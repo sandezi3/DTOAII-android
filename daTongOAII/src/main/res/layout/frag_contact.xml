@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription" >
+
+    <RelativeLayout
+        android:id="@+id/layoutNavBar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="好友群组"
+            android:textColor="@color/gray_2"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/ibAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/image_btn"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/add" />
+
+        <ImageButton
+            android:id="@+id/ibMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/image_btn"
+            android:layout_marginLeft="3dp"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/more" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutFocus"
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" />
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@id/layoutNavBar"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_search"
+        android:hint="" />
+
+    <TextView
+        android:id="@+id/tvSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutNavBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="搜索"
+        android:textColor="@color/gray_2"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/layoutNavBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tvSearch"
+        android:src="@drawable/ic_search" />
+
+    <RelativeLayout
+        android:id="@+id/lBack"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@id/etSearch"
+        android:background="@color/gray_2"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/back_white" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/slvContact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lBack"
+        layout="@layout/section_list_view" />
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="phone_play_control_bar_height">65dp</dimen>
+    <dimen name="phone_title_bar_height">42dp</dimen>
+    <dimen name="phone_search_bar_height">36dp</dimen>
+    <dimen name="phone_menu_item_height">48dp</dimen>
+    <dimen name="phone_search_btn_width">77dp</dimen>
+    <dimen name="phone_list_section_header">17sp</dimen>
+    <dimen name="phone_playlist_item_large">15sp</dimen>
+    <dimen name="phone_playlist_item_normal">12sp</dimen>
+    <dimen name="phone_orderlist_item_large">17sp</dimen>
+    <dimen name="phone_orderlist_item_normal">12sp</dimen>
+    <dimen name="phone_recommendation_title">11sp</dimen>
+    <dimen name="phone_recommendation_artist">10sp</dimen>
+    <dimen name="phone_media_control_btn_height">36dp</dimen>
+    <dimen name="phone_text_title_bar">22sp</dimen>
+    <dimen name="phone_text_copyright">10sp</dimen>
+    <dimen name="phone_text_normal_button">19sp</dimen>
+    <dimen name="phone_text_small_button">16sp</dimen>
+    <dimen name="phone_text_order_bubble">10sp</dimen>
+    <dimen name="phone_text_search_grid">20sp</dimen>
+    
+</resources>

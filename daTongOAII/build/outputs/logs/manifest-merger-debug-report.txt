@@ -1,0 +1,379 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:2:1-215:12
+	package
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:4:5-39
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:6:5-30
+	xmlns:tools
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:5:5-28
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+	tools:ignore
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:7:5-43
+	xmlns:android
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:9:5-11:41
+MERGED from [00_Android:pullToRefreshLibrary:unspecified] /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/00_Android/pullToRefreshLibrary/unspecified/AndroidManifest.xml:7:5-9:40
+MERGED from [com.android.support:appcompat-v7:19.1.0] /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/AndroidManifest.xml:18:5-42
+	android:targetSdkVersion
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:11:9-38
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:10:9-34
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+		INJECTED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:13:5-81
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:13:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:14:5-79
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:14:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:15:5-76
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:15:22-73
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:16:5-79
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:16:22-76
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:17:5-76
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:17:22-73
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:18:5-75
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:18:22-72
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:19:5-81
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:19:22-78
+uses-permission#android.permission.INTERNET
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:20:5-67
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:20:22-64
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:21:5-84
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:21:22-81
+uses-permission#android.permission.READ_LOGS
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:22:5-68
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:22:22-65
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:23:5-72
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:23:22-69
+uses-permission#android.permission.CAMERA
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:24:5-65
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:24:22-62
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:32:5-68
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:32:22-65
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:33:5-81
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:33:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:35:5-66
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:35:22-63
+uses-permission#android.permission.GET_TASKS
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:36:5-68
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:36:22-65
+uses-permission#android.permission.BLUETOOTH
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:38:5-68
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:38:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:39:5-74
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:39:22-71
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:44:5-78
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:44:22-75
+uses-permission#getui.permission.GetuiService.com.accenture.datongoaii
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:46:5-94
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:46:22-91
+permission#getui.permission.GetuiService.com.accenture.datongoaii
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:48:5-51:18
+	android:protectionLevel
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:50:9-41
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:49:9-78
+permission#com.igexin.sdk.PushService
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:52:5-55:18
+	android:protectionLevel
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:54:9-41
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:53:9-50
+permission#com.igexin.sdk.PushServiceUser
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:56:5-59:18
+	android:protectionLevel
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:58:9-41
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:57:9-54
+application
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:61:5-213:19
+MERGED from [00_Android:pullToRefreshLibrary:unspecified] /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/00_Android/pullToRefreshLibrary/unspecified/AndroidManifest.xml:11:5-20
+MERGED from [com.android.support:appcompat-v7:19.1.0] /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/AndroidManifest.xml:19:5-20
+	android:screenOrientation
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:65:9-45
+	android:label
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:64:9-41
+	android:allowBackup
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:62:9-35
+	android:icon
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:63:9-45
+	android:theme
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:66:9-62
+activity#com.accenture.datongoaii.activity.SplashActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:67:9-77:20
+	android:screenOrientation
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:71:13-49
+	android:label
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:69:13-45
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:70:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:68:13-76
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:72:13-76:29
+action#android.intent.action.MAIN
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:73:17-69
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:73:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:75:17-77
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:75:27-74
+activity#com.accenture.datongoaii.activity.MainActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:78:9-81:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:80:13-48
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:79:13-74
+activity#com.accenture.datongoaii.activity.LoginActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:82:9-85:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:84:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:83:13-75
+activity#com.accenture.datongoaii.activity.RegisterActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:86:9-89:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:88:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:87:13-78
+activity#com.accenture.datongoaii.activity.ContactAddActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:90:9-93:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:92:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:91:13-80
+activity#com.accenture.datongoaii.activity.CreateGroupActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:94:9-97:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:96:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:95:13-81
+activity#com.accenture.datongoaii.activity.PhoneContactActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:98:9-101:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:100:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:99:13-82
+activity#com.accenture.datongoaii.activity.MyInfoActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:102:9-105:20
+	android:launchMode
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:104:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:103:13-76
+activity#com.accenture.datongoaii.activity.SelectQuestionActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:106:9-107:20
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:106:19-90
+activity#com.accenture.datongoaii.activity.ForgetPwActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:108:9-109:20
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:108:19-84
+meta-data#PUSH_APPID
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:112:9-114:54
+	android:value
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:114:13-51
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:113:13-38
+meta-data#PUSH_APPKEY
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:115:9-117:53
+	android:value
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:117:13-50
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:116:13-39
+meta-data#PUSH_APPSECRET
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:118:9-120:54
+	android:value
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:120:13-51
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:119:13-42
+receiver#com.accenture.datongoaii.network.PushReceiver
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:123:9-129:20
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:125:13-37
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:124:13-73
+intent-filter#com.igexin.sdk.action.8xalVYsU77A2frg4ok8LfA
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:126:13-128:29
+action#com.igexin.sdk.action.8xalVYsU77A2frg4ok8LfA
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:127:17-87
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:127:25-84
+service#com.igexin.sdk.PushService
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:132:9-138:19
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:137:13-43
+	android:label
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:135:13-47
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:134:13-36
+	android:permission
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:136:13-60
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:133:13-54
+service#com.igexin.sdk.PushServiceUser
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:139:9-144:19
+	android:label
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:142:13-51
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:141:13-36
+	android:permission
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:143:13-64
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:140:13-58
+receiver#com.igexin.sdk.PushReceiver
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:146:9-157:20
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:146:19-61
+intent-filter#android.intent.action.ACTION_POWER_CONNECTED+android.intent.action.ACTION_POWER_DISCONNECTED+android.intent.action.BOOT_COMPLETED+android.intent.action.MEDIA_MOUNTED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.igexin.sdk.action.refreshls
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:147:13-156:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:148:17-79
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:148:25-76
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:149:17-79
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:149:25-76
+action#android.intent.action.USER_PRESENT
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:150:17-77
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:150:25-74
+action#com.igexin.sdk.action.refreshls
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:151:17-74
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:151:25-71
+action#android.intent.action.MEDIA_MOUNTED
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:153:17-78
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:153:25-75
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:154:17-87
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:154:25-84
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:155:17-90
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:155:25-87
+receiver#com.igexin.sdk.PushManagerReceiver
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:158:9-164:20
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:160:13-37
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:159:13-62
+intent-filter#com.igexin.sdk.action.pushmanager
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:161:13-163:29
+action#com.igexin.sdk.action.pushmanager
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:162:17-76
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:162:25-73
+activity#com.igexin.sdk.PushActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:166:9-173:20
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:170:13-43
+	android:excludeFromRecents
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:168:13-46
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:169:13-37
+	android:theme
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:172:13-72
+	android:taskAffinity
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:171:13-67
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:167:13-55
+service#com.igexin.download.DownloadService
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:175:9-177:46
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:177:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:176:13-63
+receiver#com.igexin.download.DownloadReceiver
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:179:9-183:20
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:179:19-70
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:180:13-182:29
+provider#com.igexin.download.DownloadProvider
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:185:9-188:46
+	android:authorities
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:187:13-69
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:188:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:186:13-64
+activity#com.igexin.getuiext.activity.GetuiExtActivity
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:190:9-197:75
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:195:13-43
+	android:excludeFromRecents
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:193:13-46
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:194:13-37
+	android:configChanges
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:192:13-72
+	android:theme
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:197:13-72
+	android:taskAffinity
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:196:13-62
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:191:13-73
+receiver#com.igexin.getuiext.service.PayloadReceiver
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:199:9-206:20
+	android:exported
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:201:13-37
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:200:13-71
+intent-filter#com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4+com.igexin.sdk.action.8xalVYsU77A2frg4ok8LfA
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:202:13-205:29
+action#com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:203:17-87
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:203:25-84
+service#com.igexin.getuiext.service.GetuiExtService
+ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:208:9-210:46
+	android:process
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:210:13-43
+	android:name
+		ADDED from /Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/src/main/AndroidManifest.xml:209:13-71

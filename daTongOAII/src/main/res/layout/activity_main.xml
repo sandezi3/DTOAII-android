@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.accenture.datongoaii.activity.MainActivity"
+    tools:ignore="MergeRootFrame,HardcodedText,ContentDescription" >
+
+    <!--
+        <TextView
+        android:id="@+id/textview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:textSize="40sp"
+        android:gravity="center|center"
+        android:text="大同OA"/>
+    -->
+
+    <FrameLayout
+        android:id="@+id/lBody"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="60dp" >
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/tabBar"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/lTodo"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imgTodo"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_todo_h" />
+
+            <TextView
+                android:id="@+id/txtTodo"
+                android:layout_width="fill_parent"
+                android:layout_height="19dp"
+                android:gravity="center"
+                android:text="待办"
+                android:textColor="@color/green" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lNotification"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imgNotification"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_todo" />
+
+            <TextView
+                android:id="@+id/txtNotification"
+                android:layout_width="fill_parent"
+                android:layout_height="19dp"
+                android:gravity="center"
+                android:text="通知中心"
+                android:textColor="@color/gray_5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lTask"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imgTask"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_todo" />
+
+            <TextView
+                android:id="@+id/txtTask"
+                android:layout_width="fill_parent"
+                android:layout_height="19dp"
+                android:gravity="center"
+                android:text="任务"
+                android:textColor="@color/gray_5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lContact"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imgContact"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_contact" />
+
+            <TextView
+                android:id="@+id/txtContact"
+                android:layout_width="fill_parent"
+                android:layout_height="19dp"
+                android:gravity="center"
+                android:text="好友群组"
+                android:textColor="@color/gray_5" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/tabBar"
+        android:layout_alignParentLeft="true"
+        android:background="@color/line" />
+
+</RelativeLayout>

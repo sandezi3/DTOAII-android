@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="ContentDescription,HardcodedText" >
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="3dp"
+        android:padding="2dp"
+        android:src="@drawable/tab_todo_h" />
+
+    <TextView
+        android:id="@+id/tvCreate"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="昨天"
+        android:textColor="@color/gray_2"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_toLeftOf="@id/tvCreate"
+        android:layout_toRightOf="@id/ivIcon"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="公文标题公文标题公文标题公文标题公文标题"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvDeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginBottom="6dp"
+        android:layout_toLeftOf="@id/tvCreate"
+        android:layout_toRightOf="@id/ivIcon"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="提醒时间：21：30"
+        android:textColor="@color/gray_2"
+        android:textSize="14sp" />
+
+</RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/list_cell_noti.xml -->
