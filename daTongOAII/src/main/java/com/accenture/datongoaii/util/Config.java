@@ -10,6 +10,8 @@ public class Config {
 	public static final String SERVER_HOST = "http://10.202.211.175:8080/DTOAII/";
 //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
 	public static final String URL_VERIFICATION = "verifyCode.json";
+	public static final String URL_REGISTER = "register.json";
+	public static final String URL_CHANGE_PASSWORD = "changePassword.json";
 
 	// 提示文字
 	public static final String SUCCESS_REGISTER = "注册成功，请登录";
@@ -35,6 +37,7 @@ public class Config {
 	public static final String PROGRESS_REGISTER = "正在注册...";
 	public static final String PROGRESS_Q_QUESTION = "正在获取安全问题...";
 	public static final String PROGRESS_SEND = "正在发送...";
+	public static final String PROGRESS_SUBMIT = "正在提交...";
 
 	//设置
 	public static final int GET_VERIFY_CODE_INVALID_SECONDS = 60;

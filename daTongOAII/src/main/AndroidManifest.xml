@@ -217,6 +217,10 @@
 
         <!-- 个推SDK配置结束 -->
 
+        <activity
+            android:name=".activity.ChangePswdActivity"
+            android:label="@string/title_activity_change_pswd" >
+        </activity>
     </application>
 
 </manifest>

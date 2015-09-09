@@ -14,10 +14,11 @@ public class Jsons {
 		public static final String create = "create";
 	}
 
-	public final class JsonRegister extends JsonCommonResponse {
+	public final class JsonAccount extends JsonCommonResponse {
 		public static final String userId = "userId";
 		public static final String password = "password";
 		public static final String username = "username";
+		public static final String cell = "cell";
 	}
 
 	public final class JsonNotiList extends JsonCommonResponse {

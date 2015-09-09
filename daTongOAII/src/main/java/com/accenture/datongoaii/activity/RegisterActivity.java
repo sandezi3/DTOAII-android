@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Jsons.JsonRegister;
+import com.accenture.datongoaii.model.Jsons.JsonAccount;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
@@ -79,8 +79,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
             case R.id.btnRegister:
                 if (isDataValid()) {
                     startRegisterConnection(mCell, etUsername.getEditableText().toString()
-                            .trim(), editPassword.getEditableText().toString()
-                            .trim());
+                            .trim(), Utils.md5(editPassword.getEditableText().toString()
+                            .trim()));
                 }
                 break;
             case R.id.btnBack:
@@ -92,12 +92,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private void startRegisterConnection(String cell, String username, String password) {
         progressDialog = ProgressDialog.show(this, null,
                 Config.PROGRESS_REGISTER);
-        String url = Config.SERVER_HOST + "register.json";
+        String url = Config.SERVER_HOST + Config.URL_REGISTER;
         JSONObject obj = new JSONObject();
         try {
-            obj.put(JsonRegister.userId, cell);
-            obj.put(JsonRegister.username, username);
-            obj.put(JsonRegister.password, Utils.md5(password));
+            obj.put(JsonAccount.userId, cell);
+            obj.put(JsonAccount.username, username);
+            obj.put(JsonAccount.password, password);
         } catch (JSONException e) {
             Utils.toast(this, Config.ERROR_APP);
             e.printStackTrace();
@@ -123,8 +123,6 @@ public class RegisterActivity extends Activity implements OnClickListener {
                 } else {
                     Utils.toast(RegisterActivity.this, Config.ERROR_NETWORK);
                 }
-                RegisterActivity.this.handler
-                        .sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
             }
         });
     }
