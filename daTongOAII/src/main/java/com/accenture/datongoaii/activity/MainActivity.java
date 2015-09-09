@@ -58,6 +58,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		findViewById(R.id.lTask).setOnClickListener(this);
 		findViewById(R.id.lContact).setOnClickListener(this);
 		setTabSelected(TAB_TODO);
+
+		Utils.toast(this, Config.SUCCESS_LOGIN);
 	}
 
 	@Override

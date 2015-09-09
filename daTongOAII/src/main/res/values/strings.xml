@@ -2,5 +2,9 @@
 <resources>
 
     <string name="app_name">大同OA II</string>
+    <string name="title_activity_cell_identify">验证手机号</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

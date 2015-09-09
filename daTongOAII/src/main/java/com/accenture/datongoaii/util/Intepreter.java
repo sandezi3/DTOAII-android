@@ -55,5 +55,4 @@ public class Intepreter {
 		}
 		return list;
 	}
-
 }

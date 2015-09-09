@@ -17,9 +17,7 @@ public class Jsons {
 	public final class JsonRegister extends JsonCommonResponse {
 		public static final String userId = "userId";
 		public static final String password = "password";
-		public static final String code = "code";
-		public static final String questionId = "questionId";
-		public static final String answer = "answer";
+		public static final String username = "username";
 	}
 
 	public final class JsonNotiList extends JsonCommonResponse {
