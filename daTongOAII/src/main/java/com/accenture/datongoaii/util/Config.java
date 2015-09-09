@@ -6,8 +6,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 public class Config {
 	public static final boolean DEBUG_AUTO_LOGIN = true;
 
-	public static final String SERVER_HOST = "http://10.202.211.246:8080/DTOAII/";
-//	public static final String SERVER_HOST = "http://192.168.22.223:8080/DTOAII/";
+	public static final String SERVER_HOST = "http://10.202.211.175:8080/DTOAII/";
+//	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
 
 	// 提示文字
 	public static final String SUCCESS_REGISTER = "注册成功，请登录";
