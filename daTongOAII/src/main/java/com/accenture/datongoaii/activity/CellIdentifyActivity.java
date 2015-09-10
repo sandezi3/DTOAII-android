@@ -196,7 +196,7 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
 
     private void getVerifyCode(String number) {
         progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_SEND);
-        String url = Config.SERVER_HOST + "getVerifyCode.json?cell=" + number;
+        String url = Config.SERVER_HOST + Config.URL_REQUIRE_VERIFY_CODE + number;
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {

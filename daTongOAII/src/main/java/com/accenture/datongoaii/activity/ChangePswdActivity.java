@@ -1,47 +1,45 @@
 package com.accenture.datongoaii.activity;
 
-import java.lang.ref.WeakReference;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Jsons.JsonAccount;
+import com.accenture.datongoaii.model.Jsons;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.EditText;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class RegisterActivity extends Activity implements OnClickListener {
+import java.lang.ref.WeakReference;
+
+public class ChangePswdActivity extends Activity implements View.OnClickListener {
     public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
 
-    private EditText etUsername;
-    private EditText editPassword;
+    private EditText etPassword;
     private EditText etRptPswd;
     private ProgressDialog progressDialog;
 
-    private String mCell;
+    public String mCell;
 
-    static class RegisterActivityHandler extends Handler {
-        WeakReference<RegisterActivity> mActivity;
+    static class ChangePswdActivityHandler extends Handler {
+        WeakReference<ChangePswdActivity> mActivity;
 
-        RegisterActivityHandler(RegisterActivity activity) {
-            mActivity = new WeakReference<RegisterActivity>(activity);
+        ChangePswdActivityHandler(ChangePswdActivity activity) {
+            mActivity = new WeakReference<ChangePswdActivity>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            RegisterActivity theActivity = mActivity.get();
+            ChangePswdActivity theActivity = mActivity.get();
             switch (msg.what) {
                 case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     if (theActivity.progressDialog != null) {
@@ -53,51 +51,46 @@ public class RegisterActivity extends Activity implements OnClickListener {
         }
     }
 
-    private Handler handler = new RegisterActivityHandler(this);
+    private Handler handler = new ChangePswdActivityHandler(this);
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_change_pswd);
 
-        etUsername = (EditText) findViewById(R.id.editUsername);
-        editPassword = (EditText) findViewById(R.id.editPassword);
-        etRptPswd = (EditText) findViewById(R.id.editRptPassword);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etRptPswd = (EditText) findViewById(R.id.etRptpassword);
 
-        findViewById(R.id.btnRegister).setOnClickListener(this);
+        findViewById(R.id.btnSubmit).setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
 
         if(getIntent().hasExtra(Constants.BUNDLE_TAG_FUNCTION)) {
             mCell = getIntent().getStringExtra(Constants.BUNDLE_TAG_FUNCTION);
         }
-        assert (mCell != null);
-    }
+        assert (mCell != null);    }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnRegister:
-                if (isDataValid()) {
-                    startRegisterConnection(mCell, etUsername.getEditableText().toString()
-                            .trim(), Utils.md5(editPassword.getEditableText().toString()
-                            .trim()));
-                }
-                break;
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btnBack:
                 this.finish();
+                break;
+            case R.id.btnSubmit:
+                if (isDataValid()) {
+                    startChangePasswordConnect(mCell, etPassword.getEditableText().toString().trim());
+                }
                 break;
         }
     }
 
-    private void startRegisterConnection(String cell, String username, String password) {
+    private void startChangePasswordConnect(String cell, String password) {
         progressDialog = ProgressDialog.show(this, null,
-                Config.PROGRESS_REGISTER);
+                Config.PROGRESS_SUBMIT);
         String url = Config.SERVER_HOST + Config.URL_REGISTER;
         JSONObject obj = new JSONObject();
         try {
-            obj.put(JsonAccount.cell, cell);
-            obj.put(JsonAccount.username, username);
-            obj.put(JsonAccount.password, password);
+            obj.put(Jsons.JsonAccount.cell, cell);
+            obj.put(Jsons.JsonAccount.password, password);
         } catch (JSONException e) {
             Utils.toast(this, Config.ERROR_APP);
             e.printStackTrace();
@@ -111,31 +104,26 @@ public class RegisterActivity extends Activity implements OnClickListener {
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            Utils.toast(RegisterActivity.this, Config.SUCCESS_REGISTER);
-                            RegisterActivity.this.finish();
+                            Utils.toast(ChangePswdActivity.this, Config.SUCCESS_REGISTER);
+                            ChangePswdActivity.this.finish();
                         } else {
-                            Utils.toast(RegisterActivity.this, Intepreter.getCommonStatusFromJson(result).statusMsg);
+                            Utils.toast(ChangePswdActivity.this, Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Utils.toast(RegisterActivity.this, Config.ERROR_INTERFACE);
+                        Utils.toast(ChangePswdActivity.this, Config.ERROR_INTERFACE);
                     }
                 } else {
-                    Utils.toast(RegisterActivity.this, Config.ERROR_NETWORK);
+                    Utils.toast(ChangePswdActivity.this, Config.ERROR_NETWORK);
                 }
             }
         });
     }
 
     private boolean isDataValid() {
-        if (etUsername.getEditableText().toString().trim().length() == 0) {
-            etUsername.requestFocus();
-            Utils.toast(this, Config.NOTE_USERNAME_EMPTY);
-            return false;
-        }
-        String pswd = editPassword.getEditableText().toString().trim();
+        String pswd = etPassword.getEditableText().toString().trim();
         if (pswd.length() == 0) {
-            editPassword.requestFocus();
+            etPassword.requestFocus();
             Utils.toast(this, Config.NOTE_PASSWORD_EMPTY);
             return false;
         }
@@ -146,14 +134,13 @@ public class RegisterActivity extends Activity implements OnClickListener {
             return false;
         }
         if (!pswd.equals(rptPswd)) {
-            editPassword.setText("");
+            etPassword.setText("");
             etRptPswd.setText("");
-            editPassword.requestFocus();
+            etPassword.requestFocus();
             Utils.toast(this, Config.NOTE_PASSWORD_UNMATCH);
             return false;
         }
 
         return true;
     }
-    
 }
