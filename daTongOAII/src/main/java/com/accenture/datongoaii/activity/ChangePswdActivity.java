@@ -86,18 +86,18 @@ public class ChangePswdActivity extends Activity implements View.OnClickListener
     private void startChangePasswordConnect(String cell, String password) {
         progressDialog = ProgressDialog.show(this, null,
                 Config.PROGRESS_SUBMIT);
-        String url = Config.SERVER_HOST + Config.URL_REGISTER;
+        String url = Config.SERVER_HOST + Config.URL_CHANGE_PASSWORD;
         JSONObject obj = new JSONObject();
         try {
             obj.put(Jsons.JsonAccount.cell, cell);
-            obj.put(Jsons.JsonAccount.password, password);
+            obj.put(Jsons.JsonAccount.newPassword, Utils.md5(password));
         } catch (JSONException e) {
             Utils.toast(this, Config.ERROR_APP);
             e.printStackTrace();
             return;
         }
         HttpConnection connection = new HttpConnection();
-        connection.post(url, obj, new HttpConnection.CallbackListener() {
+        connection.put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
                 handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);

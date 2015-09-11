@@ -80,10 +80,10 @@ public class Account {
     public void fromJson(JSONObject json) {
         try {
             json = json.getJSONObject("data");
-            this.setUserId(json.getString("userId"));
+            this.setUserId(json.getString("userId") + "");
             this.setUsername(json.getString("username"));
             this.setToken(json.getString("token"));
-            this.setHead(json.getString("head"));
+            this.setHead(json.getString("photo"));
             this.setSex(json.getString("sex"));
             this.setBirth(json.getString("birth"));
         } catch (JSONException e) {

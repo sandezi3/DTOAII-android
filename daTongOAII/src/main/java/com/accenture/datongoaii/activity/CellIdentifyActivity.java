@@ -251,7 +251,7 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
                                 }
                                 break;
                                 case Constants.FUNCTION_TAG_FORGET_PASSWORD: {
-                                    Intent intent = new Intent(CellIdentifyActivity.this, ForgetPwActivity.class);
+                                    Intent intent = new Intent(CellIdentifyActivity.this, ChangePswdActivity.class);
                                     intent.putExtra(Constants.BUNDLE_TAG_FUNCTION, mCell);
                                     CellIdentifyActivity.this.startActivity(intent);
                                     CellIdentifyActivity.this.finish();

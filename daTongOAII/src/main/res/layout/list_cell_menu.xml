@@ -45,11 +45,10 @@
     
     <ImageView
         android:id="@+id/ivValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/tvValue"
-        android:maxLines="1"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:visibility="gone"

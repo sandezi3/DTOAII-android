@@ -17,6 +17,7 @@ public class Jsons {
 	public final class JsonAccount extends JsonCommonResponse {
 		public static final String userId = "userId";
 		public static final String password = "password";
+		public static final String newPassword = "newPassword";
 		public static final String username = "username";
 		public static final String cell = "cell";
 	}

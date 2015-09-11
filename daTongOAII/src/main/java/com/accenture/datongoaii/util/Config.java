@@ -7,7 +7,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = false;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:8888";
+    public static final String SERVER_HOST = "http://10.202.211.163:9999";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/oaf/api/authentication";
     public static final String URL_REGISTER = "/oaf/api/user";

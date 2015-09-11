@@ -15,6 +15,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -73,6 +74,10 @@ public class HttpConnection implements Runnable {
 
     public void post(String url, JSONObject data, CallbackListener listener) {
         create(POST, url, data, null, listener);
+    }
+
+    public void put(String url, JSONObject data, CallbackListener listener) {
+        create(PUT, url, data, null, listener);
     }
 
     public void put(String url, JSONObject data) {
@@ -223,6 +228,63 @@ public class HttpConnection implements Runnable {
                     }
                     break;
                 }
+                case PUT: {
+                    HttpPut httpPutRquest = new HttpPut(url);
+                    StringEntity se = null;
+                    if (this.data != null) {
+                        Logger.e("PUT.Data", this.data.toString());
+                        se = new StringEntity(data.toString(), "UTF-8");
+                    }
+                    // Set HTTP parameters
+                    httpPutRquest.setEntity(se);
+                    httpPutRquest.setHeader("Accept", "application/json");
+                    httpPutRquest.setHeader("Content-type", "application/json");
+                    httpPutRquest.setHeader("Accept-Encoding", "gzip"); // only
+                    if (Account.getInstance().getToken().length() > 0) {
+                        httpPutRquest.setHeader("Token", Account.getInstance().getToken());
+                    }
+                    // set
+                    // this
+                    // parameter
+                    // if you
+                    // would
+                    // like to
+                    // use
+                    // gzip
+                    // compression
+
+                    long t = System.currentTimeMillis();
+                    httpResponse = httpClient.execute(httpPutRquest);
+                    Logger.i(TAG, "HTTPResponse received in [" + (System.currentTimeMillis() - t) + "ms]");
+
+                    if (isHttpSuccessExecuted(httpResponse)) {
+                        // Get hold of the response entity (-> the data):
+                        HttpEntity entity = httpResponse.getEntity();
+
+                        if (entity != null) {
+                            // Read the content stream
+                            InputStream instream = entity.getContent();
+                            Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
+                            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+                                instream = new GZIPInputStream(instream);
+                            }
+
+                            // convert content stream to a String
+                            String resultString = convertStreamToString(instream);
+                            Logger.e("JSON", resultString);
+                            instream.close();
+                            this.sendMessage(resultString);
+                        } else {
+                            this.sendMessage("fail");
+                        }
+                    } else {
+                        // if (Account.govDebug) {
+                        // this.sendMessage("");
+                        // }
+                        Logger.e("PUT.Err", "Please contact interface provider!");
+                    }
+                    break;
+                }
                 case POST_IMAGE: {
                     HttpPost httpPostRequest = new HttpPost(url);
                     String tempFilePath = Environment.getExternalStorageDirectory().getPath() + "/TEMP";
@@ -325,7 +387,7 @@ public class HttpConnection implements Runnable {
 
     private static String convertStreamToString(InputStream is) {
         /*
-		 * To convert the InputStream to String we use the
+         * To convert the InputStream to String we use the
 		 * BufferedReader.readLine() method. We iterate until the BufferedReader
 		 * return null which means there's no more data to read. Each line will
 		 * appended to a StringBuilder and returned as String.
