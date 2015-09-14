@@ -7,5 +7,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_change_pswd">ChangePswdActivity</string>
+    <string name="title_activity_create_org">CreateOrgActivity</string>
 
 </resources>

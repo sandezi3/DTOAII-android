@@ -1,10 +1,12 @@
 package com.accenture.datongoaii.model;
 
+import com.accenture.datongoaii.util.Intepreter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Account {
-    private String userId = null;
+    private Integer userId = null;
     private String username = null;
     private String head = null;
     private String token = null;
@@ -12,7 +14,7 @@ public class Account {
     private String birth = null;
 
     private Account() {
-        setUserId("");
+        setUserId(-1);
         setUsername("");
         setHead("");
         setToken("");
@@ -29,11 +31,11 @@ public class Account {
         return HolderClass.instance;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -80,7 +82,7 @@ public class Account {
     public void fromJson(JSONObject json) {
         try {
             json = json.getJSONObject("data");
-            this.setUserId(json.getString("userId") + "");
+            this.setUserId(json.getInt("userId"));
             this.setUsername(json.getString("username"));
             this.setToken(json.getString("token"));
             this.setHead(json.getString("photo"));

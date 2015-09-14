@@ -288,7 +288,7 @@ public class ContactFragment extends Fragment implements
 		return tList;
 	}
 
-	public void getDept(String userId, String deptId) {
+	public void getDept(Integer userId, String deptId) {
 		Dept tmp = Dept.fromDataById(this.getActivity(), "");
 		if (tmp != null) {
 			clearData();

@@ -7,19 +7,23 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = false;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:9999";
+    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
-    public static final String URL_LOGIN = "/oaf/api/authentication";
-    public static final String URL_REGISTER = "/oaf/api/user";
-    public static final String URL_REQUIRE_VERIFY_CODE = "/oaf/api/captcha/";
-    public static final String URL_UPLOAD_HEAD = "/oaf/api/user/photo";
-    public static final String URL_VERIFICATION = "/oaf/api/captcha/verification";
-    public static final String URL_CHANGE_PASSWORD = "/oaf/api/user/password";
+    public static final String URL_LOGIN = "/authentication";
+    public static final String URL_REGISTER = "/users";
+    public static final String URL_REQUIRE_VERIFY_CODE = "/captcha/";
+    public static final String URL_UPLOAD_HEAD = "/user/photo";
+    public static final String URL_VERIFICATION = "/captcha/verification";
+    public static final String URL_CHANGE_PASSWORD = "/user/password";
     public static final String URL_TODO_LIST = "/DTOAII/todo.json";
     public static final String URL_NOTI_LIST = "/DTOAII/noti.json";
     public static final String URL_DEPT = "/DTOAII/contact.json";
     public static final String URL_CREATE_GROUP = "/DTOAII/createGroup.json";
     public static final String URL_CREATE_DEPT = "/DTOAII/createDept.json";
+    public static final String URL_CREATE_ORG = "/orgs";
+    public static final String URL_GET_USER_STATUS = "/users/status";
+    public static final String URL_ADD_FRIEND = "/user/{userId}/friends";
+
 
     // 提示文字
     public static final String SUCCESS_REGISTER = "注册成功，请登录";
@@ -45,6 +49,7 @@ public class Config {
     public static final String PROGRESS_REGISTER = "正在注册...";
     public static final String PROGRESS_Q_QUESTION = "正在获取安全问题...";
     public static final String PROGRESS_SEND = "正在发送...";
+    public static final String PROGRESS_GET = "正在获取...";
     public static final String PROGRESS_SUBMIT = "正在提交...";
 
     //设置

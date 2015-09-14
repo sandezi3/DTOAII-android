@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Noti;
 import com.accenture.datongoaii.model.Todo;
 import com.accenture.datongoaii.model.Jsons.*;

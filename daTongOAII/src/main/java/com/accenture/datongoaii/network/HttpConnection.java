@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class HttpConnection implements Runnable {
     private static final String TAG = "HttpConnect";
@@ -93,7 +94,7 @@ public class HttpConnection implements Runnable {
     }
 
     public void postImage(String url, Bitmap image, CallbackListener listener) {
-        create(POST_IMAGE, url, null, image, listener);
+        create(POST_IMAGE, url, new JSONObject(), image, listener);
     }
 
     public interface CallbackListener {
@@ -168,15 +169,17 @@ public class HttpConnection implements Runnable {
                             this.sendMessage("fail");
                         }
                     } else {
-                        Logger.e("POST.Err", "Please contact interface provider!");
+                        Logger.e("GET.Err", "Please contact interface provider!");
                     }
                 }
                 break;
                 case POST: {
                     HttpPost httpPostRequest = new HttpPost(url);
                     StringEntity se = null;
+                    Logger.e("POST url = ", url);
                     if (this.data != null) {
                         se = new StringEntity(data.toString(), "UTF-8");
+                        Logger.e("POST body = ", data.toString());
                     }
                     // Set HTTP parameters
                     httpPostRequest.setEntity(se);
@@ -185,6 +188,7 @@ public class HttpConnection implements Runnable {
                     httpPostRequest.setHeader("Accept-Encoding", "gzip"); // only
                     if (Account.getInstance().getToken().length() > 0) {
                         httpPostRequest.setHeader("Token", Account.getInstance().getToken());
+                        Logger.e("POST token = ", Account.getInstance().getToken());
                     }
                     // set
                     // this

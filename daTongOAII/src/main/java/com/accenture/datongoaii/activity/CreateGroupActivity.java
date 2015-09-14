@@ -3,6 +3,8 @@ package com.accenture.datongoaii.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
@@ -13,6 +15,7 @@ import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
+import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.widget.SectionListView;
@@ -42,13 +45,12 @@ public class CreateGroupActivity extends Activity implements
     private List<Object> groupList;
     private List<Object> uList;
     private List<Object> tmpList;
+    private int prevFunction;
 
     private EditText etSearch;
     private ImageView ivSearch;
     private TextView tvSearch;
-
     private View lBack;
-
     private Button btnSubmit;
 
     private OnClickListener listener = new View.OnClickListener() {
@@ -254,14 +256,26 @@ public class CreateGroupActivity extends Activity implements
         btnSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startCreateGroupConnect();
+                switch (prevFunction) {
+                    case Constants.FUNCTION_TAG_CREATE_GROUP:
+                        startCreateGroupConnect();
+                        break;
+                    case Constants.FUNCTION_TAG_CREATE_ORG:
+                        break;
+                }
             }
         });
+
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_SELECT_MEMBER)) {
+            prevFunction = getIntent().getIntExtra(Constants.BUNDLE_TAG_SELECT_MEMBER, -1);
+        }
     }
 
     public void startCreateGroupConnect() {
         this.finish();
     }
+
+
 
     @SuppressWarnings("unused")
     private String getTmpListName(List<Contact> list) {
@@ -289,7 +303,7 @@ public class CreateGroupActivity extends Activity implements
         return tList;
     }
 
-    private boolean contains(List<Contact> list, String id) {
+    private boolean contains(List<Contact> list, Integer id) {
         for (Contact c : list) {
             if (c.id.equals(id)) {
                 return true;
@@ -370,7 +384,7 @@ public class CreateGroupActivity extends Activity implements
         }
     }
 
-    private void getDept(String userId, String id) {
+    private void getDept(Integer userId, String id) {
         Dept tmp = Dept.fromDataById(this, "");
         if (tmp != null) {
             clearData();

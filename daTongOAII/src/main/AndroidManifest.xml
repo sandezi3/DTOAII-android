@@ -221,6 +221,14 @@
             android:name=".activity.ChangePswdActivity"
             android:label="@string/title_activity_change_pswd" >
         </activity>
+        <activity
+            android:name=".activity.CreateOrgActivity"
+            android:label="@string/title_activity_create_org"
+            android:parentActivityName=".activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.accenture.datongoaii.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

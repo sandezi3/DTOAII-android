@@ -32,33 +32,33 @@
             android:text="创建群组"
             android:textSize="18sp" />
 
-        <!--  <View
-             android:layout_width="match_parent"
-             android:layout_height="1dp"
-             android:background="@color/white" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white" />
 
-         <TextView
-             android:id="@+id/tvHelp"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:background="#eeeeee"
-             android:padding="12dp"
-             android:text="创建子部门"
-             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tvCreateOrg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eeeeee"
+            android:padding="12dp"
+            android:text="创建组织"
+            android:textSize="18sp" />
 
-                 <View
-                     android:layout_width="match_parent"
-                     android:layout_height="1dp"
-                     android:background="@color/white" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white" />
 
-                 <TextView
-                     android:id="@+id/tvAbout"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:background="#eeeeee"
-                     android:padding="12dp"
-                     android:text="关于"
-                     android:textSize="18sp" /> -->
+        <TextView
+            android:id="@+id/tvAddFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eeeeee"
+            android:padding="12dp"
+            android:text="添加好友"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

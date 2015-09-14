@@ -31,7 +31,7 @@ public class Dept extends FirstPinYin {
             d.mFirstPinYin = "#";
             d.parent = null;
             d.subDept = new ArrayList<Dept>();
-            JSONArray dArray = json.getJSONArray("dList");
+            JSONArray dArray = json.getJSONArray("deptList");
             for (int i = 0; i < dArray.length(); i++) {
                 JSONObject o = dArray.getJSONObject(i);
                 Dept dd = Dept.fromJSON(o);
@@ -39,7 +39,7 @@ public class Dept extends FirstPinYin {
                 d.subDept.add(dd);
             }
             d.contactList = new ArrayList<Contact>();
-            JSONArray pArray = json.getJSONArray("pList");
+            JSONArray pArray = json.getJSONArray("userList");
             for (int i = 0; i < pArray.length(); i++) {
                 JSONObject o = pArray.getJSONObject(i);
                 Contact c = Contact.fromJSON(o);

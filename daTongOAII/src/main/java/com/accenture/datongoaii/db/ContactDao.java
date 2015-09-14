@@ -75,7 +75,7 @@ public class ContactDao {
 				c.moveToFirst();
 				while (!c.isAfterLast()) {
 					Contact cc = new Contact();
-					cc.id = c.getString(c.getColumnIndex(CONTACT_TABLE_ID));
+					cc.id = c.getInt(c.getColumnIndex(CONTACT_TABLE_ID));
 					cc.name = c.getString(c.getColumnIndex(CONTACT_TABLE_NAME));
 					cc.head = c.getString(c.getColumnIndex(CONTACT_TABLE_HEAD));
 					cc.mFirstPinYin = CharacterParser.getInstance()
