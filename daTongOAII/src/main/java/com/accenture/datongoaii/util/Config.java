@@ -22,7 +22,7 @@ public class Config {
     public static final String URL_CREATE_DEPT = "/DTOAII/createDept.json";
     public static final String URL_CREATE_ORG = "/orgs";
     public static final String URL_GET_USER_STATUS = "/users/status";
-    public static final String URL_ADD_FRIEND = "/user/{userId}/friends";
+    public static final String URL_ADD_FRIEND = "/user/friends";
 
 
     // 提示文字

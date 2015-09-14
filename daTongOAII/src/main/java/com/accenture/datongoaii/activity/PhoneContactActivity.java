@@ -150,7 +150,7 @@ public class PhoneContactActivity extends Activity implements
                             @Override
                             public void onClick(View view) {
                                 Contact c = (Contact) view.getTag();
-                                startAddFriendsConnect(c.id);
+                                startAddFriendsConnect(c.id, c.friendStatus);
                             }
                         });
                     }
@@ -164,7 +164,7 @@ public class PhoneContactActivity extends Activity implements
                             @Override
                             public void onClick(View view) {
                                 Contact c = (Contact) view.getTag();
-                                startAddFriendsConnect(c.id);
+                                startAddFriendsConnect(c.id, c.friendStatus);
                             }
                         });
                     }
@@ -306,23 +306,30 @@ public class PhoneContactActivity extends Activity implements
         });
     }
 
-    private void startAddFriendsConnect(Integer id) {
+    private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
         if(progressDialog != null) {
             progressDialog.setMessage(Config.PROGRESS_SEND);
             progressDialog.show();
         } else {
             progressDialog = ProgressDialog.show(context, null, Config.PROGRESS_SEND);
         }
-        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND.replace("{userId}", Account.getInstance().getUserId() + "");
-        JSONObject obj;
-        try {
-            obj = new JSONObject();
-            obj.put("userId", id);
-        } catch (JSONException e) {
-            Utils.toast(context, e.getMessage());
-            return;
+        String op = null;
+        switch (status) {
+            case FRIENDS_STATUS_TO_BE_FRIEND:
+                op ="add";
+                break;
+            case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
+                op = "accept";
+                break;
         }
-        new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
+        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND + "?op=" + op;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("toUserId", id);
+        } catch (JSONException e) {
+            Utils.toast(context, Config.ERROR_APP);
+        }
+        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
                 handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
