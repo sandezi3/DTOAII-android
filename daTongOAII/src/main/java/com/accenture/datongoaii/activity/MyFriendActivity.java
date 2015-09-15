@@ -1,71 +1,70 @@
 package com.accenture.datongoaii.activity;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.CommonResponse;
-import com.accenture.datongoaii.model.Contact;
-import com.accenture.datongoaii.model.FirstPinYin;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.CharacterParser;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.widget.SectionListView;
-import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
-import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
+import com.accenture.datongoaii.model.Dept;
+import com.accenture.datongoaii.model.FirstPinYin;
+import com.accenture.datongoaii.model.Group;
+import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.util.Config;
+import com.accenture.datongoaii.util.Constants;
+import com.accenture.datongoaii.util.Intepreter;
+import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.widget.SectionListView;
+import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PhoneContactActivity extends Activity implements
-        OnSectionItemClickedListener {
-    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
+public class MyFriendActivity extends Activity {
+    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
     private Context context;
-    private SectionListView slvContact;
-    private List<Object> dataList;
-    private List<Contact> contactList;
+    private List<Object> viewList;
+    private List<Contact> friends;
+    private List<Object> tmpList;
+
+    private ImageView ivSearch;
+    private TextView tvSearch;
     private ProgressDialog progressDialog;
+
     private Handler handler = new ActivityHandler(this);
 
     static class ActivityHandler extends Handler {
-        WeakReference<PhoneContactActivity> mActivity;
+        WeakReference<MyFriendActivity> mActivity;
 
-        ActivityHandler(PhoneContactActivity activity) {
-            this.mActivity = new WeakReference<PhoneContactActivity>(activity);
+        ActivityHandler(MyFriendActivity activity) {
+            this.mActivity = new WeakReference<MyFriendActivity>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
-                    PhoneContactActivity a = mActivity.get();
+                    MyFriendActivity a = mActivity.get();
                     if (a.progressDialog.isShowing()) {
                         a.progressDialog.dismiss();
                         a.progressDialog = null;
@@ -75,19 +74,31 @@ public class PhoneContactActivity extends Activity implements
 
     }
 
+    private void clearData() {
+        tmpList.clear();
+        viewList.clear();
+    }
+
+    private void syncData() {
+        viewList.addAll(friends);
+        tmpList.clear();
+        tmpList.addAll(viewList);
+        viewList.clear();
+        viewList.addAll(FirstPinYin.createPinYinGroupedList(tmpList));
+        tmpList.clear();
+        tmpList.addAll(viewList);
+        adapter.notifyDataSetChanged();
+    }
+
     private final SectionListAdapter adapter = new SectionListAdapter() {
         @Override
         public int getSectionCount() {
-            if (dataList == null) {
-                return 0;
-            } else {
-                return dataList.size();
-            }
+            return viewList.size();
         }
 
         @Override
         public int getSectionItemCount(int section) {
-            Object object = dataList.get(section);
+            Object object = viewList.get(section);
             @SuppressWarnings("unchecked")
             List<Object> list = (List<Object>) object;
             return list.size();
@@ -96,14 +107,16 @@ public class PhoneContactActivity extends Activity implements
         @Override
         public View getSectionHeaderView(int section, View convertView,
                                          ViewGroup parent) {
-            Contact c = (Contact) getItem(section, 0);
+            Object o = getItem(section, 0);
             View view = convertView;
             if (view == null) {
                 view = View.inflate(parent.getContext(),
                         R.layout.section_list_header, null);
             }
             TextView tv = (TextView) view.findViewById(R.id.txtLabel);
-            tv.setText(c.mFirstPinYin);
+            if (o instanceof Contact) {
+                tv.setText(((Contact) o).mFirstPinYin);
+            }
             return view;
         }
 
@@ -185,7 +198,7 @@ public class PhoneContactActivity extends Activity implements
 
         @Override
         public Object getItem(int section, int position) {
-            Object object = dataList.get(section);
+            Object object = viewList.get(section);
             @SuppressWarnings("unchecked")
             List<Object> list = (List<Object>) object;
             return list.get(position);
@@ -193,124 +206,111 @@ public class PhoneContactActivity extends Activity implements
 
         @Override
         public String getSectionLabel(int section) {
-            Contact c = (Contact) getItem(section, 0);
-            return c.mFirstPinYin;
+            FirstPinYin o = (FirstPinYin) getItem(section, 0);
+            return o.mFirstPinYin;
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context = this;
-        setContentView(R.layout.activity_phone_contact);
+        context = this;
+        setContentView(R.layout.activity_my_friends);
 
-        this.findViewById(R.id.btnBack).setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PhoneContactActivity.this.finish();
-                    }
-                });
+        EditText etSearch = (EditText) findViewById(R.id.etSearch);
+        ivSearch = (ImageView) findViewById(R.id.ivSearch);
+        tvSearch = (TextView) findViewById(R.id.tvSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
 
-        slvContact = (SectionListView) findViewById(R.id.slvContact);
-        contactList = new ArrayList<Contact>();
-        slvContact.setAdapter(adapter);
-        slvContact.setOnSectionItemClickedListener(this);
-        getPhoneContact();
-    }
-
-    @SuppressLint("DefaultLocale")
-    @SuppressWarnings("unchecked")
-    private void getPhoneContact() {
-        ContentResolver resolver = this.getContentResolver();
-        Cursor phoneCursor = resolver.query(Phone.CONTENT_URI, new String[]{
-                Phone.DISPLAY_NAME, Phone.NUMBER}, null, null, null);
-        if (phoneCursor != null) {
-            while (phoneCursor.moveToNext()) {
-                Contact c = new Contact();
-                c.id = -1;
-                c.selected = false;
-                c.head = "";
-                // 得到联系人名称
-                c.name = phoneCursor.getString(0);
-                // 得到手机号码
-                c.cell = resolveCell(phoneCursor.getString(1));
-
-                // 当手机号码为空的或者为空字段 跳过当前循环
-                if (c.cell == null)
-                    continue;
-                CharacterParser cp = CharacterParser.getInstance();
-                String pinyin = cp.getSelling(c.name);
-                String fLetter = pinyin.substring(0, 1).toUpperCase();
-                c.mFirstPinYin = fLetter;
-                contactList.add(c);
-            }
-
-            phoneCursor.close();
-        }
-        refreshData();
-        startGetContactsStatusConnect();
-    }
-
-    private void refreshData() {
-        dataList = (List<Object>) FirstPinYin
-                .createPinYinGroupedList(contactList);
-        adapter.notifyDataSetChanged();
-    }
-
-    private String resolveCell(String cell) {
-        if (cell.contains("+86") && cell.length() > 13) {
-            return cell.substring(cell.length() - 11);
-        }
-        if (TextUtils.isEmpty(cell)) {
-            return null;
-        }
-        if (!Utils.isValidCellNumber(cell)) {
-            return null;
-        }
-        if (cell.equals(Account.getInstance().getCell())) {
-            return null;
-        }
-        return cell;
-    }
-
-    private void startGetContactsStatusConnect() {
-        String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
-        JSONObject obj = new JSONObject();
-        try {
-            JSONArray array = new JSONArray();
-            for (Object o : contactList) {
-                Contact c = (Contact) o;
-                array.put(c.cell);
-            }
-            obj.put("cells", array);
-        } catch (JSONException e) {
-            Utils.toast(context, e.getMessage());
-            return;
-        }
-        new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
             @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        assert (cr != null);
-                        if (cr.statusCode == 0) {
-                            Contact.resolveContactListByIsUser(new JSONObject(result), contactList);
-                            refreshData();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Logger.e("startGetContactsStatusConnect", e.getMessage());
-                    }
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Logger.i("afterTextChanged", s.toString());
+                if (s.toString().length() > 0) {
+                    ivSearch.setVisibility(View.GONE);
+                    tvSearch.setVisibility(View.GONE);
+                    viewList.clear();
+                    viewList.addAll(getFiltedList(tmpList, s.toString()));
+                    adapter.notifyDataSetChanged();
+                } else {
+                    ivSearch.setVisibility(View.VISIBLE);
+                    tvSearch.setVisibility(View.VISIBLE);
+                    viewList.clear();
+                    viewList.addAll(tmpList);
+                    adapter.notifyDataSetChanged();
                 }
+            }
+        });
+
+        SectionListView slvContact = (SectionListView) findViewById(R.id.slvContact);
+        viewList = new ArrayList<Object>();
+        friends = new ArrayList<Contact>();
+        tmpList = new ArrayList<Object>();
+        slvContact.setAdapter(adapter);
+
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_FRIENDS)) {
+            List<Contact> list = (List<Contact>) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_FRIENDS);
+            friends.addAll(list);
+            syncData();
+            startGetContactsStatusConnect();
+        }
+
+        View btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyFriendActivity.this.finish();
             }
         });
     }
 
+    @SuppressWarnings("unchecked")
+    private List<List<Object>> getFiltedList(List<?> list, String str) {
+        List<List<Object>> tList = new ArrayList<List<Object>>();
+        for (Object o : list) {
+            List<Object> ll = new ArrayList<Object>();
+            List<Object> oList = (List<Object>) o;
+            for (Object oo : oList) {
+                ll.add(oo);
+            }
+            tList.add(ll);
+        }
+        for (int i = tList.size() - 1; i >= 0; i--) {
+            List<Object> l = tList.get(i);
+            for (int j = l.size() - 1; j >= 0; j--) {
+                Object o = l.get(j);
+                if (o instanceof Dept) {
+                    if (!((Dept) o).name.contains(str)) {
+                        l.remove(o);
+                    }
+                } else if (o instanceof Group) {
+                    if (!((Group) o).name.contains(str)) {
+                        l.remove(o);
+                    }
+                } else if (o instanceof Contact) {
+                    if (!((Contact) o).name.contains(str)) {
+                        l.remove(o);
+                    }
+                }
+            }
+            if (l.size() == 0) {
+                tList.remove(l);
+            }
+        }
+        return tList;
+    }
+
     private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
-        if(progressDialog != null) {
+        if (progressDialog != null) {
             progressDialog.setMessage(Config.PROGRESS_SEND);
             progressDialog.show();
         } else {
@@ -319,7 +319,7 @@ public class PhoneContactActivity extends Activity implements
         String op = null;
         switch (status) {
             case FRIENDS_STATUS_TO_BE_FRIEND:
-                op ="add";
+                op = "add";
                 break;
             case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
                 op = "accept";
@@ -351,13 +351,41 @@ public class PhoneContactActivity extends Activity implements
                 }
             }
         });
-
     }
 
-    @Override
-    public void onSectionItemClicked(SectionListView listView, View view,
-                                     int section, int position) {
-        // TODO Auto-generated method stub
-
+    private void startGetContactsStatusConnect() {
+        String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            for (Object o : friends) {
+                Contact c = (Contact) o;
+                array.put(c.cell);
+            }
+            obj.put("cells", array);
+        } catch (JSONException e) {
+            Utils.toast(context, e.getMessage());
+            return;
+        }
+        new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        assert (cr != null);
+                        if (cr.statusCode == 0) {
+                            clearData();
+                            Contact.resolveContactListByIsUser(new JSONObject(result), friends);
+                            syncData();
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Logger.e("startGetContactsStatusConnect", e.getMessage());
+                    }
+                }
+            }
+        });
     }
 }

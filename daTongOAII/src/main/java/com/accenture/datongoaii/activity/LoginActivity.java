@@ -87,8 +87,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onResume();
         if (Config.DEBUG_AUTO_LOGIN) {
             Utils.closeSoftKeyboard(this, null);
-            startLoginConnect(editPhoneNumber.getEditableText().toString()
-                    .trim(), editPassword.getEditableText().toString().trim());
+            startLoginConnect("18982135898", "1234");
 //			finishAndReturn();
         }
     }

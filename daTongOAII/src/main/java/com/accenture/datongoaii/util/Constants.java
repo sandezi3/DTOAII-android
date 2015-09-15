@@ -6,6 +6,7 @@ public class Constants {
     public static final String BUNDLE_TAG_SELECT_QUESTION = "model.SelectQuestion";
     public static final String BUNDLE_TAG_FUNCTION = "function.register.or.forgetPswd";
     public static final String BUNDLE_TAG_SELECT_MEMBER = "function.selectMember";
+    public static final String BUNDLE_TAG_FRIENDS = "bundle.friends";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;

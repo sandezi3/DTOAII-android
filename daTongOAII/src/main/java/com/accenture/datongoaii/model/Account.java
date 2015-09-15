@@ -13,6 +13,9 @@ public class Account {
     private String sex = null;
     private String birth = null;
 
+
+    private String cell = null;
+
     private Account() {
         setUserId(-1);
         setUsername("");
@@ -20,6 +23,7 @@ public class Account {
         setToken("");
         setSex("");
         setBirth("");
+        setCell("");
     }
 
     // Initialization on Demand Holder
@@ -88,9 +92,18 @@ public class Account {
             this.setHead(json.getString("photo"));
             this.setSex(json.getString("sex"));
             this.setBirth(json.getString("birth"));
+            this.setCell(json.getString("cell"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getCell() {
+        return cell;
+    }
+
+    public void setCell(String cell) {
+        this.cell = cell;
     }
 
 }

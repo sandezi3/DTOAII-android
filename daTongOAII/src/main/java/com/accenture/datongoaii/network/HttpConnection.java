@@ -141,11 +141,13 @@ public class HttpConnection implements Runnable {
                     httpGetRequest.setHeader("Content-type", "application/json");
                     httpGetRequest.setHeader("Accept-Encoding", "gzip"); // only
                     if (Account.getInstance().getToken().length() > 0) {
-                        httpGetRequest.setHeader("Token", Account.getInstance().getToken());
+                        String token = Account.getInstance().getToken();
+                        Logger.i("GET TOKEN", token);
+                        httpGetRequest.setHeader("token", Account.getInstance().getToken());
                     }
 
                     long t = System.currentTimeMillis();
-                    httpResponse = httpClient.execute(new HttpGet(url));
+                    httpResponse = httpClient.execute(httpGetRequest);
                     Logger.i(TAG, "HTTPResponse received in [" + (System.currentTimeMillis() - t) + "ms]");
 
                     if (isHttpSuccessExecuted(httpResponse)) {

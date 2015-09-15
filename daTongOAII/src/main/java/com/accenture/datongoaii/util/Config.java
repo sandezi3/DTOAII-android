@@ -4,10 +4,10 @@ import com.accenture.datongoaii.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 public class Config {
-    public static final boolean DEBUG_AUTO_LOGIN = false;
+    public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
+    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_REGISTER = "/users";
@@ -23,6 +23,7 @@ public class Config {
     public static final String URL_CREATE_ORG = "/orgs";
     public static final String URL_GET_USER_STATUS = "/users/status";
     public static final String URL_ADD_FRIEND = "/user/friends";
+    public static final String URL_GET_CONTACTS = "/user/{userId}/contacts";
 
 
     // 提示文字

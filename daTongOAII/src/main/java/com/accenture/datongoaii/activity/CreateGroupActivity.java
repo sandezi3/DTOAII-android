@@ -3,7 +3,6 @@ package com.accenture.datongoaii.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +15,6 @@ import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
@@ -65,14 +63,14 @@ public class CreateGroupActivity extends Activity implements
     private void clearData() {
         tmpList.clear();
         viewList.clear();
-        groupList.clear();
+//        groupList.clear();
         uList.clear();
     }
 
     private void syncData() {
-        viewList.addAll(dept.subDept);
-        viewList.addAll(groupList);
-        viewList.addAll(dept.contactList);
+//        viewList.addAll(dept.subDept);
+//        viewList.addAll(groupList);
+//        viewList.addAll(dept.contactList);
         viewList.addAll(uList);
         tmpList.clear();
         tmpList.addAll(viewList);
@@ -92,11 +90,11 @@ public class CreateGroupActivity extends Activity implements
     private final SectionListAdapter adapter = new SectionListAdapter() {
         @Override
         public int getSectionCount() {
-            if (dept == null) {
-                return 0;
-            } else {
+//            if (dept == null) {
+//                return 0;
+//            } else {
                 return viewList.size();
-            }
+//            }
         }
 
         @Override
@@ -189,6 +187,9 @@ public class CreateGroupActivity extends Activity implements
     };
 
     private boolean isRootList(Dept d) {
+        if (d == null) {
+            return true;
+        }
         return d.parent == null;
     }
 
@@ -385,49 +386,64 @@ public class CreateGroupActivity extends Activity implements
     }
 
     private void getDept(Integer userId, String id) {
-        Dept tmp = Dept.fromDataById(this, "");
-        if (tmp != null) {
-            clearData();
-            dept = tmp;
-            syncData();
-            return;
-        }
-        String code = id.length() > 0 ? "&id=" + id : "";
-        String url;
-        if (id.length() < 0) {
-            url = Config.SERVER_HOST + "contact.json" + "?userId=" + userId
-                    + code;
-        } else {
-            url = Config.SERVER_HOST + "contact" + id + ".json" + "?userId="
-                    + userId + code;
-        }
+        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                if (result != "fail") {
+                if (!result.equals("fail")) {
                     try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            clearData();
-                            dept = Dept.fromJSON(new JSONObject(result));
-                            groupList.addAll(Group
-                                    .getGroupListFromJSON(new JSONObject(result)));
-                            uList.addAll(Contact
-                                    .getUListFromJSON(new JSONObject(result)));
-                            Dept.updateData(CreateGroupActivity.this, dept);
-                            syncData();
-                        }
-                    } catch (Exception e) {
-                        if (Logger.DEBUG) {
-                            e.printStackTrace();
-                        }
-                        show(Config.ERROR_INTERFACE);
+                        uList.addAll(Contact.getFriendsFromJSON(new JSONObject(result)));
+                        syncData();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } else {
-                    show(Config.ERROR_NETWORK);
-                }
 
+                }
             }
         });
+//        Dept tmp = Dept.fromDataById(this, "");
+//        if (tmp != null) {
+//            clearData();
+//            dept = tmp;
+//            syncData();
+//            return;
+//        }
+//        String code = id.length() > 0 ? "&id=" + id : "";
+//        String url;
+//        if (id.length() < 0) {
+//            url = Config.SERVER_HOST + "contact.json" + "?userId=" + userId
+//                    + code;
+//        } else {
+//            url = Config.SERVER_HOST + "contact" + id + ".json" + "?userId="
+//                    + userId + code;
+//        }
+//        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+//            @Override
+//            public void callBack(String result) {
+//                if (result != "fail") {
+//                    try {
+//                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+//                            clearData();
+//                            dept = Dept.fromJSON(new JSONObject(result));
+//                            groupList.addAll(Group
+//                                    .getGroupListFromJSON(new JSONObject(result)));
+//                            uList.addAll(Contact
+//                                    .getFriendsFromJSON(new JSONObject(result)));
+//                            Dept.updateData(CreateGroupActivity.this, dept);
+//                            syncData();
+//                        }
+//                    } catch (Exception e) {
+//                        if (Logger.DEBUG) {
+//                            e.printStackTrace();
+//                        }
+//                        show(Config.ERROR_INTERFACE);
+//                    }
+//                } else {
+//                    show(Config.ERROR_NETWORK);
+//                }
+//
+//            }
+//        });
     }
 
     private void show(String msg) {

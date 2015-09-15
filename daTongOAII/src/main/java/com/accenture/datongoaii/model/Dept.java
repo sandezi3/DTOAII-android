@@ -1,5 +1,6 @@
 package com.accenture.datongoaii.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import android.content.Context;
 import com.accenture.datongoaii.db.DeptDao;
 import com.accenture.datongoaii.util.Logger;
 
-public class Dept extends FirstPinYin {
+public class Dept extends FirstPinYin implements Serializable{
     public String id;
     public String version;
     public String name;

@@ -1,5 +1,6 @@
 package com.accenture.datongoaii.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.util.CharacterParser;
 import com.accenture.datongoaii.util.Logger;
 
-public class Contact extends FirstPinYin {
+public class Contact extends FirstPinYin implements Serializable {
     public enum FriendStatus {
         FRIENDS_STATUS_TO_BE_FRIEND,
         FRIENDS_STATUS_FROM_ME_NOT_ACCEPT,
@@ -35,9 +36,10 @@ public class Contact extends FirstPinYin {
     public static Contact fromJSON(JSONObject json) {
         try {
             Contact c = new Contact();
-            c.id = json.getInt("id");
-            c.name = json.getString("name");
-            c.head = json.getString("head");
+            c.id = json.getInt("userId");
+            c.name = json.getString("username");
+            c.head = json.getString("photo");
+            c.cell = json.getString("cell");
             c.isUser = false;
             c.friendStatus = FriendStatus.FRIENDS_STATUS_TO_BE_FRIEND;
             CharacterParser cp = CharacterParser.getInstance();
@@ -53,28 +55,10 @@ public class Contact extends FirstPinYin {
         return null;
     }
 
-    public static List<Contact> getUListFromJSON(JSONObject json) {
+    public static List<Contact> getFriendsFromJSON(JSONObject json) {
         try {
             List<Contact> list = new ArrayList<Contact>();
-            JSONArray array = json.getJSONArray("uList");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject o = array.getJSONObject(i);
-                Contact c = Contact.fromJSON(o);
-                list.add(c);
-            }
-            return list;
-        } catch (Exception e) {
-            if (Logger.DEBUG) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public static List<Contact> getAListFromJSON(JSONObject json) {
-        try {
-            List<Contact> list = new ArrayList<Contact>();
-            JSONArray array = json.getJSONArray("aList");
+            JSONArray array = json.getJSONObject("data").getJSONArray("friends");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject o = array.getJSONObject(i);
                 Contact c = Contact.fromJSON(o);
@@ -110,9 +94,7 @@ public class Contact extends FirstPinYin {
             if (hasResolveContactByJSONArrayAndStatus(c, friends, FriendStatus.FRIENDS_STATUS_FRIEND)) {
                 continue;
             }
-            if (hasResolveContactByJSONArrayAndStatus(c, toBeFriends, FriendStatus.FRIENDS_STATUS_TO_BE_FRIEND)) {
-                continue;
-            }
+            hasResolveContactByJSONArrayAndStatus(c, toBeFriends, FriendStatus.FRIENDS_STATUS_TO_BE_FRIEND);
         }
         return list;
     }

@@ -1,16 +1,13 @@
 package com.accenture.datongoaii.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstPinYin {
+public class FirstPinYin implements Serializable {
 	public String mFirstPinYin;
 
 	FirstPinYin() {
-	}
-
-	FirstPinYin(String firstPinYin) {
-		mFirstPinYin = firstPinYin;
 	}
 
 	public static List<?> createPinYinGroupedList(List<?> list) {

@@ -1,16 +1,20 @@
-package com.accenture.datongoaii.fragment;
+package com.accenture.datongoaii.activity;
 
-import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.activity.MyFriendActivity;
-import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -19,64 +23,55 @@ import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.widget.ContactAddPopupWindow;
-import com.accenture.datongoaii.widget.MorePopupWindow;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
 import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class ContactFragment extends Fragment implements
+import java.util.ArrayList;
+import java.util.List;
+
+public class SelectContactActivity extends Activity implements
         OnSectionItemClickedListener {
-    private View layoutContact;
     private SectionListView slvContact;
     private Dept dept;
     private List<Object> viewList;
     private List<Object> groupList;
-    private List<Contact> friends;
     private List<Object> uList;
     private List<Object> tmpList;
+    private int prevFunction;
 
     private EditText etSearch;
     private ImageView ivSearch;
     private TextView tvSearch;
-    private ImageButton ibAdd;
-
     private View lBack;
+    private Button btnSubmit;
 
-    public static class ContactFragHandler extends Handler {
-        WeakReference<ContactFragment> theFrag = null;
+    private OnClickListener listener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            viewList.clear();
+            dept = dept.parent;
+            syncData();
+        }
+    };
+
+    private void clearData() {
+        tmpList.clear();
+        viewList.clear();
+//        groupList.clear();
+        uList.clear();
     }
 
     private void syncData() {
-//		viewList.addAll(dept.subDept);
-//		viewList.addAll(groupList);
-//		viewList.addAll(dept.contactList);
-//		viewList.addAll(uList);
-        Dept d = new Dept();
-        d.id = "MYFRIENDS";
-        d.name = "我的好友";
-        d.img = null;
-        d.mFirstPinYin = "*";
-        viewList.add(d);
+//        viewList.addAll(dept.subDept);
+//        viewList.addAll(groupList);
+//        viewList.addAll(dept.contactList);
+        viewList.addAll(uList);
         tmpList.clear();
         tmpList.addAll(viewList);
         viewList.clear();
@@ -92,23 +87,14 @@ public class ContactFragment extends Fragment implements
         }
     }
 
-    private OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            viewList.clear();
-            dept = dept.parent;
-            syncData();
-        }
-    };
-
     private final SectionListAdapter adapter = new SectionListAdapter() {
         @Override
         public int getSectionCount() {
-            if (viewList == null) {
-                return 0;
-            } else {
+//            if (dept == null) {
+//                return 0;
+//            } else {
                 return viewList.size();
-            }
+//            }
         }
 
         @Override
@@ -130,10 +116,7 @@ public class ContactFragment extends Fragment implements
             }
             TextView tv = (TextView) view.findViewById(R.id.txtLabel);
             if (o instanceof Dept) {
-                Dept department = (Dept) o;
-                if (department.id.equals("MYFRIENDS")) {
-                    tv.setText("*");
-                }
+                tv.setText("企业通讯录");
             } else if (o instanceof Group) {
                 tv.setText("我的群组");
             } else if (o instanceof Contact) {
@@ -153,29 +136,36 @@ public class ContactFragment extends Fragment implements
             }
             TextView tv = (TextView) view.findViewById(R.id.tvName);
             ImageView iv = (ImageView) view.findViewById(R.id.ivIcon);
+            ImageView ivSelect = (ImageView) view.findViewById(R.id.ivSelect);
             ImageLoader il = ImageLoader.getInstance();
             if (o instanceof Dept) {
                 Dept d = (Dept) o;
-                if (d.img != null && d.img.length() > 0) {
+                if (d.img.length() > 0) {
                     il.displayImage(d.img, iv, Config.getDisplayOptions());
-                } else {
-                    iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
                 }
+                ivSelect.setVisibility(View.GONE);
                 tv.setText(d.name);
             } else if (o instanceof Group) {
                 Group g = (Group) o;
                 if (g.img.length() > 0) {
                     il.displayImage(g.img, iv, Config.getDisplayOptions());
                 }
+                ivSelect.setVisibility(View.GONE);
                 tv.setText(g.name);
             } else if (o instanceof Contact) {
                 Contact c = (Contact) o;
                 if (c.head.length() > 0) {
-                    il.displayImage(c.head, iv);
+                    il.displayImage(c.head, iv, Config.getDisplayOptions());
                 } else {
                     iv.setImageResource(R.drawable.ic_contact_p);
                 }
+                ivSelect.setVisibility(View.VISIBLE);
                 tv.setText(c.name);
+                if (c.selected) {
+                    ivSelect.setImageResource(R.drawable.ic_selected);
+                } else {
+                    ivSelect.setImageResource(R.drawable.ic_unselected);
+                }
             }
             view.setTag(o);
             return view;
@@ -196,13 +186,21 @@ public class ContactFragment extends Fragment implements
         }
     };
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        layoutContact = inflater.inflate(R.layout.frag_contact, container,
-                false);
-        etSearch = (EditText) layoutContact.findViewById(R.id.etSearch);
-        ivSearch = (ImageView) layoutContact.findViewById(R.id.ivSearch);
-        tvSearch = (TextView) layoutContact.findViewById(R.id.tvSearch);
+    private boolean isRootList(Dept d) {
+        if (d == null) {
+            return true;
+        }
+        return d.parent == null;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_group);
+
+        etSearch = (EditText) findViewById(R.id.etSearch);
+        ivSearch = (ImageView) findViewById(R.id.ivSearch);
+        tvSearch = (TextView) findViewById(R.id.tvSearch);
         etSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -234,39 +232,85 @@ public class ContactFragment extends Fragment implements
             }
         });
 
-        lBack = layoutContact.findViewById(R.id.lBack);
+        lBack = findViewById(R.id.lBack);
 
-        slvContact = (SectionListView) layoutContact
-                .findViewById(R.id.slvContact);
+        slvContact = (SectionListView) findViewById(R.id.slvContact);
         viewList = new ArrayList<Object>();
         groupList = new ArrayList<Object>();
         uList = new ArrayList<Object>();
         tmpList = new ArrayList<Object>();
         slvContact.setAdapter(adapter);
         slvContact.setOnSectionItemClickedListener(this);
-//		getDept(Account.getInstance().getUserId(), "");
-        syncData();
+        getDept(Account.getInstance().getUserId(), "");
 
-        ibAdd = (ImageButton) layoutContact.findViewById(R.id.ibAdd);
-        ibAdd.setOnClickListener(new OnClickListener() {
+        View btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactAddPopupWindow capw = new ContactAddPopupWindow(v.getContext(), v);
-                capw.showAsDropDown();
+                SelectContactActivity.this.finish();
             }
         });
 
-        ImageButton ibMore = (ImageButton) layoutContact
-                .findViewById(R.id.ibMore);
-        ibMore.setOnClickListener(new OnClickListener() {
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setEnabled(false);
+        btnSubmit.setBackgroundResource(R.drawable.button_disable);
+        btnSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MorePopupWindow mpw = new MorePopupWindow(v.getContext(), v);
-                mpw.showAsDropDown();
+                switch (prevFunction) {
+                    case Constants.FUNCTION_TAG_CREATE_GROUP:
+                        startCreateGroupConnect();
+                        break;
+                    case Constants.FUNCTION_TAG_CREATE_ORG:
+                        break;
+                }
             }
         });
 
-        return layoutContact;
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_SELECT_MEMBER)) {
+            prevFunction = getIntent().getIntExtra(Constants.BUNDLE_TAG_SELECT_MEMBER, -1);
+        }
+    }
+
+    public void startCreateGroupConnect() {
+        this.finish();
+    }
+
+
+
+    @SuppressWarnings("unused")
+    private String getTmpListName(List<Contact> list) {
+        StringBuilder sb = new StringBuilder();
+        int len = list.size() > 3 ? 3 : list.size();
+        for (int i = 0; i < len; i++) {
+            Contact c = list.get(i);
+            if (i == len - 1) {
+                sb.append(c.name);
+            } else {
+                sb.append(c.name + ",");
+            }
+        }
+        return sb.toString();
+    }
+
+    private List<Contact> getSelectedContact(Dept d) {
+        List<Contact> tList = new ArrayList<Contact>();
+        for (Object obj : d.contactList) {
+            Contact c = (Contact) obj;
+            if (c.selected && !contains(tList, c.id)) {
+                tList.add(c);
+            }
+        }
+        return tList;
+    }
+
+    private boolean contains(List<Contact> list, Integer id) {
+        for (Contact c : list) {
+            if (c.id.equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -305,86 +349,6 @@ public class ContactFragment extends Fragment implements
         return tList;
     }
 
-    public void getDept(Integer userId, String deptId) {
-        Dept tmp = Dept.fromDataById(this.getActivity(), "");
-        if (tmp != null) {
-            clearData();
-            dept = tmp;
-            syncData();
-            return;
-        }
-        String code = deptId.length() > 0 ? "&deptId=" + deptId : "";
-        String url = Config.SERVER_HOST + "contact.json" + "?userId=" + userId
-                + code;
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (result != "fail") {
-                    try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            clearData();
-                            dept = Dept.fromJSON(new JSONObject(result));
-                            groupList.addAll(Group
-                                    .getGroupListFromJSON(new JSONObject(result)));
-                            uList.addAll(Contact
-                                    .getFriendsFromJSON(new JSONObject(result)));
-                            Dept.updateData(getActivity(), dept);
-                            syncData();
-                        }
-                    } catch (Exception e) {
-                        if (Logger.DEBUG) {
-                            e.printStackTrace();
-                        }
-                        show(Config.ERROR_INTERFACE);
-                    }
-                } else {
-                    show(Config.ERROR_NETWORK);
-                }
-
-            }
-        });
-    }
-
-    private void getFriends(Integer userId) {
-        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        friends = new ArrayList<Contact>();
-                        List<Contact> list = Contact.getFriendsFromJSON(new JSONObject(result));
-                        if (list != null) {
-                            friends.addAll(list);
-                            Intent intent = new Intent(ContactFragment.this.getActivity(), MyFriendActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(Constants.BUNDLE_TAG_FRIENDS, (Serializable) friends);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
-
-    private void clearData() {
-        tmpList.clear();
-        viewList.clear();
-//		groupList.clear();
-//		uList.clear();
-    }
-
-    private boolean isRootList(Dept d) {
-        if (d == null) {
-            return true;
-        }
-        return d.parent == null;
-    }
-
     @Override
     public void onSectionItemClicked(SectionListView listView, View view,
                                      int section, int position) {
@@ -396,20 +360,94 @@ public class ContactFragment extends Fragment implements
                 Intent intent = new Intent(view.getContext(),
                         PhoneContactActivity.class);
                 startActivity(intent);
-            } else if (d.id.equals("MYFRIENDS")) {
-                getFriends(Account.getInstance().getUserId());
             } else {
                 clearData();
                 dept = d;
                 syncData();
             }
-        } else {
-            // 个人信息
+        } else if (o instanceof Contact) {
+            Contact c = (Contact) o;
+            c.selected = !c.selected;
+            ImageView ivSelect = (ImageView) view.findViewById(R.id.ivSelect);
+            if (c.selected) {
+                ivSelect.setImageResource(R.drawable.ic_selected);
+            } else {
+                ivSelect.setImageResource(R.drawable.ic_unselected);
+            }
+            int count = getSelectedContact(dept).size() + 1;
+            btnSubmit.setText("确定(" + count + "/1000)");
+            btnSubmit.setEnabled(count > 1);
+            if (btnSubmit.isEnabled()) {
+                btnSubmit.setBackgroundResource(R.drawable.button_normal);
+            } else {
+                btnSubmit.setBackgroundResource(R.drawable.button_disable);
+            }
         }
     }
 
+    private void getDept(Integer userId, String id) {
+        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
+        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (!result.equals("fail")) {
+                    try {
+                        uList.addAll(Contact.getFriendsFromJSON(new JSONObject(result)));
+                        syncData();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+//        Dept tmp = Dept.fromDataById(this, "");
+//        if (tmp != null) {
+//            clearData();
+//            dept = tmp;
+//            syncData();
+//            return;
+//        }
+//        String code = id.length() > 0 ? "&id=" + id : "";
+//        String url;
+//        if (id.length() < 0) {
+//            url = Config.SERVER_HOST + "contact.json" + "?userId=" + userId
+//                    + code;
+//        } else {
+//            url = Config.SERVER_HOST + "contact" + id + ".json" + "?userId="
+//                    + userId + code;
+//        }
+//        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+//            @Override
+//            public void callBack(String result) {
+//                if (result != "fail") {
+//                    try {
+//                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+//                            clearData();
+//                            dept = Dept.fromJSON(new JSONObject(result));
+//                            groupList.addAll(Group
+//                                    .getGroupListFromJSON(new JSONObject(result)));
+//                            uList.addAll(Contact
+//                                    .getFriendsFromJSON(new JSONObject(result)));
+//                            Dept.updateData(CreateGroupActivity.this, dept);
+//                            syncData();
+//                        }
+//                    } catch (Exception e) {
+//                        if (Logger.DEBUG) {
+//                            e.printStackTrace();
+//                        }
+//                        show(Config.ERROR_INTERFACE);
+//                    }
+//                } else {
+//                    show(Config.ERROR_NETWORK);
+//                }
+//
+//            }
+//        });
+    }
+
     private void show(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

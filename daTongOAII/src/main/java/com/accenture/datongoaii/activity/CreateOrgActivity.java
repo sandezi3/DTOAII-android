@@ -1,6 +1,7 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateOrgActivity extends Activity implements View.OnClickListener {
+    private Context context;
+
     private EditText etName;
     private View btnSelect;
     private View btnBack;
@@ -29,6 +32,8 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        context = this;
         setContentView(R.layout.activity_create_org);
 
         etName = (EditText) findViewById(R.id.etName);
@@ -112,11 +117,10 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             @Override
             public void callBack(String result) {
                 if (!result.equals("fail")) {
-
+                    ((Activity)context).finish();
                 }
             }
         });
-        this.finish();
     }
 
 }
