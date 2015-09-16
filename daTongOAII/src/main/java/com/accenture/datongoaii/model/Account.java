@@ -1,7 +1,5 @@
 package com.accenture.datongoaii.model;
 
-import com.accenture.datongoaii.util.Intepreter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,9 +10,9 @@ public class Account {
     private String token = null;
     private String sex = null;
     private String birth = null;
-
-
     private String cell = null;
+
+    private Org org = null;
 
     private Account() {
         setUserId(-1);
@@ -24,6 +22,7 @@ public class Account {
         setSex("");
         setBirth("");
         setCell("");
+        setOrg(null);
     }
 
     // Initialization on Demand Holder
@@ -83,6 +82,22 @@ public class Account {
         this.birth = birth;
     }
 
+    public String getCell() {
+        return cell;
+    }
+
+    public void setCell(String cell) {
+        this.cell = cell;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
+    }
+
     public void fromJson(JSONObject json) {
         try {
             json = json.getJSONObject("data");
@@ -98,12 +113,5 @@ public class Account {
         }
     }
 
-    public String getCell() {
-        return cell;
-    }
-
-    public void setCell(String cell) {
-        this.cell = cell;
-    }
 
 }

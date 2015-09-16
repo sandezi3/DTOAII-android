@@ -22,7 +22,7 @@ public class FirstPinYin implements Serializable {
 			if (ch >= 'A' && ch <= 'Z') {
 				indexedArray.get(ch - 'A' + 2).add(pinYin);
 			} else {
-				if (obj instanceof Dept) {
+				if (obj instanceof Dept || obj instanceof Org) {
 					indexedArray.get(0).add(pinYin);
 				} else if (obj instanceof Group) {
 					indexedArray.get(1).add(pinYin);

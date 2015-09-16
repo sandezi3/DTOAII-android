@@ -50,12 +50,12 @@ public class DeptDao {
 			sb.append(") values(?,?,?,?,?)");
 			Logger.i("DeptCacheDB", "id = " + d.id);
 			Object[] oArray = null;
-			if (d.parent != null) {
-				oArray = new Object[] { d.id, d.version, d.name, d.img,
-						d.parent.id };
-			} else {
+//			if (d.parent != null) {
+//				oArray = new Object[] { d.id, d.version, d.name, d.img,
+//						d.parent.id };
+//			} else {
 				oArray = new Object[] { d.id, d.version, d.name, d.img, "" };
-			}
+//			}
 			db.execSQL(sb.toString(), oArray);
 			db.close();
 			for (Dept dd : d.subDept) {
@@ -69,7 +69,7 @@ public class DeptDao {
 		}
 	}
 
-	public Dept getDeptById(String id) {
+	public Dept getDeptById(Integer id) {
 		Dept d = null;
 		Cursor c = null;
 		try {
@@ -81,10 +81,10 @@ public class DeptDao {
 			sb.append(" where ");
 			sb.append(DEPT_TABLE_ID);
 			sb.append("=?");
-			c = db.rawQuery(sb.toString(), new String[] { id });
+			c = db.rawQuery(sb.toString(), new String[] { id + "" });
 			if (c != null && c.moveToNext()) {
 				d = new Dept();
-				d.id = c.getString(c.getColumnIndex(DEPT_TABLE_ID));
+				d.id = c.getInt(c.getColumnIndex(DEPT_TABLE_ID));
 				d.version = c.getString(c.getColumnIndex(DEPT_TABLE_VERSION));
 				d.name = c.getString(c.getColumnIndex(DEPT_TABLE_NAME));
 				d.img = c.getString(c.getColumnIndex(DEPT_TABLE_IMG));
@@ -120,14 +120,14 @@ public class DeptDao {
 			c = db.rawQuery(sb.toString(), new String[] { "" });
 			if (c != null && c.moveToNext()) {
 				d = new Dept();
-				d.id = c.getString(c.getColumnIndex(DEPT_TABLE_ID));
+				d.id = c.getInt(c.getColumnIndex(DEPT_TABLE_ID));
 				d.version = c.getString(c.getColumnIndex(DEPT_TABLE_VERSION));
 				d.name = c.getString(c.getColumnIndex(DEPT_TABLE_NAME));
 				d.img = c.getString(c.getColumnIndex(DEPT_TABLE_IMG));
 				d.subDept = getSubList(d.id);
-				for (Dept dd : d.subDept) {
-					dd.parent = d;
-				}
+//				for (Dept dd : d.subDept) {
+//					dd.parent = d;
+//				}
 				d.mFirstPinYin = "#";
 				d.contactList = Contact.getListFromDataByPdid(context, d.id);
 				for (Contact cc : d.contactList) {
@@ -157,7 +157,7 @@ public class DeptDao {
 				c.moveToFirst();
 				while (!c.isAfterLast()) {
 					Dept d = new Dept();
-					d.id = c.getString(c.getColumnIndex(DEPT_TABLE_ID));
+					d.id = c.getInt(c.getColumnIndex(DEPT_TABLE_ID));
 					d.version = c.getString(c
 							.getColumnIndex(DEPT_TABLE_VERSION));
 					d.name = c.getString(c.getColumnIndex(DEPT_TABLE_NAME));
@@ -180,7 +180,7 @@ public class DeptDao {
 		return deptList;
 	}
 
-	public List<Dept> getSubList(String pId) {
+	public List<Dept> getSubList(Integer pId) {
 		List<Dept> deptList = new ArrayList<Dept>();
 		try {
 			SQLiteDatabase db = DBHelper.getInstance(context)
@@ -191,20 +191,20 @@ public class DeptDao {
 			sb.append(" where ");
 			sb.append(DEPT_TABLE_PID);
 			sb.append("=?");
-			Cursor c = db.rawQuery(sb.toString(), new String[] { pId });
+			Cursor c = db.rawQuery(sb.toString(), new String[] { pId + "" });
 			if (c != null) {
 				c.moveToFirst();
 				while (!c.isAfterLast()) {
 					Dept d = new Dept();
-					d.id = c.getString(c.getColumnIndex(DEPT_TABLE_ID));
+					d.id = c.getInt(c.getColumnIndex(DEPT_TABLE_ID));
 					d.version = c.getString(c
 							.getColumnIndex(DEPT_TABLE_VERSION));
 					d.name = c.getString(c.getColumnIndex(DEPT_TABLE_NAME));
 					d.img = c.getString(c.getColumnIndex(DEPT_TABLE_IMG));
 					d.subDept = getSubList(d.id);
-					for (Dept dd : d.subDept) {
-						dd.parent = d;
-					}
+//					for (Dept dd : d.subDept) {
+//						dd.parent = d;
+//					}
 					d.mFirstPinYin = "#";
 					d.contactList = Contact
 							.getListFromDataByPdid(context, d.id);
@@ -227,7 +227,7 @@ public class DeptDao {
 		return deptList;
 	}
 
-	public void deleteDeptById(String id) {
+	public void deleteDeptById(Integer id) {
 		List<Dept> list = getSubList(id);
 		for (Dept d : list) {
 			deleteDeptById(d.id);
@@ -238,11 +238,11 @@ public class DeptDao {
 		cd.deleteByPdid(id);
 	}
 
-	private void deleteDeptByIdInner(String id) {
+	private void deleteDeptByIdInner(Integer id) {
 		try {
 			SQLiteDatabase db = DBHelper.getInstance(context)
 					.getWritableDatabase();
-			db.delete(DEPT_TABLE, DEPT_TABLE_ID + "=?", new String[] { id });
+			db.delete(DEPT_TABLE, DEPT_TABLE_ID + "=?", new String[] { id + "" });
 			db.close();
 		} catch (Exception e) {
 			Logger.e(TAG,
@@ -250,11 +250,11 @@ public class DeptDao {
 		}
 	}
 
-	private void deleteDeptByPidInner(String id) {
+	private void deleteDeptByPidInner(Integer id) {
 		try {
 			SQLiteDatabase db = DBHelper.getInstance(context)
 					.getWritableDatabase();
-			db.delete(DEPT_TABLE, DEPT_TABLE_PID + "=?", new String[] { id });
+			db.delete(DEPT_TABLE, DEPT_TABLE_PID + "=?", new String[] { id + "" });
 			db.close();
 		} catch (Exception e) {
 			Logger.e(TAG,

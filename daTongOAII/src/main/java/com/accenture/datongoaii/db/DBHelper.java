@@ -59,17 +59,17 @@ public class DBHelper extends SQLiteOpenHelper {
 		// db.execSQL(sb.toString());
 
 		String sql = "create table if not exists " + DeptDao.DEPT_TABLE + "("
-				+ DeptDao.DEPT_TABLE_ID + " text," + DeptDao.DEPT_TABLE_VERSION
+				+ DeptDao.DEPT_TABLE_ID + " int," + DeptDao.DEPT_TABLE_VERSION
 				+ " text," + DeptDao.DEPT_TABLE_NAME + " text,"
 				+ DeptDao.DEPT_TABLE_IMG + " text," + DeptDao.DEPT_TABLE_PID
-				+ " text)";
+				+ " int)";
 		db.execSQL(sql);
 
 		sql = "create table if not exists " + ContactDao.CONTACT_TABLE + "("
-				+ ContactDao.CONTACT_TABLE_ID + " text,"
+				+ ContactDao.CONTACT_TABLE_ID + " int,"
 				+ ContactDao.CONTACT_TABLE_NAME + " text,"
 				+ ContactDao.CONTACT_TABLE_HEAD + " text,"
-				+ ContactDao.CONTACT_TABLE_PDID + " text)";
+				+ ContactDao.CONTACT_TABLE_PDID + " int)";
 		db.execSQL(sql);
 	}
 

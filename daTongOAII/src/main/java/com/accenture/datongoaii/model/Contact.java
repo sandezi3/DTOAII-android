@@ -73,7 +73,7 @@ public class Contact extends FirstPinYin implements Serializable {
         return null;
     }
 
-    public static List<Contact> getListFromDataByPdid(Context context, String pdid) {
+    public static List<Contact> getListFromDataByPdid(Context context, Integer pdid) {
         ContactDao cd = new ContactDao(context);
         return cd.getListByPdid(pdid);
     }

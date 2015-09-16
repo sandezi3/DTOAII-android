@@ -1,9 +1,13 @@
 package com.accenture.datongoaii.widget;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.CreateDeptActivity;
 import com.accenture.datongoaii.activity.CreateGroupActivity;
 import com.accenture.datongoaii.activity.CreateOrgActivity;
+import com.accenture.datongoaii.activity.MainActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
+import com.accenture.datongoaii.fragment.ContactFragment;
+import com.accenture.datongoaii.util.Constants;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +34,7 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
         view.findViewById(R.id.tvAddGroup).setOnClickListener(this);
         view.findViewById(R.id.tvCreateOrg).setOnClickListener(this);
         view.findViewById(R.id.tvAddFriend).setOnClickListener(this);
+        view.findViewById(R.id.tvAddDept).setOnClickListener(this);
     }
 
     public void showAsDropDown() {
@@ -56,6 +61,12 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
             case R.id.tvAddFriend: {
                 Intent intent = new Intent(context, PhoneContactActivity.class);
                 context.startActivity(intent);
+                break;
+            }
+            case R.id.tvAddDept: {
+                Intent intent = new Intent(context, CreateDeptActivity.class);
+                intent.putExtra(Constants.BUNDLE_TAG_CREATE_DEPT, ((MainActivity) context).contactFrag.org.orgId);
+                ((MainActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_DEPT);
                 break;
             }
         }

@@ -38,29 +38,27 @@
         android:text="联系人"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="60dp"
-        android:layout_height="35dp"
+    <ImageView
+        android:id="@+id/ivArrow"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/button"
-        android:text="添加"
-        android:textColor="@drawable/button_text_color"
-        android:textSize="16sp"
-        android:visibility="gone"/>
+        android:layout_marginLeft="0dp"
+        android:padding="10dp"
+        android:src="@drawable/arrow" />
 
     <TextView
-        android:id="@+id/tvAdded"
+        android:id="@+id/tvValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/gray_2"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:textSize="16sp"
-        android:text="已添加"/>
-
-</RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/list_cell_contact.xml -->
+        android:layout_toLeftOf="@id/ivArrow"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="2人"
+        android:textColor="@color/gray_2"
+        android:visibility="visible"
+        android:textSize="14sp" />
+</RelativeLayout>

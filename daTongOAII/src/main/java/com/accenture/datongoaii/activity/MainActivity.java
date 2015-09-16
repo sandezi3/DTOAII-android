@@ -84,10 +84,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				case Constants.PUSH_COMMAND_REFRESH_NOTI:
 					notiFrag.refreshNotiList();
 				case Constants.PUSH_COMMAND_REFRESH_CONTACT:
-					String deptId = json.getString(Constants.PUSH_JSON_REFRESH_CONTACT_DEPT_ID);
-					if (deptId != null && deptId.length() > 0) {
-						contactFrag.getDept(Account.getInstance().getUserId(), deptId);
-					}
+//					Integer deptId = json.getInt(Constants.PUSH_JSON_REFRESH_CONTACT_DEPT_ID);
+//					if (deptId >= -1) {
+//						contactFrag.get(Account.getInstance().getUserId());
+//					}
 				}
 			} catch (JSONException e) {
 				Logger.e("resolvePushMessage", e.getMessage());

@@ -59,7 +59,7 @@ public class ContactDao {
 		}
 	}
 
-	public List<Contact> getListByPdid(String pdid) {
+	public List<Contact> getListByPdid(Integer pdid) {
 		List<Contact> contactList = new ArrayList<Contact>();
 		try {
 			SQLiteDatabase db = DBHelper.getInstance(context)
@@ -70,7 +70,7 @@ public class ContactDao {
 			sb.append(" where ");
 			sb.append(CONTACT_TABLE_PDID);
 			sb.append("=?");
-			Cursor c = db.rawQuery(sb.toString(), new String[] { pdid });
+			Cursor c = db.rawQuery(sb.toString(), new String[] { pdid + "" });
 			if (c != null) {
 				c.moveToFirst();
 				while (!c.isAfterLast()) {
@@ -83,9 +83,9 @@ public class ContactDao {
 					contactList.add(cc);
 					c.moveToNext();
 				}
-				if (c != null) {
-					c.close();
-				}
+					c.close();				if (c != null) {
+
+					}
 			}
 			db.close();
 
@@ -99,12 +99,12 @@ public class ContactDao {
 		return contactList;
 	}
 
-	public void deleteByPdid(String id) {
+	public void deleteByPdid(Integer id) {
 		try {
 			SQLiteDatabase db = DBHelper.getInstance(context)
 					.getWritableDatabase();
 			db.delete(CONTACT_TABLE, CONTACT_TABLE_PDID + "=?",
-					new String[] { id });
+					new String[] { id + ""});
 			db.close();
 		} catch (Exception e) {
 			Logger.e(

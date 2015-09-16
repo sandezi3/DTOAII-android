@@ -1,7 +1,6 @@
 package com.accenture.datongoaii.fragment;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.DeptActivity;
 import com.accenture.datongoaii.activity.MyFriendActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.model.Account;
@@ -16,6 +16,7 @@ import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.model.Group;
+import com.accenture.datongoaii.model.Org;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
@@ -28,9 +29,9 @@ import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListe
 import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,37 +47,29 @@ import android.widget.Toast;
 
 public class ContactFragment extends Fragment implements
         OnSectionItemClickedListener {
-    private View layoutContact;
-    private SectionListView slvContact;
-    private Dept dept;
+    public Org org;
     private List<Object> viewList;
-    private List<Object> groupList;
+    //    private List<Object> groupList;
     private List<Contact> friends;
-    private List<Object> uList;
+    //    private List<Object> uList;
     private List<Object> tmpList;
 
-    private EditText etSearch;
     private ImageView ivSearch;
     private TextView tvSearch;
-    private ImageButton ibAdd;
 
-    private View lBack;
-
-    public static class ContactFragHandler extends Handler {
-        WeakReference<ContactFragment> theFrag = null;
+    //    public static class ContactFragHandler extends Handler {
+//        WeakReference<ContactFragment> theFrag = null;
+//    }
+    private void clearData() {
+        tmpList.clear();
+        viewList.clear();
+//		groupList.clear();
+//		uList.clear();
     }
 
     private void syncData() {
-//		viewList.addAll(dept.subDept);
-//		viewList.addAll(groupList);
-//		viewList.addAll(dept.contactList);
-//		viewList.addAll(uList);
-        Dept d = new Dept();
-        d.id = "MYFRIENDS";
-        d.name = "我的好友";
-        d.img = null;
-        d.mFirstPinYin = "*";
-        viewList.add(d);
+        viewList.add(org);
+        appendLocalData();
         tmpList.clear();
         tmpList.addAll(viewList);
         viewList.clear();
@@ -84,22 +77,22 @@ public class ContactFragment extends Fragment implements
         tmpList.clear();
         tmpList.addAll(viewList);
         adapter.notifyDataSetChanged();
-        if (isRootList(dept)) {
-            lBack.setVisibility(View.GONE);
-        } else {
-            lBack.setVisibility(View.VISIBLE);
-            lBack.setOnClickListener(listener);
-        }
     }
 
-    private OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            viewList.clear();
-            dept = dept.parent;
-            syncData();
-        }
-    };
+    private void appendLocalData() {
+        Dept d0 = new Dept();
+        d0.id = Dept.DEPT_ID_MY_FRIENDS;
+        d0.name = "我的好友";
+        d0.img = null;
+        d0.mFirstPinYin = "*";
+        Dept d1 = new Dept();
+        d1.id = Dept.DEPT_ID_PHONE_CONTACT;
+        d1.name = "手机通讯录";
+        d1.img = null;
+        d1.mFirstPinYin = "*";
+        viewList.add(d0);
+        viewList.add(d1);
+    }
 
     private final SectionListAdapter adapter = new SectionListAdapter() {
         @Override
@@ -131,9 +124,11 @@ public class ContactFragment extends Fragment implements
             TextView tv = (TextView) view.findViewById(R.id.txtLabel);
             if (o instanceof Dept) {
                 Dept department = (Dept) o;
-                if (department.id.equals("MYFRIENDS")) {
+                if (department.id.equals(-2)) {
                     tv.setText("*");
                 }
+            } else if (o instanceof Org) {
+                tv.setText("组织架构");
             } else if (o instanceof Group) {
                 tv.setText("我的群组");
             } else if (o instanceof Contact) {
@@ -162,6 +157,14 @@ public class ContactFragment extends Fragment implements
                     iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
                 }
                 tv.setText(d.name);
+            } else if (o instanceof Org) {
+                Org org = (Org) o;
+                if (org.logo != null && org.logo.length() > 0) {
+                    il.displayImage(org.logo, iv, Config.getDisplayOptions());
+                } else {
+                    iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
+                }
+                tv.setText(org.orgName);
             } else if (o instanceof Group) {
                 Group g = (Group) o;
                 if (g.img.length() > 0) {
@@ -198,9 +201,9 @@ public class ContactFragment extends Fragment implements
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layoutContact = inflater.inflate(R.layout.frag_contact, container,
+        View layoutContact = inflater.inflate(R.layout.frag_contact, container,
                 false);
-        etSearch = (EditText) layoutContact.findViewById(R.id.etSearch);
+        EditText etSearch = (EditText) layoutContact.findViewById(R.id.etSearch);
         ivSearch = (ImageView) layoutContact.findViewById(R.id.ivSearch);
         tvSearch = (TextView) layoutContact.findViewById(R.id.tvSearch);
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -234,20 +237,15 @@ public class ContactFragment extends Fragment implements
             }
         });
 
-        lBack = layoutContact.findViewById(R.id.lBack);
-
-        slvContact = (SectionListView) layoutContact
+        SectionListView slvContact = (SectionListView) layoutContact
                 .findViewById(R.id.slvContact);
         viewList = new ArrayList<Object>();
-        groupList = new ArrayList<Object>();
-        uList = new ArrayList<Object>();
         tmpList = new ArrayList<Object>();
         slvContact.setAdapter(adapter);
         slvContact.setOnSectionItemClickedListener(this);
-//		getDept(Account.getInstance().getUserId(), "");
-        syncData();
+        getOrg(Account.getInstance().getUserId());
 
-        ibAdd = (ImageButton) layoutContact.findViewById(R.id.ibAdd);
+        ImageButton ibAdd = (ImageButton) layoutContact.findViewById(R.id.ibAdd);
         ibAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,6 +265,14 @@ public class ContactFragment extends Fragment implements
         });
 
         return layoutContact;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT
+                && resultCode == Activity.RESULT_OK) {
+            getOrg(Account.getInstance().getUserId());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -305,30 +311,36 @@ public class ContactFragment extends Fragment implements
         return tList;
     }
 
-    public void getDept(Integer userId, String deptId) {
-        Dept tmp = Dept.fromDataById(this.getActivity(), "");
-        if (tmp != null) {
-            clearData();
-            dept = tmp;
-            syncData();
-            return;
-        }
-        String code = deptId.length() > 0 ? "&deptId=" + deptId : "";
-        String url = Config.SERVER_HOST + "contact.json" + "?userId=" + userId
-                + code;
+    public void getOrg(Integer userId) {
+//        Dept tmp = Dept.fromDataById(this.getActivity(), "");
+//        if (tmp != null) {
+//            clearData();
+//            dept = tmp;
+//            syncData();
+//            return;
+//        }
+        String url = Config.SERVER_HOST + Config.URL_ORG.replace("{userId}", userId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                if (result != "fail") {
+                if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             clearData();
-                            dept = Dept.fromJSON(new JSONObject(result));
-                            groupList.addAll(Group
-                                    .getGroupListFromJSON(new JSONObject(result)));
-                            uList.addAll(Contact
-                                    .getFriendsFromJSON(new JSONObject(result)));
-                            Dept.updateData(getActivity(), dept);
+                            if (result.contains("orgId")) {
+                                org = Org.fromJSON(new JSONObject(result));
+                            }
+//                            else {
+//                                Dept root = Dept.getRootDept(dept);
+//                                Dept dest = Dept.getDestDeptById(root, deptId);
+//                                Dept.updateDept(dest, Dept.childFromJson((new JSONObject(result)).getJSONObject("data"), dest));
+//                                Account.getInstance().setDept(root);
+//                            }
+//                            groupList.addAll(Group
+//                                    .getGroupListFromJSON(new JSONObject(result)));
+//                            uList.addAll(Contact
+//                                    .getFriendsFromJSON(new JSONObject(result)));
+//                            Dept.updateData(getActivity(), dept);
                             syncData();
                         }
                     } catch (Exception e) {
@@ -371,20 +383,6 @@ public class ContactFragment extends Fragment implements
     }
 
 
-    private void clearData() {
-        tmpList.clear();
-        viewList.clear();
-//		groupList.clear();
-//		uList.clear();
-    }
-
-    private boolean isRootList(Dept d) {
-        if (d == null) {
-            return true;
-        }
-        return d.parent == null;
-    }
-
     @Override
     public void onSectionItemClicked(SectionListView listView, View view,
                                      int section, int position) {
@@ -392,19 +390,22 @@ public class ContactFragment extends Fragment implements
         if (o instanceof Dept) {
             // 组织
             Dept d = (Dept) o;
-            if (d.id.equals("906")) {
+            if (d.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
                 Intent intent = new Intent(view.getContext(),
                         PhoneContactActivity.class);
                 startActivity(intent);
-            } else if (d.id.equals("MYFRIENDS")) {
+            } else if (d.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
                 getFriends(Account.getInstance().getUserId());
-            } else {
-                clearData();
-                dept = d;
-                syncData();
             }
+        } else if (o instanceof Org) {
+            Intent intent = new Intent(view.getContext(), DeptActivity.class);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, org.orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, org.orgName);
+            startActivity(intent);
         } else {
             // 个人信息
+            // TODO
+            Logger.i("onSectionItemClicked", "个人信息");
         }
     }
 

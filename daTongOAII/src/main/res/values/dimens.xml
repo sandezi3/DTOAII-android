@@ -8,7 +8,7 @@
     <dimen name="phone_search_bar_height">36dp</dimen>
     <dimen name="phone_menu_item_height">48dp</dimen>
     <dimen name="phone_search_btn_width">77dp</dimen>
-    <dimen name="phone_list_section_header">17sp</dimen>
+    <dimen name="phone_list_section_header">14sp</dimen>
     <dimen name="phone_playlist_item_large">15sp</dimen>
     <dimen name="phone_playlist_item_normal">12sp</dimen>
     <dimen name="phone_orderlist_item_large">17sp</dimen>

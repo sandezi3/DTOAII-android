@@ -7,7 +7,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
+    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_REGISTER = "/users";
@@ -17,7 +17,8 @@ public class Config {
     public static final String URL_CHANGE_PASSWORD = "/user/password";
     public static final String URL_TODO_LIST = "/DTOAII/todo.json";
     public static final String URL_NOTI_LIST = "/DTOAII/noti.json";
-    public static final String URL_DEPT = "/DTOAII/contact.json";
+    public static final String URL_ORG = "/org/{userId}";
+    public static final String URL_DEPT = "/org/{orgId}/{deptId}/subdepts";
     public static final String URL_CREATE_GROUP = "/DTOAII/createGroup.json";
     public static final String URL_CREATE_DEPT = "/DTOAII/createDept.json";
     public static final String URL_CREATE_ORG = "/orgs";
@@ -30,6 +31,7 @@ public class Config {
     public static final String SUCCESS_REGISTER = "注册成功，请登录";
     public static final String SUCCESS_LOGIN = "您已登录";
     public static final String SUCCESS_GET_VERIFY_CODE = "验证码已发送，请等待短信";
+    public static final String SUCCESS_CREATE = "已创建";
 
     public static final String NOTE_USERNAME_EMPTY = "请输入用户名";
     public static final String NOTE_CELL_EMPTY = "请输入手机号码";
@@ -41,6 +43,9 @@ public class Config {
     public static final String NOTE_VERIFY_CODE_EMPTY = "请输入验证码";
     public static final String NOTE_SELECT_QUESTION = "请选择一个安全问题";
     public static final String NOTE_ANSWER_EMPTY = "请填写安全问题答案";
+    public static final String NOTE_DEPT_NAME_EMPTY = "请输入部门名称";
+    public static final String NOTE_SELECT_PARENT_DEPT = "请选择父部门";
+    public static final String NOTE_DEPT_EMPTY = "该部门没有子部门和员工";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";

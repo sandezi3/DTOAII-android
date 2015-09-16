@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -47,15 +48,14 @@
 
     <permission
         android:name="getui.permission.GetuiService.com.accenture.datongoaii"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal" />
     <permission
         android:name="com.igexin.sdk.PushService"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal" />
     <permission
         android:name="com.igexin.sdk.PushServiceUser"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal" />
 
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -76,32 +76,35 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance" />
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.ContactAddActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.CreateGroupActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.PhoneContactActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.MyInfoActivity"
-            android:launchMode="singleTop"></activity>
-        <activity android:name=".activity.SelectQuestionActivity"></activity>
-        <activity android:name=".activity.ForgetPwActivity"></activity>
+            android:launchMode="singleTop" />
+        <activity android:name=".activity.SelectQuestionActivity" />
+        <activity android:name=".activity.ForgetPwActivity" />
         <activity
             android:name=".activity.CellIdentifyActivity"
-            android:label="@string/title_activity_cell_identify"></activity>
-        <activity android:name=".activity.SelectContactActivity"></activity>
-        <activity android:name=".activity.MyFriendActivity"></activity>
+            android:label="@string/title_activity_cell_identify" />
+        <activity android:name=".activity.SelectContactActivity" />
+        <activity android:name=".activity.MyFriendActivity" />
+        <activity android:name=".activity.CreateDeptActivity" />
+        <activity android:name=".activity.SelectDeptActivity" />
+        <activity android:name=".activity.DeptActivity" />
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data
@@ -129,12 +132,12 @@
             android:exported="true"
             android:label="NotificationCenter"
             android:permission="com.igexin.sdk.PushService"
-            android:process=":pushservice"></service>
+            android:process=":pushservice" />
         <service
             android:name="com.igexin.sdk.PushServiceUser"
             android:exported="true"
             android:label="NotificationCenterUser"
-            android:permission="com.igexin.sdk.PushServiceUser"></service>
+            android:permission="com.igexin.sdk.PushServiceUser" />
 
         <receiver android:name="com.igexin.sdk.PushReceiver">
             <intent-filter>
@@ -162,7 +165,7 @@
             android:exported="false"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name="com.igexin.download.DownloadService"
@@ -205,7 +208,7 @@
 
         <activity
             android:name=".activity.ChangePswdActivity"
-            android:label="@string/title_activity_change_pswd"></activity>
+            android:label="@string/title_activity_change_pswd" />
         <activity
             android:name=".activity.CreateOrgActivity"
             android:label="@string/title_activity_create_org"

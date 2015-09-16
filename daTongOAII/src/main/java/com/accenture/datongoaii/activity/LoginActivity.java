@@ -104,7 +104,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 intent.putExtra(Constants.BUNDLE_TAG_FUNCTION, Constants.FUNCTION_TAG_REGISTER);
                 this.startActivityForResult(intent, Constants.REQUEST_CODE_FORGET_PW_LOGIN);
             }
-                break;
+            break;
             case R.id.btnLogin:
                 if (isDataValid()) {
                     Utils.closeSoftKeyboard(this, v);
@@ -118,7 +118,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 intent.putExtra(Constants.BUNDLE_TAG_FUNCTION, Constants.FUNCTION_TAG_FORGET_PASSWORD);
                 this.startActivityForResult(intent, Constants.REQUEST_CODE_FORGET_PW_LOGIN);
             }
-                break;
+            break;
         }
 
     }

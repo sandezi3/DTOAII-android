@@ -48,17 +48,8 @@ public class SelectContactActivity extends Activity implements
     private EditText etSearch;
     private ImageView ivSearch;
     private TextView tvSearch;
-    private View lBack;
     private Button btnSubmit;
 
-    private OnClickListener listener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            viewList.clear();
-            dept = dept.parent;
-            syncData();
-        }
-    };
 
     private void clearData() {
         tmpList.clear();
@@ -79,12 +70,6 @@ public class SelectContactActivity extends Activity implements
         tmpList.clear();
         tmpList.addAll(viewList);
         adapter.notifyDataSetChanged();
-        if (isRootList(dept)) {
-            lBack.setVisibility(View.GONE);
-        } else {
-            lBack.setVisibility(View.VISIBLE);
-            lBack.setOnClickListener(listener);
-        }
     }
 
     private final SectionListAdapter adapter = new SectionListAdapter() {
@@ -186,13 +171,6 @@ public class SelectContactActivity extends Activity implements
         }
     };
 
-    private boolean isRootList(Dept d) {
-        if (d == null) {
-            return true;
-        }
-        return d.parent == null;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,8 +209,6 @@ public class SelectContactActivity extends Activity implements
                 }
             }
         });
-
-        lBack = findViewById(R.id.lBack);
 
         slvContact = (SectionListView) findViewById(R.id.slvContact);
         viewList = new ArrayList<Object>();

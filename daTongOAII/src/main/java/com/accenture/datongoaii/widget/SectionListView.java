@@ -144,6 +144,7 @@ public class SectionListView extends RelativeLayout implements
 			mListView.setOnItemClickListener(this);
 			mListView.setOnScrollListener(this);
 		}
+		super.onFinishInflate();
 	}
 
 	private final DataSetObserver mDataSetObserver = new DataSetObserver() {
