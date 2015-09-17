@@ -20,8 +20,9 @@ public class Config {
     public static final String URL_ORG = "/org/{userId}";
     public static final String URL_DEPT = "/org/{orgId}/{deptId}/subdepts";
     public static final String URL_CREATE_GROUP = "/DTOAII/createGroup.json";
-    public static final String URL_CREATE_DEPT = "/DTOAII/createDept.json";
+    public static final String URL_CREATE_DEPT = "/org/depts";
     public static final String URL_CREATE_ORG = "/orgs";
+    public static final String URL_DELETE_ORG = "";
     public static final String URL_GET_USER_STATUS = "/users/status";
     public static final String URL_ADD_FRIEND = "/user/friends";
     public static final String URL_GET_CONTACTS = "/user/{userId}/contacts";
@@ -32,6 +33,7 @@ public class Config {
     public static final String SUCCESS_LOGIN = "您已登录";
     public static final String SUCCESS_GET_VERIFY_CODE = "验证码已发送，请等待短信";
     public static final String SUCCESS_CREATE = "已创建";
+    public static final String SUCCESS_DELETE = "已删除";
 
     public static final String NOTE_USERNAME_EMPTY = "请输入用户名";
     public static final String NOTE_CELL_EMPTY = "请输入手机号码";
@@ -57,6 +59,8 @@ public class Config {
     public static final String PROGRESS_SEND = "正在发送...";
     public static final String PROGRESS_GET = "正在获取...";
     public static final String PROGRESS_SUBMIT = "正在提交...";
+
+    public static final String ALERT_DELETE_ORG = "您确认删除该组织吗？";
 
     //设置
     public static final int GET_VERIFY_CODE_INVALID_SECONDS = 60;

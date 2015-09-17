@@ -60,6 +60,7 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             return;
         }
         if (view.equals(btnCreate)) {
+            //TODO
             List<Contact> userList = new ArrayList<Contact>();
             Contact c1 = new Contact();
             c1.id = 10;
@@ -77,7 +78,7 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             c4.name = "王五";
             invitedList.add(c3);
             invitedList.add(c4);
-            startCreateOrgConnect("测试组织", userList, invitedList);
+            startCreateOrgConnect(etName.getEditableText().toString().trim(), userList, invitedList);
         }
     }
 
@@ -91,9 +92,8 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
 
     public void startCreateOrgConnect(String name, List<Contact> userList, List<Contact> invitedList) {
         String url = Config.SERVER_HOST + Config.URL_CREATE_ORG;
-        JSONObject obj = null;
+        JSONObject obj = new JSONObject();
         try {
-            obj = new JSONObject();
             JSONArray uArray = new JSONArray();
             for (Contact c : userList) {
                 uArray.put(c.id);

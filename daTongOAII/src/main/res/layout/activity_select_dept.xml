@@ -1,26 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText,ContentDescription" >
+    android:background="@color/gray_3">
 
     <RelativeLayout
-        android:id="@+id/layoutNavBar"
-        android:layout_width="fill_parent"
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="选择部门"
-            android:textColor="@color/gray_2"
-            android:textSize="22sp" />
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/btnBack"
@@ -28,7 +18,7 @@
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
             android:background="@drawable/image_btn"
-            android:gravity="center_horizontal" >
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/imgViewBackBtn"
@@ -37,77 +27,86 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="选择部门"
+            android:textColor="@color/green"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button"
+            android:text="选定"
+            android:textColor="@drawable/button_text_color"
+            android:textSize="16dp" />
 
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_alignParentBottom="true"
             android:background="@color/line" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutFocus"
-        android:layout_width="0dip"
-        android:layout_height="0dip"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical" />
-
-    <EditText
-        android:id="@+id/etSearch"
+    <HorizontalScrollView
+        android:id="@+id/hsvButtons"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_margin="4dp"
-        android:background="@drawable/bg_search"
-        android:hint="" />
+        android:layout_height="45dp"
+        android:layout_below="@id/layoutTitle"
+        android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tvSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="搜索"
-        android:textColor="@color/gray_2"
-        android:textSize="13sp" />
+        <LinearLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
+    </HorizontalScrollView>
 
-    <ImageView
-        android:id="@+id/ivSearch"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@id/tvSearch"
-        android:src="@drawable/ic_search" />
-
-    <RelativeLayout
-        android:id="@+id/lBack"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_below="@id/etSearch"
-        android:background="@color/gray_2"
-        android:visibility="gone" >
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/back_white" />
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/lvDept"
+    <include
+        android:id="@+id/slvDept"
+        layout="@layout/section_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/lBack" />
+        android:layout_above="@id/rlBottom"
+        android:layout_below="@id/hsvButtons" />
+
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_1" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/gray_1">
+
+            <LinearLayout
+                android:id="@+id/llBottomBtns"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/red"
+                android:orientation="horizontal" />
+        </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

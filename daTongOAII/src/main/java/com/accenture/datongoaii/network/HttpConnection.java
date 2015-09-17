@@ -13,6 +13,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -85,7 +86,7 @@ public class HttpConnection implements Runnable {
         create(PUT, url, data, null, listener);
     }
 
-    public void delete(String url) {
+    public void delete(String url, CallbackListener listener) {
         create(DELETE, url, null, null, listener);
     }
 
@@ -353,6 +354,47 @@ public class HttpConnection implements Runnable {
                     }
                     break;
                 }
+                case DELETE: {
+                    HttpDelete httpDeleteRequest = new HttpDelete(url);
+
+                    httpDeleteRequest.setHeader("Accept", "application/json");
+                    httpDeleteRequest.setHeader("Content-type", "application/json");
+                    httpDeleteRequest.setHeader("Accept-Encoding", "gzip"); // only
+                    if (Account.getInstance().getToken().length() > 0) {
+                        String token = Account.getInstance().getToken();
+                        Logger.i("GET TOKEN", token);
+                        httpDeleteRequest.setHeader("token", Account.getInstance().getToken());
+                    }
+
+                    long t = System.currentTimeMillis();
+                    httpResponse = httpClient.execute(httpDeleteRequest);
+                    Logger.i(TAG, "HTTPResponse received in [" + (System.currentTimeMillis() - t) + "ms]");
+
+                    if (isHttpSuccessExecuted(httpResponse)) {
+                        // Get hold of the response entity (-> the data):
+                        HttpEntity entity = httpResponse.getEntity();
+
+                        if (entity != null) {
+                            // Read the content stream
+                            InputStream instream = entity.getContent();
+                            Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
+                            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+                                instream = new GZIPInputStream(instream);
+                            }
+
+                            // convert content stream to a String
+                            String resultString = convertStreamToString(instream);
+                            Logger.e("JSON", resultString);
+                            instream.close();
+                            this.sendMessage(resultString);
+                        } else {
+                            this.sendMessage("fail");
+                        }
+                    } else {
+                        Logger.e("DELETE.Err", "Please contact interface provider!");
+                    }
+                }
+                break;
             }
         } catch (Exception e) {
             e.printStackTrace();

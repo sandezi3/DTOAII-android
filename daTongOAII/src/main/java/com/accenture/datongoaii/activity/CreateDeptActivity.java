@@ -22,10 +22,14 @@ import com.accenture.datongoaii.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CreateDeptActivity extends Activity implements View.OnClickListener {
     private Context context;
-    private Dept parent;
+    private List<Dept> parents;
 
     private EditText etName;
     private View btnSelect;
@@ -44,15 +48,27 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         btnBack = findViewById(R.id.btnBack);
         btnCreate = findViewById(R.id.btnCreate);
 
+        TextView tvValue = (TextView) findViewById(R.id.tvValue);
+        tvValue.setText(Account.getInstance().getOrg().orgName);
+        tvValue.setVisibility(View.VISIBLE);
+
         btnCreate.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnSelect.setOnClickListener(this);
+
+        parents = new ArrayList<Dept>();
+        Dept dept = new Dept();
+        dept.id = -1;
+        dept.name = Account.getInstance().getOrg().orgName;
+        parents.add(dept);
     }
 
     @Override
     public void onClick(View view) {
         if (view.equals(btnSelect)) {
             Intent intent = new Intent(view.getContext(), SelectDeptActivity.class);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, Account.getInstance().getOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
             startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_DEPT);
             return;
         }
@@ -64,18 +80,27 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
             if (isDataValid()) {
                 String name = etName.getEditableText().toString().trim();
                 Integer orgId = Account.getInstance().getOrg().orgId;
-                startCreateDeptConnect(name, parent.id, orgId);
+                startCreateDeptConnect(name, -1, orgId);
             }
         }
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_SELECT_DEPT
                 && resultCode == RESULT_OK) {
-            parent = (Dept) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_DEPT);
+            parents.clear();
+            parents.addAll((List<Dept>) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_DEPT));
+            String value = "";
+            if (parents.size() > 0) {
+                value += parents.get(0).name;
+            }
+            if (parents.size() > 1) {
+                value += " 等多个";
+            }
             TextView tvValue = (TextView) findViewById(R.id.tvValue);
-            tvValue.setText(parent.name);
+            tvValue.setText(value);
         }
     }
 
@@ -87,10 +112,6 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
             etName.requestFocus();
             return false;
         }
-        if (parent == null) {
-            Utils.toast(this, Config.NOTE_SELECT_PARENT_DEPT);
-            return false;
-        }
         return true;
     }
 
@@ -100,7 +121,9 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         JSONObject obj = new JSONObject();
         try {
             obj.put("deptName", name);
-            obj.put("parentDeptId", parentDeptId);
+            if (parentDeptId != -1) {
+                obj.put("parentDeptId", parentDeptId);
+            }
             obj.put("orgId", orgId);
         } catch (JSONException e) {
             e.printStackTrace();

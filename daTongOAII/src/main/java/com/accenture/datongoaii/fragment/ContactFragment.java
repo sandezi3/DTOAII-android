@@ -8,7 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.DeptActivity;
+import com.accenture.datongoaii.activity.ManageOrgActivity;
 import com.accenture.datongoaii.activity.MyFriendActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.model.Account;
@@ -39,6 +41,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -165,6 +168,18 @@ public class ContactFragment extends Fragment implements
                     iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
                 }
                 tv.setText(org.orgName);
+                if (org.createUserId.equals(Account.getInstance().getUserId())) {
+                    Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
+                    btnAdd.setVisibility(View.VISIBLE);
+                    btnAdd.setText("管理");
+                    btnAdd.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(view.getContext(), ManageOrgActivity.class);
+                            ContactFragment.this.startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_ORG);
+                        }
+                    });
+                }
             } else if (o instanceof Group) {
                 Group g = (Group) o;
                 if (g.img.length() > 0) {
@@ -273,6 +288,10 @@ public class ContactFragment extends Fragment implements
                 && resultCode == Activity.RESULT_OK) {
             getOrg(Account.getInstance().getUserId());
         }
+        if (requestCode == Constants.REQUEST_CODE_MANAGE_ORG
+                && resultCode == Activity.RESULT_OK) {
+            getOrg(Account.getInstance().getUserId());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -329,6 +348,7 @@ public class ContactFragment extends Fragment implements
                             clearData();
                             if (result.contains("orgId")) {
                                 org = Org.fromJSON(new JSONObject(result));
+                                Account.getInstance().setOrg(org);
                             }
 //                            else {
 //                                Dept root = Dept.getRootDept(dept);

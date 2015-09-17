@@ -20,6 +20,8 @@ public class Constants {
     public static final int REQUEST_CODE_CREATE_ORG = 1005;
     public static final int REQUEST_CODE_SELECT_DEPT = 1006;
     public static final int REQUEST_CODE_CREATE_DEPT = 1007;
+    public static final int REQUEST_CODE_CHANGE_ORG_NAME = 1008;
+    public static final int REQUEST_CODE_MANAGE_ORG = 1009;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

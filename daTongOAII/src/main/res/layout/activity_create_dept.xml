@@ -118,8 +118,8 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="value"
-                android:visibility="gone"
-                android:textSize="18sp" />
+                android:textColor="@color/gray_2"
+                android:textSize="14sp" />
 
         </RelativeLayout>
     </LinearLayout>
