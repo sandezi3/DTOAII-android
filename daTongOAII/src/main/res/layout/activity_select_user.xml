@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
-        android:id="@+id/layoutTitle"
+        android:id="@+id/layoutNavBar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
@@ -37,21 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="选择部门"
+            android:text="选择联系人"
             android:textColor="@color/green"
             android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="3dp"
-            android:background="@drawable/button"
-            android:text="选定"
-            android:textColor="@drawable/button_text_color"
-            android:textSize="16dp" />
 
         <View
             android:id="@+id/view1"
@@ -61,52 +51,64 @@
             android:background="@color/line" />
     </RelativeLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/hsvButtons"
+    <LinearLayout
+        android:id="@+id/layoutFocus"
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" />
+
+    <ScrollView
+        android:id="@+id/svNavBtns"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/layoutTitle"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:layout_height="40dp"
+        android:layout_below="@id/layoutNavBar"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/layoutButtons"
+            android:id="@+id/llNavBtns"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
-    </HorizontalScrollView>
+            android:orientation="horizontal" />
+    </ScrollView>
 
-    <include
-        android:id="@+id/slvDept"
-        layout="@layout/section_list_view"
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@id/svNavBtns"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_search"
+        android:hint="" />
+
+    <TextView
+        android:id="@+id/tvSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/svNavBtns"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="搜索"
+        android:textColor="@color/gray_2"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/svNavBtns"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tvSearch"
+        android:src="@drawable/ic_search" />
+
+    <FrameLayout
+        android:id="@+id/flContact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rlBottom"
-        android:layout_below="@id/hsvButtons" />
-
-    <RelativeLayout
-        android:id="@+id/rlBottom"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_1" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/white"
-            android:textColor="@color/gray_1">
-
-            <LinearLayout
-                android:id="@+id/llBottomBtns"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:orientation="horizontal" />
-        </ScrollView>
-    </RelativeLayout>
+        android:layout_below="@id/etSearch" />
 
 </RelativeLayout>

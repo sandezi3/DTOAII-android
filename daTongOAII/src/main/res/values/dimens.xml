@@ -22,5 +22,7 @@
     <dimen name="phone_text_small_button">16sp</dimen>
     <dimen name="phone_text_order_bubble">10sp</dimen>
     <dimen name="phone_text_search_grid">20sp</dimen>
-    
+    <dimen name="phone_contact_list_item_height">60dp</dimen>
+
+
 </resources>

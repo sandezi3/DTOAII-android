@@ -4,10 +4,12 @@ import com.accenture.datongoaii.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 public class Config {
+
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
+    public static final String SERVER_HOST = "http://10.202.211.175:8080/oaf/api";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_REGISTER = "/users";
@@ -17,22 +19,34 @@ public class Config {
     public static final String URL_CHANGE_PASSWORD = "/user/password";
     public static final String URL_TODO_LIST = "/DTOAII/todo.json";
     public static final String URL_NOTI_LIST = "/DTOAII/noti.json";
-    public static final String URL_ORG = "/org/{userId}";
-    public static final String URL_DEPT = "/org/{orgId}/{deptId}/subdepts";
+    public static final String URL_ORG = "/groups/{userId}";
+    public static final String URL_DEPT = "/group/{groupId}/subgroups";
     public static final String URL_CREATE_GROUP = "/DTOAII/createGroup.json";
-    public static final String URL_CREATE_DEPT = "/org/depts";
-    public static final String URL_CREATE_ORG = "/orgs";
-    public static final String URL_DELETE_ORG = "";
+    public static final String URL_CREATE_DEPT = "/groups";
+    public static final String URL_CREATE_ORG = "/groups";
+    public static final String URL_DELETE_ORG = "/group/{groupId}";
     public static final String URL_GET_USER_STATUS = "/users/status";
     public static final String URL_ADD_FRIEND = "/user/friends";
     public static final String URL_GET_CONTACTS = "/user/{userId}/contacts";
+    public static final String URL_ADD_DEPT_USER = "";
+    public static final String URL_DELETE_DEPT = "/dept/{deptId}";
+    public static final String URL_CHANGE_DEPT_NAME = "/group/dept/{deptId}";
 
+    // GROUP TYPE
+    public static final String GROUP_TYPE_TAG = "groupTypeId";
+
+    public static final int GROUP_TYPE_COMPANY = 1;
+    public static final int GROUP_TYPE_ORG = 2;
+    public static final int GROUP_TYPE_ASSOCIATION = 3;
+    public static final int GROUP_TYPE_GROUP = 4;
+    public static final int GROUP_TYPE_DEPT = 5;
 
     // 提示文字
     public static final String SUCCESS_REGISTER = "注册成功，请登录";
     public static final String SUCCESS_LOGIN = "您已登录";
     public static final String SUCCESS_GET_VERIFY_CODE = "验证码已发送，请等待短信";
     public static final String SUCCESS_CREATE = "已创建";
+    public static final String SUCCESS_ADD = "已添加";
     public static final String SUCCESS_DELETE = "已删除";
 
     public static final String NOTE_USERNAME_EMPTY = "请输入用户名";

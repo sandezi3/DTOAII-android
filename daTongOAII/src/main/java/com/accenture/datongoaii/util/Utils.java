@@ -20,8 +20,15 @@ import android.content.Context;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Dept;
 
 public class Utils {
 
@@ -160,4 +167,39 @@ public class Utils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static Button createButton(Context context, Dept dept) {
+        Button btn = new Button(context);
+        btn.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        btn.setText(dept.name);
+        btn.setPadding(8, 12, 8, 12);
+        btn.setTextColor(context.getResources().getColor(R.color.gray_2));
+        btn.setTag(dept);
+        btn.setTextSize((float) 18);
+        btn.setOnClickListener((View.OnClickListener) context);
+        return btn;
+    }
+
+    public static void addButton(Context context, Dept dept, LinearLayout parent) {
+        TextView sep = new TextView(context);
+        sep.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        sep.setText(">");
+        sep.setTextColor(context.getResources().getColor(R.color.gray_2));
+        parent.addView(sep, 15, parent.getHeight());
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            View view = parent.getChildAt(i);
+            if (view instanceof Button) {
+                ((Button) view).setTextColor(context.getResources().getColor(R.color.tab_text_focused));
+            }
+        }
+        Button btn = createButton(context, dept);
+        parent.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public static void removeButton(Context context, Button btn, LinearLayout parent) {
+        Integer index = parent.indexOfChild(btn);
+        for (int i = parent.getChildCount() - 1; i > index; i--) {
+            parent.removeViewAt(i);
+        }
+        btn.setTextColor(context.getResources().getColor(R.color.gray_2));
+    }
 }

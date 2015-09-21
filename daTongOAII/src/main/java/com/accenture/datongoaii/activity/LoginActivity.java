@@ -32,9 +32,6 @@ import android.widget.Toast;
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText editPhoneNumber;
     private EditText editPassword;
-    private TextView tVRegister;
-    private TextView tVForgetPswd;
-    private Button btnLogin;
 
     private ProgressDialog progressDialog;
 
@@ -61,8 +58,6 @@ public class LoginActivity extends Activity implements OnClickListener {
         }
     }
 
-    ;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +65,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         editPhoneNumber = (EditText) findViewById(R.id.editCell);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        tVRegister = (TextView) findViewById(R.id.tVRegister);
-        tVForgetPswd = (TextView) findViewById(R.id.tVForgetPswd);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        TextView tVRegister = (TextView) findViewById(R.id.tVRegister);
+        TextView tVForgetPswd = (TextView) findViewById(R.id.tVForgetPswd);
+        Button btnLogin = (Button) findViewById(R.id.btnLogin);
         tVRegister.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tVForgetPswd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -87,7 +82,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onResume();
         if (Config.DEBUG_AUTO_LOGIN) {
             Utils.closeSoftKeyboard(this, null);
-            startLoginConnect("18982135898", "1234");
+            startLoginConnect("12345678901", "1234");
 //			finishAndReturn();
         }
     }
@@ -145,7 +140,9 @@ public class LoginActivity extends Activity implements OnClickListener {
     }
 
     private void startLoginConnect(String userId, String password) {
-        progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_LOGIN);
+        if (progressDialog == null) {
+            progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_LOGIN);
+        }
         String url = Config.SERVER_HOST + Config.URL_LOGIN;
         Logger.i("startLoginConnect", url);
         JSONObject obj = new JSONObject();
@@ -160,7 +157,8 @@ public class LoginActivity extends Activity implements OnClickListener {
         connection.post(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                if (result != "fail") {
+                handler.sendEmptyMessage(0);
+                if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             Account.getInstance().fromJson(new JSONObject(result));
@@ -177,7 +175,6 @@ public class LoginActivity extends Activity implements OnClickListener {
                     Logger.i("Login", "Network Error!");
                     show(Config.ERROR_NETWORK);
                 }
-                handler.sendEmptyMessage(0);
             }
         });
     }
@@ -197,9 +194,4 @@ public class LoginActivity extends Activity implements OnClickListener {
             e.printStackTrace();
         }
     }
-
-    protected void popUpSuccessDialog() {
-        Toast.makeText(this, "登录成功!", Toast.LENGTH_SHORT).show();
-    }
-
 }

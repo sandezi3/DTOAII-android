@@ -40,10 +40,10 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
     public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
 
     private Context context;
-    private Integer mOrgId;
     private Dept mDept;
     private List<Object> viewList;
     private List<Dept> selectList;
+    private Boolean isMutiMode;
 
     private LinearLayout layoutButtons;
     private ProgressDialog progressDialog;
@@ -71,6 +71,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
@@ -83,17 +84,29 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         slvDept.setOnSectionItemClickedListener(this);
 
         findViewById(R.id.btnBack).setOnClickListener(this);
+        findViewById(R.id.btnSubmit).setOnClickListener(this);
 
-        mOrgId = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, -1);
         Integer deptId = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, -1);
         String orgName = getIntent().getStringExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME);
-        getDept(mOrgId, deptId);
+        getDept(deptId);
+
+        isMutiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
 
         mDept = new Dept();
         mDept.id = -1;
         mDept.name = orgName;
+        mDept.mFirstPinYin = "#";
+
         selectList = new ArrayList<Dept>();
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT)) {
+            List<Dept> list = (List<Dept>) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT);
+            if (list != null && list.size() > 0) {
+                selectList.addAll(list);
+            }
+        }
+
         resolveButtons();
+        refreshBottomBar();
     }
 
     @Override
@@ -121,7 +134,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
                     adapter.notifyDataSetChanged();
                     removeButton((Button) view);
                     Dept dept = (Dept) view.getTag();
-                    getDept(mOrgId, dept.id);
+                    getDept(dept.id);
                 }
                 break;
         }
@@ -196,18 +209,27 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
                 @Override
                 public void onClick(View view) {
                     Dept d = (Dept) view.getTag();
-                    selectList.remove(d);
+                    Dept.removes(selectList, d);
                     refreshBottomBar();
+                    adapter.notifyDataSetChanged();
                 }
             });
             llBottomBtns.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        if (selectList.size() == 0) {
+            btnSubmit.setEnabled(false);
+            btnSubmit.setBackgroundResource(R.drawable.button_disable);
+        } else {
+            btnSubmit.setEnabled(true);
+            btnSubmit.setBackgroundResource(R.drawable.button_normal);
+        }
     }
 
     // 网络数据
-    private void getDept(Integer orgId, Integer deptId) {
+    private void getDept(Integer deptId) {
 //        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
-        String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{orgId}", orgId + "").replace("{deptId}", deptId + "");
+        String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{groupId}", deptId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
@@ -286,36 +308,45 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
             ImageView iv = (ImageView) view.findViewById(R.id.ivIcon);
             ImageView ivSelect = (ImageView) view.findViewById(R.id.ivSelect);
             ivSelect.setTag(o);
+            if (Dept.contains(selectList, (Dept) o)) {
+                ivSelect.setImageResource(R.drawable.ic_selected);
+            } else {
+                ivSelect.setImageResource(R.drawable.ic_unselected);
+            }
             ivSelect.setVisibility(View.VISIBLE);
             ivSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Dept dept = (Dept) view.getTag();
-                    if (selectList.contains(dept)) {
-                        selectList.remove(dept);
-                        ((ImageView) view).setImageResource(R.drawable.ic_unselected);
+                    if (isMutiMode) {
+                        if (Dept.contains(selectList, dept)) {
+                            Dept.removes(selectList, dept);
+                        } else {
+                            selectList.add(dept);
+                        }
                     } else {
+                        if (selectList.size() > 0) {
+                            selectList.clear();
+                        }
                         selectList.add(dept);
-                        ((ImageView) view).setImageResource(R.drawable.ic_selected);
                     }
+                    adapter.notifyDataSetChanged();
                     refreshBottomBar();
                 }
             });
             ImageLoader il = ImageLoader.getInstance();
             TextView tvValue = (TextView) view.findViewById(R.id.tvValue);
             ImageView ivArrow = (ImageView) view.findViewById(R.id.ivArrow);
-            if (o instanceof Dept) {
-                tvValue.setVisibility(View.VISIBLE);
-                ivArrow.setVisibility(View.VISIBLE);
-                Dept d = (Dept) o;
-                if (d.img != null && d.img.length() > 0) {
-                    il.displayImage(d.img, iv, Config.getDisplayOptions());
-                } else {
-                    iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
-                }
-                tv.setText(d.name);
-                tvValue.setText(d.userCount + "人");
+            tvValue.setVisibility(View.VISIBLE);
+            ivArrow.setVisibility(View.VISIBLE);
+            Dept d = (Dept) o;
+            if (d.img != null && d.img.length() > 0) {
+                il.displayImage(d.img, iv, Config.getDisplayOptions());
+            } else {
+                iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
             }
+            tv.setText(d.name);
+            tvValue.setText(d.userCount + "人");
             view.setTag(o);
             return view;
         }
@@ -335,6 +366,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         }
     };
 
+
     @Override
     public void onSectionItemClicked(SectionListView listView, View view, int section, int position) {
         if (view.getTag() instanceof Dept) {
@@ -343,7 +375,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
             Dept dept = (Dept) view.getTag();
             mDept = dept;
             addButton(dept);
-            getDept(mOrgId, dept.id);
+            getDept(dept.id);
         }
     }
 }

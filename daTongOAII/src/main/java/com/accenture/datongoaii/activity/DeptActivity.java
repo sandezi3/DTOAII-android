@@ -3,6 +3,7 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -37,10 +40,11 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
     public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
 
     private Context context;
-    private Integer mOrgId;
     private Dept mDept;
     private List<Object> viewList;
+    private Boolean isManageMode;
 
+    private SectionListView slvDept;
     private LinearLayout layoutButtons;
     private ProgressDialog progressDialog;
     private Handler handler = new ActivityHandler(this);
@@ -74,21 +78,35 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
 
         viewList = new ArrayList<Object>();
         layoutButtons = (LinearLayout) findViewById(R.id.layoutButtons);
-        SectionListView slvDept = (SectionListView) findViewById(R.id.slvDept);
+        slvDept = (SectionListView) findViewById(R.id.slvDept);
         slvDept.setAdapter(adapter);
         slvDept.setOnSectionItemClickedListener(this);
 
         findViewById(R.id.btnBack).setOnClickListener(this);
 
-        mOrgId = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, -1);
+        isManageMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_ORG_IS_MANAGE_MODE, false);
+
         Integer deptId = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, -1);
         String orgName = getIntent().getStringExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME);
-        getDept(mOrgId, deptId);
+        getDept(deptId);
 
         mDept = new Dept();
-        mDept.id = -1;
+        mDept.id = deptId;
         mDept.name = orgName;
         resolveButtons();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT
+                && resultCode == RESULT_OK) {
+            getDept(mDept.id);
+            return;
+        }
+        if (requestCode == Constants.REQUEST_CODE_ADD_DEPT_USER
+                && resultCode == RESULT_OK) {
+            getDept(mDept.id);
+        }
     }
 
     @Override
@@ -101,15 +119,59 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                 if (view instanceof Button) {
                     clearData();
                     adapter.notifyDataSetChanged();
-                    removeButton((Button) view);
+                    Utils.removeButton(context, (Button) view, layoutButtons);
                     Dept dept = (Dept) view.getTag();
-                    getDept(mOrgId, dept.id);
+                    getDept(dept.id);
                 }
                 break;
         }
     }
 
     // 私有方法
+    private void resolveBottomBar() {
+        if (isManageMode) {
+            findViewById(R.id.llBottom).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnAddDept).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CreateDeptActivity.class);
+                    intent.putExtra(Constants.BUNDLE_TAG_CREATE_DEPT_DEPT_ID, mDept.id);
+                    intent.putExtra(Constants.BUNDLE_TAG_CREATE_DEPT_DEPT_NAME, mDept.name);
+                    ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_DEPT);
+                }
+            });
+            findViewById(R.id.btnAddUser).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddDeptUserActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.BUNDLE_TAG_ADD_DEPT_USER, mDept);
+                    intent.putExtras(bundle);
+                    ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_ADD_DEPT_USER);
+                }
+            });
+            View btnManageDept = findViewById(R.id.btnManageDept);
+            if (mDept.id == null || mDept.id == Account.getInstance().getOrg().orgId) {
+                btnManageDept.setVisibility(View.GONE);
+            } else {
+                btnManageDept.setVisibility(View.VISIBLE);
+                btnManageDept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ManageDeptActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_DEPT, mDept);
+                        ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_DEPT);
+                    }
+                });
+            }
+        } else {
+            findViewById(R.id.llBottom).setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) slvDept.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+        }
+    }
+
     private void clearData() {
         viewList.clear();
     }
@@ -125,53 +187,18 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
             Utils.toast(context, Config.NOTE_DEPT_EMPTY);
         }
         adapter.notifyDataSetChanged();
+        resolveBottomBar();
     }
 
     private void resolveButtons() {
-        Button btn = createButton(mDept);
+        Button btn = Utils.createButton(this, mDept);
         layoutButtons.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-    }
-
-    private Button createButton(Dept dept) {
-        Button btn = new Button(context);
-        btn.setBackgroundColor(getResources().getColor(R.color.transparent));
-        btn.setText(dept.name);
-        btn.setPadding(8, 12, 8, 12);
-        btn.setTextColor(getResources().getColor(R.color.gray_2));
-        btn.setTag(dept);
-        btn.setTextSize((float) 18);
-        btn.setOnClickListener(this);
-        return btn;
-    }
-
-    private void addButton(Dept dept) {
-        TextView sep = new TextView(context);
-        sep.setBackgroundColor(getResources().getColor(R.color.transparent));
-        sep.setText(">");
-        sep.setTextColor(getResources().getColor(R.color.gray_2));
-        layoutButtons.addView(sep, 15, layoutButtons.getHeight());
-        for (int i = 0; i < layoutButtons.getChildCount(); i++) {
-            View view = layoutButtons.getChildAt(i);
-            if (view instanceof Button) {
-                ((Button) view).setTextColor(getResources().getColor(R.color.tab_text_focused));
-            }
-        }
-        Button btn = createButton(dept);
-        layoutButtons.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-    }
-
-    private void removeButton(Button btn) {
-        Integer index = layoutButtons.indexOfChild(btn);
-        for (int i = layoutButtons.getChildCount() - 1; i > index; i--) {
-            layoutButtons.removeViewAt(i);
-        }
-        btn.setTextColor(getResources().getColor(R.color.gray_2));
     }
 
     // 网络数据
-    private void getDept(Integer orgId, Integer deptId) {
+    private void getDept(Integer deptId) {
 //        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
-        String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{orgId}", orgId + "").replace("{deptId}", deptId + "");
+        String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{groupId}", deptId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
@@ -299,8 +326,8 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
             adapter.notifyDataSetChanged();
             Dept dept = (Dept) view.getTag();
             mDept = dept;
-            addButton(dept);
-            getDept(mOrgId, dept.id);
+            Utils.addButton(this, dept, layoutButtons);
+            getDept(dept.id);
         }
     }
 }

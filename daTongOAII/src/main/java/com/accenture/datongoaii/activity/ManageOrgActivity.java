@@ -7,26 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
-import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ManageOrgActivity extends Activity implements View.OnClickListener {
     private Context context;
@@ -69,7 +62,11 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
             return;
         }
         if (view.equals(btnOrg)) {
-            //TODO
+            Intent intent = new Intent(this, DeptActivity.class);
+            intent.putExtra(Constants.BUNDLE_TAG_ORG_IS_MANAGE_MODE, true);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
+            startActivity(intent);
             return;
         }
         if (view.equals(btnDismiss)) {
@@ -102,7 +99,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
 
     // 网络请求
     private void startDeleteOrgConnect(Integer orgId) {
-        String url = Config.SERVER_HOST + Config.URL_DELETE_ORG;
+        String url = Config.SERVER_HOST + Config.URL_DELETE_ORG.replace("{orgId}", orgId + "");
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {

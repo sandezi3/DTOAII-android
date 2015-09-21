@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.DeptActivity;
 import com.accenture.datongoaii.activity.ManageOrgActivity;
 import com.accenture.datongoaii.activity.MyFriendActivity;
@@ -35,6 +34,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -56,6 +56,7 @@ public class ContactFragment extends Fragment implements
     private List<Contact> friends;
     //    private List<Object> uList;
     private List<Object> tmpList;
+    private Org selectOrg;
 
     private ImageView ivSearch;
     private TextView tvSearch;
@@ -179,6 +180,17 @@ public class ContactFragment extends Fragment implements
                             ContactFragment.this.startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_ORG);
                         }
                     });
+                    view.setTag(org);
+                    view.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Org org1 = (Org) v.getTag();
+                            Intent intent = new Intent(v.getContext(), DeptActivity.class);
+                            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, org1.orgId);
+                            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, org1.orgName);
+                            startActivity(intent);
+                        }
+                    });
                 }
             } else if (o instanceof Group) {
                 Group g = (Group) o;
@@ -218,6 +230,7 @@ public class ContactFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View layoutContact = inflater.inflate(R.layout.frag_contact, container,
                 false);
+
         EditText etSearch = (EditText) layoutContact.findViewById(R.id.etSearch);
         ivSearch = (ImageView) layoutContact.findViewById(R.id.ivSearch);
         tvSearch = (TextView) layoutContact.findViewById(R.id.tvSearch);
@@ -264,7 +277,7 @@ public class ContactFragment extends Fragment implements
         ibAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactAddPopupWindow capw = new ContactAddPopupWindow(v.getContext(), v);
+                ContactAddPopupWindow capw = new ContactAddPopupWindow(v.getContext(), v, Account.getInstance().getOrg() == null);
                 capw.showAsDropDown();
             }
         });
@@ -287,10 +300,16 @@ public class ContactFragment extends Fragment implements
         if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT
                 && resultCode == Activity.RESULT_OK) {
             getOrg(Account.getInstance().getUserId());
+            return;
+        }
+        if (requestCode == Constants.REQUEST_CODE_CREATE_ORG && resultCode == Activity.RESULT_OK) {
+            getOrg(Account.getInstance().getUserId());
+            return;
         }
         if (requestCode == Constants.REQUEST_CODE_MANAGE_ORG
                 && resultCode == Activity.RESULT_OK) {
             getOrg(Account.getInstance().getUserId());
+            return;
         }
     }
 
@@ -346,10 +365,8 @@ public class ContactFragment extends Fragment implements
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             clearData();
-                            if (result.contains("orgId")) {
-                                org = Org.fromJSON(new JSONObject(result));
-                                Account.getInstance().setOrg(org);
-                            }
+                            org = Org.fromJSON(new JSONObject(result));
+                            Account.getInstance().setOrg(org);
 //                            else {
 //                                Dept root = Dept.getRootDept(dept);
 //                                Dept dest = Dept.getDestDeptById(root, deptId);
@@ -419,7 +436,7 @@ public class ContactFragment extends Fragment implements
             }
         } else if (o instanceof Org) {
             Intent intent = new Intent(view.getContext(), DeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, org.orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, org.orgId);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, org.orgName);
             startActivity(intent);
         } else {

@@ -64,7 +64,7 @@
     <LinearLayout
         android:id="@+id/layoutContent"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="45dp"
         android:layout_below="@id/layoutTitle"
         android:layout_marginTop="20dp"
         android:background="@color/white_transparent_1"
@@ -83,6 +83,7 @@
             android:id="@+id/layoutSelect"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:visibility="invisible"
             android:background="@color/white" >
 
             <ImageView

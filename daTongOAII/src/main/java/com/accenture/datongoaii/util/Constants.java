@@ -9,9 +9,17 @@ public class Constants {
     public static final String BUNDLE_TAG_FRIENDS = "bundle.friends";
     public static final String BUNDLE_TAG_CREATE_DEPT = "bundle.create.dept";
     public static final String BUNDLE_TAG_SELECT_DEPT = "bundle.select.dept";
-    public static final String BUNDLE_TAG_GET_DEPT_ORG_ID = "bundle.get.dept.orgId";
     public static final String BUNDLE_TAG_GET_DEPT_DEPT_ID = "bundle.get.dept.deptId";
     public static final String BUNDLE_TAG_GET_DEPT_DEPT_NAME = "bundle.get.dept.orgName";
+    public static final String BUNDLE_TAG_ORG_IS_MANAGE_MODE = "bundle.manage.org.isManagerMode";
+    public static final String BUNDLE_TAG_CREATE_DEPT_DEPT_ID = "bundle.create.dept.deptId";
+    public static final String BUNDLE_TAG_CREATE_DEPT_DEPT_NAME = "bundle.create.dept.orgName";
+    public static final String BUNDLE_TAG_SELECT_DEPT_MULTI_MODE = "bundle.select.dept.multi.mode";
+    public static final String BUNDLE_TAG_ADD_DEPT_USER = "bundle.manage.dept.add.user";
+    public static final String BUNDLE_TAG_SELECT_USER_NAME = "bundle.select.user.name";
+    public static final String BUNDLE_TAG_SELECT_USER_CELL = "bundle.select.user.cell";
+    public static final String BUNDLE_TAG_MANAGE_DEPT = "bundle.manage.dept";
+    public static final String BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT = "bundle.manage.dept.select.parent.list";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;
@@ -22,6 +30,10 @@ public class Constants {
     public static final int REQUEST_CODE_CREATE_DEPT = 1007;
     public static final int REQUEST_CODE_CHANGE_ORG_NAME = 1008;
     public static final int REQUEST_CODE_MANAGE_ORG = 1009;
+    public static final int REQUEST_CODE_SELECT_USER = 1010;
+    public static final int REQUEST_CODE_ADD_DEPT_USER = 1011;
+    public static final int REQUEST_CODE_MANAGE_DEPT = 1012;
+    public static final int REQUEST_CODE_CHANGE_DEPT_PARENT = 1013;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

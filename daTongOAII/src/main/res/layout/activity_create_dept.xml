@@ -119,7 +119,7 @@
                 android:paddingTop="8dp"
                 android:text="value"
                 android:textColor="@color/gray_2"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -50,7 +50,6 @@ public class SelectContactActivity extends Activity implements
     private TextView tvSearch;
     private Button btnSubmit;
 
-
     private void clearData() {
         tmpList.clear();
         viewList.clear();

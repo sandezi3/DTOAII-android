@@ -37,9 +37,21 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="管理组织"
+            android:text="添加人员"
             android:textColor="@color/green"
             android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button"
+            android:text="添加"
+            android:textColor="@drawable/button_text_color"
+            android:textSize="16dp" />
 
         <View
             android:id="@+id/view1"
@@ -64,39 +76,79 @@
             android:background="@color/gray_2" />
 
         <RelativeLayout
-            android:id="@+id/btnOrgName"
+            android:id="@+id/btnName"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/ivArrow1"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:src="@drawable/arrow" />
-
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/lName"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:maxLines="1"
-                android:text="组织名称"
+                android:text="姓名"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tvOrgName"
-                android:layout_width="wrap_content"
+            <ImageButton
+                android:id="@+id/ibSelect"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_contact_p" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/ivArrow1"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/ibSelect"
+                android:layout_toRightOf="@id/lName"
+                android:background="@color/transparent"
+                android:hint="必填"
                 android:maxLines="1"
-                android:text="组织名称"
-                android:textColor="@color/gray_2"
                 android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:background="@color/gray_2" />
+
+        <RelativeLayout
+            android:id="@+id/btnCell"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/lCell"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="手机号码"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etCell"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@id/lCell"
+                android:background="@color/transparent"
+                android:hint="手机号码"
+                android:maxLines="1"
+                android:textSize="18sp" />
+
         </RelativeLayout>
 
         <View
@@ -111,7 +163,7 @@
             android:background="@color/gray_2" />
 
         <RelativeLayout
-            android:id="@+id/btnOrg"
+            android:id="@+id/btnDept"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@color/white">
@@ -123,6 +175,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
+                android:visibility="invisible"
                 android:src="@drawable/arrow" />
 
             <TextView
@@ -131,38 +184,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="管理部门和成员"
-                android:textColor="@color/tab_text_focused"
+                android:text="部门"
                 android:textSize="18sp" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_2" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/gray_2" />
-
-        <RelativeLayout
-            android:id="@+id/btnDismiss"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/white">
 
             <TextView
+                android:id="@+id/tvDept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:maxLines="1"
-                android:text="删除组织"
-                android:textColor="@color/red"
+                android:layout_toLeftOf="@id/ivArrow2"
+                android:text="部门1"
+                android:textColor="@color/gray_2"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -171,6 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray_2" />
+
     </LinearLayout>
 
 </RelativeLayout>

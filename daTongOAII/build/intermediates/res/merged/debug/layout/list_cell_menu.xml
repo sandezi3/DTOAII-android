@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    tools:ignore="ContentDescription,HardcodedText" >
+    tools:ignore="ContentDescription,HardcodedText">
 
     <ImageView
         android:id="@+id/ivArrow"
@@ -23,11 +23,9 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:maxLines="1"
-        android:paddingBottom="8dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="8dp"
-        android:textColor="@color/gray_2"
+        android:layout_marginLeft="20dp"
         android:text="Function"
+        android:textColor="@color/gray_2"
         android:textSize="18sp" />
 
     <TextView
@@ -37,12 +35,10 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/ivArrow"
         android:maxLines="1"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
         android:text="value"
-        android:visibility="gone"
-        android:textSize="18sp" />
-    
+        android:textSize="18sp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/ivValue"
         android:layout_width="35dp"
@@ -51,7 +47,6 @@
         android:layout_toLeftOf="@id/tvValue"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_contact_p" />
-
+        android:src="@drawable/ic_contact_p"
+        android:visibility="gone" />
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/list_cell_menu.xml -->

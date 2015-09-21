@@ -2,8 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.accenture.datongoaii.widget.SectionListView
-        android:id="@+id/slvDept"
+    <ListView
+        android:id="@+id/lvDept"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

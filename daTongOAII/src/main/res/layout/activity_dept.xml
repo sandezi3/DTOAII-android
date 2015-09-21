@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3">
+    android:background="@color/gray_3"
+    tools:ignore="HardcodedText,ContentDescription,RtlHardcoded">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -27,8 +28,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="组织架构"
-            android:textColor="@color/gray_2"
+            android:textColor="@color/green"
             android:textSize="20sp" />
 
         <View
@@ -51,21 +51,71 @@
 
     <HorizontalScrollView
         android:id="@+id/hsvButtons"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@id/layoutTitle" >
+        android:layout_below="@id/layoutTitle"
+        android:background="@color/white">
+
         <LinearLayout
             android:id="@+id/layoutButtons"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal" />
     </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/btnAddUser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="添加员工"
+            android:textColor="@color/tab_text_focused"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnAddDept"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="添加子部门"
+            android:textColor="@color/tab_text_focused"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnManageDept"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="管理部门"
+            android:textColor="@color/tab_text_focused"
+            android:textSize="18sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/llBottom"
+        android:background="@color/gray_2" />
 
     <include
         android:id="@+id/slvDept"
+        layout="@layout/section_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/hsvButtons"
-        layout="@layout/section_list_view" />
+        android:layout_marginBottom="45dp" />
 </RelativeLayout>

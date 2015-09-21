@@ -1,34 +1,60 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Contact;
+import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
 import com.accenture.datongoaii.util.Constants;
+import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.ref.WeakReference;
+
 
 public class CreateOrgActivity extends Activity implements View.OnClickListener {
+    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
     private Context context;
 
     private EditText etName;
     private View btnSelect;
     private View btnBack;
     private View btnCreate;
+    private ProgressDialog progressDialog;
+    private Handler handler = new ActivityHandler(this);
+    static class ActivityHandler extends Handler {
+        WeakReference<CreateOrgActivity> mActivity;
 
+        public ActivityHandler(CreateOrgActivity activity) {
+            this.mActivity = new WeakReference<CreateOrgActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message message) {
+            CreateOrgActivity a = mActivity.get();
+            switch (message.what) {
+                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    if (a.progressDialog != null) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+                    break;
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,25 +86,10 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             return;
         }
         if (view.equals(btnCreate)) {
-            //TODO
-            List<Contact> userList = new ArrayList<Contact>();
-            Contact c1 = new Contact();
-            c1.id = 10;
-            Contact c2 = new Contact();
-            c2.id = 11;
-            userList.add(c1);
-            userList.add(c2);
-
-            List<Contact> invitedList = new ArrayList<Contact>();
-            Contact c3 = new Contact();
-            c3.cell = "18981827361";
-            c3.name = "张三";
-            Contact c4 = new Contact();
-            c4.cell = "18016273651";
-            c4.name = "王五";
-            invitedList.add(c3);
-            invitedList.add(c4);
-            startCreateOrgConnect(etName.getEditableText().toString().trim(), userList, invitedList);
+            if (isDataValid()) {
+                String name = etName.getEditableText().toString().trim();
+                startCreateOrgConnect(name);
+            }
         }
     }
 
@@ -90,24 +101,22 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
         }
     }
 
-    public void startCreateOrgConnect(String name, List<Contact> userList, List<Contact> invitedList) {
+    private Boolean isDataValid() {
+        String name = etName.getEditableText().toString().trim();
+        if (name.length() == 0) {
+            Utils.toast(this, Config.NOTE_DEPT_NAME_EMPTY);
+            etName.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    public void startCreateOrgConnect(String name) {
         String url = Config.SERVER_HOST + Config.URL_CREATE_ORG;
         JSONObject obj = new JSONObject();
         try {
-            JSONArray uArray = new JSONArray();
-            for (Contact c : userList) {
-                uArray.put(c.id);
-            }
-            JSONArray iArray = new JSONArray();
-            for (Contact c : invitedList) {
-                JSONObject o = new JSONObject();
-                o.put("cell", c.cell);
-                o.put("username", c.name);
-                iArray.put(o);
-            }
-            obj.put("orgName", name);
-            obj.put("userList", uArray);
-            obj.put("invitedList", iArray);
+            obj.put("groupName", name);
+            obj.put(Config.GROUP_TYPE_TAG, Config.GROUP_TYPE_COMPANY);
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -117,7 +126,24 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             @Override
             public void callBack(String result) {
                 if (!result.equals("fail")) {
-                    ((Activity)context).finish();
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        if (cr == null) {
+                            Utils.toast(context, Config.ERROR_INTERFACE);
+                            return;
+                        }
+                        if (cr.statusCode == 0) {
+                            Utils.toast(context, Config.SUCCESS_CREATE);
+                            ((Activity) context).setResult(Activity.RESULT_OK);
+                            ((Activity) context).finish();
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Utils.toast(context, Config.ERROR_INTERFACE);
+                    }
+                } else {
+                    Utils.toast(context, Config.ERROR_NETWORK);
                 }
             }
         });

@@ -9,5 +9,5 @@
     <string name="title_activity_change_pswd">ChangePswdActivity</string>
     <string name="title_activity_create_org">CreateOrgActivity</string>
     <string name="title_activity_dept">DeptActivity</string>
-
+    <item type="id" name="data_tag"></item>
 </resources>

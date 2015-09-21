@@ -48,27 +48,29 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         btnBack = findViewById(R.id.btnBack);
         btnCreate = findViewById(R.id.btnCreate);
 
-        TextView tvValue = (TextView) findViewById(R.id.tvValue);
-        tvValue.setText(Account.getInstance().getOrg().orgName);
-        tvValue.setVisibility(View.VISIBLE);
-
         btnCreate.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnSelect.setOnClickListener(this);
 
         parents = new ArrayList<Dept>();
+
         Dept dept = new Dept();
-        dept.id = -1;
-        dept.name = Account.getInstance().getOrg().orgName;
+        dept.id = getIntent().getIntExtra(Constants.BUNDLE_TAG_CREATE_DEPT_DEPT_ID, -1);
+        dept.name = getIntent().getStringExtra(Constants.BUNDLE_TAG_CREATE_DEPT_DEPT_NAME);
         parents.add(dept);
+        refreshParent();
     }
 
     @Override
     public void onClick(View view) {
         if (view.equals(btnSelect)) {
             Intent intent = new Intent(view.getContext(), SelectDeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_ORG_ID, Account.getInstance().getOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, false);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT, (Serializable) parents);
+            intent.putExtras(bundle);
             startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_DEPT);
             return;
         }
@@ -77,10 +79,9 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
             return;
         }
         if (view.equals(btnCreate)) {
+            String name = etName.getEditableText().toString().trim();
             if (isDataValid()) {
-                String name = etName.getEditableText().toString().trim();
-                Integer orgId = Account.getInstance().getOrg().orgId;
-                startCreateDeptConnect(name, -1, orgId);
+                startCreateDeptConnect(name, parents.get(0).id, Account.getInstance().getOrg().orgId);
             }
         }
     }
@@ -92,19 +93,23 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
                 && resultCode == RESULT_OK) {
             parents.clear();
             parents.addAll((List<Dept>) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_DEPT));
-            String value = "";
-            if (parents.size() > 0) {
-                value += parents.get(0).name;
-            }
-            if (parents.size() > 1) {
-                value += " 等多个";
-            }
-            TextView tvValue = (TextView) findViewById(R.id.tvValue);
-            tvValue.setText(value);
+            refreshParent();
         }
     }
 
     // Private
+    private void refreshParent() {
+        String value = "";
+        if (parents.size() > 0) {
+            value += parents.get(0).name;
+        }
+        if (parents.size() > 1) {
+            value += " 等";
+        }
+        TextView tvValue = (TextView) findViewById(R.id.tvValue);
+        tvValue.setText(value);
+    }
+
     private boolean isDataValid() {
         String name = etName.getEditableText().toString().trim();
         if (name.length() == 0) {
@@ -120,11 +125,12 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         String url = Config.SERVER_HOST + Config.URL_CREATE_DEPT;
         JSONObject obj = new JSONObject();
         try {
-            obj.put("deptName", name);
+            obj.put("groupName", name);
+            obj.put(Config.GROUP_TYPE_TAG, Config.GROUP_TYPE_DEPT);
             if (parentDeptId != -1) {
-                obj.put("parentDeptId", parentDeptId);
+                obj.put("parentGroupId", parentDeptId);
             }
-            obj.put("orgId", orgId);
+            obj.put("rootGroupId", orgId);
         } catch (JSONException e) {
             e.printStackTrace();
             return;
