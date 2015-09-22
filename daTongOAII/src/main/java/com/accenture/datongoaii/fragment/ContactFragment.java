@@ -1,10 +1,8 @@
 package com.accenture.datongoaii.fragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accenture.datongoaii.R;
@@ -34,7 +32,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -53,10 +50,8 @@ public class ContactFragment extends Fragment implements
     public Org org;
     private List<Object> viewList;
     //    private List<Object> groupList;
-    private List<Contact> friends;
     //    private List<Object> uList;
     private List<Object> tmpList;
-    private Org selectOrg;
 
     private ImageView ivSearch;
     private TextView tvSearch;
@@ -72,7 +67,9 @@ public class ContactFragment extends Fragment implements
     }
 
     private void syncData() {
-        viewList.add(org);
+        if (org != null) {
+            viewList.add(org);
+        }
         appendLocalData();
         tmpList.clear();
         tmpList.addAll(viewList);
@@ -297,8 +294,7 @@ public class ContactFragment extends Fragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT
-                && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT && resultCode == Activity.RESULT_OK) {
             getOrg(Account.getInstance().getUserId());
             return;
         }
@@ -306,10 +302,8 @@ public class ContactFragment extends Fragment implements
             getOrg(Account.getInstance().getUserId());
             return;
         }
-        if (requestCode == Constants.REQUEST_CODE_MANAGE_ORG
-                && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_MANAGE_ORG && resultCode == Activity.RESULT_OK) {
             getOrg(Account.getInstance().getUserId());
-            return;
         }
     }
 
@@ -394,31 +388,6 @@ public class ContactFragment extends Fragment implements
         });
     }
 
-    private void getFriends(Integer userId) {
-        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        friends = new ArrayList<Contact>();
-                        List<Contact> list = Contact.getFriendsFromJSON(new JSONObject(result));
-                        if (list != null) {
-                            friends.addAll(list);
-                            Intent intent = new Intent(ContactFragment.this.getActivity(), MyFriendActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(Constants.BUNDLE_TAG_FRIENDS, (Serializable) friends);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
 
     @Override
     public void onSectionItemClicked(SectionListView listView, View view,
@@ -428,11 +397,11 @@ public class ContactFragment extends Fragment implements
             // 组织
             Dept d = (Dept) o;
             if (d.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
-                Intent intent = new Intent(view.getContext(),
-                        PhoneContactActivity.class);
+                Intent intent = new Intent(view.getContext(), PhoneContactActivity.class);
                 startActivity(intent);
             } else if (d.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
-                getFriends(Account.getInstance().getUserId());
+                Intent intent = new Intent(view.getContext(), MyFriendActivity.class);
+                startActivity(intent);
             }
         } else if (o instanceof Org) {
             Intent intent = new Intent(view.getContext(), DeptActivity.class);

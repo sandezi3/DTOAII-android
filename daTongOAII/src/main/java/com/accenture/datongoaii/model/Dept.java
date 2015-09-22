@@ -8,23 +8,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-
-import com.accenture.datongoaii.db.DeptDao;
 import com.accenture.datongoaii.util.Logger;
 
 public class Dept extends FirstPinYin implements Serializable {
     public static final int DEPT_ID_MY_FRIENDS = -2;
+    @SuppressWarnings("unused")
     public static final int DEPT_ID_MY_GROUPS = -3;
     public static final int DEPT_ID_PHONE_CONTACT = -4;
-    public static final int DEPT_ID_ROOT_CONTACT= -5;
+    public static final int DEPT_ID_ROOT_CONTACT = -5;
 
     public Integer id;
     public String version;
     public String name;
     public String img;
     public Integer userCount;
-    public List<Dept> parents;
+    public Dept parent;
     public List<Dept> subDept;
     public List<Contact> contactList;
 
@@ -43,6 +41,17 @@ public class Dept extends FirstPinYin implements Serializable {
                 }
             }
             d.mFirstPinYin = "#";
+            if (json.has("parentGroup")) {
+                try {
+                    JSONObject j = json.getJSONObject("parentGroup");
+                    Dept parent = new Dept();
+                    parent.id = j.getInt("groupId");
+                    parent.name = j.getString("groupName");
+                    d.parent = parent;
+                } catch (JSONException e) {
+                    // DO NOTHING
+                }
+            }
             d.subDept = new ArrayList<Dept>();
             if (json.has("subGroups")) {
                 try {
@@ -63,12 +72,18 @@ public class Dept extends FirstPinYin implements Serializable {
             }
             d.contactList = new ArrayList<Contact>();
             if (json.has("userList")) {
-                JSONArray pArray = json.getJSONArray("userList");
-                for (int i = 0; i < pArray.length(); i++) {
-                    JSONObject o = pArray.getJSONObject(i);
-                    Contact c = Contact.fromJSON(o);
-                    c.parent = d;
-                    d.contactList.add(c);
+                try {
+                    JSONArray pArray = json.getJSONArray("userList");
+                    for (int i = 0; i < pArray.length(); i++) {
+                        JSONObject o = pArray.getJSONObject(i);
+                        Contact c = Contact.fromJSON(o);
+                        if (c != null) {
+                            c.parent = d;
+                            d.contactList.add(c);
+                        }
+                    }
+                } catch (JSONException e) {
+                    // DO NOTHING
                 }
             }
             return d;
@@ -78,6 +93,23 @@ public class Dept extends FirstPinYin implements Serializable {
             }
         }
         return null;
+    }
+
+    public static List<Dept> parentsFromJSON(JSONObject json) {
+        List<Dept> list = new ArrayList<Dept>();
+        try {
+            JSONArray array = json.getJSONArray("data");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject j = array.getJSONObject(i);
+                Dept dept = new Dept();
+                dept.id = j.getInt("groupId");
+                dept.name = j.getString("groupName");
+                list.add(dept);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static boolean contains(List<Dept> list, Dept dept) {

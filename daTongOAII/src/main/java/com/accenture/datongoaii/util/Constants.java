@@ -18,8 +18,12 @@ public class Constants {
     public static final String BUNDLE_TAG_ADD_DEPT_USER = "bundle.manage.dept.add.user";
     public static final String BUNDLE_TAG_SELECT_USER_NAME = "bundle.select.user.name";
     public static final String BUNDLE_TAG_SELECT_USER_CELL = "bundle.select.user.cell";
+    public static final String BUNDLE_TAG_SELECT_USER_ID = "bundle.select.user.id";
     public static final String BUNDLE_TAG_MANAGE_DEPT = "bundle.manage.dept";
     public static final String BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT = "bundle.manage.dept.select.parent.list";
+    public static final String BUNDLE_TAG_SELECT_PHONE_CONTACT = "bundle.select.phone.contact";
+    public static final String BUNDLE_TAG_MANAGE_USER = "bundle.manage.user";
+    public static final String BUNDLE_TAG_MANAGE_USER_DEPT = "bundle.manage.user.dept";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;
@@ -34,6 +38,7 @@ public class Constants {
     public static final int REQUEST_CODE_ADD_DEPT_USER = 1011;
     public static final int REQUEST_CODE_MANAGE_DEPT = 1012;
     public static final int REQUEST_CODE_CHANGE_DEPT_PARENT = 1013;
+    public static final int REQUEST_CODE_MANAGE_USER = 1014;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

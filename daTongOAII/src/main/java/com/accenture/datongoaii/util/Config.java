@@ -8,8 +8,8 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
-    public static final String SERVER_HOST = "http://10.202.211.175:8080/oaf/api";
+    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.175:8080/oaf/api";
     //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_REGISTER = "/users";
@@ -28,9 +28,12 @@ public class Config {
     public static final String URL_GET_USER_STATUS = "/users/status";
     public static final String URL_ADD_FRIEND = "/user/friends";
     public static final String URL_GET_CONTACTS = "/user/{userId}/contacts";
-    public static final String URL_ADD_DEPT_USER = "";
-    public static final String URL_DELETE_DEPT = "/dept/{deptId}";
-    public static final String URL_CHANGE_DEPT_NAME = "/group/dept/{deptId}";
+    public static final String URL_ADD_DEPT_USER = "/group/{groupId}/users";
+    public static final String URL_DELETE_DEPT = "/group/{groupId}";
+    public static final String URL_MODIFY_DEPT = "/group/{groupId}";
+    public static final String URL_MODIFY_USER = "/user/{userId}";
+    public static final String URL_DELETE_USER = "/group/{groupId}/user/{userId}";
+    public static final String URL_GET_USER_PARENT = "/user/{userId}/groups?rootGroupId={rootGroupId}";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";
@@ -48,6 +51,7 @@ public class Config {
     public static final String SUCCESS_CREATE = "已创建";
     public static final String SUCCESS_ADD = "已添加";
     public static final String SUCCESS_DELETE = "已删除";
+    public static final String SUCCESS_UPDATE = "已更新";
 
     public static final String NOTE_USERNAME_EMPTY = "请输入用户名";
     public static final String NOTE_CELL_EMPTY = "请输入手机号码";
@@ -59,9 +63,11 @@ public class Config {
     public static final String NOTE_VERIFY_CODE_EMPTY = "请输入验证码";
     public static final String NOTE_SELECT_QUESTION = "请选择一个安全问题";
     public static final String NOTE_ANSWER_EMPTY = "请填写安全问题答案";
+    public static final String NOTE_ORG_NAME_EMPTY = "请输入组织名称";
     public static final String NOTE_DEPT_NAME_EMPTY = "请输入部门名称";
     public static final String NOTE_SELECT_PARENT_DEPT = "请选择父部门";
     public static final String NOTE_DEPT_EMPTY = "该部门没有子部门和员工";
+    public static final String NOTE_DEPT_PARENT_SELF = "不能设置父部门为本部门";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";
@@ -75,6 +81,8 @@ public class Config {
     public static final String PROGRESS_SUBMIT = "正在提交...";
 
     public static final String ALERT_DELETE_ORG = "您确认删除该组织吗？";
+    public static final String ALERT_DELETE_DEPT = "您确认删除该部门吗？";
+    public static final String ALERT_PARENT_DEPT = "您确认更改父部门为{}吗？";
 
     //设置
     public static final int GET_VERIFY_CODE_INVALID_SECONDS = 60;

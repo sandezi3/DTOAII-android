@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -43,7 +44,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
     private Dept mDept;
     private List<Object> viewList;
     private List<Dept> selectList;
-    private Boolean isMutiMode;
+    private Boolean isMultiMode;
 
     private LinearLayout layoutButtons;
     private ProgressDialog progressDialog;
@@ -90,10 +91,10 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         String orgName = getIntent().getStringExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME);
         getDept(deptId);
 
-        isMutiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
+        isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
 
         mDept = new Dept();
-        mDept.id = -1;
+        mDept.id = Account.getInstance().getOrg().orgId;
         mDept.name = orgName;
         mDept.mFirstPinYin = "#";
 
@@ -318,7 +319,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
                 @Override
                 public void onClick(View view) {
                     Dept dept = (Dept) view.getTag();
-                    if (isMutiMode) {
+                    if (isMultiMode) {
                         if (Dept.contains(selectList, dept)) {
                             Dept.removes(selectList, dept);
                         } else {

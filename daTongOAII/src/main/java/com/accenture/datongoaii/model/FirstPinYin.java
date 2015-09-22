@@ -26,6 +26,8 @@ public class FirstPinYin implements Serializable {
 					indexedArray.get(0).add(pinYin);
 				} else if (obj instanceof Group) {
 					indexedArray.get(1).add(pinYin);
+				} else {
+                    indexedArray.get(2).add(pinYin);
 				}
 			}
 		}

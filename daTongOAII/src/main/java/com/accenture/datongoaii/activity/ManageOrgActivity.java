@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
@@ -19,6 +20,7 @@ import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ManageOrgActivity extends Activity implements View.OnClickListener {
@@ -48,6 +50,8 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
         btnOrgName.setOnClickListener(this);
         btnOrg.setOnClickListener(this);
         btnDismiss.setOnClickListener(this);
+
+        tvOrgName.setText(Account.getInstance().getOrg().orgName);
     }
 
 
@@ -58,7 +62,31 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
             return;
         }
         if (view.equals(btnOrgName)) {
-            //TODO
+            final EditText etName = new EditText(context);
+            etName.setBackgroundColor(getResources().getColor(R.color.white));
+            etName.setText(Account.getInstance().getOrg().orgName);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(etName)
+                    .setCancelable(false)
+                    .setPositiveButton("更改", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String name = etName.getEditableText().toString().trim();
+                            if (name.length() == 0) {
+                                Utils.toast(context, Config.NOTE_ORG_NAME_EMPTY);
+                                return;
+                            }
+                            startChangeDeptNameConnect(Account.getInstance().getOrg().orgId, name);
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+            alertDialog = builder.create();
             return;
         }
         if (view.equals(btnOrg)) {
@@ -98,6 +126,39 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
     }
 
     // 网络请求
+    private void startChangeDeptNameConnect(Integer deptId, final String name) {
+        String url = Config.SERVER_HOST + Config.URL_MODIFY_DEPT.replace("{groupId}", deptId + "");
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("groupName", name);
+        } catch (JSONException e) {
+            Utils.toast(context, Config.ERROR_APP);
+            return;
+        }
+        new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                alertDialog.dismiss();
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        if (cr.statusCode == 0) {
+                            ((Activity) context).setResult(RESULT_OK);
+                            tvOrgName.setText(name);
+                            Utils.toast(context, Config.SUCCESS_UPDATE);
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Utils.toast(context, Config.ERROR_INTERFACE);
+                    }
+                } else {
+                    Utils.toast(context, Config.ERROR_NETWORK);
+                }
+            }
+        });
+    }
+
     private void startDeleteOrgConnect(Integer orgId) {
         String url = Config.SERVER_HOST + Config.URL_DELETE_ORG.replace("{orgId}", orgId + "");
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {

@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 public class AddDeptUserActivity extends Activity implements View.OnClickListener {
     public Dept mDept;
+    private Integer userId;
 
     private Context context;
     private EditText etName;
@@ -72,7 +73,7 @@ public class AddDeptUserActivity extends Activity implements View.OnClickListene
             if (isDataValid()) {
                 String cell = etCell.getEditableText().toString().trim();
                 String name = etName.getEditableText().toString().trim();
-                startAddUserToDeptConnect(Account.getInstance().getOrg().orgId, mDept.id, cell, name);
+                startAddUserToDeptConnect(Account.getInstance().getOrg().orgId, mDept.id, cell, name, userId);
             }
         }
     }
@@ -84,6 +85,7 @@ public class AddDeptUserActivity extends Activity implements View.OnClickListene
             if (data.hasExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME) && data.hasExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL)) {
                 String cell = data.getStringExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL);
                 String name = data.getStringExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME);
+                userId = data.getIntExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, -1);
                 etCell.setText(cell);
                 etName.setText(name);
             }
@@ -124,14 +126,14 @@ public class AddDeptUserActivity extends Activity implements View.OnClickListene
     }
 
     // 网络数据
-    private void startAddUserToDeptConnect(Integer orgId, Integer deptId, String cell, String name) {
-        String url = Config.SERVER_HOST + Config.URL_ADD_DEPT_USER;
+    private void startAddUserToDeptConnect(Integer orgId, Integer deptId, String cell, String name, Integer userId) {
+        String url = Config.SERVER_HOST + Config.URL_ADD_DEPT_USER.replace("{groupId}", deptId + "");
         JSONObject obj = new JSONObject();
         try {
-            obj.put("deptName", name);
-            obj.put("orgId", orgId);
+//            obj.put("username", name);
+            obj.put("rootGroupId", orgId);
             obj.put("cell", cell);
-            obj.put("deptId", deptId);
+            obj.put("userId", userId);
         } catch (JSONException e) {
             e.printStackTrace();
             return;

@@ -28,6 +28,7 @@ public class Contact extends FirstPinYin implements Serializable {
     public String cell;
     public String head;
     public Dept parent;
+    public List<Dept> parents;
     public boolean selected;
     public boolean isUser;
     public FriendStatus friendStatus;
@@ -44,7 +45,6 @@ public class Contact extends FirstPinYin implements Serializable {
             c.friendStatus = FriendStatus.FRIENDS_STATUS_TO_BE_FRIEND;
             CharacterParser cp = CharacterParser.getInstance();
             c.mFirstPinYin = cp.getSelling(c.name).substring(0, 1).toUpperCase();
-            c.parent = null;
             c.selected = false;
             return c;
         } catch (Exception e) {

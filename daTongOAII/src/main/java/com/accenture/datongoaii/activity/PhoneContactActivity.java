@@ -12,6 +12,7 @@ import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.CharacterParser;
 import com.accenture.datongoaii.util.Config;
+import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
@@ -26,6 +27,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +53,7 @@ public class PhoneContactActivity extends Activity implements
     private SectionListView slvContact;
     private List<Object> dataList;
     private List<Contact> contactList;
+    private boolean isSelectMode;
     private ProgressDialog progressDialog;
     private Handler handler = new ActivityHandler(this);
 
@@ -216,6 +219,9 @@ public class PhoneContactActivity extends Activity implements
         contactList = new ArrayList<Contact>();
         slvContact.setAdapter(adapter);
         slvContact.setOnSectionItemClickedListener(this);
+
+        isSelectMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, false);
+
         getPhoneContact();
     }
 
@@ -357,7 +363,17 @@ public class PhoneContactActivity extends Activity implements
     @Override
     public void onSectionItemClicked(SectionListView listView, View view,
                                      int section, int position) {
-        // TODO Auto-generated method stub
-
+        Object object = dataList.get(section);
+        @SuppressWarnings("unchecked")
+        List<Contact> list = (List<Contact>) object;
+        Contact c = list.get(position);
+        if (isSelectMode) {
+            Intent intent = new Intent();
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
     }
 }

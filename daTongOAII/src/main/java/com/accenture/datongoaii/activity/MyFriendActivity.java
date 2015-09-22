@@ -3,6 +3,7 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -40,12 +42,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFriendActivity extends Activity {
+public class MyFriendActivity extends Activity implements SectionListView.OnSectionItemClickedListener {
     public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
     private Context context;
     private List<Object> viewList;
     private List<Contact> friends;
     private List<Object> tmpList;
+    private Boolean isSelectMode;
 
     private ImageView ivSearch;
     private TextView tvSearch;
@@ -212,6 +215,23 @@ public class MyFriendActivity extends Activity {
     };
 
     @Override
+    public void onSectionItemClicked(SectionListView listView, View view, int section, int position) {
+        Object object = viewList.get(section);
+        @SuppressWarnings("unchecked")
+        List<Contact> list = (List<Contact>) object;
+        Contact c = list.get(position);
+        if (isSelectMode) {
+            Intent intent = new Intent();
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
@@ -256,13 +276,8 @@ public class MyFriendActivity extends Activity {
         friends = new ArrayList<Contact>();
         tmpList = new ArrayList<Object>();
         slvContact.setAdapter(adapter);
-
-        if (getIntent().hasExtra(Constants.BUNDLE_TAG_FRIENDS)) {
-            List<Contact> list = (List<Contact>) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_FRIENDS);
-            friends.addAll(list);
-            syncData();
-            startGetContactsStatusConnect();
-        }
+        slvContact.setOnSectionItemClickedListener(this);
+        getFriends(Account.getInstance().getUserId());
 
         View btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new OnClickListener() {
@@ -271,6 +286,7 @@ public class MyFriendActivity extends Activity {
                 MyFriendActivity.this.finish();
             }
         });
+        isSelectMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -307,6 +323,28 @@ public class MyFriendActivity extends Activity {
             }
         }
         return tList;
+    }
+
+    private void getFriends(Integer userId) {
+        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
+        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (!result.equals("fail")) {
+                    try {
+                        List<Contact> list = Contact.getFriendsFromJSON(new JSONObject(result));
+                        if (list != null) {
+                            clearData();
+                            friends.addAll(list);
+                            syncData();
+                            startGetContactsStatusConnect();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {

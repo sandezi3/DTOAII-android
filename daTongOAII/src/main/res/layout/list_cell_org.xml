@@ -61,4 +61,16 @@
         android:textColor="@color/gray_2"
         android:visibility="visible"
         android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:background="@drawable/button"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/ivArrow"
+        android:text="编辑"
+        android:textColor="@drawable/button_text_color"
+        android:visibility="invisible"
+        android:textSize="16sp" />
 </RelativeLayout>

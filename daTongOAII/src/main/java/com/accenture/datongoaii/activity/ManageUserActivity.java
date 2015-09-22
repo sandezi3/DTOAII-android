@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Config;
@@ -20,23 +21,21 @@ import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ManageDeptActivity extends Activity implements View.OnClickListener {
+public class ManageUserActivity extends Activity implements View.OnClickListener {
     private Context context;
-    private Dept mDept;
-    private Dept parent;
-    private Dept tmpParent;
+    private Contact mContact;
+    private List<Dept> tmpParents;
 
     private View btnBack;
-    private View btnDeptName;
-    private TextView tvDeptName;
+    private View btnUsername;
+    private TextView tvUsername;
     private View btnParent;
     private TextView tvParentName;
     private View btnDismiss;
@@ -47,27 +46,34 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
 
         context = this;
-        setContentView(R.layout.activity_manage_dept);
+        setContentView(R.layout.activity_manage_user);
 
         btnBack = findViewById(R.id.btnBack);
-        btnDeptName = findViewById(R.id.btnDeptName);
-        tvDeptName = (TextView) findViewById(R.id.tvDeptName);
+        btnUsername = findViewById(R.id.btnUsername);
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
         btnParent = findViewById(R.id.btnParent);
         tvParentName = (TextView) findViewById(R.id.tvParentName);
         btnDismiss = findViewById(R.id.btnDismiss);
 
         btnBack.setOnClickListener(this);
-        btnDeptName.setOnClickListener(this);
+        btnUsername.setOnClickListener(this);
         btnParent.setOnClickListener(this);
         btnDismiss.setOnClickListener(this);
 
-        mDept = (Dept) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_MANAGE_DEPT);
-        tvDeptName.setText(mDept.name);
-        assert (mDept.parent != null);
-        parent = mDept.parent;
-        tvParentName.setText(parent.name);
+        mContact = (Contact) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_MANAGE_USER);
+        tvUsername.setText(mContact.name);
+
+        getParents(Account.getInstance().getOrg().orgId, mContact.id);
     }
 
+    private String getParentName(List<Dept> parentDepts) {
+        if (parentDepts.size() > 1) {
+            return parentDepts.get(0).name + "等";
+        } else if (parentDepts.size() == 1) {
+            return parentDepts.get(0).name;
+        }
+        return "";
+    }
 
     @Override
     public void onClick(View view) {
@@ -75,17 +81,22 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             finish();
             return;
         }
-        if (view.equals(btnDeptName)) {
+        if (view.equals(btnUsername)) {
             final EditText etName = new EditText(context);
             etName.setBackgroundColor(getResources().getColor(R.color.white));
-            etName.setText(tvDeptName.getText());
+            etName.setText(tvUsername.getText());
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(etName)
                     .setCancelable(false)
                     .setPositiveButton("更改", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startChangeDeptNameConnect(mDept.id, etName.getEditableText().toString().trim());
+                            String name = etName.getEditableText().toString().trim();
+                            if (name.length() == 0) {
+                                Utils.toast(context, Config.NOTE_USERNAME_EMPTY);
+                                return;
+                            }
+                            startChangeUserNameConnect(mContact.id, name);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -102,12 +113,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             Intent intent = new Intent(context, SelectDeptActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, false);
-            Bundle bundle = new Bundle();
-            List<Dept> list = new ArrayList<Dept>();
-            list.add(parent);
-            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT, (Serializable) list);
-            intent.putExtras(bundle);
+            intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
             this.startActivityForResult(intent, Constants.REQUEST_CODE_CHANGE_DEPT_PARENT);
             return;
         }
@@ -118,7 +124,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                     .setPositiveButton("删除", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startDeleteDeptConnect(mDept.id);
+                            startDeleteDeptUserConnect(mContact.parent.id, mContact.id);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -137,21 +143,14 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_CHANGE_DEPT_PARENT && resultCode == RESULT_OK) {
             this.setResult(Activity.RESULT_OK);
-            List<Dept> list = (List<Dept>) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_DEPT);
-            if (list != null && list.size() > 0) {
-                tmpParent = list.get(0);
-            }
-            if (mDept.id.equals(tmpParent.id)) {
-                Utils.toast(context, Config.NOTE_DEPT_PARENT_SELF);
-                return;
-            }
+            tmpParents = (List<Dept>) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_DEPT);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(Config.ALERT_PARENT_DEPT.replace("{}", "\"" + tmpParent.name + "\""))
+            builder.setMessage(Config.ALERT_PARENT_DEPT.replace("{}", "\"" + getParentName(tmpParents) + "\""))
                     .setCancelable(false)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startChangeParentDeptConnect(mDept.id, tmpParent.id);
+                            startChangeParentDeptConnect(Account.getInstance().getOrg().orgId, mContact.id, tmpParents);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -165,11 +164,41 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
         }
     }
 
-    private void startChangeParentDeptConnect(Integer sourceId, Integer parentId) {
-        String url = Config.SERVER_HOST + Config.URL_MODIFY_DEPT.replace("{groupId}", sourceId + "");
+    private void getParents(Integer orgId, Integer userId) {
+        String url = Config.SERVER_HOST + Config.URL_GET_USER_PARENT.replace("{userId}", userId + "").replace("{rootGroupId}", orgId + "");
+        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        if (cr.statusCode == 0) {
+                            List<Dept> parents = Dept.parentsFromJSON(new JSONObject(result));
+                            tvParentName.setText(getParentName(parents));
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Utils.toast(context, Config.ERROR_INTERFACE);
+                    }
+                } else {
+                    Utils.toast(context, Config.ERROR_NETWORK);
+                }
+            }
+        });
+    }
+
+    private void startChangeParentDeptConnect(Integer orgId, Integer userId, List<Dept> destParents) {
+        String url = Config.SERVER_HOST + Config.URL_MODIFY_USER.replace("{userId}", userId + "");
         JSONObject obj = new JSONObject();
+        List<Integer> ids = new ArrayList<Integer>();
+        for (Dept dept : destParents) {
+            ids.add(dept.id);
+        }
         try {
-            obj.put("parentGroupId", parentId);
+            JSONArray array = new JSONArray(ids);
+            obj.put("groupIds", array);
+            obj.put("rootGroupId", orgId);
         } catch (JSONException e) {
             Utils.toast(context, Config.ERROR_APP);
             return;
@@ -184,8 +213,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         if (cr.statusCode == 0) {
                             ((Activity) context).setResult(RESULT_OK);
                             Utils.toast(context, Config.SUCCESS_UPDATE);
-                            parent = tmpParent;
-                            tvParentName.setText(parent.name);
+                            getParents(Account.getInstance().getOrg().orgId, mContact.id);
                         } else {
                             Utils.toast(context, cr.statusMsg);
                         }
@@ -201,11 +229,11 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
 
 
     // 网络请求
-    private void startChangeDeptNameConnect(Integer deptId, final String name) {
-        String url = Config.SERVER_HOST + Config.URL_MODIFY_DEPT.replace("{groupId}", deptId + "");
+    private void startChangeUserNameConnect(Integer userId, final String name) {
+        String url = Config.SERVER_HOST + Config.URL_MODIFY_USER.replace("{userId}", userId + "");
         JSONObject obj = new JSONObject();
         try {
-            obj.put("groupName", name);
+            obj.put("username", name);
         } catch (JSONException e) {
             Utils.toast(context, Config.ERROR_APP);
             return;
@@ -219,7 +247,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
                             ((Activity) context).setResult(RESULT_OK);
-                            tvDeptName.setText(name);
+                            tvUsername.setText(name);
                             Utils.toast(context, Config.SUCCESS_UPDATE);
                         } else {
                             Utils.toast(context, cr.statusMsg);
@@ -234,8 +262,8 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
         });
     }
 
-    private void startDeleteDeptConnect(Integer deptId) {
-        String url = Config.SERVER_HOST + Config.URL_DELETE_DEPT.replace("{groupId}", deptId + "");
+    private void startDeleteDeptUserConnect(Integer deptId, Integer userId) {
+        String url = Config.SERVER_HOST + Config.URL_DELETE_USER.replace("{groupId}", deptId + "").replace("{userId}", userId + "");
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {

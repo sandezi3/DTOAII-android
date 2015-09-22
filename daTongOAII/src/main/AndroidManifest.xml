@@ -108,6 +108,8 @@
         <activity android:name=".activity.ManageOrgActivity" />
         <activity android:name=".activity.SelectUserActivity" />
         <activity android:name=".activity.AddDeptUserActivity" />
+        <activity android:name=".activity.ManageDeptActivity" />
+        <activity android:name=".activity.ManageUserActivity" />
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data

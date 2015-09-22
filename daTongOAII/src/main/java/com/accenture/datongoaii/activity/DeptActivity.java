@@ -98,13 +98,19 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT
-                && resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT && resultCode == RESULT_OK) {
             getDept(mDept.id);
             return;
         }
-        if (requestCode == Constants.REQUEST_CODE_ADD_DEPT_USER
-                && resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_ADD_DEPT_USER && resultCode == RESULT_OK) {
+            getDept(mDept.id);
+            return;
+        }
+        if (requestCode == Constants.REQUEST_CODE_MANAGE_DEPT && resultCode == RESULT_OK) {
+            getDept(mDept.id);
+            return;
+        }
+        if (requestCode == Constants.REQUEST_CODE_MANAGE_USER && resultCode == RESULT_OK) {
             getDept(mDept.id);
         }
     }
@@ -151,7 +157,7 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                 }
             });
             View btnManageDept = findViewById(R.id.btnManageDept);
-            if (mDept.id == null || mDept.id == Account.getInstance().getOrg().orgId) {
+            if (mDept.id == null || mDept.id.equals(Account.getInstance().getOrg().orgId)) {
                 btnManageDept.setVisibility(View.GONE);
             } else {
                 btnManageDept.setVisibility(View.VISIBLE);
@@ -161,6 +167,7 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                         Intent intent = new Intent(context, ManageDeptActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_DEPT, mDept);
+                        intent.putExtras(bundle);
                         ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_DEPT);
                     }
                 });
@@ -291,7 +298,7 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                 tvValue.setText(d.userCount + "人");
             } else if (o instanceof Contact) {
                 tvValue.setVisibility(View.GONE);
-                ivArrow.setVisibility(View.GONE);
+                ivArrow.setVisibility(View.INVISIBLE);
                 Contact c = (Contact) o;
                 if (c.head.length() > 0) {
                     il.displayImage(c.head, iv);
@@ -299,6 +306,25 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                     iv.setImageResource(R.drawable.ic_contact_p);
                 }
                 tv.setText(c.name);
+                Button btnEdit = (Button) view.findViewById(R.id.btnEdit);
+                if (isManageMode) {
+                    btnEdit.setVisibility(View.VISIBLE);
+                    btnEdit.setTag(c);
+                    btnEdit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Contact contact = (Contact) view.getTag();
+                            Intent intent = new Intent(context, ManageUserActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER, contact);
+                            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER_DEPT, mDept);
+                            intent.putExtras(bundle);
+                            ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_USER);
+                        }
+                    });
+                } else {
+                    btnEdit.setVisibility(View.INVISIBLE);
+                }
             }
             view.setTag(o);
             return view;
