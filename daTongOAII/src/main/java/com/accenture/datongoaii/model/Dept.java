@@ -10,12 +10,13 @@ import org.json.JSONObject;
 
 import com.accenture.datongoaii.util.Logger;
 
+@SuppressWarnings("unused")
 public class Dept extends FirstPinYin implements Serializable {
     public static final int DEPT_ID_MY_FRIENDS = -2;
-    @SuppressWarnings("unused")
     public static final int DEPT_ID_MY_GROUPS = -3;
     public static final int DEPT_ID_PHONE_CONTACT = -4;
     public static final int DEPT_ID_ROOT_CONTACT = -5;
+    public static final int DEPT_ID_INVALID = -6;
 
     public Integer id;
     public String version;

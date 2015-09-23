@@ -2,10 +2,13 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import com.accenture.datongoaii.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+
 
 public class ManageOrgActivity extends Activity implements View.OnClickListener {
     private Context context;
@@ -31,7 +36,30 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
     private TextView tvOrgName;
     private View btnOrg;
     private View btnDismiss;
-    private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
+
+    private Handler handler = new ActivityHandler(this);
+
+    static class ActivityHandler extends Handler {
+        WeakReference<ManageOrgActivity> mActivity;
+
+        ActivityHandler(ManageOrgActivity activity) {
+            this.mActivity = new WeakReference<ManageOrgActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    ManageOrgActivity a = mActivity.get();
+                    if (a.progressDialog.isShowing()) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+            }
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +114,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
             return;
         }
         if (view.equals(btnOrg)) {
@@ -114,7 +142,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
         }
     }
 
@@ -135,10 +163,11 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
             Utils.toast(context, Config.ERROR_APP);
             return;
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
         new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
@@ -161,10 +190,11 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
 
     private void startDeleteOrgConnect(Integer orgId) {
         String url = Config.SERVER_HOST + Config.URL_DELETE_ORG.replace("{groupId}", orgId + "");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

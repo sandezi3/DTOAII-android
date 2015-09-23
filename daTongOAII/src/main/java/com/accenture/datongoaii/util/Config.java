@@ -3,15 +3,17 @@ package com.accenture.datongoaii.util;
 import com.accenture.datongoaii.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
+@SuppressWarnings("unused")
 public class Config {
 
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-    public static final String SERVER_HOST = "http://10.202.211.163:8888/oaf/api";
-//    public static final String SERVER_HOST = "http://10.202.211.175:8080/oaf/api";
-    //	public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
+    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
+    //    public static final String SERVER_HOST = "http://10.202.211.175:8080/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.22.107:8080/DTOAII/";
     public static final String URL_LOGIN = "/authentication";
+    public static final String URL_AUTO_LOGIN = "/authentication/{token}";
     public static final String URL_REGISTER = "/users";
     public static final String URL_REQUIRE_VERIFY_CODE = "/captcha/";
     public static final String URL_UPLOAD_HEAD = "/user/photo";

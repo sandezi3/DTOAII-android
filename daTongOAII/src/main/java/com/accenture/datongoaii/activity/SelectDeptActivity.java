@@ -45,6 +45,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
     private List<Object> viewList;
     private List<Dept> selectList;
     private Boolean isMultiMode;
+    private Integer invalidDeptId;
 
     private LinearLayout layoutButtons;
     private ProgressDialog progressDialog;
@@ -92,6 +93,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         getDept(deptId);
 
         isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
+        invalidDeptId = getIntent().getIntExtra(Constants.BUNDLE_TAG_PARENT_DEPT_INVALID, Dept.DEPT_ID_INVALID);
 
         mDept = new Dept();
         mDept.id = Account.getInstance().getOrg().orgId;
@@ -348,6 +350,11 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
             }
             tv.setText(d.name);
             tvValue.setText(d.userCount + "人");
+            if (d.id.equals(invalidDeptId)) {
+                ivSelect.setOnClickListener(null);
+                view.setOnClickListener(null);
+                view.setBackgroundColor(getResources().getColor(R.color.gray_5));
+            }
             view.setTag(o);
             return view;
         }

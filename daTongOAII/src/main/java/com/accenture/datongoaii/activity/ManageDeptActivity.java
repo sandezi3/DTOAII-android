@@ -2,10 +2,13 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +45,28 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
     private TextView tvParentName;
     private View btnDismiss;
     private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
+    private Handler handler = new ActivityHandler(this);
+
+    public static class ActivityHandler extends Handler {
+        WeakReference<ManageDeptActivity> mActivity;
+
+        ActivityHandler(ManageDeptActivity activity) {
+            this.mActivity = new WeakReference<ManageDeptActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    ManageDeptActivity a = mActivity.get();
+                    if (a.progressDialog.isShowing()) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +129,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, false);
+            intent.putExtra(Constants.BUNDLE_TAG_PARENT_DEPT_INVALID, mDept.id);
             Bundle bundle = new Bundle();
             List<Dept> list = new ArrayList<Dept>();
             list.add(parent);
@@ -210,10 +237,11 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             Utils.toast(context, Config.ERROR_APP);
             return;
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
@@ -236,10 +264,11 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
 
     private void startDeleteDeptConnect(Integer deptId) {
         String url = Config.SERVER_HOST + Config.URL_DELETE_DEPT.replace("{groupId}", deptId + "");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

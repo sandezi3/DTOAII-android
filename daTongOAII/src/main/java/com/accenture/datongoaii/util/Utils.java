@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -201,5 +203,17 @@ public class Utils {
             parent.removeViewAt(i);
         }
         btn.setTextColor(context.getResources().getColor(R.color.gray_2));
+    }
+
+    public static void saveUserInfo(Context context, String token) {
+        SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("token", token);
+        editor.commit();
+    }
+
+    public static String getUserInfo(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        return sp.getString("token", "");
     }
 }

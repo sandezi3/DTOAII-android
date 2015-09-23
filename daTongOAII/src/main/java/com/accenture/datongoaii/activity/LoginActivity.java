@@ -82,8 +82,10 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onResume();
         if (Config.DEBUG_AUTO_LOGIN) {
             Utils.closeSoftKeyboard(this, null);
-            startLoginConnect("12345678901", "1234");
-//			finishAndReturn();
+            String token = Utils.getUserInfo(this);
+            if (token != null && token.length() > 0) {
+                startLoginConnect(token);
+            }
         }
     }
 
@@ -139,7 +141,37 @@ public class LoginActivity extends Activity implements OnClickListener {
         return true;
     }
 
-    private void startLoginConnect(String userId, String password) {
+    private void startLoginConnect(String token) {
+        progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_LOGIN);
+        String url = Config.SERVER_HOST + Config.URL_AUTO_LOGIN.replace("{token}", token);
+        HttpConnection connection = new HttpConnection();
+        connection.get(url, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                handler.sendEmptyMessage(0);
+                if (!result.equals("fail")) {
+                    try {
+                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+                            Account.getInstance().fromJson(new JSONObject(result));
+                            Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
+                            finishAndReturn();
+                        } else {
+                            Logger.i("Login", "Failed!");
+                            show(Intepreter.getCommonStatusFromJson(result).statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Logger.e("Login", "Exception!");
+                        show(Config.ERROR_INTERFACE);
+                    }
+                } else {
+                    Logger.i("Login", "Network Error!");
+                    show(Config.ERROR_NETWORK);
+                }
+            }
+        });
+    }
+
+    private void startLoginConnect(final String userId, final String password) {
         if (progressDialog == null) {
             progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_LOGIN);
         }
@@ -162,6 +194,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             Account.getInstance().fromJson(new JSONObject(result));
+                            Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
                             finishAndReturn();
                         } else {
                             Logger.i("Login", "Failed!");
