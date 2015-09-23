@@ -68,7 +68,11 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
 
     private String getParentName(List<Dept> parentDepts) {
         if (parentDepts.size() > 1) {
-            return parentDepts.get(0).name + "等";
+            String name = "";
+            for (Dept d : parentDepts) {
+                name += d.name + ",";
+            }
+            return name.substring(0, name.length() - 1);
         } else if (parentDepts.size() == 1) {
             return parentDepts.get(0).name;
         }
@@ -119,7 +123,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
         }
         if (view.equals(btnDismiss)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(Config.ALERT_DELETE_ORG)
+            builder.setMessage(Config.ALERT_DELETE_USER)
                     .setCancelable(false)
                     .setPositiveButton("删除", new DialogInterface.OnClickListener() {
                         @Override
@@ -267,7 +271,6 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

@@ -337,7 +337,9 @@ public class MyFriendActivity extends Activity implements SectionListView.OnSect
                             clearData();
                             friends.addAll(list);
                             syncData();
-                            startGetContactsStatusConnect();
+                            if (list.size() > 0) {
+                                startGetContactsStatusConnect();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

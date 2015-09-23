@@ -160,7 +160,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
     }
 
     private void startDeleteOrgConnect(Integer orgId) {
-        String url = Config.SERVER_HOST + Config.URL_DELETE_ORG.replace("{orgId}", orgId + "");
+        String url = Config.SERVER_HOST + Config.URL_DELETE_ORG.replace("{groupId}", orgId + "");
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {

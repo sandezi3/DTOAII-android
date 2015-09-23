@@ -122,9 +122,11 @@ public class Dept extends FirstPinYin implements Serializable {
     }
 
     public static void removes(List<Dept> list, Dept dept) {
-        for (Dept d : list) {
+        for (int i = 0; i < list.size(); i++) {
+            Dept d = list.get(i);
             if (d.id.equals(dept.id)) {
-                list.remove(d);
+                list.remove(i);
+                break;
             }
         }
     }

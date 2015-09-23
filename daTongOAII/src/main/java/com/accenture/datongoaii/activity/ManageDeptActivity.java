@@ -113,7 +113,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
         }
         if (view.equals(btnDismiss)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(Config.ALERT_DELETE_ORG)
+            builder.setMessage(Config.ALERT_DELETE_DEPT)
                     .setCancelable(false)
                     .setPositiveButton("删除", new DialogInterface.OnClickListener() {
                         @Override

@@ -171,6 +171,15 @@ public class PhoneContactActivity extends Activity implements
                             }
                         });
                     }
+                    view.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Contact c = (Contact) view.getTag();
+                            if (isSelectMode) {
+                                finishAndReturn(c);
+                            }
+                        }
+                    });
                 }
             } else {
                 if (!Utils.isValidCellNumber(c.cell)) {
@@ -280,6 +289,15 @@ public class PhoneContactActivity extends Activity implements
         return cell;
     }
 
+    private void finishAndReturn(Contact c) {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
     private void startGetContactsStatusConnect() {
         String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
         JSONObject obj = new JSONObject();
@@ -368,12 +386,7 @@ public class PhoneContactActivity extends Activity implements
         List<Contact> list = (List<Contact>) object;
         Contact c = list.get(position);
         if (isSelectMode) {
-            Intent intent = new Intent();
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
-            setResult(Activity.RESULT_OK, intent);
-            finish();
+            finishAndReturn(c);
         }
     }
 }

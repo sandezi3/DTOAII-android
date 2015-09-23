@@ -9,6 +9,7 @@ import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.util.Constants;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
@@ -53,12 +54,12 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
         switch (v.getId()) {
             case R.id.tvAddGroup: {
                 Intent intent = new Intent(context, CreateGroupActivity.class);
-                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvCreateOrg: {
                 Intent intent = new Intent(context, CreateOrgActivity.class);
-                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvAddFriend: {

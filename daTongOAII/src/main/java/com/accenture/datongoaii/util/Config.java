@@ -82,6 +82,7 @@ public class Config {
 
     public static final String ALERT_DELETE_ORG = "您确认删除该组织吗？";
     public static final String ALERT_DELETE_DEPT = "您确认删除该部门吗？";
+    public static final String ALERT_DELETE_USER = "您确认删除该员工吗？";
     public static final String ALERT_PARENT_DEPT = "您确认更改父部门为{}吗？";
 
     //设置

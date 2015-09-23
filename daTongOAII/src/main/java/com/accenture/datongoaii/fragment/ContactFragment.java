@@ -292,21 +292,6 @@ public class ContactFragment extends Fragment implements
         return layoutContact;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT && resultCode == Activity.RESULT_OK) {
-            getOrg(Account.getInstance().getUserId());
-            return;
-        }
-        if (requestCode == Constants.REQUEST_CODE_CREATE_ORG && resultCode == Activity.RESULT_OK) {
-            getOrg(Account.getInstance().getUserId());
-            return;
-        }
-        if (requestCode == Constants.REQUEST_CODE_MANAGE_ORG && resultCode == Activity.RESULT_OK) {
-            getOrg(Account.getInstance().getUserId());
-        }
-    }
-
     @SuppressWarnings("unchecked")
     private List<List<Object>> getFiltedList(List<?> list, String str) {
         List<List<Object>> tList = new ArrayList<List<Object>>();

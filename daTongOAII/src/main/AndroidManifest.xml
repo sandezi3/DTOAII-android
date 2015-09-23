@@ -75,8 +75,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleInstance" />
+            android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTop" />

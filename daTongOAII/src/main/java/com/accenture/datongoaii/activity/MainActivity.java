@@ -18,6 +18,7 @@ import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.igexin.sdk.PushManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         setTabSelected(TAB_TODO);
 
         Utils.toast(this, Config.SUCCESS_LOGIN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            contactFrag.getOrg(Account.getInstance().getUserId());
+        }
     }
 
     @Override
