@@ -416,7 +416,7 @@ public class MyFriendActivity extends Activity implements SectionListView.OnSect
                         assert (cr != null);
                         if (cr.statusCode == 0) {
                             clearData();
-                            Contact.resolveContactListByIsUser(new JSONObject(result), friends);
+                            Contact.resolveContactList(new JSONObject(result), friends);
                             syncData();
                         } else {
                             Utils.toast(context, cr.statusMsg);

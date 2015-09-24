@@ -46,8 +46,6 @@ import org.json.JSONObject;
 
 public class PhoneContactActivity extends Activity implements
         OnSectionItemClickedListener {
-    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
-
     private Context context;
     private List<Object> dataList;
     private List<Contact> contactList;
@@ -65,7 +63,7 @@ public class PhoneContactActivity extends Activity implements
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     PhoneContactActivity a = mActivity.get();
                     if (a.progressDialog.isShowing()) {
                         a.progressDialog.dismiss();
@@ -184,9 +182,22 @@ public class PhoneContactActivity extends Activity implements
                     tvAdded.setText("非手机号");
                     tvAdded.setVisibility(View.VISIBLE);
                     btnAdd.setVisibility(View.GONE);
+                } else if (c.isInvited) {
+                    tvAdded.setText("已邀请");
+                    tvAdded.setVisibility(View.VISIBLE);
+                    btnAdd.setVisibility(View.GONE);
                 } else {
                     tvAdded.setVisibility(View.GONE);
-                    btnAdd.setVisibility(View.GONE);
+                    btnAdd.setVisibility(View.VISIBLE);
+                    btnAdd.setText("邀请");
+                    btnAdd.setTag(c);
+                    btnAdd.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Contact c = (Contact) view.getTag();
+                            startInviteFriendConnect(c.cell);
+                        }
+                    });
                 }
             }
             view.setTag(c);
@@ -317,7 +328,7 @@ public class PhoneContactActivity extends Activity implements
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         assert (cr != null);
                         if (cr.statusCode == 0) {
-                            Contact.resolveContactListByIsUser(new JSONObject(result), contactList);
+                            Contact.resolveContactList(new JSONObject(result), contactList);
                             refreshData();
                         } else {
                             Utils.toast(context, cr.statusMsg);
@@ -331,12 +342,6 @@ public class PhoneContactActivity extends Activity implements
     }
 
     private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
-        if(progressDialog != null) {
-            progressDialog.setMessage(Config.PROGRESS_SEND);
-            progressDialog.show();
-        } else {
-            progressDialog = ProgressDialog.show(context, null, Config.PROGRESS_SEND);
-        }
         String op = null;
         switch (status) {
             case FRIENDS_STATUS_TO_BE_FRIEND:
@@ -354,10 +359,40 @@ public class PhoneContactActivity extends Activity implements
         } catch (JSONException e) {
             Utils.toast(context, Config.ERROR_APP);
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
         new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        if (cr.statusCode == 0) {
+                            startGetContactsStatusConnect();
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Utils.toast(context, e.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    private void startInviteFriendConnect(String cell) {
+        String url = Config.SERVER_HOST + Config.URL_INVITE_FRIEND;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("cell", cell);
+        } catch (JSONException e) {
+            Utils.toast(context, Config.ERROR_APP);
+        }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
+        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

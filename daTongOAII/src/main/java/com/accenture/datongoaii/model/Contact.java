@@ -31,6 +31,7 @@ public class Contact extends FirstPinYin implements Serializable {
     public List<Dept> parents;
     public boolean selected;
     public boolean isUser;
+    public boolean isInvited;
     public FriendStatus friendStatus;
 
     @SuppressLint("DefaultLocale")
@@ -78,7 +79,7 @@ public class Contact extends FirstPinYin implements Serializable {
         return cd.getListByPdid(pdid);
     }
 
-    public static List<Contact> resolveContactListByIsUser(JSONObject obj, List<Contact> list) throws JSONException {
+    public static List<Contact> resolveContactList(JSONObject obj, List<Contact> list) throws JSONException {
         JSONObject json = obj.getJSONObject("data");
         JSONArray fromMeNotAccept = json.getJSONArray("fromMes");
         JSONArray toMeNotAccept = json.getJSONArray("toMes");
@@ -103,10 +104,12 @@ public class Contact extends FirstPinYin implements Serializable {
         for (int i = 0; i < array.length(); i++) {
             JSONObject object = (JSONObject) array.get(i);
             if (c.cell.equals(object.getString("cell"))) {
-                c.isUser = true;
-                int userId = object.getInt("userId");
-                if (userId != 0) {
-                    c.id = userId;
+                if (object.has("userId") && object.getInt("userId") > 0) {
+                    c.isUser = true;
+                    c.id = object.getInt("userId");
+                } else if (object.has("") && object.getBoolean("")) {
+                    // TODO
+                    c.isInvited = true;
                 }
                 c.friendStatus = status;
                 return true;

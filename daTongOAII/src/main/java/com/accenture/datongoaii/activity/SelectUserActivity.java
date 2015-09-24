@@ -22,7 +22,6 @@ import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.util.Constants;
 import com.accenture.datongoaii.util.Utils;
 
-
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {
     private Fragment currentFrag;
 

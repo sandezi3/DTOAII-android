@@ -229,7 +229,7 @@ public class SelectPhoneContactActivity extends Activity implements
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         assert (cr != null);
                         if (cr.statusCode == 0) {
-                            Contact.resolveContactListByIsUser(new JSONObject(result), contactList);
+                            Contact.resolveContactList(new JSONObject(result), contactList);
                             refreshData();
                         } else {
                             Utils.toast(context, cr.statusMsg);

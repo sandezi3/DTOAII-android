@@ -6,7 +6,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 @SuppressWarnings("unused")
 public class Config {
 
-    public static final boolean DEBUG_AUTO_LOGIN = false;
+    public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
     public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
@@ -36,6 +36,7 @@ public class Config {
     public static final String URL_MODIFY_USER = "/user/{userId}";
     public static final String URL_DELETE_USER = "/group/{groupId}/user/{userId}";
     public static final String URL_GET_USER_PARENT = "/user/{userId}/groups?rootGroupId={rootGroupId}";
+    public static final String URL_INVITE_FRIEND = "";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";
