@@ -1,8 +1,20 @@
 package com.accenture.datongoaii.activity;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
@@ -21,60 +33,19 @@ import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListe
 import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PhoneContactActivity extends Activity implements
-        OnSectionItemClickedListener {
-    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
+import java.util.ArrayList;
+import java.util.List;
 
+public class SelectPhoneContactActivity extends Activity implements
+        OnSectionItemClickedListener {
     private Context context;
     private List<Object> dataList;
     private List<Contact> contactList;
     private boolean isSelectMode;
-    private ProgressDialog progressDialog;
-    private Handler handler = new ActivityHandler(this);
-
-    static class ActivityHandler extends Handler {
-        WeakReference<PhoneContactActivity> mActivity;
-
-        ActivityHandler(PhoneContactActivity activity) {
-            this.mActivity = new WeakReference<PhoneContactActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
-                    PhoneContactActivity a = mActivity.get();
-                    if (a.progressDialog.isShowing()) {
-                        a.progressDialog.dismiss();
-                        a.progressDialog = null;
-                    }
-            }
-        }
-
-    }
 
     private final SectionListAdapter adapter = new SectionListAdapter() {
         @Override
@@ -128,67 +99,8 @@ public class PhoneContactActivity extends Activity implements
                 iv.setImageResource(R.drawable.ic_contact_p);
             }
             tv.setText(c.name);
-            if (c.isUser) {
-                switch (c.friendStatus) {
-                    case FRIENDS_STATUS_FRIEND: {
-                        tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("已添加");
-                        btnAdd.setVisibility(View.GONE);
-                    }
-                    break;
-                    case FRIENDS_STATUS_FROM_ME_NOT_ACCEPT: {
-                        tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("等待对方接受");
-                        btnAdd.setVisibility(View.GONE);
-                    }
-                    break;
-                    case FRIENDS_STATUS_TO_ME_NOT_ACCEPT: {
-                        tvAdded.setVisibility(View.GONE);
-                        btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("接受");
-                        btnAdd.setTag(c);
-                        btnAdd.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Contact c = (Contact) view.getTag();
-                                startAddFriendsConnect(c.id, c.friendStatus);
-                            }
-                        });
-                    }
-                    break;
-                    case FRIENDS_STATUS_TO_BE_FRIEND: {
-                        tvAdded.setVisibility(View.GONE);
-                        btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("添加");
-                        btnAdd.setTag(c);
-                        btnAdd.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Contact c = (Contact) view.getTag();
-                                startAddFriendsConnect(c.id, c.friendStatus);
-                            }
-                        });
-                    }
-                    view.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Contact c = (Contact) view.getTag();
-                            if (isSelectMode) {
-                                finishAndReturn(c);
-                            }
-                        }
-                    });
-                }
-            } else {
-                if (!Utils.isValidCellNumber(c.cell)) {
-                    tvAdded.setText("非手机号");
-                    tvAdded.setVisibility(View.VISIBLE);
-                    btnAdd.setVisibility(View.GONE);
-                } else {
-                    tvAdded.setVisibility(View.GONE);
-                    btnAdd.setVisibility(View.GONE);
-                }
-            }
+            btnAdd.setVisibility(View.INVISIBLE);
+            tvAdded.setVisibility(View.INVISIBLE);
             view.setTag(c);
             return view;
         }
@@ -218,7 +130,7 @@ public class PhoneContactActivity extends Activity implements
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PhoneContactActivity.this.finish();
+                        SelectPhoneContactActivity.this.finish();
                     }
                 });
 
@@ -324,50 +236,6 @@ public class PhoneContactActivity extends Activity implements
                         }
                     } catch (JSONException e) {
                         Logger.e("startGetContactsStatusConnect", e.getMessage());
-                    }
-                }
-            }
-        });
-    }
-
-    private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
-        if(progressDialog != null) {
-            progressDialog.setMessage(Config.PROGRESS_SEND);
-            progressDialog.show();
-        } else {
-            progressDialog = ProgressDialog.show(context, null, Config.PROGRESS_SEND);
-        }
-        String op = null;
-        switch (status) {
-            case FRIENDS_STATUS_TO_BE_FRIEND:
-                op ="add";
-                break;
-            case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
-                op = "accept";
-                break;
-        }
-        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND;
-        JSONObject object = new JSONObject();
-        try {
-            object.put("toUserId", id);
-            object.put("op", op);
-        } catch (JSONException e) {
-            Utils.toast(context, Config.ERROR_APP);
-        }
-        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        if (cr.statusCode == 0) {
-                            startGetContactsStatusConnect();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Utils.toast(context, e.getMessage());
                     }
                 }
             }

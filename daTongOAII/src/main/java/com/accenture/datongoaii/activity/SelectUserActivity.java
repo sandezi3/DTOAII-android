@@ -1,7 +1,6 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
-//import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.LinearLayout;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
-import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 
@@ -26,37 +24,11 @@ import com.accenture.datongoaii.util.Utils;
 
 
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {
-//    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
-
     private Fragment currentFrag;
-
 
     private Context context;
     private Dept mDept;
     private LinearLayout llNavBtns;
-//    private ProgressDialog progressDialog;
-//    private Handler handler = new ActivityHandler(this);
-//
-//    public static class ActivityHandler extends Handler {
-//        WeakReference<SelectUserActivity> mActivity;
-//
-//        public ActivityHandler(SelectUserActivity activity) {
-//            this.mActivity = new WeakReference<SelectUserActivity>(activity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message message) {
-//            SelectUserActivity a = mActivity.get();
-//            switch (message.what) {
-//                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
-//                    if (a.progressDialog != null) {
-//                        a.progressDialog.dismiss();
-//                        a.progressDialog = null;
-//                    }
-//                    break;
-//            }
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,15 +124,12 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             Intent intent = new Intent(context, MyFriendActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, true);
             startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_USER);
-            return;
         } else if (dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
-            Intent intent = new Intent(context, PhoneContactActivity.class);
+            Intent intent = new Intent(context, SelectPhoneContactActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, true);
             startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_USER);
-            return;
         } else {
             FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-
             if (currentFrag != null) {
                 t.remove(currentFrag);
             }

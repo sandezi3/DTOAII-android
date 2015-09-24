@@ -122,9 +122,11 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             return;
         }
         Logger.i("CreateOrgActivity", "startCreateOrgConnect");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

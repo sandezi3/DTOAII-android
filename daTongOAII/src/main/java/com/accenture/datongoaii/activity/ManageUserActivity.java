@@ -2,10 +2,13 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +43,30 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
     private View btnParent;
     private TextView tvParentName;
     private View btnDismiss;
-    private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
 
+    private Handler handler = new ActivityHandler(this);
+
+    static class ActivityHandler extends Handler {
+        WeakReference<ManageUserActivity> mActivity;
+
+        ActivityHandler(ManageUserActivity activity) {
+            this.mActivity = new WeakReference<ManageUserActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    ManageUserActivity a = mActivity.get();
+                    if (a.progressDialog.isShowing()) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+            }
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +136,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
             return;
         }
         if (view.equals(btnParent)) {
@@ -138,7 +164,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
         }
     }
 
@@ -164,21 +190,23 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
         }
     }
 
     private void getParents(Integer orgId, Integer userId) {
         String url = Config.SERVER_HOST + Config.URL_GET_USER_PARENT.replace("{userId}", userId + "").replace("{rootGroupId}", orgId + "");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
-                            List<Dept> parents = Dept.parentsFromJSON(new JSONObject(result));
-                            tvParentName.setText(getParentName(parents));
+                            mContact.parents = Dept.parentsFromJSON(new JSONObject(result));
+                            tvParentName.setText(getParentName(mContact.parents));
                         } else {
                             Utils.toast(context, cr.statusMsg);
                         }
@@ -207,10 +235,11 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
             Utils.toast(context, Config.ERROR_APP);
             return;
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
@@ -242,10 +271,11 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
             Utils.toast(context, Config.ERROR_APP);
             return;
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
@@ -268,9 +298,11 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
 
     private void startDeleteDeptUserConnect(Integer deptId, Integer userId) {
         String url = Config.SERVER_HOST + Config.URL_DELETE_USER.replace("{groupId}", deptId + "").replace("{userId}", userId + "");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().delete(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

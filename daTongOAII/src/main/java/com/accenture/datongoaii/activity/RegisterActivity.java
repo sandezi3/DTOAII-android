@@ -23,8 +23,6 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 public class RegisterActivity extends Activity implements OnClickListener {
-    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
-
     private EditText etUsername;
     private EditText editPassword;
     private EditText etRptPswd;
@@ -43,7 +41,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
         public void handleMessage(Message msg) {
             RegisterActivity theActivity = mActivity.get();
             switch (msg.what) {
-                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     if (theActivity.progressDialog != null) {
                         theActivity.progressDialog.dismiss();
                         theActivity.progressDialog = null;
@@ -107,7 +105,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
         connection.post(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {

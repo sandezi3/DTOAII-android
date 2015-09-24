@@ -1,9 +1,12 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +39,28 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
     private View btnSelect;
     private View btnBack;
     private View btnCreate;
+    private ProgressDialog progressDialog;
+    private Handler handler = new ActivityHandler(this);
 
+    public static class ActivityHandler extends Handler {
+        WeakReference<CreateDeptActivity> mActivity;
+
+        ActivityHandler(CreateDeptActivity activity) {
+            this.mActivity = new WeakReference<CreateDeptActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    CreateDeptActivity a = mActivity.get();
+                    if (a.progressDialog.isShowing()) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,9 +161,11 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
             return;
         }
         Logger.i("CreateDeptActivity", "startCreateDeptConnect");
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

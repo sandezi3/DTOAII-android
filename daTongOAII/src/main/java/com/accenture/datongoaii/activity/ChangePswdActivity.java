@@ -22,8 +22,6 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 
 public class ChangePswdActivity extends Activity implements View.OnClickListener {
-    public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
-
     private EditText etPassword;
     private EditText etRptPswd;
     private ProgressDialog progressDialog;
@@ -41,7 +39,7 @@ public class ChangePswdActivity extends Activity implements View.OnClickListener
         public void handleMessage(Message msg) {
             ChangePswdActivity theActivity = mActivity.get();
             switch (msg.what) {
-                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     if (theActivity.progressDialog != null) {
                         theActivity.progressDialog.dismiss();
                         theActivity.progressDialog = null;
@@ -84,8 +82,6 @@ public class ChangePswdActivity extends Activity implements View.OnClickListener
     }
 
     private void startChangePasswordConnect(String cell, String password) {
-        progressDialog = ProgressDialog.show(this, null,
-                Config.PROGRESS_SUBMIT);
         String url = Config.SERVER_HOST + Config.URL_CHANGE_PASSWORD;
         JSONObject obj = new JSONObject();
         try {
@@ -96,11 +92,12 @@ public class ChangePswdActivity extends Activity implements View.OnClickListener
             e.printStackTrace();
             return;
         }
+        progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_SUBMIT);
         HttpConnection connection = new HttpConnection();
         connection.put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {

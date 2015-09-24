@@ -195,8 +195,8 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
     }
 
     private void getVerifyCode(String number) {
-        progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_SEND);
         String url = Config.SERVER_HOST + Config.URL_REQUIRE_VERIFY_CODE + number;
+        progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_GET);
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
@@ -224,7 +224,6 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
     }
 
     private void startVerficationConnect(String cell, String code) {
-        progressDialog = ProgressDialog.show(this, null, Config.PROGRESS_SEND);
         String url = Config.SERVER_HOST + Config.URL_VERIFICATION;
         JSONObject obj = new JSONObject();
         try {
@@ -235,6 +234,7 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
                 e.printStackTrace();
             }
         }
+        progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_SEND);
         new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {

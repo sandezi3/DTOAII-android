@@ -44,7 +44,6 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
     private View btnParent;
     private TextView tvParentName;
     private View btnDismiss;
-    private AlertDialog alertDialog;
     private ProgressDialog progressDialog;
     private Handler handler = new ActivityHandler(this);
 
@@ -121,7 +120,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
             return;
         }
         if (view.equals(btnParent)) {
@@ -155,7 +154,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
         }
     }
 
@@ -188,7 +187,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         }
                     })
                     .show();
-            alertDialog = builder.create();
+            builder.create();
         }
     }
 
@@ -201,10 +200,11 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             Utils.toast(context, Config.ERROR_APP);
             return;
         }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
         new HttpConnection().put(url, obj, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-                alertDialog.dismiss();
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

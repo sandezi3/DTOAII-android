@@ -6,7 +6,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 @SuppressWarnings("unused")
 public class Config {
 
-    public static final boolean DEBUG_AUTO_LOGIN = true;
+    public static final boolean DEBUG_AUTO_LOGIN = false;
 
     // Host & Url
     public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";

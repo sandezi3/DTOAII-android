@@ -75,40 +75,83 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity" />
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ContactAddActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CreateGroupActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PhoneContactActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyInfoActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".activity.SelectQuestionActivity" />
-        <activity android:name=".activity.ForgetPwActivity" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPwActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CellIdentifyActivity"
-            android:label="@string/title_activity_cell_identify" />
-        <activity android:name=".activity.SelectContactActivity" />
-        <activity android:name=".activity.MyFriendActivity" />
-        <activity android:name=".activity.CreateDeptActivity" />
-        <activity android:name=".activity.SelectDeptActivity" />
-        <activity android:name=".activity.DeptActivity" />
-        <activity android:name=".activity.ManageOrgActivity" />
-        <activity android:name=".activity.SelectUserActivity" />
-        <activity android:name=".activity.AddDeptUserActivity" />
-        <activity android:name=".activity.ManageDeptActivity" />
-        <activity android:name=".activity.ManageUserActivity" />
+            android:label="@string/title_activity_cell_identify"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateDeptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectDeptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DeptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ManageOrgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddDeptUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ManageDeptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ManageUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectPhoneContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChangePswdActivity"
+            android:label="@string/title_activity_change_pswd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateOrgActivity"
+            android:label="@string/title_activity_create_org"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.accenture.datongoaii.activity.MainActivity" />
+        </activity>
+
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data
@@ -210,17 +253,7 @@
 
         <!-- 个推SDK配置结束 -->
 
-        <activity
-            android:name=".activity.ChangePswdActivity"
-            android:label="@string/title_activity_change_pswd" />
-        <activity
-            android:name=".activity.CreateOrgActivity"
-            android:label="@string/title_activity_create_org"
-            android:parentActivityName=".activity.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.accenture.datongoaii.activity.MainActivity" />
-        </activity>
+
     </application>
 
 </manifest>
