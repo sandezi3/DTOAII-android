@@ -1,14 +1,5 @@
 package com.accenture.datongoaii.widget;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.activity.CreateDeptActivity;
-import com.accenture.datongoaii.activity.CreateGroupActivity;
-import com.accenture.datongoaii.activity.CreateOrgActivity;
-import com.accenture.datongoaii.activity.MainActivity;
-import com.accenture.datongoaii.activity.PhoneContactActivity;
-import com.accenture.datongoaii.fragment.ContactFragment;
-import com.accenture.datongoaii.util.Constants;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +9,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.CreateGroupActivity;
+import com.accenture.datongoaii.activity.CreateOrgActivity;
+import com.accenture.datongoaii.activity.PhoneContactActivity;
+import com.accenture.datongoaii.common.Constants;
 
 public class ContactAddPopupWindow extends PopupWindow implements OnClickListener {
     private View anchor;
@@ -54,12 +51,12 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
         switch (v.getId()) {
             case R.id.tvAddGroup: {
                 Intent intent = new Intent(context, CreateGroupActivity.class);
-                ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvCreateOrg: {
                 Intent intent = new Intent(context, CreateOrgActivity.class);
-                ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvAddFriend: {

@@ -1,19 +1,19 @@
 package com.accenture.datongoaii.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.util.CharacterParser;
 import com.accenture.datongoaii.util.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Contact extends FirstPinYin implements Serializable {
     public enum FriendStatus {
@@ -27,6 +27,7 @@ public class Contact extends FirstPinYin implements Serializable {
     public String name;
     public String cell;
     public String head;
+    public String imId;
     public Dept parent;
     public List<Dept> parents;
     public boolean selected;
@@ -42,7 +43,13 @@ public class Contact extends FirstPinYin implements Serializable {
             c.name = json.getString("username");
             c.head = json.getString("photo");
             c.cell = json.getString("cell");
+            if (json.has("imId")) {
+                c.imId = json.getString("imId");
+            } else {
+                c.imId = "";
+            }
             c.isUser = false;
+            c.isInvited = false;
             c.friendStatus = FriendStatus.FRIENDS_STATUS_TO_BE_FRIEND;
             CharacterParser cp = CharacterParser.getInstance();
             c.mFirstPinYin = cp.getSelling(c.name).substring(0, 1).toUpperCase();

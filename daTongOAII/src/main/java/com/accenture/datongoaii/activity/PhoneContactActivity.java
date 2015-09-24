@@ -1,26 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.CommonResponse;
-import com.accenture.datongoaii.model.Contact;
-import com.accenture.datongoaii.model.FirstPinYin;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.CharacterParser;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.widget.SectionListView;
-import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
-import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -40,9 +19,30 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
+import com.accenture.datongoaii.model.FirstPinYin;
+import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.util.CharacterParser;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.widget.SectionListView;
+import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
+import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PhoneContactActivity extends Activity implements
         OnSectionItemClickedListener {
@@ -345,7 +345,7 @@ public class PhoneContactActivity extends Activity implements
         String op = null;
         switch (status) {
             case FRIENDS_STATUS_TO_BE_FRIEND:
-                op ="add";
+                op = "add";
                 break;
             case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
                 op = "accept";

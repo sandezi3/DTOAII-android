@@ -1,13 +1,13 @@
 package com.accenture.datongoaii.network;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.zip.GZIPInputStream;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.util.Logger;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -25,16 +25,14 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.util.Logger;
-
-
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.zip.GZIPInputStream;
 
 public class HttpConnection implements Runnable {
     private static final String TAG = "HttpConnect";

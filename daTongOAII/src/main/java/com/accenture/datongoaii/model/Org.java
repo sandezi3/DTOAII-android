@@ -1,6 +1,6 @@
 package com.accenture.datongoaii.model;
 
-import com.accenture.datongoaii.util.Config;
+import com.accenture.datongoaii.common.Config;
 import com.accenture.datongoaii.util.Logger;
 
 import org.json.JSONArray;

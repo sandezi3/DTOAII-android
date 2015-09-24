@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -18,8 +17,7 @@ import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-
-import com.accenture.datongoaii.util.Constants;
+import com.accenture.datongoaii.common.Constants;
 import com.accenture.datongoaii.util.Utils;
 
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {

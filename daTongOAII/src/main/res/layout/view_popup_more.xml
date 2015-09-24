@@ -4,7 +4,7 @@
     android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    tools:ignore="ContentDescription" >
+    tools:ignore="ContentDescription">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:layout_marginTop="6dp"
         android:background="#eeeeee"
         android:orientation="vertical"
-        tools:ignore="HardcodedText" >
+        tools:ignore="HardcodedText">
 
         <TextView
             android:id="@+id/tvAccount"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,ContentDescription" >
+    tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
         android:id="@+id/layoutNavBar"
@@ -12,7 +12,7 @@
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -99,7 +99,7 @@
         android:layout_height="44dp"
         android:layout_below="@id/etSearch"
         android:background="@color/gray_2"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="40dp"

@@ -1,18 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import java.lang.ref.WeakReference;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Jsons.JsonAccount;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Utils;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -21,6 +8,19 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Jsons.JsonAccount;
+import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.util.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
 
 public class RegisterActivity extends Activity implements OnClickListener {
     private EditText etUsername;
@@ -65,7 +65,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
         findViewById(R.id.btnRegister).setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
 
-        if(getIntent().hasExtra(Constants.BUNDLE_TAG_FUNCTION)) {
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_FUNCTION)) {
             mCell = getIntent().getStringExtra(Constants.BUNDLE_TAG_FUNCTION);
         }
         assert (mCell != null);
@@ -153,5 +153,5 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
         return true;
     }
-    
+
 }

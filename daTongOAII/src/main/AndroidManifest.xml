@@ -61,6 +61,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:name=".common.DTOAIIApplication"
         android:screenOrientation="portrait"
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
@@ -253,6 +254,12 @@
 
         <!-- 个推SDK配置结束 -->
 
+        <!-- 环信SDK配置开始-->
+        <!-- 设置环信应用的appkey -->
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="accenture#oaf" />
+        <!-- 声明sdk所需的service SDK核心功能-->
+        <service android:name="com.easemob.chat.EMChatService" />
+        <!-- 环信SDK配置结束-->
 
     </application>
 

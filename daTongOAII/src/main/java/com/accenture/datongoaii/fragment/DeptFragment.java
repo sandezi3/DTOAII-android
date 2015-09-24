@@ -1,8 +1,8 @@
 package com.accenture.datongoaii.fragment;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +12,11 @@ import android.widget.ListView;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.SelectUserActivity;
 import com.accenture.datongoaii.adapter.ContactListAdapter;
-import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Intepreter;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONException;

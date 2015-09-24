@@ -1,14 +1,14 @@
 package com.accenture.datongoaii.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.accenture.datongoaii.util.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.accenture.datongoaii.util.Logger;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Dept extends FirstPinYin implements Serializable {

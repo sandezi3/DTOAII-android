@@ -1,4 +1,4 @@
-package com.accenture.datongoaii.util;
+package com.accenture.datongoaii.common;
 
 import com.accenture.datongoaii.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

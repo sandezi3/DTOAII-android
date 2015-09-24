@@ -1,23 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.fragment.ContactFragment;
-import com.accenture.datongoaii.fragment.NotiFragment;
-import com.accenture.datongoaii.fragment.TaskFragment;
-import com.accenture.datongoaii.fragment.TodoFragment;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.CommonResponse;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.util.Utils;
-import com.igexin.sdk.PushManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +12,24 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.fragment.ContactFragment;
+import com.accenture.datongoaii.fragment.NotiFragment;
+import com.accenture.datongoaii.fragment.TaskFragment;
+import com.accenture.datongoaii.fragment.TodoFragment;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
+import com.igexin.sdk.PushManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
     private long mExitTime = 0;

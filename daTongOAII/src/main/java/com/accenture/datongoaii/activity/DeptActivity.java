@@ -22,9 +22,9 @@ import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -319,7 +319,7 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                             bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER, contact);
                             bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER_DEPT, mDept);
                             intent.putExtras(bundle);
-                            ((Activity)context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_USER);
+                            ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_USER);
                         }
                     });
                 } else {

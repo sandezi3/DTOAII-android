@@ -13,9 +13,9 @@ import android.widget.EditText;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 
@@ -35,6 +35,7 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
     private View btnCreate;
     private ProgressDialog progressDialog;
     private Handler handler = new ActivityHandler(this);
+
     static class ActivityHandler extends Handler {
         WeakReference<CreateOrgActivity> mActivity;
 
@@ -55,6 +56,7 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

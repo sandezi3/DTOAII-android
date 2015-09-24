@@ -1,20 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.util.Utils;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -28,6 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText editPhoneNumber;

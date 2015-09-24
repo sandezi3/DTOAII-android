@@ -1,24 +1,24 @@
 package com.accenture.datongoaii.activity;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.util.Config;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.common.Config;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MyInfoActivity extends Activity {
     private ListView lvMenu;

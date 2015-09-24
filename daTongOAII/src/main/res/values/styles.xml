@@ -30,8 +30,8 @@
     </style>
 
     <style name="DialogAnimation" parent="@android:style/Animation.Dialog">
-<!--         <item name="android:windowEnterAnimation">@anim/push_up_in</item>
-        <item name="android:windowExitAnimation">@anim/push_down_out</item> -->
+        <!--         <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+                <item name="android:windowExitAnimation">@anim/push_down_out</item> -->
     </style>
 
 </resources>

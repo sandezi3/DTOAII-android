@@ -1,10 +1,18 @@
 package com.accenture.datongoaii.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
@@ -13,27 +21,19 @@ import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
 import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateGroupActivity extends Activity implements
         OnSectionItemClickedListener {
@@ -78,7 +78,7 @@ public class CreateGroupActivity extends Activity implements
 //            if (dept == null) {
 //                return 0;
 //            } else {
-                return viewList.size();
+            return viewList.size();
 //            }
         }
 
@@ -251,7 +251,6 @@ public class CreateGroupActivity extends Activity implements
     public void startCreateGroupConnect() {
         this.finish();
     }
-
 
 
     @SuppressWarnings("unused")

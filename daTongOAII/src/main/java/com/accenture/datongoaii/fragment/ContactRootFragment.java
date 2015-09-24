@@ -1,55 +1,21 @@
 package com.accenture.datongoaii.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.activity.DeptActivity;
-import com.accenture.datongoaii.activity.ManageOrgActivity;
-import com.accenture.datongoaii.activity.MyFriendActivity;
-import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.activity.SelectUserActivity;
 import com.accenture.datongoaii.adapter.ContactListAdapter;
 import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.model.FirstPinYin;
-import com.accenture.datongoaii.model.Group;
-import com.accenture.datongoaii.model.Org;
-import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
-import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.widget.ContactAddPopupWindow;
-import com.accenture.datongoaii.widget.MorePopupWindow;
-import com.accenture.datongoaii.widget.SectionListView;
-import com.accenture.datongoaii.widget.SectionListView.OnSectionItemClickedListener;
-import com.accenture.datongoaii.widget.SectionListView.SectionListAdapter;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

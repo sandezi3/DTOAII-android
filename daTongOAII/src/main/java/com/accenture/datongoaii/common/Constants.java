@@ -1,4 +1,4 @@
-package com.accenture.datongoaii.util;
+package com.accenture.datongoaii.common;
 
 public class Constants {
 

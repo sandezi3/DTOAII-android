@@ -1,7 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import com.accenture.datongoaii.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +11,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.accenture.datongoaii.R;
 
 public class ContactAddActivity extends Activity {
     private ListView lvMenu;

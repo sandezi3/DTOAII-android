@@ -83,7 +83,7 @@
             android:id="@+id/layoutSelect"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:background="@color/white" >
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/ivArrow"

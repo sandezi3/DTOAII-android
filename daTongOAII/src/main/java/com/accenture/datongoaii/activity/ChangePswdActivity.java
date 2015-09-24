@@ -2,18 +2,18 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Jsons;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.util.Config;
-import com.accenture.datongoaii.util.Constants;
-import com.accenture.datongoaii.util.Intepreter;
+import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.common.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONException;
@@ -62,10 +62,11 @@ public class ChangePswdActivity extends Activity implements View.OnClickListener
         findViewById(R.id.btnSubmit).setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
 
-        if(getIntent().hasExtra(Constants.BUNDLE_TAG_FUNCTION)) {
+        if (getIntent().hasExtra(Constants.BUNDLE_TAG_FUNCTION)) {
             mCell = getIntent().getStringExtra(Constants.BUNDLE_TAG_FUNCTION);
         }
-        assert (mCell != null);    }
+        assert (mCell != null);
+    }
 
     @Override
     public void onClick(View view) {

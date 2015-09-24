@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:scaleType="fitXY"
     android:src="@drawable/background"
-    tools:ignore="ContentDescription" >
+    tools:ignore="ContentDescription">
 
 </ImageView><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/acitivty_splash.xml -->
