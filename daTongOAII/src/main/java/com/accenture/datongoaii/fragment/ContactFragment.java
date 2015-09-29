@@ -28,10 +28,12 @@ import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.model.Org;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Constants;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.vendor.HX.ChatActivity;
+import com.accenture.datongoaii.vendor.HX.Constant;
 import com.accenture.datongoaii.widget.ContactAddPopupWindow;
 import com.accenture.datongoaii.widget.MorePopupWindow;
 import com.accenture.datongoaii.widget.SectionListView;
@@ -395,7 +397,7 @@ public class ContactFragment extends Fragment implements
         } else {
             // 个人信息
             // TODO
-            Logger.i("onSectionItemClicked", "个人信息");
+
         }
     }
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Todo;
-import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.util.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

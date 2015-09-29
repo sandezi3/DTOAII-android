@@ -18,8 +18,8 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Question;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 
 import org.json.JSONException;

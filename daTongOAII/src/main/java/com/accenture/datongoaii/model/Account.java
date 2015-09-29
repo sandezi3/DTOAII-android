@@ -12,6 +12,9 @@ public class Account {
     private String birth = null;
     private String cell = null;
 
+
+    private String imId = null;
+
     private Org org = null;
 
     private Account() {
@@ -23,6 +26,7 @@ public class Account {
         setBirth("");
         setCell("");
         setOrg(null);
+        setImId("");
     }
 
     // Initialization on Demand Holder
@@ -90,6 +94,14 @@ public class Account {
         this.cell = cell;
     }
 
+    public String getImId() {
+        return imId;
+    }
+
+    public void setImId(String imId) {
+        this.imId = imId;
+    }
+
     public Org getOrg() {
         return org;
     }
@@ -108,6 +120,9 @@ public class Account {
             this.setSex(json.getString("sex"));
             this.setBirth(json.getString("birth"));
             this.setCell(json.getString("cell"));
+            if (json.has("imId") && json.getString("imId") != null) {
+                this.setImId(json.getString("imId"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

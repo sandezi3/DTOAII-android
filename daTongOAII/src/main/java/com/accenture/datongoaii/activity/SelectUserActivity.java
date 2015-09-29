@@ -17,7 +17,7 @@ import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.util.Utils;
 
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {

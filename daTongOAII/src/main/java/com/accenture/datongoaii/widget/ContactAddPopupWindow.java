@@ -14,7 +14,7 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.CreateGroupActivity;
 import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
-import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.Constants;
 
 public class ContactAddPopupWindow extends PopupWindow implements OnClickListener {
     private View anchor;

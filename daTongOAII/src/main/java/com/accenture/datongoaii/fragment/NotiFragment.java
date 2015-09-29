@@ -18,9 +18,10 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.NotiListAdapter;
 import com.accenture.datongoaii.model.Noti;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
+import com.easemob.chat.EMChatManager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -114,6 +115,7 @@ public class NotiFragment extends Fragment {
     }
 
     public void refreshNotiList() {
+        EMChatManager.getInstance().getAllConversations();
         String url = Config.SERVER_HOST + "noti.json";
         Logger.i("NotiFragment.refreshNotiList", "URL = " + url);
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {

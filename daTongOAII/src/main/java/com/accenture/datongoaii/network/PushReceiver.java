@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.accenture.datongoaii.activity.MainActivity;
-import com.accenture.datongoaii.common.Constants;
+import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.util.Logger;
 import com.igexin.sdk.PushConsts;
 

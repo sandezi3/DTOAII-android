@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.common.Config;
+import com.accenture.datongoaii.Config;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

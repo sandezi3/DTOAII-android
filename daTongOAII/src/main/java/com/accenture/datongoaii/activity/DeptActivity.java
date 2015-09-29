@@ -22,10 +22,12 @@ import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Constants;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.ChatActivity;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -354,6 +356,13 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
             mDept = dept;
             Utils.addButton(this, dept, layoutButtons);
             getDept(dept.id);
+        } else if (view.getTag() instanceof Contact) {
+            Logger.i("onSectionItemClicked", "个人信息");
+            Contact c = (Contact) view.getTag();
+            Intent intent = new Intent(view.getContext(), ChatActivity.class);
+            intent.putExtra("userId", c.imId);
+            intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+            startActivity(intent);
         }
     }
 }

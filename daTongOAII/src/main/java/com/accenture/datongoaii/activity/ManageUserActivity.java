@@ -19,9 +19,9 @@ import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Constants;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONArray;

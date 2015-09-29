@@ -17,11 +17,12 @@ import android.widget.Toast;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.common.Config;
-import com.accenture.datongoaii.common.Constants;
-import com.accenture.datongoaii.common.Intepreter;
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.HXController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 public class LoginActivity extends Activity implements OnClickListener {
+    private final static String TAG = "LoginActivity";
     private EditText editPhoneNumber;
     private EditText editPassword;
 
@@ -141,6 +143,16 @@ public class LoginActivity extends Activity implements OnClickListener {
         return true;
     }
 
+    private void resolveLoginSuccess(String result) throws JSONException {
+        Account.getInstance().fromJson(new JSONObject(result));
+        String imId = Account.getInstance().getImId();
+        if (imId != null && imId.length() > 0) {
+            HXController.getInstance().startLogin(imId);
+        }
+        Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
+        finishAndReturn();
+    }
+
     private void startLoginConnect(String token) {
         progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_LOGIN);
         String url = Config.SERVER_HOST + Config.URL_AUTO_LOGIN.replace("{token}", token);
@@ -152,19 +164,17 @@ public class LoginActivity extends Activity implements OnClickListener {
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            Account.getInstance().fromJson(new JSONObject(result));
-                            Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
-                            finishAndReturn();
+                            resolveLoginSuccess(result);
                         } else {
-                            Logger.i("Login", "Failed!");
+                            Logger.i(TAG, "Failed!");
                             show(Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
                     } catch (JSONException e) {
-                        Logger.e("Login", "Exception!");
+                        Logger.e(TAG, "Exception!");
                         show(Config.ERROR_INTERFACE);
                     }
                 } else {
-                    Logger.i("Login", "Network Error!");
+                    Logger.i(TAG, "Network Error!");
                     show(Config.ERROR_NETWORK);
                 }
             }
@@ -193,19 +203,17 @@ public class LoginActivity extends Activity implements OnClickListener {
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            Account.getInstance().fromJson(new JSONObject(result));
-                            Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
-                            finishAndReturn();
+                            resolveLoginSuccess(result);
                         } else {
-                            Logger.i("Login", "Failed!");
+                            Logger.i(TAG, "Failed!");
                             show(Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
                     } catch (JSONException e) {
-                        Logger.e("Login", "Exception!");
+                        Logger.e(TAG, "Exception!");
                         show(Config.ERROR_INTERFACE);
                     }
                 } else {
-                    Logger.i("Login", "Network Error!");
+                    Logger.i(TAG, "Network Error!");
                     show(Config.ERROR_NETWORK);
                 }
             }

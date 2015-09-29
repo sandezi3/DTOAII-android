@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Dept;
+import com.easemob.util.TimeInfo;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -27,7 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -214,5 +217,132 @@ public class Utils {
     public static String getUserInfo(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         return sp.getString("token", "");
+    }
+
+    public static String getTimestampString(Date messageDate) {
+        Boolean isChinese = true;
+        String format;
+
+        long messageTime = messageDate.getTime();
+        if (isSameDay(messageTime)) {
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(messageDate);
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+            format = "HH:mm";
+
+            if (hour > 17) {
+                if (isChinese) {
+                    format = "晚上 hh:mm";
+                }
+
+            } else if (hour >= 0 && hour <= 6) {
+                if (isChinese) {
+                    format = "凌晨 hh:mm";
+                }
+            } else if (hour > 11 && hour <= 17) {
+                if (isChinese) {
+                    format = "下午 hh:mm";
+                }
+
+            } else {
+                if (isChinese) {
+                    format = "上午 hh:mm";
+                }
+            }
+        } else if (isYesterday(messageTime)) {
+            if (isChinese) {
+                format = "昨天 HH:mm";
+            } else {
+                format = "MM-dd HH:mm";
+            }
+
+        } else {
+            if (isChinese) {
+                format = "M月d日 HH:mm";
+            } else {
+                format = "MM-dd HH:mm";
+            }
+        }
+
+        if (isChinese) {
+            return new SimpleDateFormat(format, Locale.CHINA).format(messageDate);
+        } else {
+            return new SimpleDateFormat(format, Locale.US).format(messageDate);
+        }
+    }
+
+    private static boolean isSameDay(long inputTime) {
+
+        TimeInfo tStartAndEndTime = getTodayStartAndEndTime();
+        if (inputTime > tStartAndEndTime.getStartTime() && inputTime < tStartAndEndTime.getEndTime())
+            return true;
+        return false;
+    }
+
+    private static boolean isYesterday(long inputTime) {
+        TimeInfo yStartAndEndTime = getYesterdayStartAndEndTime();
+        if (inputTime > yStartAndEndTime.getStartTime() && inputTime < yStartAndEndTime.getEndTime())
+            return true;
+        return false;
+    }
+
+    public static TimeInfo getTodayStartAndEndTime() {
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        Date startDate = calendar1.getTime();
+        long startTime = startDate.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss S");
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.HOUR_OF_DAY, 23);
+        calendar2.set(Calendar.MINUTE, 59);
+        calendar2.set(Calendar.SECOND, 59);
+        calendar2.set(Calendar.MILLISECOND, 999);
+        Date endDate = calendar2.getTime();
+        long endTime = endDate.getTime();
+        TimeInfo info = new TimeInfo();
+        info.setStartTime(startTime);
+        info.setEndTime(endTime);
+        return info;
+    }
+
+    public static TimeInfo getYesterdayStartAndEndTime() {
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.add(Calendar.DATE, -1);
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+
+        Date startDate = calendar1.getTime();
+        long startTime = startDate.getTime();
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.DATE, -1);
+        calendar2.set(Calendar.HOUR_OF_DAY, 23);
+        calendar2.set(Calendar.MINUTE, 59);
+        calendar2.set(Calendar.SECOND, 59);
+        calendar2.set(Calendar.MILLISECOND, 999);
+        Date endDate = calendar2.getTime();
+        long endTime = endDate.getTime();
+        TimeInfo info = new TimeInfo();
+        info.setStartTime(startTime);
+        info.setEndTime(endTime);
+        return info;
+    }
+
+    private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
+    public static boolean isCloseEnough(long time1, long time2) {
+        // long time1 = date1.getTime();
+        // long time2 = date2.getTime();
+        long delta = time1 - time2;
+        if (delta < 0) {
+            delta = -delta;
+        }
+        return delta < INTERVAL_IN_MILLISECONDS;
     }
 }
