@@ -12,11 +12,10 @@ import android.widget.TextView;
 
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.adapter.MessageAdapter;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.easemob.EMCallBack;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
@@ -152,6 +151,8 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 //        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
 //        sdkHelper.pushActivity(this);
         // register the event listener when enter the foreground
+        HXController ctrl = HXController.getInstance();
+        ctrl.pushActivity(this);
         EMChatManager.getInstance().registerEventListener(
                 this,
                 new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
@@ -162,6 +163,8 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     @Override
     protected void onStop() {
         EMChatManager.getInstance().unregisterEventListener(this);
+        HXController ctrl = HXController.getInstance();
+        ctrl.popActivity(this);
         super.onStop();
     }
 

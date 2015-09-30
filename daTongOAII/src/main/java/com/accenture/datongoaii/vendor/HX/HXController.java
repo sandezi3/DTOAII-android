@@ -2,19 +2,22 @@ package com.accenture.datongoaii.vendor.HX;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.widget.Toast;
 
-import com.accenture.datongoaii.Constants;
-import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.vendor.HX.receiver.DeliveryAckMessageReceiver;
 import com.accenture.datongoaii.vendor.HX.receiver.NewMessageBroadcastReceiver;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
+import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
@@ -22,6 +25,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.OnMessageNotifyListener;
 import com.easemob.chat.OnNotificationClickListener;
+import com.easemob.util.EasyUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,21 +41,13 @@ public class HXController {
     public Context context;
     public static HXController instance;
     public boolean sdkInited;
+    protected EMEventListener eventListener;
+    public HXNotifier notifier;
 
     /**
      * 用来记录foreground Activity
      */
     private List<Activity> activityList = new ArrayList<Activity>();
-
-    public void pushActivity(Activity activity) {
-        if (!activityList.contains(activity)) {
-            activityList.add(0, activity);
-        }
-    }
-
-    public void popActivity(Activity activity) {
-        activityList.remove(activity);
-    }
 
     public HXController() {
         instance = this;
@@ -90,6 +86,8 @@ public class HXController {
 
         registerGlobleReceivers();
         initOptions();
+        initNotifier();
+        initEventListener();
 
         sdkInited = true;
         return true;
@@ -144,6 +142,20 @@ public class HXController {
         IntentFilter deliveryAckMessageIntentFilter = new IntentFilter(EMChatManager.getInstance().getDeliveryAckMessageBroadcastAction());
         deliveryAckMessageIntentFilter.setPriority(5);
         contextLocal.registerReceiver(deliveryAckMessageReceiver, deliveryAckMessageIntentFilter);
+    }
+
+    public void pushActivity(Activity activity) {
+        if (!activityList.contains(activity)) {
+            activityList.add(0, activity);
+        }
+    }
+
+    public void popActivity(Activity activity) {
+        activityList.remove(activity);
+    }
+
+    public HXNotifier getNotifier() {
+        return notifier;
     }
 
     private String getAppName(int pID) {
@@ -231,6 +243,171 @@ public class HXController {
         } catch (Exception e) {
             Logger.e(TAG, e.getMessage());
         }
+    }
+
+    protected void initEventListener() {
+        eventListener = new EMEventListener() {
+            private BroadcastReceiver broadCastReceiver = null;
+
+            @Override
+            public void onEvent(EMNotifierEvent event) {
+                EMMessage message = null;
+                if (event.getData() instanceof EMMessage) {
+                    message = (EMMessage) event.getData();
+                    Logger.d(TAG, "receive the event : " + event.getEvent() + ",id : " + message.getMsgId());
+                }
+
+                switch (event.getEvent()) {
+                    case EventNewMessage:
+                        //应用在后台，不需要刷新UI,通知栏提示新消息
+                        if (activityList.size() <= 0) {
+                            HXController.getInstance().getNotifier().onNewMsg(message);
+                        }
+                        break;
+                    case EventOfflineMessage:
+                        if (activityList.size() <= 0) {
+                            Logger.d(TAG, "received offline messages");
+                            List<EMMessage> messages = (List<EMMessage>) event.getData();
+                            HXController.getInstance().getNotifier().onNewMesg(messages);
+                        }
+                        break;
+                    // below is just giving a example to show a cmd toast, the app should not follow this
+                    // so be careful of this
+                    case EventNewCMDMessage: {
+
+                        Logger.d(TAG, "收到透传消息");
+                        //获取消息body
+                        CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
+                        final String action = cmdMsgBody.action;//获取自定义action
+
+                        //获取扩展属性 此处省略
+                        //message.getStringAttribute("");
+                        Logger.d(TAG, String.format("透传消息：action:%s,message:%s", action, message.toString()));
+                        final String str = "收到透传：action：";
+
+                        final String CMD_TOAST_BROADCAST = "com.accenture.dtoaii.im.cmd.toast";
+                        IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
+
+                        if (broadCastReceiver == null) {
+                            broadCastReceiver = new BroadcastReceiver() {
+
+                                @Override
+                                public void onReceive(Context context, Intent intent) {
+                                    // TODO Auto-generated method stub
+                                    Toast.makeText(context, intent.getStringExtra("cmd_value"), Toast.LENGTH_SHORT).show();
+                                }
+                            };
+
+                            //注册广播接收者
+                            context.registerReceiver(broadCastReceiver, cmdFilter);
+                        }
+
+                        Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
+                        broadcastIntent.putExtra("cmd_value", str + action);
+                        context.sendBroadcast(broadcastIntent, null);
+
+                        break;
+                    }
+                    case EventDeliveryAck:
+                        message.setDelivered(true);
+                        break;
+                    case EventReadAck:
+                        message.setAcked(true);
+                        break;
+                    // add other events in case you are interested in
+                    default:
+                        break;
+                }
+
+            }
+        };
+
+        EMChatManager.getInstance().registerEventListener(eventListener);
+    }
+
+    public void initNotifier() {
+        if (notifier == null) {
+            notifier = createNotifier();
+            notifier.init(context);
+            notifier.setNotificationInfoProvider(getNotificationListener());
+        }
+    }
+
+    public HXNotifier createNotifier() {
+        return new HXNotifier() {
+            public synchronized void onNewMsg(final EMMessage message) {
+                if (EMChatManager.getInstance().isSlientMessage(message)) {
+                    return;
+                }
+
+                // 判断app是否在后台
+                if (!EasyUtils.isAppRunningForeground(context)) {
+                    Logger.d(TAG, "app is running in backgroud");
+                    sendNotification(message, false);
+                } else {
+                    sendNotification(message, true);
+                }
+
+                viberateAndPlayTone(message);
+            }
+        };
+    }
+
+    protected HXNotifier.HXNotificationInfoProvider getNotificationListener() {
+        //可以覆盖默认的设置
+        return new HXNotifier.HXNotificationInfoProvider() {
+
+            @Override
+            public String getTitle(EMMessage message) {
+                //修改标题,这里使用默认
+                return null;
+            }
+
+            @Override
+            public int getSmallIcon(EMMessage message) {
+                //设置小图标，这里为默认
+                return 0;
+            }
+
+            @Override
+            public String getDisplayedText(EMMessage message) {
+                // 设置状态栏的消息提示，可以根据message的类型做相应提示
+                String ticker = CommonUtils.getMessageDigest(message, context);
+                if (message.getType() == EMMessage.Type.TXT) {
+                    ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
+                }
+
+                return message.getFrom() + ": " + ticker;
+            }
+
+            @Override
+            public String getLatestText(EMMessage message, int fromUsersNum, int messageNum) {
+                return null;
+                // return fromUsersNum + "个基友，发来了" + messageNum + "条消息";
+            }
+
+            @Override
+            public Intent getLaunchIntent(EMMessage message) {
+                //设置点击通知栏跳转事件
+                Intent intent = new Intent(context, ChatActivity.class);
+
+                EMMessage.ChatType chatType = message.getChatType();
+                if (chatType == EMMessage.ChatType.Chat) { // 单聊信息
+                    intent.putExtra("userId", message.getFrom());
+                    intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                } else { // 群聊信息
+                    // message.getTo()为群聊id
+                    intent.putExtra("groupId", message.getTo());
+                    if (chatType == EMMessage.ChatType.GroupChat) {
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                    } else {
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_CHATROOM);
+                    }
+
+                }
+                return intent;
+            }
+        };
     }
 
     private class MyConnectionListener implements EMConnectionListener {
