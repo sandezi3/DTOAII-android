@@ -359,10 +359,12 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
         } else if (view.getTag() instanceof Contact) {
             Logger.i("onSectionItemClicked", "个人信息");
             Contact c = (Contact) view.getTag();
-            Intent intent = new Intent(view.getContext(), ChatActivity.class);
-            intent.putExtra("userId", c.imId);
-            intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+            Intent intent = new Intent(view.getContext(), ContactProfileActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.BUNDLE_TAG_CONTACT_PROFILE, c);
+            intent.putExtras(bundle);
             startActivity(intent);
+            finish();
         }
     }
 }

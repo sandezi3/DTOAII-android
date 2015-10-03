@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="管理员工"
+            android:text="详细资料"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -55,12 +55,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layoutTitle"
         android:layout_marginTop="20dp"
-        android:background="@color/white_transparent_1"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivHead"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_contact_p" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_marginTop="40dp"
             android:background="@color/gray_2" />
 
         <RelativeLayout
@@ -76,7 +84,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/arrow"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,14 +113,8 @@
             android:layout_height="0.5dp"
             android:background="@color/gray_2" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/gray_2" />
 
         <RelativeLayout
-            android:id="@+id/btnParent"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@color/white">
@@ -123,7 +126,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/arrow"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,16 +135,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="选择父部门"
+                android:text="电话"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tvParentName"
+                android:id="@+id/tvCell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow2"
                 android:maxLines="1"
+                android:text="130xxxxxxxx"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -150,35 +155,17 @@
             android:layout_height="0.5dp"
             android:background="@color/gray_2" />
 
-        <View
+        <Button
+            android:id="@+id/btnSendMessage"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/gray_2" />
+            android:layout_height="35dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:text="发消息"
+            android:textColor="@drawable/button_text_color"
+            android:textSize="18sp" />
 
-        <RelativeLayout
-            android:id="@+id/btnDismiss"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:maxLines="1"
-                android:text="删除员工"
-                android:textColor="@color/red"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray_2" />
     </LinearLayout>
 
 </RelativeLayout>

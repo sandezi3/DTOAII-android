@@ -192,10 +192,10 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 if (username.equals(toId)) {
                     refreshUIWithNewMessage();
 //                    //声音和震动提示有新消息
-//                    HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(message);
+                    HXController.getInstance().getNotifier().viberateAndPlayTone(message);
                 } else {
                     //如果消息不是和当前聊天ID的消息
-//                    HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+                    HXController.getInstance().getNotifier().onNewMsg(message);
                 }
 
                 break;

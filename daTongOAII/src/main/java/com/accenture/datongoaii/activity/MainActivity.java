@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.fragment.NotiFragment;
@@ -21,17 +24,20 @@ import com.accenture.datongoaii.fragment.TodoFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Constants;
-import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.HXController;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
 import com.igexin.sdk.PushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends FragmentActivity implements OnClickListener {
+public class MainActivity extends FragmentActivity implements OnClickListener, EMEventListener {
     private long mExitTime = 0;
     private final int TAB_TODO = 0;
     private final int TAB_NOTI = 1;
@@ -64,6 +70,26 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        HXController controller = HXController.getInstance();
+        controller.pushActivity(this);
+
+        EMChatManager.getInstance().registerEventListener(
+                this,
+                new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
+                        EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
+    }
+
+    @Override
+    protected void onStop() {
+        HXController controller = HXController.getInstance();
+        controller.popActivity(this);
+        EMChatManager.getInstance().unregisterEventListener(this);
+        super.onStop();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             contactFrag.getOrg(Account.getInstance().getUserId());
@@ -90,7 +116,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                         todoFrag.refreshTodoList();
                         break;
                     case Constants.PUSH_COMMAND_REFRESH_NOTI:
-                        notiFrag.refreshNotiList();
+                        notiFrag.syncConversationList();
                     case Constants.PUSH_COMMAND_REFRESH_CONTACT:
 //					Integer deptId = json.getInt(Constants.PUSH_JSON_REFRESH_CONTACT_DEPT_ID);
 //					if (deptId >= -1) {
@@ -283,6 +309,55 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             syncUserForPush();
         }
         retryTimes++;
+    }
+
+
+    @Override
+    public void onEvent(EMNotifierEvent emNotifierEvent) {
+        switch (emNotifierEvent.getEvent()) {
+            case EventNewMessage: {
+                //获取到message
+                EMMessage message = (EMMessage) emNotifierEvent.getData();
+
+//                String username = null;
+//                //群组消息
+//                if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
+//                    username = message.getTo();
+//                } else {
+//                    //单聊消息
+//                    username = message.getFrom();
+//                }
+
+                //刷新消息列表
+                HXController.getInstance().getNotifier().viberateAndPlayTone(message);
+                notiFrag.syncConversationList();
+
+                break;
+            }
+//            case EventDeliveryAck:
+//            {
+//                //获取到message
+//                EMMessage message = (EMMessage) event.getData();
+//                refreshUI();
+//                break;
+//            }
+//            case EventReadAck:
+//            {
+//                //获取到message
+//                EMMessage message = (EMMessage) event.getData();
+//                refreshUI();
+//                break;
+//            }
+//            case EventOfflineMessage:
+//            {
+//                //a list of offline messages
+//                //List<EMMessage> offlineMessages = (List<EMMessage>) event.getData();
+//                refreshUI();
+//                break;
+//            }
+            default:
+                break;
+        }
     }
 
     private void show(String msg) {

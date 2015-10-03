@@ -64,15 +64,21 @@
         android:layout_height="16dp"
         android:layout_below="@id/layoutNavBar"
         android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@id/tvSearch"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tvSearch"
         android:src="@drawable/ic_search" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/lvNoti"
+    <!--<com.handmark.pulltorefresh.library.PullToRefreshListView-->
+    <!--android:id="@+id/lvNoti"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/etSearch" />-->
+
+    <ListView
+        android:id="@+id/lvConversation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/etSearch" />
+        android:layout_below="@id/etSearch"></ListView>
 
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/frag_noti.xml -->

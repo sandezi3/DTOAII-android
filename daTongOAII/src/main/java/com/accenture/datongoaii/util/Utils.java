@@ -80,6 +80,30 @@ public class Utils {
         return "刚才";
     }
 
+    public static String getPeroid(long time, long now) throws ParseException {
+        long year = (now - time) / 1000 / 60 / 60 / 24 / 30 / 12;
+        if (year > 0) {
+            return year + "年前";
+        }
+        long month = (now - time) / 1000 / 60 / 60 / 24 / 30;
+        if (month > 0) {
+            return month + "个月前";
+        }
+        long day = (now - time) / 1000 / 60 / 60 / 24;
+        if (day > 0) {
+            return day + "天前";
+        }
+        long hour = (now - time) / 1000 / 60 / 60;
+        if (hour > 0) {
+            return hour + "小时前";
+        }
+        long minute = (now - time) / 1000 / 60;
+        if (minute > 0) {
+            return minute + "分钟前";
+        }
+        return "刚才";
+    }
+
     @SuppressLint("SimpleDateFormat")
     public static String getCurrentTime() {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

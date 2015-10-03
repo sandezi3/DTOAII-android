@@ -25,7 +25,7 @@ public class Constants {
     public static final String BUNDLE_TAG_MANAGE_USER = "bundle.manage.user";
     public static final String BUNDLE_TAG_MANAGE_USER_DEPT = "bundle.manage.user.dept";
     public static final String BUNDLE_TAG_PARENT_DEPT_INVALID = "bundle.manage.dept.parent.invalid";
-    public static final String BUNDLE_TAG_SINGLE_CHAT_CONTACT = "bundle.single.chat";
+    public static final String BUNDLE_TAG_CONTACT_PROFILE = "bundle.contact.profile";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;

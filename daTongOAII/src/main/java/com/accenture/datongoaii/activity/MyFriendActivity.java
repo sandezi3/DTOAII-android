@@ -227,6 +227,13 @@ public class MyFriendActivity extends Activity implements SectionListView.OnSect
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
             setResult(Activity.RESULT_OK, intent);
             finish();
+        } else {
+            Intent intent = new Intent(view.getContext(), ContactProfileActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.BUNDLE_TAG_CONTACT_PROFILE, c);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
     }
 

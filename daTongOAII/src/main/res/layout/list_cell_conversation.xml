@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="ContentDescription,HardcodedText">
+
+    <ImageView
+        android:id="@+id/ivHead"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="3dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_contact_p" />
+
+    <LinearLayout
+        android:id="@+id/llRight"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:id="@+id/tvCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:text="昨天"
+            android:textColor="@color/gray_2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:text="11"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_toLeftOf="@id/llRight"
+        android:layout_toRightOf="@id/ivHead"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="姓名"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_marginBottom="6dp"
+        android:layout_toLeftOf="@id/llRight"
+        android:layout_toRightOf="@id/ivHead"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="上午开个小会"
+        android:textColor="@color/gray_2"
+        android:textSize="14sp" />
+
+</RelativeLayout>
