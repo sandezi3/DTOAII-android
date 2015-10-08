@@ -17,6 +17,7 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
+import com.accenture.datongoaii.fragment.FriendFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -52,9 +53,9 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         mDept.name = "联系人";
 
         isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, false);
+        rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);
         if (isMultiMode) {
             llBottom = (LinearLayout) findViewById(R.id.llBottom);
-            rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);
             findViewById(R.id.btnSubmit).setOnClickListener(this);
             rlBottom.setVisibility(View.VISIBLE);
             selectedUsers = new ArrayList<Contact>();
@@ -122,7 +123,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         if (obj instanceof Dept) {
             Dept dept = (Dept) obj;
             setDisplay(dept);
-            if (!dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT) && !dept.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
+            if (!dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
                 Utils.addButton(context, (Dept) obj, llNavBtns);
             }
             return;
@@ -165,9 +166,15 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             currentFrag = rootFrag;
             t.commitAllowingStateLoss();
         } else if (dept.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
-            Intent intent = new Intent(context, MyFriendActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, true);
-            startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_USER);
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            if (currentFrag != null) {
+                t.remove(currentFrag);
+            }
+            FriendFragment friendFrag = new FriendFragment();
+            friendFrag.isSelectMode = true;
+            currentFrag = friendFrag;
+            t.add(R.id.flContact, friendFrag);
+            t.commitAllowingStateLoss();
         } else if (dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
             Intent intent = new Intent(context, SelectPhoneContactActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, true);
