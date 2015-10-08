@@ -11,14 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.util.Utils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {
     private Fragment currentFrag;
@@ -26,6 +32,10 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     private Context context;
     private Dept mDept;
     private LinearLayout llNavBtns;
+    private boolean isMultiMode;
+    private RelativeLayout rlBottom;
+    private LinearLayout llBottom;
+    private List<Contact> selectedUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,19 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         mDept.id = Dept.DEPT_ID_ROOT_CONTACT;
         mDept.name = "联系人";
 
+        isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, false);
+        if (isMultiMode) {
+            llBottom = (LinearLayout) findViewById(R.id.llBottom);
+            rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);
+            findViewById(R.id.btnSubmit).setOnClickListener(this);
+            rlBottom.setVisibility(View.VISIBLE);
+            selectedUsers = new ArrayList<Contact>();
+            initMeButton();
+            refreshBottomBar();
+        } else {
+            rlBottom.setVisibility(View.GONE);
+        }
+
         initNavButton();
         setDisplay(mDept);
     }
@@ -51,11 +74,27 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             case R.id.btnBack:
                 finish();
                 break;
+            case R.id.btnSubmit:
+                if (isMultiMode) {
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT, (Serializable) selectedUsers);
+                    intent.putExtras(bundle);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                break;
             default:
                 if (view.getTag() instanceof Dept) {
                     Dept dept = (Dept) view.getTag();
                     Utils.removeButton(context, (Button) view, llNavBtns);
                     setDisplay(dept);
+                } else if (isMultiMode && view.getTag() instanceof Contact) {
+                    Contact contact = (Contact) view.getTag();
+                    if (!contact.id.equals(Account.getInstance().getUserId())) {
+                        selectedUsers.remove(contact);
+                        refreshBottomBar();
+                    }
                 }
                 break;
         }
@@ -90,14 +129,22 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         }
         if (obj instanceof Contact) {
             Contact contact = (Contact) obj;
-            Intent intent = new Intent();
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, contact.cell);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, contact.name);
-            if (contact.id != null && contact.id > 0) {
-                intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, contact.id);
+            if (isMultiMode) {
+                // 排除重选
+                if (!Contact.contains(selectedUsers, contact)) {
+                    selectedUsers.add(contact);
+                    refreshBottomBar();
+                }
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, contact.cell);
+                intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, contact.name);
+                if (contact.id != null && contact.id > 0) {
+                    intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, contact.id);
+                }
+                this.setResult(Activity.RESULT_OK, intent);
+                this.finish();
             }
-            this.setResult(Activity.RESULT_OK, intent);
-            this.finish();
         }
     }
 
@@ -136,5 +183,29 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             currentFrag = deptFrag;
             t.commitAllowingStateLoss();
         }
+    }
+
+    private void refreshBottomBar() {
+        llBottom.removeAllViews();
+        for (Contact contact : selectedUsers) {
+            Utils.addButton(this, contact, llBottom);
+        }
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        if (selectedUsers.size() == 1) {
+            btnSubmit.setEnabled(false);
+            btnSubmit.setBackgroundResource(R.drawable.button_disable);
+        } else {
+            btnSubmit.setEnabled(true);
+            btnSubmit.setBackgroundResource(R.drawable.button_normal);
+        }
+    }
+
+    private void initMeButton() {
+        Contact me = new Contact();
+        me.name = Account.getInstance().getUsername();
+        me.imId = Account.getInstance().getImId();
+        me.id = Account.getInstance().getUserId();
+        me.cell = Account.getInstance().getCell();
+        selectedUsers.add(me);
     }
 }

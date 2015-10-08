@@ -107,6 +107,18 @@ public class Contact extends FirstPinYin implements Serializable {
         return list;
     }
 
+    public static boolean contains(List<Contact> list, Contact contact) {
+        for (Contact c : list) {
+            if (c.id != null && c.id.equals(contact.id)) {
+                return true;
+            }
+            if (c.cell != null && c.cell.equals(contact.cell)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean hasResolveContactByJSONArrayAndStatus(Contact c, JSONArray array, FriendStatus status) throws JSONException {
         for (int i = 0; i < array.length(); i++) {
             JSONObject object = (JSONObject) array.get(i);

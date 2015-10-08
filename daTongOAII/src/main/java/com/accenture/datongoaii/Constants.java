@@ -19,6 +19,8 @@ public class Constants {
     public static final String BUNDLE_TAG_SELECT_USER_NAME = "bundle.select.user.name";
     public static final String BUNDLE_TAG_SELECT_USER_CELL = "bundle.select.user.cell";
     public static final String BUNDLE_TAG_SELECT_USER_ID = "bundle.select.user.id";
+    public static final String BUNDLE_TAG_SELECT_USER_MULTI_MODE = "bundle.select.user.multi.mode";
+    public static final String BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT = "bundle.select.user.multi.mode.result";
     public static final String BUNDLE_TAG_MANAGE_DEPT = "bundle.manage.dept";
     public static final String BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT = "bundle.manage.dept.select.parent.list";
     public static final String BUNDLE_TAG_SELECT_PHONE_CONTACT = "bundle.select.phone.contact";

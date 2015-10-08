@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.easemob.util.TimeInfo;
 
@@ -220,6 +221,23 @@ public class Utils {
             }
         }
         Button btn = createButton(context, dept);
+        parent.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public static Button createButton(Context context, Contact contact) {
+        Button btn = new Button(context);
+        btn.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        btn.setText(contact.name);
+        btn.setPadding(8, 12, 8, 12);
+        btn.setTextColor(context.getResources().getColor(R.color.tab_text_focused));
+        btn.setTag(contact);
+        btn.setTextSize((float) 18);
+        btn.setOnClickListener((View.OnClickListener) context);
+        return btn;
+    }
+
+    public static void addButton(Context context, Contact contact, LinearLayout parent) {
+        Button btn = createButton(context, contact);
         parent.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
