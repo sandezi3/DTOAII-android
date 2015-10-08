@@ -14,6 +14,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactRootFragment;
@@ -134,6 +135,8 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 if (!Contact.contains(selectedUsers, contact)) {
                     selectedUsers.add(contact);
                     refreshBottomBar();
+                } else {
+                    Utils.toast(context, Config.NOTE_CHOSEN_CONTACT);
                 }
             } else {
                 Intent intent = new Intent();

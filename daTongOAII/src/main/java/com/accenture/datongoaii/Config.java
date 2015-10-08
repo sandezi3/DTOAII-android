@@ -73,6 +73,7 @@ public class Config {
     public static final String NOTE_SELECT_PARENT_DEPT = "请选择父部门";
     public static final String NOTE_DEPT_EMPTY = "该部门没有子部门和员工";
     public static final String NOTE_DEPT_PARENT_SELF = "不能设置父部门为本部门";
+    public static final String NOTE_CHOSEN_CONTACT = "已选择此联系人";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";
