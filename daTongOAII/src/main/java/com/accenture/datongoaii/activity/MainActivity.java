@@ -183,6 +183,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                     t.add(R.id.lBody, notiFrag);
                 } else {
                     t.show(notiFrag);
+                    notiFrag.syncConversationList();
                 }
                 ((ImageView) findViewById(R.id.imgNotification))
                         .setImageResource(R.drawable.tab_noti_h);

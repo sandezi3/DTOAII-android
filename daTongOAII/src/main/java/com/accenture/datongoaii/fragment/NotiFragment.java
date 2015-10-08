@@ -15,9 +15,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.accenture.datongoaii.DTOARequest;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.ConversationListAdapter;
+import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Conversation;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.ChatActivity;
 import com.easemob.chat.EMChatManager;
@@ -25,6 +30,9 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VoiceMessageBody;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -126,33 +134,63 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
         return layoutNoti;
     }
 
-    public void syncConversationList() {
+    public void refresh() {
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                conversationList.clear();
-                conversationList.addAll(loadConversationsWithRecentChat());
                 adapter.notifyDataSetChanged();
             }
         });
-//        for (Conversation c : conversationList) {
-//            DTOARequest.startGetUserByImId(c.username, new HttpConnection.CallbackListener() {
-//                @Override
-//                public void callBack(String result) {
-//                    if (!result.equals("result")) {
-//                        try {
-//                            CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-//                            if (cr.statusCode == 0) {
-//                                // TODO: 10/3/15
-//                                adapter.notifyDataSetChanged();
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            });
-//        }
+    }
+
+    public void syncConversationList() {
+        conversationList.clear();
+        conversationList.addAll(loadConversationsWithRecentChat());
+        // 判断会话是否有更新
+        if(isConversationUpdated(conversationList)) {
+            DTOARequest.startGetUsersByImIds(getImIds(conversationList), new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    if (!result.equals("result")) {
+                        try {
+                            CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                            if (cr.statusCode == 0) {
+                                JSONArray array = new JSONObject(result).getJSONArray("userList");
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject obj = array.getJSONObject(i);
+                                    Contact c = Contact.fromJSON(obj);
+                                    Conversation conversation = Conversation.getItemByImId(conversationList, c.imId);
+                                    if (conversation != null) {
+                                        conversation.head = c.head;
+                                        conversation.username = c.name;
+                                    }
+                                }
+                                refresh();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean isConversationUpdated(List<Conversation> list) {
+        for (Conversation conversation : list) {
+            if (conversation.username == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<String> getImIds(List<Conversation> list) {
+        List<String> imIds = new ArrayList<String>();
+        for (Conversation conversation : list) {
+            imIds.add(conversation.imId);
+        }
+        return imIds;
     }
 
 
@@ -258,7 +296,7 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
         for (Pair<Long, EMConversation> sortItem : sortList) {
             Conversation conversation = new Conversation();
             EMConversation emConversation = sortItem.second;
-            conversation.username = emConversation.getUserName();
+            conversation.username = null;
             conversation.imId = emConversation.getUserName();
             if (emConversation.getLastMessage().getBody() instanceof TextMessageBody) {
                 conversation.summary = ((TextMessageBody) emConversation.getLastMessage().getBody()).getMessage();

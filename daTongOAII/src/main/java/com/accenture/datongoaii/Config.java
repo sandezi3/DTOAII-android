@@ -38,6 +38,7 @@ public class Config {
     public static final String URL_GET_USER_PARENT = "/user/{userId}/groups?rootGroupId={rootGroupId}";
     public static final String URL_INVITE_FRIEND = "";
     public static final String URL_GET_USER_BY_IMID = "/user/{imId}";
+    public static final String URL_GET_USERS_BY_IMIDS = "/users/search";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";
@@ -93,6 +94,7 @@ public class Config {
     public static final String ALERT_SWITCH_ACCOUNT = "您确认要切换账户登录吗？";
 
     //设置
+    public static final int HTTP_CONNECTION_EXPIRE_SECONDS = 120;
     public static final int GET_VERIFY_CODE_INVALID_SECONDS = 60;
 
     public static DisplayImageOptions getDisplayOptions() {

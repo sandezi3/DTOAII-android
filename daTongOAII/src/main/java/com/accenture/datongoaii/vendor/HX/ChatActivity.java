@@ -147,9 +147,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
         refreshUI();
 
-
-//        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
-//        sdkHelper.pushActivity(this);
         // register the event listener when enter the foreground
         HXController ctrl = HXController.getInstance();
         ctrl.pushActivity(this);

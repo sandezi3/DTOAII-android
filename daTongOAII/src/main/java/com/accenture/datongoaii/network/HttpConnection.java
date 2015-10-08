@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.util.Logger;
 
@@ -417,8 +418,8 @@ public class HttpConnection implements Runnable {
 
     public static DefaultHttpClient getHttpClient() {
         HttpParams httpParams = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParams, 120000);
-        HttpConnectionParams.setSoTimeout(httpParams, 120000);
+        HttpConnectionParams.setConnectionTimeout(httpParams, Config.HTTP_CONNECTION_EXPIRE_SECONDS * 1000);
+        HttpConnectionParams.setSoTimeout(httpParams, Config.HTTP_CONNECTION_EXPIRE_SECONDS * 1000);
         httpParams.setParameter("charset", "UTF-8");
         // HttpConnectionParams.setSocketBufferSize(httpParams, 8192);
 

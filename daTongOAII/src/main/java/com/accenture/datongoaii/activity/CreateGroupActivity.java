@@ -40,7 +40,6 @@ public class CreateGroupActivity extends Activity implements
     private SectionListView slvContact;
     private Dept dept;
     private List<Object> viewList;
-    private List<Object> groupList;
     private List<Object> uList;
     private List<Object> tmpList;
     private int prevFunction;
@@ -53,7 +52,6 @@ public class CreateGroupActivity extends Activity implements
     private void clearData() {
         tmpList.clear();
         viewList.clear();
-//        groupList.clear();
         uList.clear();
     }
 
@@ -212,7 +210,6 @@ public class CreateGroupActivity extends Activity implements
 
         slvContact = (SectionListView) findViewById(R.id.slvContact);
         viewList = new ArrayList<Object>();
-        groupList = new ArrayList<Object>();
         uList = new ArrayList<Object>();
         tmpList = new ArrayList<Object>();
         slvContact.setAdapter(adapter);
