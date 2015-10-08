@@ -137,9 +137,6 @@
             android:name=".activity.ManageUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SelectPhoneContactActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.ChangePswdActivity"
             android:label="@string/title_activity_change_pswd"
             android:screenOrientation="portrait" />

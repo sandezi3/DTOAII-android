@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -18,6 +19,7 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactRootFragment;
 import com.accenture.datongoaii.fragment.DeptFragment;
 import com.accenture.datongoaii.fragment.FriendFragment;
+import com.accenture.datongoaii.fragment.PhoneContactFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -122,9 +124,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         if (obj instanceof Dept) {
             Dept dept = (Dept) obj;
             setDisplay(dept);
-            if (!dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
-                Utils.addButton(context, (Dept) obj, llNavBtns);
-            }
+            Utils.addButton(context, (Dept) obj, llNavBtns);
             return;
         }
         if (obj instanceof Contact) {
@@ -176,9 +176,16 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             t.add(R.id.flContact, friendFrag);
             t.commitAllowingStateLoss();
         } else if (dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
-            Intent intent = new Intent(context, SelectPhoneContactActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, true);
-            startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_USER);
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            if (currentFrag != null) {
+                t.remove(currentFrag);
+            }
+            PhoneContactFragment fcFrag = new PhoneContactFragment();
+            fcFrag.isSelectMode = true;
+            fcFrag.isMultiMode = isMultiMode;
+            currentFrag = fcFrag;
+            t.add(R.id.flContact, fcFrag);
+            t.commitAllowingStateLoss();
         } else {
             FragmentTransaction t = getSupportFragmentManager().beginTransaction();
             if (currentFrag != null) {
@@ -193,18 +200,24 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     }
 
     private void refreshBottomBar() {
-        llBottom.removeAllViews();
-        for (Contact contact : selectedUsers) {
-            Utils.addButton(this, contact, llBottom);
-        }
-        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        if (selectedUsers.size() == 1) {
-            btnSubmit.setEnabled(false);
-            btnSubmit.setBackgroundResource(R.drawable.button_disable);
-        } else {
-            btnSubmit.setEnabled(true);
-            btnSubmit.setBackgroundResource(R.drawable.button_normal);
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                llBottom.removeAllViews();
+                for (Contact contact : selectedUsers) {
+                    Utils.addButton(context, contact, llBottom);
+                }
+                ((HorizontalScrollView)findViewById(R.id.hsvBottom)).fullScroll(View.FOCUS_RIGHT);
+                Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+                if (selectedUsers.size() == 1) {
+                    btnSubmit.setEnabled(false);
+                    btnSubmit.setBackgroundResource(R.drawable.button_disable);
+                } else {
+                    btnSubmit.setEnabled(true);
+                    btnSubmit.setBackgroundResource(R.drawable.button_normal);
+                }
+            }
+        });
     }
 
     private void initMeButton() {

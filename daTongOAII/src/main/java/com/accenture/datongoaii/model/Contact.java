@@ -109,7 +109,7 @@ public class Contact extends FirstPinYin implements Serializable {
 
     public static boolean contains(List<Contact> list, Contact contact) {
         for (Contact c : list) {
-            if (c.id != null && c.id.equals(contact.id)) {
+            if (c.id != null && c.id.equals(contact.id) && c.id != -1) {
                 return true;
             }
             if (c.cell != null && c.cell.equals(contact.cell)) {

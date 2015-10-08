@@ -133,9 +133,10 @@
             android:textSize="18sp"
             tools:ignore="RtlHardcoded" />
 
-        <ScrollView
+        <HorizontalScrollView
+            android:id="@+id/hsvBottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_toLeftOf="@id/btnSubmit"
             tools:ignore="RtlHardcoded">
 
@@ -145,7 +146,7 @@
                 android:layout_height="45dp"
                 android:orientation="horizontal"
                 android:visibility="visible" />
-        </ScrollView>
+        </HorizontalScrollView>
 
     </RelativeLayout>
 
