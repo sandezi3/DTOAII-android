@@ -34,7 +34,6 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     private Dept mDept;
     private LinearLayout llNavBtns;
     private boolean isMultiMode;
-    private RelativeLayout rlBottom;
     private LinearLayout llBottom;
     private List<Contact> selectedUsers;
 
@@ -53,7 +52,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         mDept.name = "联系人";
 
         isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, false);
-        rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);
+        RelativeLayout rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);
         if (isMultiMode) {
             llBottom = (LinearLayout) findViewById(R.id.llBottom);
             findViewById(R.id.btnSubmit).setOnClickListener(this);
@@ -171,7 +170,8 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 t.remove(currentFrag);
             }
             FriendFragment friendFrag = new FriendFragment();
-            friendFrag.isSelectMode = true;
+            friendFrag.isSelectMode = false;
+            friendFrag.isMultiMode = isMultiMode;
             currentFrag = friendFrag;
             t.add(R.id.flContact, friendFrag);
             t.commitAllowingStateLoss();

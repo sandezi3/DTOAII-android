@@ -20,6 +20,7 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.ContactProfileActivity;
+import com.accenture.datongoaii.activity.SelectUserActivity;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -45,6 +46,7 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
     private List<Contact> friends;
     private List<Object> tmpList;
     public Boolean isSelectMode;
+    public Boolean isMultiMode;
 
     private ProgressDialog progressDialog;
 
@@ -221,6 +223,8 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
             ((Activity)context).setResult(Activity.RESULT_OK, intent);
             ((Activity)context).finish();
+        } else if (isMultiMode) {
+            ((SelectUserActivity)context).onFragmentItemClick(c);
         } else {
             Intent intent = new Intent(view.getContext(), ContactProfileActivity.class);
             Bundle bundle = new Bundle();
