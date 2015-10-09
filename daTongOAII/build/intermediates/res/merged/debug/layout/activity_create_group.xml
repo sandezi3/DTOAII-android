@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText,ContentDescription">
+    tools:ignore="HardcodedText,ContentDescription,RtlHardcoded">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -52,7 +52,7 @@
             android:background="@drawable/button"
             android:text="创建"
             android:textColor="@drawable/button_text_color"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <View
             android:id="@+id/view1"
@@ -84,8 +84,8 @@
             android:id="@+id/layoutSelect"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:visibility="visible"
-            android:background="@drawable/button_selector">
+            android:background="@drawable/button_selector"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/ivArrow"
@@ -103,10 +103,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:paddingBottom="8dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="8dp"
+
                 android:text="请选择群聊人员"
                 android:textSize="18sp" />
 
@@ -120,8 +119,8 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="value"
-                android:visibility="gone"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -136,7 +135,7 @@
         android:columnWidth="80dp"
         android:horizontalSpacing="3dp"
         android:numColumns="4"
-        android:verticalSpacing="3dp">
+        android:verticalSpacing="6dp">
 
     </GridView>
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/activity_create_group.xml -->
