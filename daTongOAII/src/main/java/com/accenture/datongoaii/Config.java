@@ -9,8 +9,8 @@ public class Config {
 
     // Host & Url
 //    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
-        public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
-//    public static final String SERVER_HOST = "http://10.202.211/.175:8080/oaf/api";
+//        public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
+    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_AUTO_LOGIN = "/authentication/{token}";
     public static final String URL_LOGOUT = "/logout";
@@ -74,6 +74,7 @@ public class Config {
     public static final String NOTE_DEPT_EMPTY = "该部门没有子部门和员工";
     public static final String NOTE_DEPT_PARENT_SELF = "不能设置父部门为本部门";
     public static final String NOTE_CHOSEN_CONTACT = "已选择此联系人";
+    public static final String NOTE_IM_GROUP_USER_EMPTY = "请选择群聊成员";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";

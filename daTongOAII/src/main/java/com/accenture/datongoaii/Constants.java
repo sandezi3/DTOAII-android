@@ -43,6 +43,7 @@ public class Constants {
     public static final int REQUEST_CODE_MANAGE_DEPT = 1012;
     public static final int REQUEST_CODE_CHANGE_DEPT_PARENT = 1013;
     public static final int REQUEST_CODE_MANAGE_USER = 1014;
+    public static final int REQUEST_CODE_CREATE_GROUP = 1015;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

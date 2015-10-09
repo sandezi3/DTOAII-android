@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="6dp"
+    tools:ignore="ContentDescription,HardcodedText,RtlHardcoded" >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:text="用户名"
+        android:textColor="@color/tab_text_focused"/>
+
+    <TextView
+        android:id="@+id/tvDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:textColor="@color/gray_2"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

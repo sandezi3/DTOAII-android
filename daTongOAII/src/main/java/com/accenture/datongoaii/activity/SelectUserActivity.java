@@ -41,6 +41,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     private List<Contact> selectedUsers;
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
@@ -60,8 +61,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
             llBottom = (LinearLayout) findViewById(R.id.llBottom);
             findViewById(R.id.btnSubmit).setOnClickListener(this);
             rlBottom.setVisibility(View.VISIBLE);
-            selectedUsers = new ArrayList<Contact>();
-            initMeButton();
+            selectedUsers = (List<Contact>) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT);
             refreshBottomBar();
         } else {
             rlBottom.setVisibility(View.GONE);
@@ -210,7 +210,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 for (Contact contact : selectedUsers) {
                     Utils.addButton(context, contact, llBottom);
                 }
-                ((HorizontalScrollView)findViewById(R.id.hsvBottom)).fullScroll(View.FOCUS_RIGHT);
+                ((HorizontalScrollView) findViewById(R.id.hsvBottom)).fullScroll(View.FOCUS_RIGHT);
                 Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
                 if (selectedUsers.size() == 1) {
                     btnSubmit.setEnabled(false);
@@ -221,14 +221,5 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 }
             }
         });
-    }
-
-    private void initMeButton() {
-        Contact me = new Contact();
-        me.name = Account.getInstance().getUsername();
-        me.imId = Account.getInstance().getImId();
-        me.id = Account.getInstance().getUserId();
-        me.cell = Account.getInstance().getCell();
-        selectedUsers.add(me);
     }
 }

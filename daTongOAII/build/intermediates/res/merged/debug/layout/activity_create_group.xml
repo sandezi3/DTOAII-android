@@ -6,21 +6,12 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
-        android:id="@+id/layoutNavBar"
-        android:layout_width="fill_parent"
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@color/white">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="创建群组"
-            android:textColor="@color/gray_2"
-            android:textSize="22sp" />
 
         <RelativeLayout
             android:id="@+id/btnBack"
@@ -37,114 +28,115 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="创建群聊"
+            android:textColor="@color/green"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button"
+            android:text="创建"
+            android:textColor="@drawable/button_text_color"
+            android:textSize="16dp" />
 
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
             android:background="@color/line" />
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/layoutFocus"
-        android:layout_width="0dip"
-        android:layout_height="0dip"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical" />
-
-    <EditText
-        android:id="@+id/etSearch"
+        android:id="@+id/layoutContent"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_margin="4dp"
-        android:background="@drawable/bg_search"
-        android:hint="" />
+        android:layout_height="90dp"
+        android:layout_below="@id/layoutTitle"
+        android:layout_marginTop="20dp"
+        android:background="@color/white_transparent_1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="搜索"
-        android:textColor="@color/gray_2"
-        android:textSize="13sp" />
-
-    <ImageView
-        android:id="@+id/ivSearch"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_below="@id/layoutNavBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@id/tvSearch"
-        android:src="@drawable/ic_search" />
-
-    <RelativeLayout
-        android:id="@+id/lBack"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_below="@id/etSearch"
-        android:background="@color/gray_2"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/back_white" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlBottom"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-
-        <View
+        <EditText
+            android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="45dp"
             android:layout_marginLeft="20dp"
-            android:text="选择1-999人创建群组"
-            android:textColor="@color/gray_1" />
+            android:layout_marginRight="20dp"
+            android:background="@color/transparent"
+            android:hint="请输入群聊名称（选填）" />
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/button"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="确定(1/1000)"
-            android:enabled="false"
-            android:textColor="@color/white" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layoutSelect"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:visibility="visible"
+            android:background="@drawable/button_selector">
 
-    <include
-        android:id="@+id/slvContact"
+            <ImageView
+                android:id="@+id/ivArrow"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:padding="10dp"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="8dp"
+                android:text="请选择群聊人员"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/ivArrow"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="value"
+                android:visibility="gone"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gvUsers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rlBottom"
-        android:layout_below="@id/lBack"
-        layout="@layout/section_list_view" />
+        android:layout_below="@id/layoutContent"
+        android:layout_marginTop="20dp"
+        android:choiceMode="singleChoice"
+        android:columnWidth="80dp"
+        android:horizontalSpacing="3dp"
+        android:numColumns="4"
+        android:verticalSpacing="3dp">
 
+    </GridView>
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/activity_create_group.xml -->

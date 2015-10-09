@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.CreateGroupActivity;
 import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.activity.SelectUserActivity;
@@ -50,9 +51,7 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvAddGroup: {
-//                Intent intent = new Intent(context, CreateGroupActivity.class);
-                Intent intent = new Intent(context, SelectUserActivity.class);
-                intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, true);
+                Intent intent = new Intent(context, CreateGroupActivity.class);
                 ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }

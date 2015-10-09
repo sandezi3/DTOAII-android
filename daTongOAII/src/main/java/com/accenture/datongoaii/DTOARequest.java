@@ -1,5 +1,6 @@
 package com.accenture.datongoaii;
 
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Conversation;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
@@ -28,6 +29,21 @@ public class DTOARequest {
         JSONArray array = new JSONArray(ids);
         try {
             object.put("imIdList", array);
+        } catch (JSONException e) {
+            Logger.e(TAG, e.getMessage());
+            return;
+        }
+        new HttpConnection().post(url, object, listener);
+    }
+
+    public static void startCreateGroup(String name, List<Contact> users, HttpConnection.CallbackListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_CREATE_GROUP;
+        JSONObject object = new JSONObject();
+        JSONArray array = new JSONArray(users);
+        try {
+            object.put("users", array);
+            object.put("name", name);
+            // TODO: 10/9/15 implement objects
         } catch (JSONException e) {
             Logger.e(TAG, e.getMessage());
             return;

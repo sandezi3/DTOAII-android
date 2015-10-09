@@ -75,14 +75,6 @@
             android:orientation="horizontal"></LinearLayout>
     </HorizontalScrollView>
 
-    <include
-        android:id="@+id/slvDept"
-        layout="@layout/section_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/rlBottom"
-        android:layout_below="@id/hsvButtons" />
-
     <RelativeLayout
         android:id="@+id/rlBottom"
         android:layout_width="match_parent"
@@ -108,5 +100,13 @@
                 android:orientation="horizontal" />
         </ScrollView>
     </RelativeLayout>
+
+    <include
+        android:id="@+id/slvDept"
+        layout="@layout/section_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rlBottom"
+        android:layout_below="@id/hsvButtons" />
 
 </RelativeLayout>

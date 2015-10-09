@@ -167,16 +167,14 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
                             }
                         });
                     }
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Contact c = (Contact) view.getTag();
-                            if (isSelectMode) {
-                                finishAndReturn(c);
-                            }
-                        }
-                    });
                 }
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Contact c = (Contact) view.getTag();
+                        onContactClicked(c);
+                    }
+                });
             } else {
                 if (!Utils.isValidCellNumber(c.cell)) {
                     tvAdded.setText("非手机号");
@@ -237,6 +235,16 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
 
         getPhoneContact();
         return view;
+    }
+
+    private void onContactClicked(Contact c) {
+        if (isMultiMode) {
+            ((SelectUserActivity) context).onFragmentItemClick(c);
+            return;
+        }
+        if (isSelectMode) {
+            finishAndReturn(c);
+        }
     }
 
     @SuppressLint("DefaultLocale")
@@ -412,12 +420,6 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
         @SuppressWarnings("unchecked")
         List<Contact> list = (List<Contact>) object;
         Contact c = list.get(position);
-        if (isMultiMode) {
-            ((SelectUserActivity) context).onFragmentItemClick(c);
-            return;
-        }
-        if (isSelectMode) {
-            finishAndReturn(c);
-        }
+        onContactClicked(c);
     }
 }
