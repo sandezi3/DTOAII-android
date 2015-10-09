@@ -34,6 +34,7 @@ public class MyFriendActivity extends FragmentActivity {
         if (friendFragment == null) {
             friendFragment = new FriendFragment();
             friendFragment.isSelectMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, false);
+            friendFragment.isMultiMode = false;
             t.add(R.id.flContent, friendFragment);
             t.commitAllowingStateLoss();
         }

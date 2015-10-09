@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.easemob.EMCallBack;
 import com.easemob.EMEventListener;
@@ -247,7 +249,10 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
 
     public void sendText(String content) {
-
+        if (!EMChatManager.getInstance().isConnected()) {
+            Utils.toast(context, Config.ERROR_IM);
+            return;
+        }
         if (content.length() > 0) {
             EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
 
