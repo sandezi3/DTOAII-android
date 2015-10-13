@@ -121,16 +121,8 @@ public class DTOARequest {
         new HttpConnection().delete(url, listener);
     }
 
-    public static void startGetGroupsByIds(List<String> ids, HttpConnection.CallbackListener listener) {
-        String url = Config.SERVER_HOST + Config.URL_GET_GROUPS_BY_IDS;
-        JSONObject object = new JSONObject();
-        JSONArray array = new JSONArray(ids);
-        try {
-            object.put("groupIdList", array);
-        } catch (JSONException e) {
-            Logger.e(TAG, e.getMessage());
-            return;
-        }
-        new HttpConnection().post(url, object, listener);
+    public static void startGetGroupsByIds(String ids, HttpConnection.CallbackListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_GET_GROUPS_BY_IDS.replace("{chatGroupIds}", ids);
+        new HttpConnection().get(url, listener);
     }
 }

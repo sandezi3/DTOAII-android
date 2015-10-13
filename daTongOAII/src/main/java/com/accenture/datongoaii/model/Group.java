@@ -11,19 +11,23 @@ import java.util.List;
 
 public class Group extends FirstPinYin {
     public static final String TAG = "Group";
+    public Integer id;
     public String imId;
     public String version;
     public String name;
     public String img;
     public Contact owner;
+    public Integer userNum;
     public List<Contact> contactList;
 
     public static Group fromJSON(JSONObject json) {
         try {
             Group g = new Group();
-            g.imId = json.getString("groupid");
-            g.name = json.getString("groupname");
-            g.img = "";
+            g.id = json.getInt("groupId");
+            g.imId = json.getString("chatGroupId");
+            g.name = json.getString("groupName");
+            g.img = json.getString("logo");
+            g.userNum = json.getInt("userNum");
             g.mFirstPinYin = "*";
             g.contactList = new ArrayList<Contact>();
             return g;
@@ -35,14 +39,19 @@ public class Group extends FirstPinYin {
         return null;
     }
 
-    public static Group updateMembersFromJSON(Group group, JSONObject json) {
+    public static Group updateFromJSON(Group group, JSONObject json) {
         try {
+            if (json.has("groupId")) {
+                group = Group.fromJSON(json);
+                assert (group != null);
+            }
             group.owner = Contact.fromJSON(json.getJSONObject("owner"));
             List<Contact> list = Contact.getContactsFromJSON(json, "members");
             if (list != null && group.owner != null) {
                 list.add(0, group.owner);
             }
             group.contactList = list;
+
         } catch (JSONException e) {
             Logger.e(TAG, e.getMessage());
         }

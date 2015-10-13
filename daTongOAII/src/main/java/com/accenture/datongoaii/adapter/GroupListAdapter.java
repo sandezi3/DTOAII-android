@@ -16,13 +16,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 public class GroupListAdapter extends BaseAdapter {
-    private Context context;
     private List<Group> groupList;
     private LayoutInflater inflater;
     private ImageLoader loader;
 
     public GroupListAdapter(Context context, List<Group> list) {
-        this.context = context;
         groupList = list;
         inflater = LayoutInflater.from(context);
         loader = ImageLoader.getInstance();
@@ -62,7 +60,7 @@ public class GroupListAdapter extends BaseAdapter {
         Group t = groupList.get(position);
         loader.displayImage(t.img, holder.ivIcon, Config.getDisplayOptions());
         holder.tvName.setText(t.name);
-        holder.tvMemberCount.setText(String.valueOf(t.contactList.size()));
+        holder.tvMemberCount.setText(t.userNum + "人");
 
         return convertView;
     }

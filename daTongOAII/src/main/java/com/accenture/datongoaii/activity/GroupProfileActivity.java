@@ -288,7 +288,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                 if (!result.equals("fail")) {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            mGroup = Group.updateMembersFromJSON(mGroup, new JSONObject(result).getJSONObject("data"));
+                            mGroup = Group.updateFromJSON(mGroup, new JSONObject(result).getJSONObject("data"));
                             isAdmin = mGroup.owner.imId.equals(Account.getInstance().getImId());
                             runOnUiThread(new Runnable() {
                                 @Override

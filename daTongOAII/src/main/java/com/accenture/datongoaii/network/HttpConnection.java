@@ -45,7 +45,7 @@ public class HttpConnection implements Runnable {
     private static final int POST = 1;
     private static final int PUT = 2;
     private static final int DELETE = 3;
-    private static final int BITMAP = 4;
+//    private static final int BITMAP = 4;
     private static final int POST_IMAGE = 5;
 
     private String url;
@@ -53,8 +53,6 @@ public class HttpConnection implements Runnable {
     private JSONObject data;
     private CallbackListener listener;
     private Bitmap image;
-
-    private HttpClient httpClient;
 
     // public HttpConnection() {
     // this(new Handler());
@@ -89,16 +87,16 @@ public class HttpConnection implements Runnable {
         create(DELETE, url, null, null, listener);
     }
 
-    public void bitmap(String url) {
-        create(BITMAP, url, null, null, listener);
-    }
-
-    public void postImage(String url, Bitmap image, CallbackListener listener) {
-        create(POST_IMAGE, url, new JSONObject(), image, listener);
-    }
+//    public void bitmap(String url) {
+//        create(BITMAP, url, null, null, listener);
+//    }
+//
+//    public void postImage(String url, Bitmap image, CallbackListener listener) {
+//        create(POST_IMAGE, url, new JSONObject(), image, listener);
+//    }
 
     public interface CallbackListener {
-        public void callBack(String result);
+        void callBack(String result);
     }
 
     private static final Handler handler = new Handler() {
@@ -130,9 +128,9 @@ public class HttpConnection implements Runnable {
     public void run() {
         // handler.sendMessage(Message.obtain(handler,
         // HttpConnection.DID_START));
-        httpClient = getHttpClient();
+        HttpClient httpClient = getHttpClient();
         try {
-            HttpResponse httpResponse = null;
+            HttpResponse httpResponse;
             switch (method) {
                 case GET: {
                     HttpGet httpGetRequest = new HttpGet(url);
@@ -423,8 +421,7 @@ public class HttpConnection implements Runnable {
         httpParams.setParameter("charset", "UTF-8");
         // HttpConnectionParams.setSocketBufferSize(httpParams, 8192);
 
-        DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
-        return httpClient;
+        return new DefaultHttpClient(httpParams);
     }
 
     public static boolean isHttpSuccessExecuted(HttpResponse response) {
@@ -446,10 +443,10 @@ public class HttpConnection implements Runnable {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

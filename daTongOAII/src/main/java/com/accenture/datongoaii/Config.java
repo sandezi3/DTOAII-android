@@ -42,12 +42,12 @@ public class Config {
     public static final String URL_GET_USERS_BY_IMIDS = "/users/search";
     public static final String URL_CREATE_GROUP = "/chatgroups";
     public static final String URL_GET_GROUPS = "/member/{imId}/joined_chatgroups";
-    public static final String URL_GET_GROUP = "/chatgroup/{chatGroupId}/members";
+    public static final String URL_GET_GROUP = "/chatgroup/{chatGroupId}";
     public static final String URL_GROUP_INVITE_MEMBER = "/chatgroup/{groupId}/members";
     public static final String URL_QUIT_GROUP = "/chatgroup/{groupId}/member/{imId}";
     public static final String URL_DISMISS_GROUP = "/chatgroup/{groupId}";
     public static final String URL_RENAME_GROUP = "/chatgroup/{chatGroupId}";
-    public static final String URL_GET_GROUPS_BY_IDS = "";
+    public static final String URL_GET_GROUPS_BY_IDS = "/chatgroups/{chatGroupIds}";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";
@@ -87,6 +87,7 @@ public class Config {
     public static final String NOTE_DEPT_PARENT_SELF = "不能设置父部门为本部门";
     public static final String NOTE_CHOSEN_CONTACT = "已选择此联系人";
     public static final String NOTE_IM_GROUP_USER_EMPTY = "请选择群聊成员";
+    public static final String NOTE_NO_MORE_MESSAGE = "没有更多的消息了";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";

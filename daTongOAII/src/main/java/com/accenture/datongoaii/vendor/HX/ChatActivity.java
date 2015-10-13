@@ -3,7 +3,7 @@ package com.accenture.datongoaii.vendor.HX;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.format.DateUtils;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +42,11 @@ import java.util.List;
 public class ChatActivity extends Activity implements View.OnClickListener, EMEventListener {
 
     private static final String TAG = "ChatActivity";
+    public static final int CHATTYPE_SINGLE = 1;
+    public static final int CHATTYPE_GROUP = 2;
+    public static final int CHATTYPE_CHATROOM = 3;
+    private static final int pagesize = 20;
+
     private Context context;
     private String toId;
     private int chatType;
@@ -49,10 +54,9 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     private EditText mEditTextContent;
     public PullToRefreshListView ptrlvChat;
     public MessageAdapter adapter;
+    private boolean isloading = false;
+    private boolean haveMoreData = true;
 
-    public static final int CHATTYPE_SINGLE = 1;
-    public static final int CHATTYPE_GROUP = 2;
-    public static final int CHATTYPE_CHATROOM = 3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,13 +83,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         ptrlvChat.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                String label = DateUtils.formatDateTime(
-                        context,
-                        System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
-                                | DateUtils.FORMAT_SHOW_DATE
-                                | DateUtils.FORMAT_ABBREV_ALL);
-                // Update the LastUpdatedLabel
-                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
                 loadMoreChatHistory();
             }
         });
@@ -101,6 +98,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                     if (!result.equals("fail")) {
                         try {
                             Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
+                            assert c != null;
                             ((TextView) findViewById(R.id.textTitle)).setText(c.name);
                             adapter = new MessageAdapter(context, c);
                             ptrlvChat.setAdapter(adapter);
@@ -120,7 +118,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                         try {
                             Group group = new Group();
                             group.imId = toId;
-                            group = Group.updateMembersFromJSON(group, new JSONObject(result).getJSONObject("data"));
+                            group = Group.updateFromJSON(group, new JSONObject(result).getJSONObject("data"));
                             if (group.name != null) {
                                 ((TextView) findViewById(R.id.textTitle)).setText(group.name);
                             }
@@ -162,8 +160,38 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     }
 
     private void loadMoreChatHistory() {
-        // TODO: 9/29/15
-        ptrlvChat.onRefreshComplete();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isloading && haveMoreData) {
+                    List<EMMessage> messages;
+                    try {
+                        if (chatType == CHATTYPE_SINGLE) {
+                            messages = conversation.loadMoreMsgFromDB(adapter.getItem(0).getMsgId(), pagesize);
+                        } else {
+                            messages = conversation.loadMoreGroupMsgFromDB(adapter.getItem(0).getMsgId(), pagesize);
+                        }
+                    } catch (Exception e1) {
+                        ptrlvChat.onRefreshComplete();
+                        return;
+                    }
+                    if (messages.size() > 0) {
+                        adapter.notifyDataSetChanged();
+                        adapter.refreshSeekTo(messages.size() - 1);
+                        if (messages.size() != pagesize) {
+                            haveMoreData = false;
+                        }
+                    } else {
+                        haveMoreData = false;
+                    }
+                    isloading = false;
+                }
+                if (!haveMoreData) {
+                    Utils.toast(context, Config.NOTE_NO_MORE_MESSAGE);
+                }
+                ptrlvChat.onRefreshComplete();
+            }
+        }, 1000);
     }
 
     private void initConversations() {
@@ -227,22 +255,19 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
                 break;
             }
-            case EventDeliveryAck:
-            {
+            case EventDeliveryAck: {
                 //获取到message
 //                EMMessage message = (EMMessage) emNotifierEvent.getData();
                 refreshUI();
                 break;
             }
-            case EventReadAck:
-            {
+            case EventReadAck: {
                 //获取到message
 //                EMMessage message = (EMMessage) emNotifierEvent.getData();
                 refreshUI();
                 break;
             }
-            case EventOfflineMessage:
-            {
+            case EventOfflineMessage: {
                 //a list of offline messages
 //                List<EMMessage> offlineMessages = (List<EMMessage>) emNotifierEvent.getData();
                 refreshUI();
@@ -270,7 +295,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     /**
      * 点击文字输入框
      *
-     * @param v
+     * @param v do nothing
      */
     public void editClick(View v) {
 //        getListView().setSelection(getListView().getCount() - 1);

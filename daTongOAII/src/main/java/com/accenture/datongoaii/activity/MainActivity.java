@@ -78,6 +78,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 this,
                 new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
                         EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
+        if (notiFrag != null) {
+            notiFrag.syncConversationList();
+        }
     }
 
     @Override
@@ -92,7 +95,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             contactFrag.getOrg(Account.getInstance().getUserId());
-            notiFrag.syncConversationList();
         }
     }
 
