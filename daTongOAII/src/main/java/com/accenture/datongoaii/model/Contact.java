@@ -23,6 +23,8 @@ public class Contact extends FirstPinYin implements Serializable {
         FRIENDS_STATUS_FRIEND
     }
 
+    public static final int CONTACT_BUTTON_INVALID_ID = -2032;
+
     public Integer id;
     public String name;
     public String cell;
@@ -67,6 +69,24 @@ public class Contact extends FirstPinYin implements Serializable {
         try {
             List<Contact> list = new ArrayList<Contact>();
             JSONArray array = json.getJSONObject("data").getJSONArray("friends");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject o = array.getJSONObject(i);
+                Contact c = Contact.fromJSON(o);
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            if (Logger.DEBUG) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static List<Contact> getContactsFromJSON(JSONObject json, String tag) {
+        try {
+            List<Contact> list = new ArrayList<Contact>();
+            JSONArray array = json.getJSONArray(tag);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject o = array.getJSONObject(i);
                 Contact c = Contact.fromJSON(o);

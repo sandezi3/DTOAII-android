@@ -16,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.DeptActivity;
 import com.accenture.datongoaii.activity.ManageOrgActivity;
 import com.accenture.datongoaii.activity.MyFriendActivity;
+import com.accenture.datongoaii.activity.MyGroupsActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
@@ -28,12 +32,7 @@ import com.accenture.datongoaii.model.FirstPinYin;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.model.Org;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Constants;
-import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
-import com.accenture.datongoaii.vendor.HX.ChatActivity;
-import com.accenture.datongoaii.vendor.HX.Constant;
 import com.accenture.datongoaii.widget.ContactAddPopupWindow;
 import com.accenture.datongoaii.widget.MorePopupWindow;
 import com.accenture.datongoaii.widget.SectionListView;
@@ -50,16 +49,11 @@ public class ContactFragment extends Fragment implements
         OnSectionItemClickedListener {
     public Org org;
     private List<Object> viewList;
-    //    private List<Object> groupList;
-    //    private List<Object> uList;
     private List<Object> tmpList;
 
     private ImageView ivSearch;
     private TextView tvSearch;
 
-    //    public static class ContactFragHandler extends Handler {
-//        WeakReference<ContactFragment> theFrag = null;
-//    }
     private void clearData() {
         tmpList.clear();
         viewList.clear();
@@ -92,8 +86,14 @@ public class ContactFragment extends Fragment implements
         d1.name = "手机通讯录";
         d1.img = null;
         d1.mFirstPinYin = "*";
+        Dept d2 = new Dept();
+        d2.id = Dept.DEPT_ID_MY_GROUPS;
+        d2.name = "我的群聊";
+        d2.img = null;
+        d2.mFirstPinYin = "*";
         viewList.add(d0);
         viewList.add(d1);
+        viewList.add(d2);
     }
 
     private final SectionListAdapter adapter = new SectionListAdapter() {
@@ -330,13 +330,6 @@ public class ContactFragment extends Fragment implements
     }
 
     public void getOrg(Integer userId) {
-//        Dept tmp = Dept.fromDataById(this.getActivity(), "");
-//        if (tmp != null) {
-//            clearData();
-//            dept = tmp;
-//            syncData();
-//            return;
-//        }
         String url = Config.SERVER_HOST + Config.URL_ORG.replace("{userId}", userId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
@@ -347,17 +340,6 @@ public class ContactFragment extends Fragment implements
                             clearData();
                             org = Org.fromJSON(new JSONObject(result));
                             Account.getInstance().setOrg(org);
-//                            else {
-//                                Dept root = Dept.getRootDept(dept);
-//                                Dept dest = Dept.getDestDeptById(root, deptId);
-//                                Dept.updateDept(dest, Dept.childFromJson((new JSONObject(result)).getJSONObject("data"), dest));
-//                                Account.getInstance().setDept(root);
-//                            }
-//                            groupList.addAll(Group
-//                                    .getGroupListFromJSON(new JSONObject(result)));
-//                            uList.addAll(Contact
-//                                    .getFriendsFromJSON(new JSONObject(result)));
-//                            Dept.updateData(getActivity(), dept);
                             syncData();
                         }
                     } catch (Exception e) {
@@ -387,6 +369,9 @@ public class ContactFragment extends Fragment implements
                 startActivity(intent);
             } else if (d.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
                 Intent intent = new Intent(view.getContext(), MyFriendActivity.class);
+                startActivity(intent);
+            } else if (d.id.equals(Dept.DEPT_ID_MY_GROUPS)) {
+                Intent intent = new Intent(view.getContext(), MyGroupsActivity.class);
                 startActivity(intent);
             }
         } else if (o instanceof Org) {

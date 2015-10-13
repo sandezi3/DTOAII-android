@@ -10,26 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Group extends FirstPinYin {
-    public String id;
+    public static final String TAG = "Group";
+    public String imId;
     public String version;
     public String name;
     public String img;
+    public Contact owner;
     public List<Contact> contactList;
 
     public static Group fromJSON(JSONObject json) {
         try {
             Group g = new Group();
-            g.id = json.getString("id");
-            g.name = json.getString("name");
-            g.img = json.getString("img");
+            g.imId = json.getString("groupid");
+            g.name = json.getString("groupname");
+            g.img = "";
             g.mFirstPinYin = "*";
             g.contactList = new ArrayList<Contact>();
-            JSONArray array = json.getJSONArray("pList");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject o = array.getJSONObject(i);
-                Contact c = Contact.fromJSON(o);
-                g.contactList.add(c);
-            }
             return g;
         } catch (Exception e) {
             if (Logger.DEBUG) {
@@ -39,10 +35,24 @@ public class Group extends FirstPinYin {
         return null;
     }
 
+    public static Group updateMembersFromJSON(Group group, JSONObject json) {
+        try {
+            group.owner = Contact.fromJSON(json.getJSONObject("owner"));
+            List<Contact> list = Contact.getContactsFromJSON(json, "members");
+            if (list != null && group.owner != null) {
+                list.add(0, group.owner);
+            }
+            group.contactList = list;
+        } catch (JSONException e) {
+            Logger.e(TAG, e.getMessage());
+        }
+        return group;
+    }
+
     public static List<Group> getGroupListFromJSON(JSONObject json) {
         List<Group> list = new ArrayList<Group>();
         try {
-            JSONArray a = json.getJSONArray("gList");
+            JSONArray a = json.getJSONArray("data");
             for (int i = 0; i < a.length(); i++) {
                 JSONObject o = a.getJSONObject(i);
                 Group g = Group.fromJSON(o);
@@ -51,6 +61,15 @@ public class Group extends FirstPinYin {
             return list;
         } catch (JSONException e) {
             Logger.e("Group.getGroupListFromJSON", e.getMessage());
+        }
+        return null;
+    }
+
+    public static Contact getMemberByImid(Group group, String imId) {
+        for (Contact contact : group.contactList) {
+            if (contact.imId.equals(imId)) {
+                return contact;
+            }
         }
         return null;
     }

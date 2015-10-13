@@ -14,6 +14,7 @@ import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Contact;
+import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
@@ -31,6 +32,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by leon on 9/28/15.
@@ -60,6 +63,8 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         chatType = getIntent().getIntExtra("chatType", CHATTYPE_SINGLE);
         if (chatType == CHATTYPE_SINGLE) {
             toId = getIntent().getStringExtra("userId");
+        } else if (chatType == CHATTYPE_GROUP) {
+            toId = getIntent().getStringExtra("groupId");
         }
 
         mEditTextContent = (EditText) findViewById(R.id.et_sendmessage);
@@ -85,28 +90,51 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             }
         });
 
-        initAdapter(toId);
+        initAdapter();
     }
 
-    private void initAdapter(String id) {
-        DTOARequest.startGetUserByImId(id, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
-                        ((TextView) findViewById(R.id.textTitle)).setText(c.name);
-                        adapter = new MessageAdapter(context, c, CHATTYPE_SINGLE);
-                        ptrlvChat.setAdapter(adapter);
-                        refreshUIWithNewMessage();
-                        initConversations();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    private void initAdapter() {
+        if (chatType == CHATTYPE_SINGLE) {
+            DTOARequest.startGetUserByImId(toId, new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    if (!result.equals("fail")) {
+                        try {
+                            Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
+                            ((TextView) findViewById(R.id.textTitle)).setText(c.name);
+                            adapter = new MessageAdapter(context, c);
+                            ptrlvChat.setAdapter(adapter);
+                            refreshUIWithNewMessage();
+                            initConversations();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        });
-
+            });
+        } else if (chatType == CHATTYPE_GROUP) {
+            DTOARequest.startGetGroup(toId, new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    if (!result.equals("fail")) {
+                        try {
+                            Group group = new Group();
+                            group.imId = toId;
+                            group = Group.updateMembersFromJSON(group, new JSONObject(result).getJSONObject("data"));
+                            if (group.name != null) {
+                                ((TextView) findViewById(R.id.textTitle)).setText(group.name);
+                            }
+                            adapter = new MessageAdapter(context, group);
+                            ptrlvChat.setAdapter(adapter);
+                            refreshUIWithNewMessage();
+                            initConversations();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void refreshUIWithNewMessage() {
@@ -178,7 +206,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 //获取到message
                 EMMessage message = (EMMessage) emNotifierEvent.getData();
 
-                String username = null;
+                String username;
                 //群组消息
                 if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
                     username = message.getTo();
@@ -199,27 +227,27 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
                 break;
             }
-//            case EventDeliveryAck:
-//            {
-//                //获取到message
-//                EMMessage message = (EMMessage) event.getData();
-//                refreshUI();
-//                break;
-//            }
-//            case EventReadAck:
-//            {
-//                //获取到message
-//                EMMessage message = (EMMessage) event.getData();
-//                refreshUI();
-//                break;
-//            }
-//            case EventOfflineMessage:
-//            {
-//                //a list of offline messages
-//                //List<EMMessage> offlineMessages = (List<EMMessage>) event.getData();
-//                refreshUI();
-//                break;
-//            }
+            case EventDeliveryAck:
+            {
+                //获取到message
+//                EMMessage message = (EMMessage) emNotifierEvent.getData();
+                refreshUI();
+                break;
+            }
+            case EventReadAck:
+            {
+                //获取到message
+//                EMMessage message = (EMMessage) emNotifierEvent.getData();
+                refreshUI();
+                break;
+            }
+            case EventOfflineMessage:
+            {
+                //a list of offline messages
+//                List<EMMessage> offlineMessages = (List<EMMessage>) emNotifierEvent.getData();
+                refreshUI();
+                break;
+            }
             default:
                 break;
         }
@@ -229,6 +257,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBack:
+                setResult(RESULT_OK);
                 finish();
                 break;
             case R.id.btn_send:
@@ -260,6 +289,9 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             // 设置消息body
             message.addBody(txtBody);
             // 设置要发给谁,用户username或者群聊groupid
+            if (chatType == CHATTYPE_GROUP) {
+                message.setChatType(EMMessage.ChatType.GroupChat);
+            }
             message.setReceipt(toId);
             // 把messgage加到conversation中
             conversation.addMessage(message);

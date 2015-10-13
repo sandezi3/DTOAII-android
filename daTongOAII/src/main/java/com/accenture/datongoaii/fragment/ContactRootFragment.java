@@ -29,10 +29,6 @@ public class ContactRootFragment extends Fragment implements AdapterView.OnItemC
     private ListView lvGroup;
     private ListView lvContact;
 
-    private ContactListAdapter adapterOrg;
-    private ContactListAdapter adapterGroup;
-    private ContactListAdapter adapterContact;
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getActivity();
@@ -48,9 +44,9 @@ public class ContactRootFragment extends Fragment implements AdapterView.OnItemC
         userList = new ArrayList<Object>();
         appendLocalData();
 
-        adapterOrg = new ContactListAdapter(context, orgList);
-        adapterGroup = new ContactListAdapter(context, groupList);
-        adapterContact = new ContactListAdapter(context, userList);
+        ContactListAdapter adapterOrg = new ContactListAdapter(context, orgList);
+        ContactListAdapter adapterGroup = new ContactListAdapter(context, groupList);
+        ContactListAdapter adapterContact = new ContactListAdapter(context, userList);
         lvOrg.setAdapter(adapterOrg);
         lvGroup.setAdapter(adapterGroup);
         lvContact.setAdapter(adapterContact);
@@ -70,10 +66,12 @@ public class ContactRootFragment extends Fragment implements AdapterView.OnItemC
 
     // 私有方法
     private void appendLocalData() {
-        Dept d0 = new Dept();
-        d0.id = Account.getInstance().getOrg().orgId;
-        d0.name = Account.getInstance().getOrg().orgName;
-        orgList.add(d0);
+        if (Account.getInstance().getOrg() != null) {
+            Dept d0 = new Dept();
+            d0.id = Account.getInstance().getOrg().orgId;
+            d0.name = Account.getInstance().getOrg().orgName;
+            orgList.add(d0);
+        }
         Dept d1 = new Dept();
         d1.id = Dept.DEPT_ID_MY_FRIENDS;
         d1.name = "我的好友";

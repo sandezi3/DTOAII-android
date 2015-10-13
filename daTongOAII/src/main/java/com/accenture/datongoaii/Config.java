@@ -8,9 +8,11 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
+//    public static final String SERVER_HOST = "http://192.168.43.158:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
-//        public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
-    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
+//    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
+    //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
+    public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_AUTO_LOGIN = "/authentication/{token}";
     public static final String URL_LOGOUT = "/logout";
@@ -23,7 +25,6 @@ public class Config {
     public static final String URL_NOTI_LIST = "/DTOAII/noti.json";
     public static final String URL_ORG = "/groups/{userId}";
     public static final String URL_DEPT = "/group/{groupId}/subgroups";
-    public static final String URL_CREATE_GROUP = "/DTOAII/createGroup.json";
     public static final String URL_CREATE_DEPT = "/groups";
     public static final String URL_CREATE_ORG = "/groups";
     public static final String URL_DELETE_ORG = "/group/{groupId}";
@@ -39,6 +40,14 @@ public class Config {
     public static final String URL_INVITE_FRIEND = "";
     public static final String URL_GET_USER_BY_IMID = "/user/{imId}";
     public static final String URL_GET_USERS_BY_IMIDS = "/users/search";
+    public static final String URL_CREATE_GROUP = "/chatgroups";
+    public static final String URL_GET_GROUPS = "/member/{imId}/joined_chatgroups";
+    public static final String URL_GET_GROUP = "/chatgroup/{chatGroupId}/members";
+    public static final String URL_GROUP_INVITE_MEMBER = "/chatgroup/{groupId}/members";
+    public static final String URL_QUIT_GROUP = "/chatgroup/{groupId}/member/{imId}";
+    public static final String URL_DISMISS_GROUP = "/chatgroup/{groupId}";
+    public static final String URL_RENAME_GROUP = "/chatgroup/{chatGroupId}";
+    public static final String URL_GET_GROUPS_BY_IDS = "";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";
@@ -57,6 +66,9 @@ public class Config {
     public static final String SUCCESS_ADD = "已添加";
     public static final String SUCCESS_DELETE = "已删除";
     public static final String SUCCESS_UPDATE = "已更新";
+    public static final String SUCCESS_QUIT = "已退出";
+    public static final String SUCCESS_INVITE = "已邀请";
+    public static final String SUCCESS_DISMISS = "已解散";
 
     public static final String NOTE_USERNAME_EMPTY = "请输入用户名";
     public static final String NOTE_CELL_EMPTY = "请输入手机号码";
@@ -88,12 +100,17 @@ public class Config {
     public static final String PROGRESS_SEND = "正在发送...";
     public static final String PROGRESS_GET = "正在获取...";
     public static final String PROGRESS_SUBMIT = "正在提交...";
+    public static final String PROGRESS_QUIT = "正在退出...";
 
     public static final String ALERT_DELETE_ORG = "您确认删除该组织吗？";
     public static final String ALERT_DELETE_DEPT = "您确认删除该部门吗？";
     public static final String ALERT_DELETE_USER = "您确认删除该员工吗？";
-    public static final String ALERT_PARENT_DEPT = "您确认更改父部门为{}吗？";
+    public static final String ALERT_PARENT_DEPT = "您确认更改父部门为 {} 吗？";
     public static final String ALERT_SWITCH_ACCOUNT = "您确认要切换账户登录吗？";
+    public static final String ALERT_QUIT_GROUP = "您确认退出该群吗？";
+    public static final String ALERT_DISMISS_GROUP = "您确认解散该群吗？";
+    public static final String ALERT_RENAME_GROUP = "更改群名称为：";
+    public static final String ALERT_KICK_MEMBER = "您确认从该群移除用户 {} 吗？";
 
     //设置
     public static final int HTTP_CONNECTION_EXPIRE_SECONDS = 120;

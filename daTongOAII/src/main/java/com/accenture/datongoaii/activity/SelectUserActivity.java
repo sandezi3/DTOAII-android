@@ -27,7 +27,6 @@ import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.util.Utils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {
@@ -212,7 +211,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 }
                 ((HorizontalScrollView) findViewById(R.id.hsvBottom)).fullScroll(View.FOCUS_RIGHT);
                 Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
-                if (selectedUsers.size() == 1) {
+                if (!isSubmitButtonEnabled()) {
                     btnSubmit.setEnabled(false);
                     btnSubmit.setBackgroundResource(R.drawable.button_disable);
                 } else {
@@ -221,5 +220,9 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 }
             }
         });
+    }
+
+    private boolean isSubmitButtonEnabled() {
+        return selectedUsers.size() != 0 && !(selectedUsers.size() == 1 && selectedUsers.get(0).id.equals(Account.getInstance().getUserId()));
     }
 }

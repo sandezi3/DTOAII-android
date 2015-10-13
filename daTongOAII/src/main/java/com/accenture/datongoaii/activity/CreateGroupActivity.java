@@ -80,7 +80,7 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
 
         selectedUsers = new ArrayList<Contact>();
         initMeButton();
-        adapter = new UserGridAdapter(context, selectedUsers);
+        adapter = new UserGridAdapter(context, selectedUsers, true);
         gvUsers.setAdapter(adapter);
         gvUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -128,8 +128,8 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
             break;
             case R.id.btnCreate:
                 if (isDataValid()) {
-                    Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
-                    DTOARequest.startCreateGroup(getGroupName(), selectedUsers, new HttpConnection.CallbackListener() {
+                    progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
+                    DTOARequest.startCreateGroup(getGroupName(), Account.getInstance().getImId(), "", selectedUsers, new HttpConnection.CallbackListener() {
                         @Override
                         public void callBack(String result) {
                             handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);

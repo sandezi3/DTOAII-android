@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
+import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.ChatActivity;
 import com.accenture.datongoaii.vendor.HX.Constant;
@@ -53,6 +54,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
@@ -81,9 +83,10 @@ public class MessageAdapter extends BaseAdapter {
 
     public static final String IMAGE_DIR = "chat/image/";
     public static final String VOICE_DIR = "chat/audio/";
-    public static final String VIDEO_DIR = "chat/video";
+    public static final String VIDEO_DIR = "chat/video/";
 
     private Contact user;
+    private Group group;
     private LayoutInflater inflater;
     private Activity activity;
     private ImageLoader imageLoader;
@@ -100,7 +103,7 @@ public class MessageAdapter extends BaseAdapter {
 
     private Map<String, Timer> timers = new Hashtable<String, Timer>();
 
-    public MessageAdapter(Context context, Contact user, int chatType) {
+    public MessageAdapter(Context context, Contact user) {
         this.user = user;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -109,11 +112,20 @@ public class MessageAdapter extends BaseAdapter {
         imageLoader = ImageLoader.getInstance();
     }
 
+    public MessageAdapter(Context context, Group group) {
+        this.group = group;
+        this.context = context;
+        inflater = LayoutInflater.from(context);
+        activity = (Activity) context;
+        this.conversation = EMChatManager.getInstance().getConversation(group.imId);
+        imageLoader = ImageLoader.getInstance();
+    }
+
     Handler handler = new Handler() {
         private void refreshList() {
             // UI线程不能直接使用conversation.getAllMessages()
             // 否则在UI刷新过程中，如果收到新的消息，会导致并发问题
-            messages = (EMMessage[]) conversation.getAllMessages().toArray(new EMMessage[conversation.getAllMessages().size()]);
+            messages = conversation.getAllMessages().toArray(new EMMessage[conversation.getAllMessages().size()]);
             for (int i = 0; i < messages.length; i++) {
                 // getMessage will set message as read status
                 conversation.getMessage(i);
@@ -380,12 +392,15 @@ public class MessageAdapter extends BaseAdapter {
         }
 
 //        // 群聊时，显示接收的消息的发送人的名称
-//        if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.RECEIVE) {
-//            //demo里使用username代码nick
-//            UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
-//        }
+        if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.RECEIVE) {
+            //demo里使用username代码nick
+            Contact from = Group.getMemberByImid(group, message.getFrom());
+            if (from != null) {
+                holder.tv_usernick.setText(from.name);
+            }
+        }
 //        if (message.direct == Direct.SEND) {
-//            UserUtils.setCurrentUserNick(holder.tv_usernick);
+//            holder.tv_usernick.setText(Account.getInstance().getUsername());
 //        }
         // 如果是发送的消息并且不是群聊消息，显示已读textview
         if (!(chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.SEND) {
@@ -539,8 +554,10 @@ public class MessageAdapter extends BaseAdapter {
         if (message.direct == Direct.SEND) {
             //显示自己头像
             imageLoader.displayImage(Account.getInstance().getHead(), imageView);
-        } else {
+        } else if (this.group == null){
             imageLoader.displayImage(user.head, imageView);
+        } else {
+            imageLoader.displayImage(Group.getMemberByImid(group, message.getFrom()).head, imageView);
         }
 //        imageView.setOnClickListener(new OnClickListener() {
 //

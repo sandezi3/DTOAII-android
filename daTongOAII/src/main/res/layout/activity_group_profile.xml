@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,ContentDescription,RtlHardcoded">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/btnBack"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/image_btn"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/imgViewBackBtn"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="群聊详情"
+            android:textColor="@color/green"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutTitle"
+        android:background="@color/gray_3">
+
+        <LinearLayout
+            android:id="@+id/layoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    android:text="群图标"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/ivHead"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_contact_p" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <RelativeLayout
+                android:id="@+id/btnRename"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/ivArrow"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="0dp"
+                    android:padding="10dp"
+                    android:src="@drawable/arrow"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    android:text="群名称"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/ivArrow"
+                    android:maxLines="1"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="value"
+                    android:textColor="@color/gray_2"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/ivArrow1"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:visibility="invisible"
+                    android:src="@drawable/arrow" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <RelativeLayout
+                android:id="@+id/layoutSelect"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    android:text="群成员"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <GridView
+                android:id="@+id/gvUsers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:columnWidth="80dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="6dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/gray_2" />
+
+            <TextView
+                android:id="@+id/btnChat"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="发消息"
+                android:textColor="@color/green"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <TextView
+                android:id="@+id/btnQuit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="退出该群"
+                android:textColor="@color/red"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

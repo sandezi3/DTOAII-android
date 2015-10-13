@@ -16,11 +16,13 @@ public class UserGridAdapter extends BaseAdapter {
     private Context context;
     private List<Contact> userList;
     private LayoutInflater inflater;
+    public Boolean delectable;
 
-    public UserGridAdapter(Context context, List<Contact> list) {
+    public UserGridAdapter(Context context, List<Contact> list, Boolean delectable) {
         this.context = context;
         this.userList = list;
         this.inflater = LayoutInflater.from(context);
+        this.delectable = delectable;
     }
 
     @Override
@@ -46,17 +48,31 @@ public class UserGridAdapter extends BaseAdapter {
                     false);
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.tvTitle);
+            holder.tvDelete = (TextView) convertView.findViewById(R.id.tvDelete);
+            if (delectable) {
+                holder.tvDelete.setVisibility(View.VISIBLE);
+            } else {
+                holder.tvDelete.setVisibility(View.INVISIBLE);
+            }
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         Contact c = userList.get(position);
-        holder.tvName.setText(c.name);
-        if (position == 0) {
-            holder.tvName.setTextColor(context.getResources().getColor(R.color.gray_2));
+        if (c.id != Contact.CONTACT_BUTTON_INVALID_ID) {
+            holder.tvName.setText(c.name);
+            if (position == 0) {
+                holder.tvName.setTextColor(context.getResources().getColor(R.color.gray_2));
+            } else {
+                holder.tvName.setTextColor(context.getResources().getColor(R.color.tab_text_focused));
+            }
+            holder.tvName.setBackgroundColor(context.getResources().getColor(R.color.white));
+            holder.tvDelete.setVisibility(View.VISIBLE);
         } else {
-            holder.tvName.setTextColor(context.getResources().getColor(R.color.tab_text_focused));
+            holder.tvName.setText("+");
+            holder.tvName.setBackgroundColor(context.getResources().getColor(R.color.gray_3));
+            holder.tvDelete.setVisibility(View.INVISIBLE);
         }
 
         return convertView;
@@ -64,5 +80,6 @@ public class UserGridAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         TextView tvName;
+        TextView tvDelete;
     }
 }

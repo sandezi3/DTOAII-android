@@ -30,7 +30,6 @@ import com.accenture.datongoaii.vendor.HX.HXController;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.igexin.sdk.PushManager;
 
@@ -93,6 +92,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             contactFrag.getOrg(Account.getInstance().getUserId());
+            notiFrag.syncConversationList();
         }
     }
 

@@ -10,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
@@ -22,6 +19,7 @@ import com.accenture.datongoaii.adapter.ConversationListAdapter;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Conversation;
+import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.ChatActivity;
@@ -42,13 +40,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class NotiFragment extends Fragment implements AdapterView.OnItemClickListener {
-    private View layoutNoti;
     private Context context;
     //    private PullToRefreshListView lvNoti;
-    private ListView lvConversation;
-    private EditText etSearch;
-    private ImageView ivSearch;
-    private TextView tvSearch;
+//    private EditText etSearch;
+//    private ImageView ivSearch;
+//    private TextView tvSearch;
 
     //    private NotiListAdapter adapter;
 //    private List<Noti> notiList;
@@ -59,12 +55,12 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = this.getActivity();
-        layoutNoti = inflater.inflate(R.layout.frag_noti, container, false);
+        View layoutNoti = inflater.inflate(R.layout.frag_noti, container, false);
 //        lvNoti = (PullToRefreshListView) layoutNoti.findViewById(R.id.lvNoti);
-        lvConversation = (ListView) layoutNoti.findViewById(R.id.lvConversation);
-        etSearch = (EditText) layoutNoti.findViewById(R.id.etSearch);
-        ivSearch = (ImageView) layoutNoti.findViewById(R.id.ivSearch);
-        tvSearch = (TextView) layoutNoti.findViewById(R.id.tvSearch);
+        ListView lvConversation = (ListView) layoutNoti.findViewById(R.id.lvConversation);
+//        etSearch = (EditText) layoutNoti.findViewById(R.id.etSearch);
+//        ivSearch = (ImageView) layoutNoti.findViewById(R.id.ivSearch);
+//        tvSearch = (TextView) layoutNoti.findViewById(R.id.tvSearch);
 
 //        etSearch.addTextChangedListener(new TextWatcher() {
 //
@@ -147,7 +143,7 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
         conversationList.clear();
         conversationList.addAll(loadConversationsWithRecentChat());
         // 判断会话是否有更新
-        if(isConversationUpdated(conversationList)) {
+        if (isConversationUpdated(conversationList)) {
             DTOARequest.startGetUsersByImIds(getImIds(conversationList), new HttpConnection.CallbackListener() {
                 @Override
                 public void callBack(String result) {
@@ -155,14 +151,43 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
                         try {
                             CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                             if (cr.statusCode == 0) {
-                                JSONArray array = new JSONObject(result).getJSONArray("userList");
+                                JSONArray array = new JSONObject(result).getJSONArray("data");
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject obj = array.getJSONObject(i);
                                     Contact c = Contact.fromJSON(obj);
-                                    Conversation conversation = Conversation.getItemByImId(conversationList, c.imId);
-                                    if (conversation != null) {
-                                        conversation.head = c.head;
-                                        conversation.username = c.name;
+                                    if (c != null) {
+                                        Conversation conversation = Conversation.getItemByImId(conversationList, c.imId);
+                                        if (conversation != null) {
+                                            conversation.head = c.head;
+                                            conversation.username = c.name;
+                                        }
+                                    }
+                                }
+                                refresh();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            DTOARequest.startGetGroupsByIds(getGroupIds(conversationList), new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    if (!result.equals("result")) {
+                        try {
+                            CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                            if (cr.statusCode == 0) {
+                                JSONArray array = new JSONObject(result).getJSONArray("groupList");
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject obj = array.getJSONObject(i);
+                                    Group group = Group.fromJSON(obj);
+                                    if (group != null) {
+                                        Conversation conversation = Conversation.getItemByImId(conversationList, group.imId);
+                                        if (conversation != null) {
+                                            conversation.head = group.img;
+                                            conversation.username = group.name;
+                                        }
                                     }
                                 }
                                 refresh();
@@ -188,12 +213,22 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
     private List<String> getImIds(List<Conversation> list) {
         List<String> imIds = new ArrayList<String>();
         for (Conversation conversation : list) {
-            imIds.add(conversation.imId);
+            if (!conversation.isGroup) {
+                imIds.add(conversation.imId);
+            }
         }
         return imIds;
     }
 
-
+    private List<String> getGroupIds(List<Conversation> list) {
+        List<String> ids = new ArrayList<String>();
+        for (Conversation conversation : list) {
+            if (conversation.isGroup) {
+                ids.add(conversation.imId);
+            }
+        }
+        return ids;
+    }
 //    public void refreshNotiList() {
 //        EMChatManager.getInstance().getAllConversations();
 //        String url = Config.SERVER_HOST + "noti.json";
@@ -297,13 +332,14 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
             Conversation conversation = new Conversation();
             EMConversation emConversation = sortItem.second;
             conversation.username = null;
+            conversation.isGroup = emConversation.getIsGroup();
             conversation.imId = emConversation.getUserName();
             if (emConversation.getLastMessage().getBody() instanceof TextMessageBody) {
                 conversation.summary = ((TextMessageBody) emConversation.getLastMessage().getBody()).getMessage();
             } else if (emConversation.getLastMessage().getBody() instanceof ImageMessageBody) {
-                conversation.summary = "图片";
+                conversation.summary = "[图片]";
             } else if (emConversation.getLastMessage().getBody() instanceof VoiceMessageBody) {
-                conversation.summary = "语音";
+                conversation.summary = "[语音]";
             }
             try {
                 conversation.create = Utils.getPeroid(emConversation.getLastMessage().getMsgTime(), System.currentTimeMillis());
@@ -320,6 +356,7 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
      * 根据最后一条消息的时间排序
      *
      * @param conversationList
+     * 会话列表
      */
     private void sortConversationByLastChatTime(List<Pair<Long, EMConversation>> conversationList) {
         Collections.sort(conversationList, new Comparator<Pair<Long, EMConversation>>() {
@@ -341,8 +378,13 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Conversation c = conversationList.get(position);
         Intent intent = new Intent(view.getContext(), ChatActivity.class);
-        intent.putExtra("userId", c.imId);
-        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+        if (c.isGroup) {
+            intent.putExtra("groupId", c.imId);
+            intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+        } else {
+            intent.putExtra("userId", c.imId);
+            intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+        }
         startActivity(intent);
     }
 }

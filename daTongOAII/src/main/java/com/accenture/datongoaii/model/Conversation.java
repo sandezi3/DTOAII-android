@@ -16,6 +16,7 @@ public class Conversation implements Serializable {
     public String summary;
     public String create;
     public String unReadedCount;
+    public boolean isGroup;
 
     public static Conversation getItemByImId(List<Conversation> list, String imId) {
         for (Conversation conversation : list) {

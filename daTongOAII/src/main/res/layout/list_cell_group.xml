@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="ContentDescription,HardcodedText">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="3dp"
+        android:padding="2dp"
+        android:src="@drawable/tab_todo_h" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/ivIcon"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="群名称"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvMemberCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_marginBottom="6dp"
+        android:layout_toRightOf="@id/ivIcon"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:text="3人"
+        android:textColor="@color/gray_2"
+        android:textSize="14sp" />
+
+</RelativeLayout>
