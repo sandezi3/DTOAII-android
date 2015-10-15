@@ -409,9 +409,11 @@ public class MessageAdapter extends BaseAdapter {
 //        // 群聊时，显示接收的消息的发送人的名称
         if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.RECEIVE) {
             //demo里使用username代码nick
-            Contact from = Group.getMemberByImid(group, message.getFrom());
-            if (from != null) {
-                holder.tv_usernick.setText(from.name);
+            if (group != null) {
+                Contact from = Group.getMemberByImid(group, message.getFrom());
+                if (from != null) {
+                    holder.tv_usernick.setText(from.name);
+                }
             }
         }
 //        if (message.direct == Direct.SEND) {
@@ -569,13 +571,17 @@ public class MessageAdapter extends BaseAdapter {
         if (message.direct == Direct.SEND) {
             //显示自己头像
             imageLoader.displayImage(Account.getInstance().getHead(), imageView);
-        } else if (user != null) {
+        } else if (user != null && user.head != null) {
             imageLoader.displayImage(user.head, imageView, Config.getDisplayOptions());
         } else if (group != null) {
             Contact c = Group.getMemberByImid(group, message.getFrom());
             if (c != null) {
                 imageLoader.displayImage(c.head, imageView, Config.getDisplayOptions());
+            } else {
+                imageLoader.displayImage("", imageView, Config.getDisplayOptions());
             }
+        } else {
+            imageLoader.displayImage("", imageView, Config.getDisplayOptions());
         }
 //        imageView.setOnClickListener(new OnClickListener() {
 //

@@ -214,6 +214,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             }
         });
         initAdapter();
+        updateAdapter();
     }
 
     @Override
@@ -555,7 +556,27 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         }
     }
 
+    private void syncAdapter(MessageAdapter a) {
+        ptrlvChat.setAdapter(a);
+        refreshUIWithNewMessage();
+        initConversations();
+    }
+
     private void initAdapter() {
+        if (chatType == CHATTYPE_SINGLE) {
+            Contact contact = new Contact();
+            contact.imId = toId;
+            adapter = new MessageAdapter(context, contact);
+            syncAdapter(adapter);
+        } else if (chatType == CHATTYPE_GROUP) {
+            Group group = new Group();
+            group.imId = toId;
+            adapter = new MessageAdapter(context, group);
+            syncAdapter(adapter);
+        }
+    }
+
+    private void updateAdapter() {
         if (chatType == CHATTYPE_SINGLE) {
             DTOARequest.startGetUserByImId(toId, new HttpConnection.CallbackListener() {
                 @Override
@@ -566,9 +587,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                             assert c != null;
                             ((TextView) findViewById(R.id.textTitle)).setText(c.name);
                             adapter = new MessageAdapter(context, c);
-                            ptrlvChat.setAdapter(adapter);
-                            refreshUIWithNewMessage();
-                            initConversations();
+                            syncAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -588,9 +607,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                                 ((TextView) findViewById(R.id.textTitle)).setText(group.name);
                             }
                             adapter = new MessageAdapter(context, group);
-                            ptrlvChat.setAdapter(adapter);
-                            refreshUIWithNewMessage();
-                            initConversations();
+                            syncAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
