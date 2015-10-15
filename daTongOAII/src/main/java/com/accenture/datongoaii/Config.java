@@ -90,6 +90,8 @@ public class Config {
     public static final String NOTE_NO_MORE_MESSAGE = "没有更多的消息了";
     public static final String NOTE_NO_STORAGE_CARD = "没有存储卡";
     public static final String NOTE_NO_LOCAL_PIC = "没有找到图片";
+    public static final String NOTE_GROUP_REMOVED_BY_ADMIN = "你被群创建者从此群中移除";
+    public static final String NOTE_GROUP_DISMISSED_BY_ADMIN = "当前群聊已被群创建者解散";
 
     public static final String NOTE_RECORD_FAIL_NO_STORAGE_CARD = "未检测到存储卡，无法录音";
     public static final String NOTE_RECORD_SLIDE_UP_CANCEL = "手指上滑，取消发送";

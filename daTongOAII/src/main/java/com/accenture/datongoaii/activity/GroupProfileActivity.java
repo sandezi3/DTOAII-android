@@ -46,6 +46,8 @@ import java.util.List;
  * 群聊详情
  */
 public class GroupProfileActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+    public static GroupProfileActivity instance;
+
     private static final String TAG = "GroupProfileActivity";
     private Context context;
     private Group mGroup;
@@ -83,6 +85,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_profile);
         context = this;
+        instance = this;
         isAdmin = false;
 
         ImageView ivHead = (ImageView) findViewById(R.id.ivHead);

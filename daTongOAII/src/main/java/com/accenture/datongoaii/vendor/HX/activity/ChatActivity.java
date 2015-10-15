@@ -30,6 +30,7 @@ import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.GroupProfileActivity;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
@@ -37,6 +38,7 @@ import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.CommonUtils;
 import com.accenture.datongoaii.vendor.HX.HXController;
+import com.accenture.datongoaii.vendor.HX.adapter.GroupRemoveListener;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.VoicePlayClickListener;
 import com.easemob.EMCallBack;
@@ -46,6 +48,7 @@ import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
@@ -62,7 +65,7 @@ import java.util.List;
 
 /**
  * Created by leon on 9/28/15.
- * 单聊
+ * 聊天
  */
 public class ChatActivity extends Activity implements View.OnClickListener, EMEventListener {
 
@@ -98,6 +101,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     private File cameraFile;
     public String playMsgId;
     private VoiceRecorder voiceRecorder;
+    private GroupListener groupListener;
     private Handler micImageHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -119,6 +123,9 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             toId = getIntent().getStringExtra("userId");
         } else if (chatType == CHATTYPE_GROUP) {
             toId = getIntent().getStringExtra("groupId");
+            // 监听当前会话的群聊解散被T事件
+            groupListener = new GroupListener();
+            EMGroupManager.getInstance().addGroupChangeListener(groupListener);
         }
 
         recordingContainer = findViewById(R.id.recording_container);
@@ -239,6 +246,15 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         HXController ctrl = HXController.getInstance();
         ctrl.popActivity(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
+        if(groupListener != null){
+            EMGroupManager.getInstance().removeGroupChangeListener(groupListener);
+        }
     }
 
     @Override
@@ -827,5 +843,42 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                     return false;
             }
         }
+    }
+
+    /**
+     * 监测群组解散或者被T事件
+     *
+     */
+    class GroupListener extends GroupRemoveListener {
+
+        @Override
+        public void onUserRemoved(final String groupId, String groupName) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (toId.equals(groupId)) {
+                        Utils.toast(context, Config.NOTE_GROUP_REMOVED_BY_ADMIN);
+                        if (GroupProfileActivity.instance != null)
+                            GroupProfileActivity.instance.finish();
+                        finish();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onGroupDestroy(final String groupId, String groupName) {
+            // 群组解散正好在此页面，提示群组被解散，并finish此页面
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (toId.equals(groupId)) {
+                        Utils.toast(context, Config.NOTE_GROUP_REMOVED_BY_ADMIN);
+                        if (GroupProfileActivity.instance != null)
+                            GroupProfileActivity.instance.finish();
+                        finish();
+                    }
+                }
+            });
+        }
+
     }
 }
