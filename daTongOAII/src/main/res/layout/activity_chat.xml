@@ -77,8 +77,8 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="6dp"
                 android:background="@drawable/chatting_setmode_voice_btn"
+                android:onClick="setModeVoice"
                 android:visibility="visible" />
-            <!--android:onClick="setModeVoice"-->
 
             <Button
                 android:id="@+id/btn_set_mode_keyboard"
@@ -86,8 +86,8 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="6dp"
                 android:background="@drawable/chatting_setmode_keyboard_btn"
+                android:onClick="setModeKeyboard"
                 android:visibility="gone" />
-            <!--android:onClick="setModeKeyboard"-->
 
 
             <LinearLayout
@@ -176,8 +176,8 @@
                 android:layout_height="32dip"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="10dp"
-                android:onClick="toggleMore"
-                android:background="@drawable/type_select_btn" />
+                android:background="@drawable/type_select_btn"
+                android:onClick="toggleMore" />
 
             <Button
                 android:id="@+id/btn_send"
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:orientation="vertical"
-            android:visibility="visible" >
+            android:visibility="visible">
 
             <!-- 表情图片 -->
             <LinearLayout
@@ -206,7 +206,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/vPager"
@@ -220,25 +220,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible" >
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:layout_marginTop="6dp"
-                    android:weightSum="4" >
+                    android:weightSum="4">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="64dp"
-                            android:layout_height="64dp" >
+                            android:layout_height="64dp">
 
                             <ImageView
                                 android:id="@+id/btn_take_picture"
@@ -264,11 +264,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="64dp"
-                            android:layout_height="64dp" >
+                            android:layout_height="64dp">
 
                             <ImageView
                                 android:id="@+id/btn_picture"
@@ -300,5 +300,33 @@
         android:layout_above="@id/bar_bottom"
         android:layout_below="@id/layoutTitle"
         android:divider="@color/transparent" />
+
+    <RelativeLayout
+        android:id="@+id/recording_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/recording_hint_bg"
+        android:padding="10dp"
+        android:visibility="invisible" >
+
+        <ImageView
+            android:id="@+id/mic_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/record_animate_01" />
+
+        <TextView
+            android:id="@+id/recording_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mic_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:text="手指上滑，取消发送"
+            android:textSize="10sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

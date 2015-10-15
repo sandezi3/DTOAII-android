@@ -357,6 +357,11 @@ public class HXController {
         };
     }
 
+    public boolean getSettingMsgSpeaker() {
+        // TODO: 10/15/15
+        return true;
+    }
+
     private class MyConnectionListener implements EMConnectionListener {
         @Override
         public void onConnected() {

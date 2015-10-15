@@ -91,6 +91,15 @@ public class Config {
     public static final String NOTE_NO_STORAGE_CARD = "没有存储卡";
     public static final String NOTE_NO_LOCAL_PIC = "没有找到图片";
 
+    public static final String NOTE_RECORD_FAIL_NO_STORAGE_CARD = "未检测到存储卡，无法录音";
+    public static final String NOTE_RECORD_SLIDE_UP_CANCEL = "手指上滑，取消发送";
+    public static final String NOTE_RECORD_FAIL = "录音失败";
+    public static final String NOTE_RECORD_RELEASE_CANCEL = "松开手指，取消发送";
+    public static final String NOTE_RECORD_NO_PERMISSION = "没有录音权限";
+    public static final String NOTE_RECORD_TOO_SHORT = "录音时间太短";
+    public static final String NOTE_RECORD_SEND_FAIL = "发送失败，请检测服务器是否连接";
+    public static final String NOTE_RECORD_DOWNLOADING = "正在下载语音，稍后点击";
+
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";
     public static final String ERROR_APP = "程序出错";

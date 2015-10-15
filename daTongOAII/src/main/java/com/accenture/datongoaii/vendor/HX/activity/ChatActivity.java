@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.Config;
@@ -31,7 +38,9 @@ import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.CommonUtils;
 import com.accenture.datongoaii.vendor.HX.HXController;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
+import com.accenture.datongoaii.vendor.HX.adapter.VoicePlayClickListener;
 import com.easemob.EMCallBack;
+import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChat;
@@ -40,6 +49,8 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
+import com.easemob.chat.VoiceMessageBody;
+import com.easemob.util.VoiceRecorder;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -64,9 +75,18 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     private EditText mEditTextContent;
     private LinearLayout emojiIconContainer;
     private LinearLayout btnContainer;
+    private View recordingContainer;
     private View more;
     private ImageView iv_emoticons_normal;
     private ImageView iv_emoticons_checked;
+    private RelativeLayout edittext_layout;
+    private View buttonSetModeKeyboard;
+    private View buttonSetModeVoice;
+    private View buttonPressToSpeak;
+    private View buttonSend;
+    private Button btnMore;
+    private ImageView micImage;
+    private TextView recordingHint;
 
     private Context context;
     private String toId;
@@ -76,8 +96,19 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     private boolean isLoading = false;
     private boolean haveMoreData = true;
     private File cameraFile;
+    public String playMsgId;
+    private VoiceRecorder voiceRecorder;
+    private Handler micImageHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            // 切换msg切换图片
+            micImage.setImageDrawable(micImages[msg.what]);
+        }
+    };
+    private Drawable[] micImages;
 
     @Override
+    @SuppressWarnings("Deprecated")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
@@ -90,21 +121,69 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             toId = getIntent().getStringExtra("groupId");
         }
 
+        recordingContainer = findViewById(R.id.recording_container);
         mEditTextContent = (EditText) findViewById(R.id.et_sendmessage);
-        Button btnSend = (Button) findViewById(R.id.btn_send);
+        buttonSend = findViewById(R.id.btn_send);
         ptrlvChat = (PullToRefreshListView) findViewById(R.id.ptrlvChat);
         btnContainer = (LinearLayout) findViewById(R.id.ll_btn_container);
         emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
+        buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
+        buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
+        buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
+        btnMore = (Button) findViewById(R.id.btn_more);
         more = findViewById(R.id.more);
         iv_emoticons_normal = (ImageView) findViewById(R.id.iv_emoticons_normal);
         iv_emoticons_checked = (ImageView) findViewById(R.id.iv_emoticons_checked);
+        edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
+        micImage = (ImageView) findViewById(R.id.mic_image);
+        recordingHint = (TextView) findViewById(R.id.recording_hint);
 
-        btnSend.setOnClickListener(this);
+        buttonSend.setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
         iv_emoticons_normal.setVisibility(View.VISIBLE);
         iv_emoticons_checked.setVisibility(View.INVISIBLE);
         btnContainer.setVisibility(View.GONE);
+        buttonPressToSpeak.setOnTouchListener(new PressToSpeakListen());
+        voiceRecorder = new VoiceRecorder(micImageHandler);
 
+        // 动画资源文件,用于录制语音时
+        micImages = new Drawable[]{getResources().getDrawable(R.drawable.record_animate_01),
+                getResources().getDrawable(R.drawable.record_animate_02),
+                getResources().getDrawable(R.drawable.record_animate_03),
+                getResources().getDrawable(R.drawable.record_animate_04),
+                getResources().getDrawable(R.drawable.record_animate_05),
+                getResources().getDrawable(R.drawable.record_animate_06),
+                getResources().getDrawable(R.drawable.record_animate_07),
+                getResources().getDrawable(R.drawable.record_animate_08),
+                getResources().getDrawable(R.drawable.record_animate_09),
+                getResources().getDrawable(R.drawable.record_animate_10),
+                getResources().getDrawable(R.drawable.record_animate_11),
+                getResources().getDrawable(R.drawable.record_animate_12),
+                getResources().getDrawable(R.drawable.record_animate_13),
+                getResources().getDrawable(R.drawable.record_animate_14)};
+        wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(
+                PowerManager.SCREEN_DIM_WAKE_LOCK, "demo");
+        // 监听文字框
+        mEditTextContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    btnMore.setVisibility(View.GONE);
+                    buttonSend.setVisibility(View.VISIBLE);
+                } else {
+                    btnMore.setVisibility(View.VISIBLE);
+                    buttonSend.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         mEditTextContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +254,27 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                     sendPicByUri(selectedImage);
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (wakeLock.isHeld())
+            wakeLock.release();
+        if (VoicePlayClickListener.isPlaying && VoicePlayClickListener.currentPlayListener != null) {
+            // 停止语音播放
+            VoicePlayClickListener.currentPlayListener.stopPlayVoice();
+        }
+
+        try {
+            // 停止录音
+            if (voiceRecorder.isRecording()) {
+                voiceRecorder.discardRecording();
+                recordingContainer.setVisibility(View.INVISIBLE);
+            }
+        } catch (Exception e) {
+            Logger.e(TAG, e.getMessage());
         }
     }
 
@@ -268,6 +368,61 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             iv_emoticons_checked.setVisibility(View.INVISIBLE);
         }
     }
+
+
+    /**
+     * 显示语音图标按钮
+     *
+     * @param view view
+     */
+    public void setModeVoice(View view) {
+        Utils.closeSoftKeyboard(context, view);
+        edittext_layout.setVisibility(View.GONE);
+        more.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        buttonSetModeKeyboard.setVisibility(View.VISIBLE);
+        buttonSend.setVisibility(View.GONE);
+        btnMore.setVisibility(View.VISIBLE);
+        buttonPressToSpeak.setVisibility(View.VISIBLE);
+        iv_emoticons_normal.setVisibility(View.VISIBLE);
+        iv_emoticons_checked.setVisibility(View.INVISIBLE);
+        btnContainer.setVisibility(View.VISIBLE);
+        emojiIconContainer.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示键盘图标
+     *
+     * @param view view
+     */
+    public void setModeKeyboard(View view) {
+        // mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener()
+        // {
+        // @Override
+        // public void onFocusChange(View v, boolean hasFocus) {
+        // if(hasFocus){
+        // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        // }
+        // }
+        // });
+        edittext_layout.setVisibility(View.VISIBLE);
+        more.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        buttonSetModeVoice.setVisibility(View.VISIBLE);
+        // mEditTextContent.setVisibility(View.VISIBLE);
+        mEditTextContent.requestFocus();
+        // buttonSend.setVisibility(View.VISIBLE);
+        buttonPressToSpeak.setVisibility(View.GONE);
+        if (TextUtils.isEmpty(mEditTextContent.getText())) {
+            btnMore.setVisibility(View.VISIBLE);
+            buttonSend.setVisibility(View.GONE);
+        } else {
+            btnMore.setVisibility(View.GONE);
+            buttonSend.setVisibility(View.VISIBLE);
+        }
+
+    }
+
 
     /**
      * 显示或隐藏图标按钮页
@@ -365,6 +520,39 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         ptrlvChat.setAdapter(adapter);
         adapter.refreshSelectLast();
         setResult(RESULT_OK);
+    }
+
+    /**
+     * 发送语音
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     * @param length   文件长度
+     * @param isResend 是否重发
+     */
+    @SuppressWarnings("unused")
+    private void sendVoice(String filePath, String fileName, String length, boolean isResend) {
+        if (!(new File(filePath).exists())) {
+            return;
+        }
+        try {
+            final EMMessage message = EMMessage.createSendMessage(EMMessage.Type.VOICE);
+            // 如果是群聊，设置chattype,默认是单聊
+            if (chatType == CHATTYPE_GROUP) {
+                message.setChatType(EMMessage.ChatType.GroupChat);
+            }
+            message.setReceipt(toId);
+            int len = Integer.parseInt(length);
+            VoiceMessageBody body = new VoiceMessageBody(new File(filePath), len);
+            message.addBody(body);
+            conversation.addMessage(message);
+            adapter.refreshSelectLast();
+            setResult(RESULT_OK);
+            // send file
+            // sendVoiceSub(filePath, fileName, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initAdapter() {
@@ -535,6 +723,92 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 return;
             }
             sendPicture(file.getAbsolutePath());
+        }
+    }
+
+    /**
+     * 按住说话listener
+     */
+    private PowerManager.WakeLock wakeLock;
+
+    class PressToSpeakListen implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (!CommonUtils.isExitsSdcard()) {
+                        Utils.toast(context, Config.NOTE_RECORD_FAIL_NO_STORAGE_CARD);
+                        return false;
+                    }
+                    try {
+                        v.setPressed(true);
+                        wakeLock.acquire();
+                        if (VoicePlayClickListener.isPlaying)
+                            VoicePlayClickListener.currentPlayListener.stopPlayVoice();
+                        recordingContainer.setVisibility(View.VISIBLE);
+                        recordingHint.setText(Config.NOTE_RECORD_SLIDE_UP_CANCEL);
+                        recordingHint.setBackgroundColor(Color.TRANSPARENT);
+                        voiceRecorder.startRecording(null, toId, getApplicationContext());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        v.setPressed(false);
+                        if (wakeLock.isHeld())
+                            wakeLock.release();
+                        if (voiceRecorder != null)
+                            voiceRecorder.discardRecording();
+                        recordingContainer.setVisibility(View.INVISIBLE);
+                        Utils.toast(context, Config.NOTE_RECORD_FAIL);
+                        return false;
+                    }
+
+                    return true;
+                case MotionEvent.ACTION_MOVE: {
+                    if (event.getY() < 0) {
+                        recordingHint.setText(Config.NOTE_RECORD_RELEASE_CANCEL);
+                        recordingHint.setBackgroundResource(R.drawable.recording_text_hint_bg);
+                    } else {
+                        recordingHint.setText(Config.NOTE_RECORD_SLIDE_UP_CANCEL);
+                        recordingHint.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                    return true;
+                }
+                case MotionEvent.ACTION_UP:
+                    v.setPressed(false);
+                    recordingContainer.setVisibility(View.INVISIBLE);
+                    if (wakeLock.isHeld())
+                        wakeLock.release();
+                    if (event.getY() < 0) {
+                        // discard the recorded audio.
+                        voiceRecorder.discardRecording();
+
+                    } else {
+                        // stop recording and send voice file
+                        String st1 = Config.NOTE_RECORD_NO_PERMISSION;
+                        String st2 = Config.NOTE_RECORD_TOO_SHORT;
+                        String st3 = Config.NOTE_RECORD_SEND_FAIL;
+                        try {
+                            int length = voiceRecorder.stopRecoding();
+                            if (length > 0) {
+                                sendVoice(voiceRecorder.getVoiceFilePath(), voiceRecorder.getVoiceFileName(toId),
+                                        Integer.toString(length), false);
+                            } else if (length == EMError.INVALID_FILE) {
+                                Utils.toast(context, st1);
+                            } else {
+                                Utils.toast(context, st2);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Utils.toast(context, st3);
+                        }
+
+                    }
+                    return true;
+                default:
+                    recordingContainer.setVisibility(View.INVISIBLE);
+                    if (voiceRecorder != null)
+                        voiceRecorder.discardRecording();
+                    return false;
+            }
         }
     }
 }
