@@ -151,8 +151,11 @@
         </activity>
 
         <activity
-            android:name=".vendor.HX.ChatActivity"
+            android:name=".vendor.HX.activity.ChatActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".vendor.HX.activity.ShowBigImage"
             android:screenOrientation="portrait" />
 
         <activity

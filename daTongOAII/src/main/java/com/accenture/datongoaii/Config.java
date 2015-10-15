@@ -88,6 +88,8 @@ public class Config {
     public static final String NOTE_CHOSEN_CONTACT = "已选择此联系人";
     public static final String NOTE_IM_GROUP_USER_EMPTY = "请选择群聊成员";
     public static final String NOTE_NO_MORE_MESSAGE = "没有更多的消息了";
+    public static final String NOTE_NO_STORAGE_CARD = "没有存储卡";
+    public static final String NOTE_NO_LOCAL_PIC = "没有找到图片";
 
     public static final String ERROR_NETWORK = "请检查网络连接";
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";
@@ -102,6 +104,7 @@ public class Config {
     public static final String PROGRESS_GET = "正在获取...";
     public static final String PROGRESS_SUBMIT = "正在提交...";
     public static final String PROGRESS_QUIT = "正在退出...";
+    public static final String PROGRESS_DOWNLOADING_PICTURE = "正在下载图片...";
 
     public static final String ALERT_DELETE_ORG = "您确认删除该组织吗？";
     public static final String ALERT_DELETE_DEPT = "您确认删除该部门吗？";

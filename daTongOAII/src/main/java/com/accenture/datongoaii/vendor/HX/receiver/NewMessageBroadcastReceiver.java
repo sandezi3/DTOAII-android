@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.accenture.datongoaii.activity.MainActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
@@ -33,5 +34,8 @@ public class NewMessageBroadcastReceiver extends BroadcastReceiver {
             // 消息不是发给当前会话，return
             return;
         }
+        Intent main = new Intent(context, MainActivity.class);
+        main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(main);
     }
 }

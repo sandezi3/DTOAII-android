@@ -12,7 +12,7 @@ import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Contact;
-import com.accenture.datongoaii.vendor.HX.ChatActivity;
+import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**

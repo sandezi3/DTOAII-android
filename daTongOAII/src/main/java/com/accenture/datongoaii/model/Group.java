@@ -75,6 +75,9 @@ public class Group extends FirstPinYin {
     }
 
     public static Contact getMemberByImid(Group group, String imId) {
+        if (group.contactList == null) {
+            return null;
+        }
         for (Contact contact : group.contactList) {
             if (contact.imId.equals(imId)) {
                 return contact;

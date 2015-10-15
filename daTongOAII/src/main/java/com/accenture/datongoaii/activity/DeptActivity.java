@@ -27,7 +27,6 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.vendor.HX.ChatActivity;
 import com.accenture.datongoaii.widget.SectionListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

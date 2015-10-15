@@ -22,7 +22,7 @@ import com.accenture.datongoaii.model.Conversation;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.vendor.HX.ChatActivity;
+import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.ImageMessageBody;

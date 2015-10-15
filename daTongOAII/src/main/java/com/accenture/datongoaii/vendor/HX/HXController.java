@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.accenture.datongoaii.vendor.HX.receiver.DeliveryAckMessageReceiver;
 import com.accenture.datongoaii.vendor.HX.receiver.NewMessageBroadcastReceiver;
 import com.easemob.EMCallBack;
@@ -85,7 +86,6 @@ public class HXController {
         EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
 
         registerGlobleReceivers();
-        initOptions();
         initNotifier();
         initEventListener();
 
@@ -186,54 +186,6 @@ public class HXController {
         IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
         intentFilter.setPriority(3);
         context.registerReceiver(msgReceiver, intentFilter);
-    }
-
-    private void initOptions() {
-        //获取到配置options对象
-        EMChatOptions options = EMChatManager.getInstance().getChatOptions();
-        //设置自定义的文字提示
-        options.setNotifyText(new OnMessageNotifyListener() {
-
-            @Override
-            public String onNewMessageNotify(EMMessage message) {
-                return "你的好基友" + message.getFrom() + "发来了一条消息哦";
-            }
-
-            @Override
-            public String onLatestMessageNotify(EMMessage message, int fromUsersNum, int messageNum) {
-                return fromUsersNum + "个基友，发来了" + messageNum + "条消息";
-            }
-
-            @Override
-            public String onSetNotificationTitle(EMMessage emMessage) {
-                return null;
-            }
-
-            @Override
-            public int onSetSmallIcon(EMMessage emMessage) {
-                return 0;
-            }
-        });
-
-        //设置notification点击listener
-        options.setOnNotificationClickListener(new OnNotificationClickListener() {
-            @Override
-            public Intent onNotificationClick(EMMessage message) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                EMMessage.ChatType chatType = message.getChatType();
-                if (chatType == EMMessage.ChatType.Chat) { //单聊信息
-                    intent.putExtra("userId", message.getFrom());
-                    intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-                } else { //群聊信息
-                    //message.getTo()为群聊id
-                    intent.putExtra("groupId", message.getTo());
-                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-                }
-                return intent;
-            }
-        });
-
-
     }
 
     private void loadAllEnvirionment() {
@@ -390,20 +342,15 @@ public class HXController {
             public Intent getLaunchIntent(EMMessage message) {
                 //设置点击通知栏跳转事件
                 Intent intent = new Intent(context, ChatActivity.class);
-
                 EMMessage.ChatType chatType = message.getChatType();
                 if (chatType == EMMessage.ChatType.Chat) { // 单聊信息
                     intent.putExtra("userId", message.getFrom());
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-                } else { // 群聊信息
+                } else if (chatType == EMMessage.ChatType.GroupChat) {
+                    // 群聊信息
                     // message.getTo()为群聊id
                     intent.putExtra("groupId", message.getTo());
-                    if (chatType == EMMessage.ChatType.GroupChat) {
-                        intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-                    } else {
-                        intent.putExtra("chatType", ChatActivity.CHATTYPE_CHATROOM);
-                    }
-
+                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
                 }
                 return intent;
             }

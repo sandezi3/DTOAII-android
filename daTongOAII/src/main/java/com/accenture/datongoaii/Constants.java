@@ -47,6 +47,8 @@ public class Constants {
     public static final int REQUEST_CODE_CREATE_GROUP = 1015;
     public static final int REQUEST_CODE_MANAGE_GROUP = 1016;
     public static final int REQUEST_CODE_GROUP_INVITE_MEMBER = 1017;
+    public static final int REQUEST_CODE_CAMERA = 1018;
+    public static final int REQUEST_CODE_LOCAL = 1019;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;
