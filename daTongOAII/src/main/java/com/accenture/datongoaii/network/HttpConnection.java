@@ -1,5 +1,6 @@
 package com.accenture.datongoaii.network;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 public class HttpConnection implements Runnable {

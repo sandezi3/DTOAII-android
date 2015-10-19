@@ -1,9 +1,7 @@
 package com.accenture.datongoaii.model;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
-import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.util.CharacterParser;
 import com.accenture.datongoaii.util.Logger;
 
@@ -101,10 +99,10 @@ public class Contact extends FirstPinYin implements Serializable {
         return null;
     }
 
-    public static List<Contact> getListFromDataByPdid(Context context, Integer pdid) {
-        ContactDao cd = new ContactDao(context);
-        return cd.getListByPdid(pdid);
-    }
+//    public static List<Contact> getListFromDataByPdid(Context context, Integer pdid) {
+//        ContactDao cd = new ContactDao(context);
+//        return cd.getListByPdid(pdid);
+//    }
 
     public static List<Contact> resolveContactList(JSONObject obj, List<Contact> list) throws JSONException {
         JSONObject json = obj.getJSONObject("data");

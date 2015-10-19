@@ -23,6 +23,7 @@ import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.UserGridAdapter;
+import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -125,6 +126,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_GROUP_INVITE_MEMBER && resultCode == RESULT_OK) {
             List<Contact> selectedUsers = (List<Contact>) data.getSerializableExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT);
+            handleExistedMembers(selectedUsers, mGroup.contactList);
             if (selectedUsers != null && selectedUsers.size() > 0) {
                 startInviteGroupMembers(mGroup.imId, selectedUsers);
             }
@@ -224,7 +226,9 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
 
     private void syncData() {
         dataList.clear();
-        dataList.addAll(mGroup.contactList);
+        if (mGroup.contactList != null) {
+            dataList.addAll(mGroup.contactList);
+        }
         Contact addBtn = new Contact();
         addBtn.id = Contact.CONTACT_BUTTON_INVALID_ID;
         dataList.add(addBtn);
@@ -281,8 +285,39 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         }
     }
 
+    private void refreshUI() {
+        isAdmin = mGroup.owner.imId.equals(Account.getInstance().getImId());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                refreshUIByAdmin();
+                syncData();
+                adapter.notifyDataSetChanged();
+                adjustHeight();
+            }
+        });
+    }
+
+    private void handleExistedMembers(List<Contact> list, List<Contact> members) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            Contact contact = list.get(i);
+            if (Contact.contains(members, contact)) {
+                list.remove(i);
+            }
+        }
+    }
+
     // 网络访问
     private void refreshGroup() {
+        GroupDao dao = new GroupDao(context);
+        if (dao.isExisted(mGroup)) {
+            Group group = dao.getById(mGroup.id);
+            if (group.owner != null) {
+                mGroup = group;
+                refreshUI();
+                return;
+            }
+        }
         progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
         DTOARequest.startGetGroup(mGroup.imId, new HttpConnection.CallbackListener() {
             @Override
@@ -292,16 +327,14 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             mGroup = Group.updateFromJSON(mGroup, new JSONObject(result).getJSONObject("data"));
-                            isAdmin = mGroup.owner.imId.equals(Account.getInstance().getImId());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    refreshUIByAdmin();
-                                    syncData();
-                                    adapter.notifyDataSetChanged();
-                                    adjustHeight();
-                                }
-                            });
+                            GroupDao dao = new GroupDao(context);
+                            if (dao.isExisted(mGroup)) {
+                                dao.update(mGroup);
+                            } else {
+                                // should not come to here
+                                dao.save(mGroup);
+                            }
+                            refreshUI();
                             return;
                         }
                     } catch (JSONException e) {
@@ -327,6 +360,8 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                             Utils.toast(context, Config.SUCCESS_UPDATE);
                             setResult(RESULT_OK);
                             tvName.setText(name);
+                            mGroup.name = name;
+                            new GroupDao(context).update(mGroup);
                             return;
                         }
                         Utils.toast(context, cr.statusMsg);
@@ -340,7 +375,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         });
     }
 
-    private void startQuitGroup(String groupId, String imId) {
+    private void startQuitGroup(String groupId, final String imId) {
         String msg = isAdmin ? Config.PROGRESS_SUBMIT : Config.PROGRESS_QUIT;
         progressDialog = Utils.showProgressDialog(context, progressDialog, null, msg);
         DTOARequest.startQuitGroup(groupId, imId, new HttpConnection.CallbackListener() {
@@ -354,11 +389,19 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                             String msg = isAdmin ? Config.SUCCESS_UPDATE : Config.SUCCESS_QUIT;
                             Utils.toast(context, msg);
                             setResult(RESULT_OK);
+                            GroupDao dao = new GroupDao(context);
                             if (isAdmin) {
                                 // 管理员 踢人调用此方法
+                                Group.removeMemberByImId(mGroup, imId);
+                                mGroup.userNum--;
+                                if (dao.isExisted(mGroup)) {
+                                    dao.update(mGroup);
+                                }
                                 refreshGroup();
                             } else {
                                 // 普通用户 退群调用此方法
+                                dao.delete(mGroup);
+                                dao.deleteFromMyGroups(mGroup);
                                 finish();
                             }
                             return;
@@ -374,7 +417,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         });
     }
 
-    private void startInviteGroupMembers(String groupId, List<Contact> list) {
+    private void startInviteGroupMembers(String groupId, final List<Contact> list) {
         progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
         DTOARequest.startInviteGroupMembers(groupId, list, new HttpConnection.CallbackListener() {
             @Override
@@ -386,6 +429,8 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                         if (cr.statusCode == 0) {
                             Utils.toast(context, Config.SUCCESS_INVITE);
                             setResult(RESULT_OK);
+                            mGroup.owner = null;
+                            new GroupDao(context).update(mGroup);
                             refreshGroup();
                             return;
                         }
@@ -411,6 +456,9 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
                             Utils.toast(context, Config.SUCCESS_DISMISS);
+                            GroupDao dao = new GroupDao(context);
+                            dao.delete(mGroup);
+                            dao.deleteFromMyGroups(mGroup);
                             setResult(RESULT_OK);
                             finish();
                             return;

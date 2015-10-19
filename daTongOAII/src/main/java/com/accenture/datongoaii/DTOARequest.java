@@ -1,5 +1,6 @@
 package com.accenture.datongoaii;
 
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
@@ -36,7 +37,14 @@ public class DTOARequest {
     }
 
     /**
-     * Created by leon on 10/12/15.
+     * 好友
+     */
+    public static void startDeleteFriend(Integer userId, HttpConnection.CallbackListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_DELETE_FRIEND.replace("{userId}", Account.getInstance().getUserId().toString()).replace("{friendUserId}", userId.toString());
+        new HttpConnection().delete(url, listener);
+    }
+
+    /**
      * Group
      */
     public static void startCreateGroup(String name, String ownerId, String desc, List<Contact> users, HttpConnection.CallbackListener listener) {
@@ -125,4 +133,6 @@ public class DTOARequest {
         String url = Config.SERVER_HOST + Config.URL_GET_GROUPS_BY_IDS.replace("{chatGroupIds}", ids);
         new HttpConnection().get(url, listener);
     }
+
+
 }

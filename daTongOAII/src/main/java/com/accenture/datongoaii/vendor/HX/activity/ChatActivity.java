@@ -31,6 +31,8 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.GroupProfileActivity;
+import com.accenture.datongoaii.db.ContactDao;
+import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
@@ -236,7 +238,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         EMChatManager.getInstance().registerEventListener(
                 this,
                 new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
-                        EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
+                        EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck, EMNotifierEvent.Event.EventNewCMDMessage});
         EMChat.getInstance().setAppInited();
     }
 
@@ -252,7 +254,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     protected void onDestroy() {
         super.onDestroy();
         context = null;
-        if(groupListener != null){
+        if (groupListener != null) {
             EMGroupManager.getInstance().removeGroupChangeListener(groupListener);
         }
     }
@@ -298,6 +300,9 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
     @Override
     public void onEvent(EMNotifierEvent emNotifierEvent) {
         switch (emNotifierEvent.getEvent()) {
+            case EventNewCMDMessage:
+                EMMessage message1 = (EMMessage) emNotifierEvent.getData();
+                break;
             case EventNewMessage: {
                 //获取到message
                 EMMessage message = (EMMessage) emNotifierEvent.getData();
@@ -578,6 +583,20 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         initConversations();
     }
 
+    private void syncAdapterWithContact(Contact contact) {
+        ((TextView) findViewById(R.id.textTitle)).setText(contact.name);
+        adapter = new MessageAdapter(context, contact);
+        syncAdapter(adapter);
+    }
+
+    private void syncAdapterWithGroup(Group group) {
+        if (group.name != null) {
+            ((TextView) findViewById(R.id.textTitle)).setText(group.name);
+        }
+        adapter = new MessageAdapter(context, group);
+        syncAdapter(adapter);
+    }
+
     private void initAdapter() {
         if (chatType == CHATTYPE_SINGLE) {
             Contact contact = new Contact();
@@ -594,42 +613,52 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
     private void updateAdapter() {
         if (chatType == CHATTYPE_SINGLE) {
-            DTOARequest.startGetUserByImId(toId, new HttpConnection.CallbackListener() {
-                @Override
-                public void callBack(String result) {
-                    if (!result.equals("fail")) {
-                        try {
-                            Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
-                            assert c != null;
-                            ((TextView) findViewById(R.id.textTitle)).setText(c.name);
-                            adapter = new MessageAdapter(context, c);
-                            syncAdapter(adapter);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-        } else if (chatType == CHATTYPE_GROUP) {
-            DTOARequest.startGetGroup(toId, new HttpConnection.CallbackListener() {
-                @Override
-                public void callBack(String result) {
-                    if (!result.equals("fail")) {
-                        try {
-                            Group group = new Group();
-                            group.imId = toId;
-                            group = Group.updateFromJSON(group, new JSONObject(result).getJSONObject("data"));
-                            if (group.name != null) {
-                                ((TextView) findViewById(R.id.textTitle)).setText(group.name);
+            Contact contact = new ContactDao(context).getByImId(toId);
+            if (contact != null) {
+                syncAdapterWithContact(contact);
+            } else {
+                DTOARequest.startGetUserByImId(toId, new HttpConnection.CallbackListener() {
+                    @Override
+                    public void callBack(String result) {
+                        if (!result.equals("fail")) {
+                            try {
+                                Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
+                                assert c != null;
+                                ContactDao dao = new ContactDao(context);
+                                if (dao.isExisted(c)) {
+                                    dao.update(c);
+                                } else {
+                                    dao.save(c);
+                                }
+                                syncAdapterWithContact(c);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            adapter = new MessageAdapter(context, group);
-                            syncAdapter(adapter);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
-                }
-            });
+                });
+            }
+        } else if (chatType == CHATTYPE_GROUP) {
+            Group group = new GroupDao(context).getByImId(toId);
+            if (group != null) {
+                syncAdapterWithGroup(group);
+            } else {
+                DTOARequest.startGetGroup(toId, new HttpConnection.CallbackListener() {
+                    @Override
+                    public void callBack(String result) {
+                        if (!result.equals("fail")) {
+                            try {
+                                Group group = new Group();
+                                group.imId = toId;
+                                group = Group.updateFromJSON(group, new JSONObject(result).getJSONObject("data"));
+                                syncAdapterWithGroup(group);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -847,7 +876,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
     /**
      * 监测群组解散或者被T事件
-     *
      */
     class GroupListener extends GroupRemoveListener {
 

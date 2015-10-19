@@ -275,6 +275,7 @@ public class HXController {
         };
 
         EMChatManager.getInstance().registerEventListener(eventListener);
+        EMChat.getInstance().setAppInited();
     }
 
     public void initNotifier() {
@@ -391,12 +392,11 @@ public class HXController {
         @Override
         public void onDisconnected(final int error) {
             if (error == EMError.USER_REMOVED) {
-                Logger.i(TAG, "MyConnectionListener.onDisconnected");
+                Logger.i(TAG, "MyConnectionListener.onDisconnected USER_REMOVED");
             } else if (error == EMError.CONNECTION_CONFLICT) {
-                Logger.i(TAG, "MyConnectionListener.onDisconnected");
+                Logger.i(TAG, "MyConnectionListener.onDisconnected CONNECTION_CONFLICT");
             } else {
-                Logger.i(TAG, "MyConnectionListener.onDisconnected");
-
+                Logger.i(TAG, "MyConnectionListener.onDisconnected error = " + error);
             }
         }
 

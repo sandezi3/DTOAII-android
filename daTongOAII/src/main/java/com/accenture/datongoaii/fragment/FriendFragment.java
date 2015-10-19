@@ -21,6 +21,7 @@ import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.ContactProfileActivity;
 import com.accenture.datongoaii.activity.SelectUserActivity;
+import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -221,17 +222,18 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
-            ((Activity)context).setResult(Activity.RESULT_OK, intent);
-            ((Activity)context).finish();
+            ((Activity) context).setResult(Activity.RESULT_OK, intent);
+            ((Activity) context).finish();
         } else if (isMultiMode) {
-            ((SelectUserActivity)context).onFragmentItemClick(c);
+            ((SelectUserActivity) context).onFragmentItemClick(c);
         } else {
             Intent intent = new Intent(view.getContext(), ContactProfileActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.BUNDLE_TAG_CONTACT_PROFILE, c);
             intent.putExtras(bundle);
-            startActivity(intent);
-            ((Activity)context).finish();
+            intent.putExtra(Constants.BUNDLE_TAG_CONTACT_PROFILE_IS_FROM_MY_FRIENDS, true);
+            startActivityForResult(intent, Constants.REQUEST_CODE_DELETE_FRIEND);
+            ((Activity) context).finish();
         }
     }
 
@@ -254,28 +256,38 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
         return layoutContact;
     }
 
-    private void getFriends(Integer userId) {
-        String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        List<Contact> list = Contact.getFriendsFromJSON(new JSONObject(result));
-                        if (list != null) {
-                            clearData();
-                            friends.addAll(list);
-                            syncData();
-                            if (list.size() > 0) {
+    public void getFriends(Integer userId) {
+        ContactDao dao = new ContactDao(context);
+        List<Contact> list = dao.getFriends();
+        if (list == null || list.size() == 0) {
+            String url = Config.SERVER_HOST + Config.URL_GET_CONTACTS.replace("{userId}", userId + "");
+            new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    if (!result.equals("fail")) {
+                        try {
+                            List<Contact> list = Contact.getFriendsFromJSON(new JSONObject(result));
+                            if (list != null && list.size() > 0) {
+                                ContactDao dao = new ContactDao(context);
+                                dao.saveFriends(list);
+                                syncList(list);
                                 startGetContactsStatusConnect();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-        });
+            });
+        } else {
+            syncList(list);
+        }
+    }
+
+    private void syncList(List<Contact> list) {
+        clearData();
+        friends.addAll(list);
+        syncData();
     }
 
     private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
@@ -347,6 +359,8 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
                             clearData();
                             Contact.resolveContactList(new JSONObject(result), friends);
                             syncData();
+                            ContactDao dao = new ContactDao(context);
+                            dao.saveFriends(friends);
                         } else {
                             Utils.toast(context, cr.statusMsg);
                         }

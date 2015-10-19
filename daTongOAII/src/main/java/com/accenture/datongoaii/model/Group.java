@@ -29,7 +29,8 @@ public class Group extends FirstPinYin {
             g.img = json.getString("logo");
             g.userNum = json.getInt("userNum");
             g.mFirstPinYin = "*";
-            g.contactList = new ArrayList<Contact>();
+            g.owner = null;
+            g.contactList = null;
             return g;
         } catch (Exception e) {
             if (Logger.DEBUG) {
@@ -84,5 +85,14 @@ public class Group extends FirstPinYin {
             }
         }
         return null;
+    }
+
+    public static void removeMemberByImId(Group group, String imId) {
+        for (Contact contact : group.contactList) {
+            if (contact.imId.equals(imId)) {
+                group.contactList.remove(contact);
+                return;
+            }
+        }
     }
 }

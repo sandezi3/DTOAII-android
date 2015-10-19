@@ -155,16 +155,27 @@
             android:layout_height="0.5dp"
             android:background="@color/gray_2" />
 
-        <Button
+        <TextView
             android:id="@+id/btnSendMessage"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/button"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center_horizontal|center_vertical"
             android:text="发消息"
-            android:textColor="@drawable/button_text_color"
+            android:textColor="@color/green"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="删除好友"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

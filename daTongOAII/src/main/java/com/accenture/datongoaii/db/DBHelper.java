@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "DatongOAII.db";
+    public static final int DATABASE_VERSION = 1;
     private static DBHelper instance;
     private static Context context;
 
@@ -21,73 +22,55 @@ public class DBHelper extends SQLiteOpenHelper {
         if (instance != null) {
             return instance;
         } else {
-            instance = new DBHelper(appContext, DB_NAME, null, 1);
+            instance = new DBHelper(appContext, DB_NAME, null, DATABASE_VERSION);
             return instance;
         }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // StringBuffer sb = new StringBuffer();
-        // sb.append("create table if not exists ");
-        // sb.append(TodoDao.TODO_TABLE);
-        // sb.append("(");
-        // sb.append(TodoDao.TODO_TABLE_ID);
-        // sb.append(" integer PRIMARY KEY AUTOINCREMENT");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_TID);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_TITLE);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_CREATE);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_FROM);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_DEADLINE);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_IMAGE_URL);
-        // sb.append(" text");
-        // sb.append(",");
-        // sb.append(TodoDao.TODO_TABLE_IMAGE);
-        // sb.append(" BINARY");
-        // sb.append(")");
-        // db.execSQL(sb.toString());
-
-        String sql = "create table if not exists " + DeptDao.DEPT_TABLE + "("
+        db.execSQL("create table if not exists " + DeptDao.DEPT_TABLE + "("
                 + DeptDao.DEPT_TABLE_ID + " int," + DeptDao.DEPT_TABLE_VERSION
                 + " text," + DeptDao.DEPT_TABLE_NAME + " text,"
                 + DeptDao.DEPT_TABLE_IMG + " text," + DeptDao.DEPT_TABLE_PID
-                + " int)";
-        db.execSQL(sql);
+                + " int)");
 
-        sql = "create table if not exists " + ContactDao.CONTACT_TABLE + "("
+        db.execSQL("create table if not exists " + ContactDao.CONTACT_TABLE + "("
                 + ContactDao.CONTACT_TABLE_ID + " int,"
                 + ContactDao.CONTACT_TABLE_NAME + " text,"
                 + ContactDao.CONTACT_TABLE_HEAD + " text,"
-                + ContactDao.CONTACT_TABLE_PDID + " int)";
-        db.execSQL(sql);
+                + ContactDao.CONTACT_TABLE_IMID + " text,"
+                + ContactDao.CONTACT_TABLE_CELL + " text,"
+                + ContactDao.CONTACT_TABLE_FRIEND_STATUS + " int)");
+
+        db.execSQL("create table if not exists " + ContactDao.FRIEND_TABLE + "("
+                + ContactDao.FRIEND_TABLE_USER_ID + " int)");
+
+        db.execSQL("create table if not exists " + GroupDao.GROUP_TABLE + "("
+                + GroupDao.GROUP_TABLE_ID + " int,"
+                + GroupDao.GROUP_TABLE_NAME + " text,"
+                + GroupDao.GROUP_TABLE_IMG + " text,"
+                + GroupDao.GROUP_TABLE_IMID + " text,"
+                + GroupDao.GROUP_TABLE_USER_NUM + " int,"
+                + GroupDao.GROUP_TABLE_OWNER_ID + " int,"
+                + GroupDao.GROUP_TABLE_USER_IDS + " text)");
+
+        db.execSQL("create table if not exists " + GroupDao.MY_GROUP_TABLE + "("
+                + GroupDao.MY_GROUP_TABLE_GROUP_ID + " int)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            StringBuffer sb = new StringBuffer();
-            sb.append("DROP TABLE IF EXISTS ");
-            sb.append(TodoDao.TODO_TABLE);
-            db.execSQL(sb.toString());
-            String sql = "DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE;
-            db.execSQL(sql);
-            sql = "DROP TABLE IF EXISTS" + ContactDao.CONTACT_TABLE;
-            db.execSQL(sql);
+            db.execSQL("DROP TABLE IF EXISTS " + TodoDao.TODO_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS" + ContactDao.CONTACT_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS" + ContactDao.FRIEND_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS" + GroupDao.GROUP_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS" + GroupDao.MY_GROUP_TABLE);
         } else {
             return;
         }
         onCreate(db);
     }
-
 }

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -49,6 +50,17 @@ public class Utils {
             list.add(str);
         }
         return list;
+    }
+
+    public static String combineStrings (List<String> list, String sep) {
+        String result = "";
+        if (list == null || list.size() == 0) {
+            return result;
+        }
+        for (String str : list) {
+            result += str + sep;
+        }
+        return result.substring(0, result.length() - 1);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -249,16 +261,22 @@ public class Utils {
         btn.setTextColor(context.getResources().getColor(R.color.gray_2));
     }
 
-    public static void saveUserInfo(Context context, String token) {
+    public static void saveUserInfo(Context context, String token, String userId) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("token", token);
+        if (userId != null) {
+            editor.putString("userId", userId);
+        }
         editor.commit();
     }
 
-    public static String getUserInfo(Context context) {
+    public static HashMap<String,String> getUserInfo(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
-        return sp.getString("token", "");
+        HashMap<String,String> map = new HashMap<String, String>();
+        map.put("token", sp.getString("token", ""));
+        map.put("userId", sp.getString("userId", ""));
+        return map;
     }
 
     public static String getTimestampString(Date messageDate) {

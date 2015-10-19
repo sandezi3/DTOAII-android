@@ -16,6 +16,7 @@ import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.GroupListAdapter;
+import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
@@ -103,27 +104,38 @@ public class MyGroupsActivity extends Activity implements AdapterView.OnItemClic
     }
 
     private void getGroups() {
-        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
-        DTOARequest.startGetGroups(Account.getInstance().getImId(), new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                if (!result.equals("fail")) {
-                    try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            List<Group> list = Group.getGroupListFromJSON(new JSONObject(result));
-                            if (list != null && list.size() > 0) {
-                                groupList.clear();
-                                groupList.addAll(list);
-                                refresh();
+        GroupDao dao = new GroupDao(context);
+        List<Group> groups = dao.getMyGroups();
+        if (groups != null && groups.size() > 0) {
+            refreshData(groups);
+        } else {
+            progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
+            DTOARequest.startGetGroups(Account.getInstance().getImId(), new HttpConnection.CallbackListener() {
+                @Override
+                public void callBack(String result) {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                    if (!result.equals("fail")) {
+                        try {
+                            if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+                                List<Group> list = Group.getGroupListFromJSON(new JSONObject(result));
+                                if (list != null && list.size() > 0) {
+                                    new GroupDao(context).saveMyGroups(list);
+                                    refreshData(list);
+                                }
                             }
+                        } catch (JSONException e) {
+                            Logger.e(TAG, e.getMessage());
                         }
-                    } catch (JSONException e) {
-                        Logger.e(TAG, e.getMessage());
                     }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    private void refreshData(List<Group> groups) {
+        groupList.clear();
+        groupList.addAll(groups);
+        refresh();
     }
 
     private void refresh() {

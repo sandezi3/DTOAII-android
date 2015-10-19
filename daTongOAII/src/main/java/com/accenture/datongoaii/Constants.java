@@ -29,6 +29,7 @@ public class Constants {
     public static final String BUNDLE_TAG_PARENT_DEPT_INVALID = "bundle.manage.dept.parent.invalid";
     public static final String BUNDLE_TAG_CONTACT_PROFILE = "bundle.contact.profile";
     public static final String BUNDLE_TAG_GROUP_PROFILE = "bundle.group.profile";
+    public static final String BUNDLE_TAG_CONTACT_PROFILE_IS_FROM_MY_FRIENDS = "bundle.contact.profile.is.from.my.friends";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;
@@ -49,6 +50,7 @@ public class Constants {
     public static final int REQUEST_CODE_GROUP_INVITE_MEMBER = 1017;
     public static final int REQUEST_CODE_CAMERA = 1018;
     public static final int REQUEST_CODE_LOCAL = 1019;
+    public static final int REQUEST_CODE_DELETE_FRIEND = 1020;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

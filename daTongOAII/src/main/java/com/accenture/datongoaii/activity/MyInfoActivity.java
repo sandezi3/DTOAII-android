@@ -201,7 +201,7 @@ public class MyInfoActivity extends Activity {
                                         Logger.e(TAG, e.getMessage());
                                         Utils.toast(context, Config.ERROR_IM);
                                     }
-                                    Utils.saveUserInfo(context, "");
+                                    Utils.saveUserInfo(context, "", null);
                                     ((DTOAIIApplication) getApplicationContext()).restartApplication();
                                 } else {
                                     Utils.toast(context, cr.statusMsg);

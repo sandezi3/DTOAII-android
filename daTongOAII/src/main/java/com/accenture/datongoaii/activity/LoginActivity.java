@@ -3,6 +3,7 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,14 +13,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.db.DBHelper;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
@@ -27,11 +28,11 @@ import com.accenture.datongoaii.vendor.HX.HXController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private final static String TAG = "LoginActivity";
+    private Activity activity;
     private EditText editPhoneNumber;
     private EditText editPassword;
 
@@ -63,6 +64,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.activity_login);
 
         editPhoneNumber = (EditText) findViewById(R.id.editCell);
@@ -84,7 +86,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onResume();
         if (Config.DEBUG_AUTO_LOGIN) {
             Utils.closeSoftKeyboard(this, null);
-            String token = Utils.getUserInfo(this);
+            String token = Utils.getUserInfo(this).get("token");
             if (token != null && token.length() > 0) {
                 startLoginConnect(token);
             }
@@ -99,7 +101,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 this.finish();
                 break;
             case R.id.tVRegister: {
-                Intent intent = new Intent(LoginActivity.this, CellIdentifyActivity.class);
+                Intent intent = new Intent(activity, CellIdentifyActivity.class);
                 intent.putExtra(Constants.BUNDLE_TAG_FUNCTION, Constants.FUNCTION_TAG_REGISTER);
                 this.startActivityForResult(intent, Constants.REQUEST_CODE_FORGET_PW_LOGIN);
             }
@@ -113,7 +115,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.tVForgetPswd: {
-                Intent intent = new Intent(LoginActivity.this, CellIdentifyActivity.class);
+                Intent intent = new Intent(activity, CellIdentifyActivity.class);
                 intent.putExtra(Constants.BUNDLE_TAG_FUNCTION, Constants.FUNCTION_TAG_FORGET_PASSWORD);
                 this.startActivityForResult(intent, Constants.REQUEST_CODE_FORGET_PW_LOGIN);
             }
@@ -132,12 +134,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     private boolean isDataValid() {
         if (editPhoneNumber.getEditableText().toString().trim().length() == 0) {
-            show(Config.NOTE_CELL_EMPTY);
+            Utils.toast(activity, Config.NOTE_CELL_EMPTY);
             return false;
         }
         if (editPassword.getEditableText().toString().trim().length() == 0) {
             editPassword.requestFocus();
-            show(Config.NOTE_PASSWORD_EMPTY);
+            Utils.toast(activity, Config.NOTE_PASSWORD_EMPTY);
             return false;
         }
         return true;
@@ -149,8 +151,22 @@ public class LoginActivity extends Activity implements OnClickListener {
         if (imId != null && imId.length() > 0) {
             HXController.getInstance().startLogin(imId);
         }
-        Utils.saveUserInfo(LoginActivity.this, Account.getInstance().getToken());
+        // 不同用户登录，清数据库
+        try {
+            if (!Utils.getUserInfo(activity).get("userId").equals(Account.getInstance().getUserId().toString())) {
+                clearDB();
+            }
+        } catch (Exception e) {
+            clearDB();
+        }
+
+        Utils.saveUserInfo(activity, Account.getInstance().getToken(), Account.getInstance().getUserId().toString());
         finishAndReturn();
+    }
+
+    private void clearDB() {
+//        SQLiteDatabase db = DBHelper.getInstance(activity).getWritableDatabase();
+//        DBHelper.getInstance(activity).onUpgrade(db, 0, DBHelper.DATABASE_VERSION);
     }
 
     private void startLoginConnect(String token) {
@@ -167,15 +183,15 @@ public class LoginActivity extends Activity implements OnClickListener {
                             resolveLoginSuccess(result);
                         } else {
                             Logger.i(TAG, "Failed!");
-                            show(Intepreter.getCommonStatusFromJson(result).statusMsg);
+                            Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
                     } catch (JSONException e) {
                         Logger.e(TAG, "Exception!");
-                        show(Config.ERROR_INTERFACE);
+                        Utils.toast(activity, Config.ERROR_INTERFACE);
                     }
                 } else {
                     Logger.i(TAG, "Network Error!");
-                    show(Config.ERROR_NETWORK);
+                    Utils.toast(activity, Config.ERROR_NETWORK);
                 }
             }
         });
@@ -206,15 +222,15 @@ public class LoginActivity extends Activity implements OnClickListener {
                             resolveLoginSuccess(result);
                         } else {
                             Logger.i(TAG, "Failed!");
-                            show(Intepreter.getCommonStatusFromJson(result).statusMsg);
+                            Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
                     } catch (JSONException e) {
                         Logger.e(TAG, "Exception!");
-                        show(Config.ERROR_INTERFACE);
+                        Utils.toast(activity, Config.ERROR_INTERFACE);
                     }
                 } else {
                     Logger.i(TAG, "Network Error!");
-                    show(Config.ERROR_NETWORK);
+                    Utils.toast(activity, Config.ERROR_NETWORK);
                 }
             }
         });
@@ -225,14 +241,5 @@ public class LoginActivity extends Activity implements OnClickListener {
         Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
         this.finish();
-    }
-
-    protected void show(CharSequence str) {
-        try {
-            Toast.makeText(this, Utils.getDecodedString((String) str),
-                    Toast.LENGTH_SHORT).show();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
     }
 }

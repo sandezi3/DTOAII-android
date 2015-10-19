@@ -8,7 +8,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://192.168.43.158:9999/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.1.100:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
@@ -30,6 +30,7 @@ public class Config {
     public static final String URL_DELETE_ORG = "/group/{groupId}";
     public static final String URL_GET_USER_STATUS = "/users/status";
     public static final String URL_ADD_FRIEND = "/user/friends";
+    public static final String URL_DELETE_FRIEND = "/user/{userId}/friend/{friendUserId}";
     public static final String URL_GET_CONTACTS = "/user/{userId}/contacts";
     public static final String URL_ADD_DEPT_USER = "/group/{groupId}/users";
     public static final String URL_DELETE_DEPT = "/group/{groupId}";
@@ -126,6 +127,7 @@ public class Config {
     public static final String ALERT_DISMISS_GROUP = "您确认解散该群吗？";
     public static final String ALERT_RENAME_GROUP = "更改群名称为：";
     public static final String ALERT_KICK_MEMBER = "您确认从该群移除用户 {} 吗？";
+    public static final String ALERT_DELETE_FRIEND = "删除该好友吗？";
 
     //设置
     public static final int HTTP_CONNECTION_EXPIRE_SECONDS = 120;

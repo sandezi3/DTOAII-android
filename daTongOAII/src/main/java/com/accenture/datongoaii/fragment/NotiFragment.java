@@ -16,6 +16,8 @@ import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.ConversationListAdapter;
+import com.accenture.datongoaii.db.ContactDao;
+import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Conversation;
@@ -146,63 +148,102 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
         if (isConversationUpdated(conversationList)) {
             List<String> list = getImIds(conversationList);
             if (list.size() > 0) {
-                DTOARequest.startGetUsersByImIds(list, new HttpConnection.CallbackListener() {
-                    @Override
-                    public void callBack(String result) {
-                        if (!result.equals("result")) {
-                            try {
-                                CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                                if (cr.statusCode == 0) {
-                                    JSONArray array = new JSONObject(result).getJSONArray("data");
-                                    for (int i = 0; i < array.length(); i++) {
-                                        JSONObject obj = array.getJSONObject(i);
-                                        Contact c = Contact.fromJSON(obj);
-                                        if (c != null) {
-                                            Conversation conversation = Conversation.getItemByImId(conversationList, c.imId);
-                                            if (conversation != null) {
-                                                conversation.head = c.head;
-                                                conversation.username = c.name;
-                                            }
-                                        }
-                                    }
-                                    refresh();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                // 先在数据库中查询并更新list,按结果刷新view
+                List<Contact> contacts = new ContactDao(context).getListByImIds(list);
+                for (Contact contact : contacts) {
+                    for (int i = list.size() - 1; i >= 0; i--) {
+                        String imId = list.get(i);
+                        if (contact.imId.equals(imId)) {
+                            // 移除已处理会话
+                            list.remove(imId);
+                            Conversation.updateContactInList(conversationList, contact);
                         }
                     }
-                });
+                }
+                if (contacts.size() > 0) {
+                    refresh();
+                }
+                if (list.size() > 0) {
+                    DTOARequest.startGetUsersByImIds(list, new HttpConnection.CallbackListener() {
+                        @Override
+                        public void callBack(String result) {
+                            if (!result.equals("result")) {
+                                try {
+                                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                                    if (cr.statusCode == 0) {
+                                        JSONArray array = new JSONObject(result).getJSONArray("data");
+                                        for (int i = 0; i < array.length(); i++) {
+                                            JSONObject obj = array.getJSONObject(i);
+                                            Contact c = Contact.fromJSON(obj);
+                                            if (c != null) {
+                                                ContactDao dao = new ContactDao(context);
+                                                if (dao.isExisted(c)) {
+                                                    dao.update(c);
+                                                } else {
+                                                    dao.save(c);
+                                                }
+                                                Conversation.updateContactInList(conversationList, c);
+                                            }
+                                        }
+                                        refresh();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                }
             }
-            String ids = getGroupIds(conversationList);
-            if (ids.length() > 0) {
-                DTOARequest.startGetGroupsByIds(ids, new HttpConnection.CallbackListener() {
-                    @Override
-                    public void callBack(String result) {
-                        if (!result.equals("result")) {
-                            try {
-                                CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                                if (cr.statusCode == 0) {
-                                    JSONArray array = new JSONObject(result).getJSONArray("data");
-                                    for (int i = 0; i < array.length(); i++) {
-                                        JSONObject obj = array.getJSONObject(i);
-                                        Group group = Group.fromJSON(obj);
-                                        if (group != null) {
-                                            Conversation conversation = Conversation.getItemByImId(conversationList, group.imId);
-                                            if (conversation != null) {
-                                                conversation.head = group.img;
-                                                conversation.username = group.name;
-                                            }
-                                        }
-                                    }
-                                    refresh();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+            // 先在数据库中查询并更新list,按结果刷新view
+            list = Utils.splitStrings(getGroupIds(conversationList), ",");
+            if (list != null && list.size() > 0) {
+                List<Group> groups = new GroupDao(context).getListByImIds(list);
+                for (Group group : groups) {
+                    for (int i = list.size() - 1; i >= 0; i--) {
+                        String imId = list.get(i);
+                        if (group.imId.equals(imId)) {
+                            // 移除已处理会话
+                            list.remove(imId);
+                            Conversation.updateGroupInList(conversationList, group);
                         }
                     }
-                });
+                }
+                if (groups.size() > 0) {
+                    refresh();
+                }
+                if (list.size() > 0) {
+                    String ids = Utils.combineStrings(list, ",");
+                    DTOARequest.startGetGroupsByIds(ids, new HttpConnection.CallbackListener() {
+                        @Override
+                        public void callBack(String result) {
+                            if (!result.equals("result")) {
+                                try {
+                                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                                    if (cr.statusCode == 0) {
+                                        JSONArray array = new JSONObject(result).getJSONArray("data");
+                                        for (int i = 0; i < array.length(); i++) {
+                                            JSONObject obj = array.getJSONObject(i);
+                                            Group group = Group.fromJSON(obj);
+                                            GroupDao dao = new GroupDao(context);
+                                            if (group != null) {
+                                                if (dao.isExisted(group)) {
+                                                    dao.update(group);
+                                                } else {
+                                                    dao.save(group);
+                                                }
+                                                Conversation.updateGroupInList(conversationList, group);
+                                            }
+                                        }
+                                        refresh();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                }
             }
         }
     }

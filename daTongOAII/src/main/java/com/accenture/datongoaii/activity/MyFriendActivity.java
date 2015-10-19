@@ -1,6 +1,7 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,9 @@ import android.view.View.OnClickListener;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.FriendFragment;
+import com.accenture.datongoaii.model.Account;
+
+import java.util.List;
 
 public class MyFriendActivity extends FragmentActivity {
     private Activity context;
@@ -39,4 +43,10 @@ public class MyFriendActivity extends FragmentActivity {
             t.commitAllowingStateLoss();
         }
     }
-}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_DELETE_FRIEND && resultCode == RESULT_OK) {
+            friendFragment.getFriends(Account.getInstance().getUserId());
+        }
+    }}
