@@ -19,6 +19,7 @@ import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.UserGridAdapter;
+import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
@@ -139,6 +140,8 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
                                         Utils.toast(context, Config.SUCCESS_CREATE);
                                         ((Activity) context).setResult(RESULT_OK);
                                         ((Activity) context).finish();
+                                        //清数据库
+                                        new GroupDao(context).saveMyGroups(null);
                                     }
                                 } catch (JSONException e) {
                                     Logger.e(TAG, e.getMessage());

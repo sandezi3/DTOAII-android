@@ -1,9 +1,13 @@
 package com.accenture.datongoaii;
 
+import android.content.Context;
+
 import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,8 +67,12 @@ public class DTOARequest {
                     array2.put(contact.cell);
                 }
             }
-            object.put("members", array1);
-            object.put("cells", array2);
+            if (array1.length() > 0) {
+                object.put("members", array1);
+            }
+            if (array2.length() > 0) {
+                object.put("cells", array2);
+            }
             object.put("owner", ownerId);
             object.put("groupname", name);
             object.put("desc", desc);
@@ -98,8 +106,12 @@ public class DTOARequest {
                     array2.put(contact.cell);
                 }
             }
-            object.put("imIds", array1);
-            object.put("cells", array2);
+            if (array1.length() > 0) {
+                object.put("imIds", array1);
+            }
+            if (array2.length() > 0) {
+                object.put("cells", array2);
+            }
         } catch (JSONException e) {
             Logger.e(TAG, e.getMessage());
             return;
@@ -129,10 +141,70 @@ public class DTOARequest {
         new HttpConnection().delete(url, listener);
     }
 
-    public static void startGetGroupsByIds(String ids, HttpConnection.CallbackListener listener) {
+    public void startGetGroupsByIds(String ids, RequestListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_GROUPS_BY_IDS.replace("{chatGroupIds}", ids);
-        new HttpConnection().get(url, listener);
+        mListener = listener;
+        new HttpConnection().get(url, defaultListener);
     }
 
 
+    private static DTOARequest instance;
+    private HttpConnection.CallbackListener defaultListener;
+    private RequestListener mListener;
+    private static Context mAppContext;
+    private boolean mIsSilent;
+
+    public interface RequestListener {
+        void callback(String result);
+    }
+
+    private DTOARequest(Context appContext) {
+        super();
+        mAppContext = appContext;
+        instance = this;
+        mListener = null;
+        mIsSilent = false;
+        defaultListener = new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (result.equals("fail")) {
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_NETWORK);
+                    }
+                    return;
+                }
+                try {
+                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                    if (cr.statusCode == 0) {
+                        mListener.callback(result);
+                    } else {
+                        if (!mIsSilent) {
+                            Utils.toast(mAppContext, cr.statusMsg);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Logger.e(TAG, e.getMessage());
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_INTERFACE);
+                    }
+                }
+            }
+        };
+    }
+
+    public static DTOARequest getInstance(Context appContext) {
+        if (instance == null) {
+            instance = new DTOARequest(appContext);
+        }
+        instance.mIsSilent = false;
+        return instance;
+    }
+
+    public static DTOARequest getInstance(Context appContext, Boolean isSilent) {
+        if (instance == null) {
+            instance = new DTOARequest(appContext);
+        }
+        instance.mIsSilent = isSilent;
+        return instance;
+    }
 }

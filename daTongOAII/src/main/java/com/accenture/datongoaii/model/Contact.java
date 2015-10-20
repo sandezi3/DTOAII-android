@@ -144,6 +144,7 @@ public class Contact extends FirstPinYin implements Serializable {
                 if (object.has("userId") && object.getInt("userId") > 0) {
                     c.isUser = true;
                     c.id = object.getInt("userId");
+                    c.imId = object.getString("imId");
                 } else if (object.has("") && object.getBoolean("")) {
                     // TODO
                     c.isInvited = true;

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
@@ -23,6 +24,7 @@ import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Conversation;
 import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.easemob.chat.EMChatManager;
@@ -32,6 +34,7 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VoiceMessageBody;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -42,6 +45,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class NotiFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private static final String TAG = "NotiFragment";
     private Context context;
     //    private PullToRefreshListView lvNoti;
 //    private EditText etSearch;
@@ -150,18 +154,20 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
             if (list.size() > 0) {
                 // 先在数据库中查询并更新list,按结果刷新view
                 List<Contact> contacts = new ContactDao(context).getListByImIds(list);
-                for (Contact contact : contacts) {
-                    for (int i = list.size() - 1; i >= 0; i--) {
-                        String imId = list.get(i);
-                        if (contact.imId.equals(imId)) {
-                            // 移除已处理会话
-                            list.remove(imId);
-                            Conversation.updateContactInList(conversationList, contact);
+                if (contacts != null && contacts.size() > 0) {
+                    for (Contact contact : contacts) {
+                        for (int i = list.size() - 1; i >= 0; i--) {
+                            String imId = list.get(i);
+                            if (contact.imId.equals(imId)) {
+                                // 移除已处理会话
+                                list.remove(imId);
+                                Conversation.updateContactInList(conversationList, contact);
+                            }
                         }
                     }
-                }
-                if (contacts.size() > 0) {
-                    refresh();
+                    if (contacts.size() > 0) {
+                        refresh();
+                    }
                 }
                 if (list.size() > 0) {
                     DTOARequest.startGetUsersByImIds(list, new HttpConnection.CallbackListener() {
@@ -178,7 +184,7 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
                                             if (c != null) {
                                                 ContactDao dao = new ContactDao(context);
                                                 if (dao.isExisted(c)) {
-                                                    dao.update(c);
+                                                    dao.update(c, false);
                                                 } else {
                                                     dao.save(c);
                                                 }
@@ -199,51 +205,49 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
             list = Utils.splitStrings(getGroupIds(conversationList), ",");
             if (list != null && list.size() > 0) {
                 List<Group> groups = new GroupDao(context).getListByImIds(list);
-                for (Group group : groups) {
-                    for (int i = list.size() - 1; i >= 0; i--) {
-                        String imId = list.get(i);
-                        if (group.imId.equals(imId)) {
-                            // 移除已处理会话
-                            list.remove(imId);
-                            Conversation.updateGroupInList(conversationList, group);
-                        }
-                    }
-                }
-                if (groups.size() > 0) {
-                    refresh();
-                }
-                if (list.size() > 0) {
-                    String ids = Utils.combineStrings(list, ",");
-                    DTOARequest.startGetGroupsByIds(ids, new HttpConnection.CallbackListener() {
-                        @Override
-                        public void callBack(String result) {
-                            if (!result.equals("result")) {
-                                try {
-                                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                                    if (cr.statusCode == 0) {
-                                        JSONArray array = new JSONObject(result).getJSONArray("data");
-                                        for (int i = 0; i < array.length(); i++) {
-                                            JSONObject obj = array.getJSONObject(i);
-                                            Group group = Group.fromJSON(obj);
-                                            GroupDao dao = new GroupDao(context);
-                                            if (group != null) {
-                                                if (dao.isExisted(group)) {
-                                                    dao.update(group);
-                                                } else {
-                                                    dao.save(group);
-                                                }
-                                                Conversation.updateGroupInList(conversationList, group);
-                                            }
-                                        }
-                                        refresh();
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                if (groups != null) {
+                    for (Group group : groups) {
+                        for (int i = list.size() - 1; i >= 0; i--) {
+                            String imId = list.get(i);
+                            if (group.imId.equals(imId)) {
+                                // 移除已处理会话
+                                list.remove(imId);
+                                Conversation.updateGroupInList(conversationList, group);
                             }
                         }
-                    });
+                    }
+                    if (groups.size() > 0) {
+                        refresh();
+                    }
                 }
+            }
+            if (list != null && list.size() > 0) {
+                String ids = Utils.combineStrings(list, ",");
+                DTOARequest.getInstance(context).startGetGroupsByIds(ids, new DTOARequest.RequestListener() {
+                    @Override
+                    public void callback(String result) {
+                        try {
+                            JSONArray array = new JSONObject(result).getJSONArray("data");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject obj = array.getJSONObject(i);
+                                Group group = Group.fromJSON(obj);
+                                GroupDao dao = new GroupDao(context);
+                                if (group != null) {
+                                    if (dao.isExisted(group)) {
+                                        dao.update(group);
+                                    } else {
+                                        dao.save(group);
+                                    }
+                                    Conversation.updateGroupInList(conversationList, group);
+                                }
+                            }
+                            refresh();
+                        } catch (JSONException e) {
+                            Logger.e(TAG, e.getMessage());
+                            Utils.toast(context, Config.ERROR_INTERFACE);
+                        }
+                    }
+                });
             }
         }
     }

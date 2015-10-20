@@ -626,7 +626,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                                 assert c != null;
                                 ContactDao dao = new ContactDao(context);
                                 if (dao.isExisted(c)) {
-                                    dao.update(c);
+                                    dao.update(c, false);
                                 } else {
                                     dao.save(c);
                                 }

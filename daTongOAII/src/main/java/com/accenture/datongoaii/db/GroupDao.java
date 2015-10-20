@@ -163,7 +163,13 @@ public class GroupDao {
         }
         List<Group> list = new ArrayList<Group>();
         for (String id : ids) {
-            list.add(getByImId(id));
+            Group group = getByImId(id);
+            if (group!= null) {
+                list.add(group);
+            }
+        }
+        if (list.size() == 0) {
+            return null;
         }
         return list;
     }
@@ -343,7 +349,7 @@ public class GroupDao {
         if (group.owner != null) {
             ContactDao dao = new ContactDao(context);
             if (dao.isExisted(group.owner)) {
-                dao.update(group.owner);
+                dao.update(group.owner, false);
             } else {
                 dao.save(group.owner);
             }
@@ -355,7 +361,7 @@ public class GroupDao {
             for (Contact c : group.contactList) {
                 ContactDao dao = new ContactDao(context);
                 if (dao.isExisted(c)) {
-                    dao.update(c);
+                    dao.update(c, false);
                 } else {
                     dao.save(c);
                 }

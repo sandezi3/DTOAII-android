@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
-import com.accenture.datongoaii.vendor.HX.receiver.DeliveryAckMessageReceiver;
 import com.accenture.datongoaii.vendor.HX.receiver.NewMessageBroadcastReceiver;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -21,11 +20,8 @@ import com.easemob.EMNotifierEvent;
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.OnMessageNotifyListener;
-import com.easemob.chat.OnNotificationClickListener;
 import com.easemob.util.EasyUtils;
 
 import java.util.ArrayList;
@@ -134,16 +130,6 @@ public class HXController {
         }
     }
 
-    public void registerDeliveryAckReceiver(Context contextLocal) {
-        //如果用到已发送的回执需要把这个flag设置成true
-        EMChatManager.getInstance().getChatOptions().setRequireDeliveryAck(true);
-
-        DeliveryAckMessageReceiver deliveryAckMessageReceiver = new DeliveryAckMessageReceiver();
-        IntentFilter deliveryAckMessageIntentFilter = new IntentFilter(EMChatManager.getInstance().getDeliveryAckMessageBroadcastAction());
-        deliveryAckMessageIntentFilter.setPriority(5);
-        contextLocal.registerReceiver(deliveryAckMessageReceiver, deliveryAckMessageIntentFilter);
-    }
-
     public void pushActivity(Activity activity) {
         if (!activityList.contains(activity)) {
             activityList.add(0, activity);
@@ -197,6 +183,7 @@ public class HXController {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void initEventListener() {
         eventListener = new EMEventListener() {
             private BroadcastReceiver broadCastReceiver = null;
@@ -226,45 +213,51 @@ public class HXController {
                     // below is just giving a example to show a cmd toast, the app should not follow this
                     // so be careful of this
                     case EventNewCMDMessage: {
-
                         Logger.d(TAG, "收到透传消息");
                         //获取消息body
-                        CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
-                        final String action = cmdMsgBody.action;//获取自定义action
+                        CmdMessageBody cmdMsgBody;
+                        final String action;//获取自定义action
+                        if (message != null) {
+                            cmdMsgBody = (CmdMessageBody) message.getBody();
+                            action = cmdMsgBody.action;
+                            //获取扩展属性 此处省略
+                            //message.getStringAttribute("");
+                            Logger.d(TAG, String.format("透传消息：action:%s,message:%s", action, message.toString()));
+                            final String str = "收到透传：action：";
 
-                        //获取扩展属性 此处省略
-                        //message.getStringAttribute("");
-                        Logger.d(TAG, String.format("透传消息：action:%s,message:%s", action, message.toString()));
-                        final String str = "收到透传：action：";
+                            final String CMD_TOAST_BROADCAST = "com.accenture.dtoaii.im.cmd.toast";
+                            IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
 
-                        final String CMD_TOAST_BROADCAST = "com.accenture.dtoaii.im.cmd.toast";
-                        IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
+                            if (broadCastReceiver == null) {
+                                broadCastReceiver = new BroadcastReceiver() {
 
-                        if (broadCastReceiver == null) {
-                            broadCastReceiver = new BroadcastReceiver() {
+                                    @Override
+                                    public void onReceive(Context context, Intent intent) {
+                                        // TODO Auto-generated method stub
+                                        Toast.makeText(context, intent.getStringExtra("cmd_value"), Toast.LENGTH_SHORT).show();
+                                    }
+                                };
 
-                                @Override
-                                public void onReceive(Context context, Intent intent) {
-                                    // TODO Auto-generated method stub
-                                    Toast.makeText(context, intent.getStringExtra("cmd_value"), Toast.LENGTH_SHORT).show();
-                                }
-                            };
+                                //注册广播接收者
+                                context.registerReceiver(broadCastReceiver, cmdFilter);
+                            }
 
-                            //注册广播接收者
-                            context.registerReceiver(broadCastReceiver, cmdFilter);
+                            Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
+                            broadcastIntent.putExtra("cmd_value", str + action);
+                            context.sendBroadcast(broadcastIntent, null);
                         }
-
-                        Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
-                        broadcastIntent.putExtra("cmd_value", str + action);
-                        context.sendBroadcast(broadcastIntent, null);
-
-                        break;
                     }
+
+                    break;
                     case EventDeliveryAck:
-                        message.setDelivered(true);
+                        if (message != null) {
+                            message.setDelivered(true);
+                        }
                         break;
                     case EventReadAck:
-                        message.setAcked(true);
+                        if (message != null) {
+                            message.setAcked(true);
+                        }
                         break;
                     // add other events in case you are interested in
                     default:

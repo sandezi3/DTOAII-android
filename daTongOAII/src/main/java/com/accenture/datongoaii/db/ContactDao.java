@@ -48,7 +48,7 @@ public class ContactDao {
                     values.put(FRIEND_TABLE_USER_ID, c.id);
                     db.replace(FRIEND_TABLE, null, values);
                     if (isExisted(c)) {
-                        update(c);
+                        update(c, true);
                     } else {
                         save(c);
                     }
@@ -247,7 +247,7 @@ public class ContactDao {
      *
      * @param contact 待更新Contact
      */
-    synchronized public void update(Contact contact) {
+    synchronized public void update(Contact contact, boolean updateFriendsStatus) {
         try {
             SQLiteDatabase db = DBHelper.getInstance(context).getWritableDatabase();
             if (db.isOpen()) {
@@ -258,7 +258,9 @@ public class ContactDao {
                 if (contact.head != null && contact.head.length() > 0) {
                     values.put(ContactDao.CONTACT_TABLE_HEAD, contact.head);
                 }
-                values.put(ContactDao.CONTACT_TABLE_FRIEND_STATUS, getFriendStatus(contact.friendStatus));
+                if (updateFriendsStatus) {
+                    values.put(ContactDao.CONTACT_TABLE_FRIEND_STATUS, getFriendStatus(contact.friendStatus));
+                }
                 if (contact.id > 0) {
                     db.update(ContactDao.CONTACT_TABLE, values, ContactDao.CONTACT_TABLE_ID + " = ?", new String[]{String.valueOf(contact.id)});
                 } else if (contact.imId != null && contact.imId.length() > 0) {
