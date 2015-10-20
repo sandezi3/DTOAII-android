@@ -38,7 +38,7 @@ import java.util.Locale;
  * 新消息提醒class
  * 2.1.8把新消息提示相关的api移除出sdk，方便开发者自由修改
  * 开发者也可以继承此类实现相关的接口
- *
+ * <p/>
  * this class is subject to be inherited and implement the relative APIs
  */
 public class HXNotifier {
@@ -74,6 +74,7 @@ public class HXNotifier {
     /**
      * 开发者可以重载此函数
      * this function can be override
+     *
      * @param context
      * @return
      */
@@ -115,7 +116,7 @@ public class HXNotifier {
 
     /**
      * 处理新收到的消息，然后发送通知
-     *
+     * <p/>
      * 开发者可以重载此函数
      * this function can be override
      *
@@ -155,6 +156,7 @@ public class HXNotifier {
     /**
      * 发送通知栏提示
      * This can be override by subclass to provide customer implementation
+     *
      * @param messages
      * @param isForeground
      */
@@ -175,6 +177,7 @@ public class HXNotifier {
     /**
      * 发送通知栏提示
      * This can be override by subclass to provide customer implementation
+     *
      * @param message
      */
     protected void sendNotification(EMMessage message, boolean isForeground, boolean numIncrease) {
@@ -360,8 +363,7 @@ public class HXNotifier {
         /**
          * 设置发送notification时状态栏提示新消息的内容(比如Xxx发来了一条图片消息)
          *
-         * @param message
-         *            接收到的消息
+         * @param message 接收到的消息
          * @return null为使用默认
          */
         String getDisplayedText(EMMessage message);
@@ -369,12 +371,9 @@ public class HXNotifier {
         /**
          * 设置notification持续显示的新消息提示(比如2个联系人发来了5条消息)
          *
-         * @param message
-         *            接收到的消息
-         * @param fromUsersNum
-         *            发送人的数量
-         * @param messageNum
-         *            消息数量
+         * @param message      接收到的消息
+         * @param fromUsersNum 发送人的数量
+         * @param messageNum   消息数量
          * @return null为使用默认
          */
         String getLatestText(EMMessage message, int fromUsersNum, int messageNum);
@@ -398,8 +397,7 @@ public class HXNotifier {
         /**
          * 设置notification点击时的跳转intent
          *
-         * @param message
-         *            显示在notification上最近的一条消息
+         * @param message 显示在notification上最近的一条消息
          * @return null为使用默认
          */
         Intent getLaunchIntent(EMMessage message);

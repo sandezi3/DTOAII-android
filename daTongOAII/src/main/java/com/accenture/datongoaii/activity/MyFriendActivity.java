@@ -13,8 +13,6 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.FriendFragment;
 import com.accenture.datongoaii.model.Account;
 
-import java.util.List;
-
 public class MyFriendActivity extends FragmentActivity {
     private Activity context;
     private FriendFragment friendFragment;
@@ -49,4 +47,5 @@ public class MyFriendActivity extends FragmentActivity {
         if (requestCode == Constants.REQUEST_CODE_DELETE_FRIEND && resultCode == RESULT_OK) {
             friendFragment.getFriends(Account.getInstance().getUserId());
         }
-    }}
+    }
+}

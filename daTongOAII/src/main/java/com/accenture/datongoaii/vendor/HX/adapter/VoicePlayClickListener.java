@@ -127,7 +127,7 @@ public class VoicePlayClickListener implements View.OnClickListener {
                     if (!message.isAcked) {
                         message.isAcked = true;
                         // 告知对方已读这条消息
-						if (chatType != ChatType.GroupChat && chatType != ChatType.ChatRoom) {
+                        if (chatType != ChatType.GroupChat && chatType != ChatType.ChatRoom) {
 //							EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
                             message.isAcked = true;
                         }

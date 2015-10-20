@@ -52,7 +52,7 @@ public class Utils {
         return list;
     }
 
-    public static String combineStrings (List<String> list, String sep) {
+    public static String combineStrings(List<String> list, String sep) {
         String result = "";
         if (list == null || list.size() == 0) {
             return result;
@@ -271,9 +271,9 @@ public class Utils {
         editor.commit();
     }
 
-    public static HashMap<String,String> getUserInfo(Context context) {
+    public static HashMap<String, String> getUserInfo(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
-        HashMap<String,String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<String, String>();
         map.put("token", sp.getString("token", ""));
         map.put("userId", sp.getString("userId", ""));
         return map;
@@ -396,6 +396,7 @@ public class Utils {
     }
 
     private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
+
     public static boolean isCloseEnough(long time1, long time2) {
         // long time1 = date1.getTime();
         // long time2 = date2.getTime();

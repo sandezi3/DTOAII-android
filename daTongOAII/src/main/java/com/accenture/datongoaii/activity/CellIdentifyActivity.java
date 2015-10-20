@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 

@@ -8,12 +8,12 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Jsons;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Jsons;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONException;

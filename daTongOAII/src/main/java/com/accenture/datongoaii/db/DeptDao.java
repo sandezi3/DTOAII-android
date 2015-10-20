@@ -1,15 +1,6 @@
 package com.accenture.datongoaii.db;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.accenture.datongoaii.model.Contact;
-import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.util.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DeptDao {
     private Context context;

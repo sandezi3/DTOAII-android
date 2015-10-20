@@ -1,7 +1,5 @@
 package com.accenture.datongoaii.model;
 
-import com.easemob.chat.EMConversation;
-
 import java.io.Serializable;
 import java.util.List;
 

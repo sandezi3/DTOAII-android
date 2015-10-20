@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.model.Jsons.JsonAccount;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Jsons.JsonAccount;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Utils;
 
 import org.json.JSONException;

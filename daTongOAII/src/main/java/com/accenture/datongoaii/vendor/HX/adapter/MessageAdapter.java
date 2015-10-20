@@ -276,9 +276,9 @@ public class MessageAdapter extends BaseAdapter {
                 return message.direct == Direct.RECEIVE ? inflater.inflate(R.layout.row_received_picture, null) : inflater.inflate(
                         R.layout.row_sent_picture, null);
 //
-		case VOICE:
-			return message.direct == Direct.RECEIVE ? inflater.inflate(R.layout.row_received_voice, null) : inflater.inflate(
-					R.layout.row_sent_voice, null);
+            case VOICE:
+                return message.direct == Direct.RECEIVE ? inflater.inflate(R.layout.row_received_voice, null) : inflater.inflate(
+                        R.layout.row_sent_voice, null);
 //		case VIDEO:
 //			return message.direct == Direct.RECEIVE ? inflater.inflate(R.layout.row_received_video, null) : inflater.inflate(
 //					R.layout.row_sent_video, null);

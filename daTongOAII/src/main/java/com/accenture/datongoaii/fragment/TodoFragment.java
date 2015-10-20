@@ -14,12 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.adapter.TodoListAdapter;
 import com.accenture.datongoaii.model.Todo;
 import com.accenture.datongoaii.network.HttpConnection;
-import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.util.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;

@@ -164,7 +164,7 @@ public class GroupDao {
         List<Group> list = new ArrayList<Group>();
         for (String id : ids) {
             Group group = getByImId(id);
-            if (group!= null) {
+            if (group != null) {
                 list.add(group);
             }
         }
