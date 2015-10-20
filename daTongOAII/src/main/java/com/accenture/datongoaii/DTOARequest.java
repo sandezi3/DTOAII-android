@@ -21,7 +21,65 @@ import java.util.List;
  */
 public class DTOARequest {
     public static final String TAG = "DTOARequest";
+    private static DTOARequest instance;
+    private HttpConnection.CallbackListener defaultListener;
+    private RequestListener mListener;
+    private static Context mAppContext;
+    private boolean mIsSilent;
 
+    public interface RequestListener {
+        void callback(String result);
+    }
+
+    private DTOARequest(Context appContext) {
+        super();
+        mAppContext = appContext;
+        instance = this;
+        mListener = null;
+        mIsSilent = false;
+        defaultListener = new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (result.equals("fail")) {
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_NETWORK);
+                    }
+                    return;
+                }
+                try {
+                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                    if (cr.statusCode == 0) {
+                        mListener.callback(result);
+                    } else {
+                        if (!mIsSilent) {
+                            Utils.toast(mAppContext, cr.statusMsg);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Logger.e(TAG, e.getMessage());
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_INTERFACE);
+                    }
+                }
+            }
+        };
+    }
+
+    public static DTOARequest getInstance(Context appContext) {
+        instance = new DTOARequest(appContext);
+        instance.mIsSilent = false;
+        return instance;
+    }
+
+    public static DTOARequest getInstance(Context appContext, Boolean isSilent) {
+        instance = new DTOARequest(appContext);
+        instance.mIsSilent = isSilent;
+        return instance;
+    }
+
+    /**
+     * 用户
+     */
     public static void startGetUserByImId(String imId, HttpConnection.CallbackListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_USER_BY_IMID.replace("{imId}", imId);
         new HttpConnection().get(url, listener);
@@ -148,63 +206,4 @@ public class DTOARequest {
     }
 
 
-    private static DTOARequest instance;
-    private HttpConnection.CallbackListener defaultListener;
-    private RequestListener mListener;
-    private static Context mAppContext;
-    private boolean mIsSilent;
-
-    public interface RequestListener {
-        void callback(String result);
-    }
-
-    private DTOARequest(Context appContext) {
-        super();
-        mAppContext = appContext;
-        instance = this;
-        mListener = null;
-        mIsSilent = false;
-        defaultListener = new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (result.equals("fail")) {
-                    if (!mIsSilent) {
-                        Utils.toast(mAppContext, Config.ERROR_NETWORK);
-                    }
-                    return;
-                }
-                try {
-                    CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                    if (cr.statusCode == 0) {
-                        mListener.callback(result);
-                    } else {
-                        if (!mIsSilent) {
-                            Utils.toast(mAppContext, cr.statusMsg);
-                        }
-                    }
-                } catch (JSONException e) {
-                    Logger.e(TAG, e.getMessage());
-                    if (!mIsSilent) {
-                        Utils.toast(mAppContext, Config.ERROR_INTERFACE);
-                    }
-                }
-            }
-        };
-    }
-
-    public static DTOARequest getInstance(Context appContext) {
-        if (instance == null) {
-            instance = new DTOARequest(appContext);
-        }
-        instance.mIsSilent = false;
-        return instance;
-    }
-
-    public static DTOARequest getInstance(Context appContext, Boolean isSilent) {
-        if (instance == null) {
-            instance = new DTOARequest(appContext);
-        }
-        instance.mIsSilent = isSilent;
-        return instance;
-    }
 }
