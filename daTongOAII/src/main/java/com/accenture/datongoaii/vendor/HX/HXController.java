@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.widget.Toast;
 
+import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
+import com.accenture.datongoaii.vendor.HX.receiver.NewCMDMessageBroadcastReceiver;
 import com.accenture.datongoaii.vendor.HX.receiver.NewMessageBroadcastReceiver;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -81,10 +84,6 @@ public class HXController {
 
         EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
 
-        registerGlobleReceivers();
-        initNotifier();
-        initEventListener();
-
         sdkInited = true;
         return true;
     }
@@ -110,6 +109,9 @@ public class HXController {
             @Override
             public void onSuccess() {
                 loadAllEnvirionment();
+                registerGlobleReceivers();
+                initNotifier();
+                initEventListener();
             }
 
             @Override
@@ -229,21 +231,13 @@ public class HXController {
                             IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
 
                             if (broadCastReceiver == null) {
-                                broadCastReceiver = new BroadcastReceiver() {
-
-                                    @Override
-                                    public void onReceive(Context context, Intent intent) {
-                                        // TODO Auto-generated method stub
-                                        Toast.makeText(context, intent.getStringExtra("cmd_value"), Toast.LENGTH_SHORT).show();
-                                    }
-                                };
-
+                                broadCastReceiver = new NewCMDMessageBroadcastReceiver();
                                 //注册广播接收者
                                 context.registerReceiver(broadCastReceiver, cmdFilter);
                             }
 
                             Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
-                            broadcastIntent.putExtra("cmd_value", str + action);
+                            broadcastIntent.putExtra(Constants.BROADCAST_CMD, action);
                             context.sendBroadcast(broadcastIntent, null);
                         }
                     }
@@ -260,6 +254,9 @@ public class HXController {
                         }
                         break;
                     // add other events in case you are interested in
+                    case EventConversationListChanged:
+                        Utils.toast(context, Config.NOTE_CONVERSATION_UPDATED);
+                        break;
                     default:
                         break;
                 }
@@ -267,7 +264,7 @@ public class HXController {
             }
         };
 
-        EMChatManager.getInstance().registerEventListener(eventListener);
+        EMChatManager.getInstance().registerEventListener(eventListener, new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage, EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck, EMNotifierEvent.Event.EventNewCMDMessage});
         EMChat.getInstance().setAppInited();
     }
 

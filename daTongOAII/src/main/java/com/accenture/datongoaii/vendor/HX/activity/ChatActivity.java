@@ -239,7 +239,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 this,
                 new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
                         EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck, EMNotifierEvent.Event.EventNewCMDMessage});
-        EMChat.getInstance().setAppInited();
     }
 
     @Override

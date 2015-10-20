@@ -8,7 +8,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://192.168.1.100:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.1.101:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
@@ -38,7 +38,7 @@ public class Config {
     public static final String URL_MODIFY_USER = "/user/{userId}";
     public static final String URL_DELETE_USER = "/group/{groupId}/user/{userId}";
     public static final String URL_GET_USER_PARENT = "/user/{userId}/groups?rootGroupId={rootGroupId}";
-    public static final String URL_INVITE_FRIEND = "";
+    public static final String URL_INVITE_FRIEND = "/user/invited_friends/{cell}";
     public static final String URL_GET_USER_BY_IMID = "/user/{imId}";
     public static final String URL_GET_USERS_BY_IMIDS = "/users/search";
     public static final String URL_CREATE_GROUP = "/chatgroups";
@@ -93,6 +93,7 @@ public class Config {
     public static final String NOTE_NO_LOCAL_PIC = "没有找到图片";
     public static final String NOTE_GROUP_REMOVED_BY_ADMIN = "你被群创建者从此群中移除";
     public static final String NOTE_GROUP_DISMISSED_BY_ADMIN = "当前群聊已被群创建者解散";
+    public static final String NOTE_CONVERSATION_UPDATED = "您的会话有更新";
 
     public static final String NOTE_RECORD_FAIL_NO_STORAGE_CARD = "未检测到存储卡，无法录音";
     public static final String NOTE_RECORD_SLIDE_UP_CANCEL = "手指上滑，取消发送";

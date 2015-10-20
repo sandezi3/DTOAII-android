@@ -21,9 +21,11 @@ import android.widget.TextView;
 
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.SelectUserActivity;
+import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -72,6 +74,189 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
             }
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = this.getActivity();
+        View view = inflater.inflate(R.layout.frag_phone_contact, container, false);
+
+        SectionListView slvContact = (SectionListView) view.findViewById(R.id.slvContact);
+        contactList = new ArrayList<Contact>();
+        slvContact.setAdapter(adapter);
+        slvContact.setOnSectionItemClickedListener(this);
+
+        getPhoneContact();
+        return view;
+    }
+
+    @Override
+    public void onSectionItemClicked(SectionListView listView, View view, int section, int position) {
+        Object object = dataList.get(section);
+        @SuppressWarnings("unchecked")
+        List<Contact> list = (List<Contact>) object;
+        Contact c = list.get(position);
+        onContactClicked(c);
+    }
+
+    private void onContactClicked(Contact c) {
+        if (isMultiMode) {
+            ((SelectUserActivity) context).onFragmentItemClick(c);
+            return;
+        }
+        if (isSelectMode) {
+            finishAndReturn(c);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    @SuppressWarnings("unchecked")
+    private void getPhoneContact() {
+        ContentResolver resolver = context.getContentResolver();
+        Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, new String[]{
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);
+        if (phoneCursor != null) {
+            while (phoneCursor.moveToNext()) {
+                Contact c = new Contact();
+                c.id = -1;
+                c.selected = false;
+                c.head = "";
+                // 得到联系人名称
+                c.name = phoneCursor.getString(0);
+                // 得到手机号码
+                c.cell = resolveCell(phoneCursor.getString(1));
+                // 当手机号码为空的或者为空字段 跳过当前循环
+                if (c.cell == null)
+                    continue;
+                CharacterParser cp = CharacterParser.getInstance();
+                String pinyin = cp.getSelling(c.name);
+                c.mFirstPinYin = pinyin.substring(0, 1).toUpperCase();
+                contactList.add(c);
+            }
+
+            phoneCursor.close();
+        }
+        refreshData();
+        startGetContactsStatusConnect();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void refreshData() {
+        dataList = (List<Object>) FirstPinYin.createPinYinGroupedList(contactList);
+        adapter.notifyDataSetChanged();
+    }
+
+    private String resolveCell(String cell) {
+        cell = cell.trim().replace(" ", "");
+        if (cell.contains("+86") && cell.length() > 13) {
+            return cell.substring(cell.length() - 11);
+        }
+        if (TextUtils.isEmpty(cell)) {
+            return null;
+        }
+        if (!Utils.isValidCellNumber(cell)) {
+            return null;
+        }
+        if (cell.equals(Account.getInstance().getCell())) {
+            return null;
+        }
+        return cell;
+    }
+
+    private void finishAndReturn(Contact c) {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
+        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
+        context.setResult(Activity.RESULT_OK, intent);
+        context.finish();
+    }
+
+    private void startGetContactsStatusConnect() {
+        String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            for (Object o : contactList) {
+                Contact c = (Contact) o;
+                array.put(c.cell);
+            }
+            obj.put("cells", array);
+        } catch (JSONException e) {
+            Utils.toast(context, e.getMessage());
+            return;
+        }
+        new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        assert (cr != null);
+                        if (cr.statusCode == 0) {
+                            Contact.resolveContactList(new JSONObject(result), contactList);
+                            refreshData();
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Logger.e("startGetContactsStatusConnect", e.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
+        String op = null;
+        switch (status) {
+            case FRIENDS_STATUS_TO_BE_FRIEND:
+                op = "add";
+                break;
+            case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
+                op = "accept";
+                break;
+        }
+        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("toUserId", id);
+            object.put("op", op);
+        } catch (JSONException e) {
+            Utils.toast(context, Config.ERROR_APP);
+        }
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
+        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                if (!result.equals("fail")) {
+                    try {
+                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
+                        if (cr.statusCode == 0) {
+                            // 清数据库，更新好友
+                            new ContactDao(context).saveFriends(null);
+                            startGetContactsStatusConnect();
+                        } else {
+                            Utils.toast(context, cr.statusMsg);
+                        }
+                    } catch (JSONException e) {
+                        Utils.toast(context, e.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    private void startInviteFriendConnect(String cell) {
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
+        DTOARequest.getInstance(context).startInviteFriendConnect(cell, new DTOARequest.RequestListener() {
+            @Override
+            public void callback(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                startGetContactsStatusConnect();
+            }
+        });
     }
 
     private final SectionListView.SectionListAdapter adapter = new SectionListView.SectionListAdapter() {
@@ -221,205 +406,4 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
             return c.mFirstPinYin;
         }
     };
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        context = this.getActivity();
-        View view = inflater.inflate(R.layout.frag_phone_contact, container, false);
-
-        SectionListView slvContact = (SectionListView) view.findViewById(R.id.slvContact);
-        contactList = new ArrayList<Contact>();
-        slvContact.setAdapter(adapter);
-        slvContact.setOnSectionItemClickedListener(this);
-
-        getPhoneContact();
-        return view;
-    }
-
-    private void onContactClicked(Contact c) {
-        if (isMultiMode) {
-            ((SelectUserActivity) context).onFragmentItemClick(c);
-            return;
-        }
-        if (isSelectMode) {
-            finishAndReturn(c);
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    @SuppressWarnings("unchecked")
-    private void getPhoneContact() {
-        ContentResolver resolver = context.getContentResolver();
-        Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, new String[]{
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);
-        if (phoneCursor != null) {
-            while (phoneCursor.moveToNext()) {
-                Contact c = new Contact();
-                c.id = -1;
-                c.selected = false;
-                c.head = "";
-                // 得到联系人名称
-                c.name = phoneCursor.getString(0);
-                // 得到手机号码
-                c.cell = resolveCell(phoneCursor.getString(1));
-                // 当手机号码为空的或者为空字段 跳过当前循环
-                if (c.cell == null)
-                    continue;
-                CharacterParser cp = CharacterParser.getInstance();
-                String pinyin = cp.getSelling(c.name);
-                c.mFirstPinYin = pinyin.substring(0, 1).toUpperCase();
-                contactList.add(c);
-            }
-
-            phoneCursor.close();
-        }
-        refreshData();
-        startGetContactsStatusConnect();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void refreshData() {
-        dataList = (List<Object>) FirstPinYin.createPinYinGroupedList(contactList);
-        adapter.notifyDataSetChanged();
-    }
-
-    private String resolveCell(String cell) {
-        cell = cell.trim().replace(" ", "");
-        if (cell.contains("+86") && cell.length() > 13) {
-            return cell.substring(cell.length() - 11);
-        }
-        if (TextUtils.isEmpty(cell)) {
-            return null;
-        }
-        if (!Utils.isValidCellNumber(cell)) {
-            return null;
-        }
-        if (cell.equals(Account.getInstance().getCell())) {
-            return null;
-        }
-        return cell;
-    }
-
-    private void finishAndReturn(Contact c) {
-        Intent intent = new Intent();
-        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_CELL, c.cell);
-        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_NAME, c.name);
-        intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_ID, c.id);
-        context.setResult(Activity.RESULT_OK, intent);
-        context.finish();
-    }
-
-    private void startGetContactsStatusConnect() {
-        String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
-        JSONObject obj = new JSONObject();
-        try {
-            JSONArray array = new JSONArray();
-            for (Object o : contactList) {
-                Contact c = (Contact) o;
-                array.put(c.cell);
-            }
-            obj.put("cells", array);
-        } catch (JSONException e) {
-            Utils.toast(context, e.getMessage());
-            return;
-        }
-        new HttpConnection().post(url, obj, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        assert (cr != null);
-                        if (cr.statusCode == 0) {
-                            Contact.resolveContactList(new JSONObject(result), contactList);
-                            refreshData();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Logger.e("startGetContactsStatusConnect", e.getMessage());
-                    }
-                }
-            }
-        });
-    }
-
-    private void startAddFriendsConnect(Integer id, Contact.FriendStatus status) {
-        String op = null;
-        switch (status) {
-            case FRIENDS_STATUS_TO_BE_FRIEND:
-                op = "add";
-                break;
-            case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
-                op = "accept";
-                break;
-        }
-        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND;
-        JSONObject object = new JSONObject();
-        try {
-            object.put("toUserId", id);
-            object.put("op", op);
-        } catch (JSONException e) {
-            Utils.toast(context, Config.ERROR_APP);
-        }
-        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
-        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        if (cr.statusCode == 0) {
-                            startGetContactsStatusConnect();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Utils.toast(context, e.getMessage());
-                    }
-                }
-            }
-        });
-    }
-
-    private void startInviteFriendConnect(String cell) {
-        String url = Config.SERVER_HOST + Config.URL_INVITE_FRIEND;
-        JSONObject object = new JSONObject();
-        try {
-            object.put("cell", cell);
-        } catch (JSONException e) {
-            Utils.toast(context, Config.ERROR_APP);
-        }
-        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
-        new HttpConnection().post(url, object, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        if (cr.statusCode == 0) {
-                            startGetContactsStatusConnect();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Utils.toast(context, e.getMessage());
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onSectionItemClicked(SectionListView listView, View view,
-                                     int section, int position) {
-        Object object = dataList.get(section);
-        @SuppressWarnings("unchecked")
-        List<Contact> list = (List<Contact>) object;
-        Contact c = list.get(position);
-        onContactClicked(c);
-    }
 }

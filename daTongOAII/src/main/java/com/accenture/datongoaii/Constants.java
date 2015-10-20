@@ -70,5 +70,8 @@ public class Constants {
     public static final int PUSH_COMMAND_REFRESH_CONTACT = 10002;
     public static final String PUSH_JSON_REFRESH_CONTACT_DEPT_ID = "DeptId";
 
-
+    // 透传命令
+    public static final String BROADCAST_CMD = "cmd.broadcast";
+    public static final String BROADCAST_CMD_DELETE_FRIEND = "deleteUserFriend";
+    public static final String BROADCAST_CMD_ADD_FRIEND = "addUserFriend";
 }

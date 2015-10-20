@@ -106,6 +106,11 @@ public class DTOARequest {
         new HttpConnection().delete(url, listener);
     }
 
+    public void startInviteFriendConnect(String cell, RequestListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_INVITE_FRIEND.replace("{cell}", cell);
+        mListener = listener;
+        new HttpConnection().put(url, defaultListener);
+    }
     /**
      * Group
      */

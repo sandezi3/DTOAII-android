@@ -79,8 +79,8 @@ public class HttpConnection implements Runnable {
         create(PUT, url, data, null, listener);
     }
 
-    public void put(String url, JSONObject data) {
-        create(PUT, url, data, null, listener);
+    public void put(String url, CallbackListener listener) {
+        create(PUT, url, null, null, listener);
     }
 
     public void delete(String url, CallbackListener listener) {
