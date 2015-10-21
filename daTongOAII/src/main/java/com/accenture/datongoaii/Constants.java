@@ -72,6 +72,15 @@ public class Constants {
 
     // 透传命令
     public static final String BROADCAST_CMD = "cmd.broadcast";
+    public static final String BROADCAST_CMD_PREFIX_TAG = "00cmd00";
+
     public static final String BROADCAST_CMD_DELETE_FRIEND = "deleteUserFriend";
-    public static final String BROADCAST_CMD_ADD_FRIEND = "addUserFriend";
+    public static final String BROADCAST_CMD_ADD_FRIEND = "addFriend";
+    public static final String BROADCAST_CMD_ACCEPT_FRIEND = "acceptFriend";
+
+    public static final String BROADCAST_CMD_GROUP_RENAME = "deleteUserFriend";
+    public static final String BROADCAST_CMD_GROUP_MEMBER_REMOVED = "deleteUserFriend";
+    public static final String BROADCAST_CMD_GROUP_DISMISS = "addFriend";
+    public static final String BROADCAST_CMD_GROUP_ADD_MEMBER = "acceptFriend";
+
 }

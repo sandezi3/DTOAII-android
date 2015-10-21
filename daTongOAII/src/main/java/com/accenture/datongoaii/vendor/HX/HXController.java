@@ -2,25 +2,22 @@ package com.accenture.datongoaii.vendor.HX;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 
 import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
-import com.accenture.datongoaii.vendor.HX.receiver.NewCMDMessageBroadcastReceiver;
 import com.accenture.datongoaii.vendor.HX.receiver.NewMessageBroadcastReceiver;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
-import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
@@ -188,16 +185,15 @@ public class HXController {
     @SuppressWarnings("unchecked")
     protected void initEventListener() {
         eventListener = new EMEventListener() {
-            private BroadcastReceiver broadCastReceiver = null;
-
             @Override
             public void onEvent(EMNotifierEvent event) {
+                if (CommonUtils.handleEvent(event)) {
+                    return;
+                }
                 EMMessage message = null;
                 if (event.getData() instanceof EMMessage) {
                     message = (EMMessage) event.getData();
-                    Logger.d(TAG, "receive the event : " + event.getEvent() + ",id : " + message.getMsgId());
                 }
-
                 switch (event.getEvent()) {
                     case EventNewMessage:
                         //应用在后台，不需要刷新UI,通知栏提示新消息
@@ -214,35 +210,8 @@ public class HXController {
                         break;
                     // below is just giving a example to show a cmd toast, the app should not follow this
                     // so be careful of this
-                    case EventNewCMDMessage: {
-                        Logger.d(TAG, "收到透传消息");
-                        //获取消息body
-                        CmdMessageBody cmdMsgBody;
-                        final String action;//获取自定义action
-                        if (message != null) {
-                            cmdMsgBody = (CmdMessageBody) message.getBody();
-                            action = cmdMsgBody.action;
-                            //获取扩展属性 此处省略
-                            //message.getStringAttribute("");
-                            Logger.d(TAG, String.format("透传消息：action:%s,message:%s", action, message.toString()));
-                            final String str = "收到透传：action：";
-
-                            final String CMD_TOAST_BROADCAST = "com.accenture.dtoaii.im.cmd.toast";
-                            IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
-
-                            if (broadCastReceiver == null) {
-                                broadCastReceiver = new NewCMDMessageBroadcastReceiver();
-                                //注册广播接收者
-                                context.registerReceiver(broadCastReceiver, cmdFilter);
-                            }
-
-                            Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
-                            broadcastIntent.putExtra(Constants.BROADCAST_CMD, action);
-                            context.sendBroadcast(broadcastIntent, null);
-                        }
-                    }
-
-                    break;
+                    case EventNewCMDMessage:
+                        break;
                     case EventDeliveryAck:
                         if (message != null) {
                             message.setDelivered(true);
@@ -349,7 +318,6 @@ public class HXController {
     }
 
     public boolean getSettingMsgSpeaker() {
-        // TODO: 10/15/15
         return true;
     }
 

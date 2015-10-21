@@ -2,7 +2,7 @@
  * * EaseMob CONFIDENTIAL
  * __________________
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * NOTICE: All information contained herein is, and remains
  * the property of EaseMob Technologies.
  * Dissemination of this information or reproduction of this material

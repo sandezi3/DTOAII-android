@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -45,9 +45,9 @@ import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.Constant;
 import com.accenture.datongoaii.vendor.HX.ImageCache;
-import com.accenture.datongoaii.vendor.HX.ImageUtils;
 import com.accenture.datongoaii.vendor.HX.LoadImageTask;
-import com.accenture.datongoaii.vendor.HX.SmileUtils;
+import com.accenture.datongoaii.vendor.HX.Utils.ImageUtils;
+import com.accenture.datongoaii.vendor.HX.Utils.SmileUtils;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.accenture.datongoaii.vendor.HX.activity.ShowBigImage;
 import com.easemob.EMCallBack;

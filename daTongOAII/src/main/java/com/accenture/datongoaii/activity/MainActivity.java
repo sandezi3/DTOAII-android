@@ -27,6 +27,7 @@ import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
+import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
@@ -317,6 +318,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
 
     @Override
     public void onEvent(EMNotifierEvent emNotifierEvent) {
+        if (CommonUtils.handleEventSkip(emNotifierEvent)) {
+            return;
+        }
         switch (emNotifierEvent.getEvent()) {
             case EventNewMessage: {
                 //获取到message

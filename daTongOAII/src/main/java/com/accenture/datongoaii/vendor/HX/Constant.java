@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,6 +17,8 @@ public class Constant {
     public static final String NEW_FRIENDS_USERNAME = "item_new_friends";
     public static final String GROUP_USERNAME = "item_groups";
     public static final String CHAT_ROOM = "item_chatroom";
+    public static final String MESSAGE_ATTR_IS_PICTURE = "is_image";
+    public static final String MESSAGE_ATTR_IS_VOICE = "is_voice";
     public static final String MESSAGE_ATTR_IS_VOICE_CALL = "is_voice_call";
     public static final String MESSAGE_ATTR_IS_VIDEO_CALL = "is_video_call";
     public static final String ACCOUNT_REMOVED = "account_removed";

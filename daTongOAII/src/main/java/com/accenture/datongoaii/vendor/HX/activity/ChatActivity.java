@@ -38,8 +38,8 @@ import com.accenture.datongoaii.model.Group;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.vendor.HX.CommonUtils;
 import com.accenture.datongoaii.vendor.HX.HXController;
+import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
 import com.accenture.datongoaii.vendor.HX.adapter.GroupRemoveListener;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.VoicePlayClickListener;
@@ -47,7 +47,6 @@ import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
-import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroupManager;
@@ -298,6 +297,9 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
 
     @Override
     public void onEvent(EMNotifierEvent emNotifierEvent) {
+        if (CommonUtils.handleEventSkip(emNotifierEvent)) {
+            return;
+        }
         switch (emNotifierEvent.getEvent()) {
             case EventNewCMDMessage:
                 EMMessage message1 = (EMMessage) emNotifierEvent.getData();
