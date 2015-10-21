@@ -156,7 +156,8 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".vendor.HX.activity.ShowBigImage"
+        <activity
+            android:name=".vendor.HX.activity.ShowBigImage"
             android:screenOrientation="portrait" />
 
         <activity
@@ -169,6 +170,10 @@
 
         <activity
             android:name=".activity.GroupProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.AppActivity"
             android:screenOrientation="portrait" />
 
         <!-- 个推SDK配置开始 -->

@@ -148,8 +148,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="10dp"
-                    android:visibility="invisible"
-                    android:src="@drawable/arrow" />
+                    android:src="@drawable/arrow"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <View
@@ -157,24 +157,22 @@
                 android:layout_height="0.5dp"
                 android:background="@color/gray_2" />
 
-            <RelativeLayout
-                android:id="@+id/layoutSelect"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_2" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tvLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:maxLines="1"
-                    android:text="群成员"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
+                android:gravity="center_vertical"
+                android:layout_gravity="left|center_vertical"
+                android:background="@color/white"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:text="群成员"
+                android:textSize="18sp" />
 
             <GridView
                 android:id="@+id/gvUsers"
@@ -196,7 +194,43 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_2" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="left|center_vertical"
+                android:background="@color/white"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:text="群应用"
+                android:textSize="18sp" />
+
+
+            <GridView
+                android:id="@+id/gvApps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:choiceMode="singleChoice"
+                android:columnWidth="80dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="6dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/gray_2" />
 
             <TextView

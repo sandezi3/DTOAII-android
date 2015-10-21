@@ -29,21 +29,25 @@ public class DeptFragment extends Fragment implements AdapterView.OnItemClickLis
     public Context context;
     public Dept mDept;
     public List<Object> viewList;
-
     private ContactListAdapter adapter;
+
+    private View pbLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dept, container, false);
+        View view = inflater.inflate(R.layout.frag_dept, container, false);
         context = this.getActivity();
 
         ListView lvDept = (ListView) view.findViewById(R.id.lvDept);
+        pbLayout = view.findViewById(R.id.pbLayout);
+        pbLayout.setVisibility(View.VISIBLE);
 
         viewList = new ArrayList<Object>();
         adapter = new ContactListAdapter(this.getActivity(), viewList);
         lvDept.setAdapter(adapter);
         lvDept.setOnItemClickListener(this);
+
 
         return view;
     }
@@ -69,12 +73,11 @@ public class DeptFragment extends Fragment implements AdapterView.OnItemClickLis
 
     // 网络数据
     private void startGetDeptConnect(Integer deptId) {
-//        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
         String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{groupId}", deptId + "");
         new HttpConnection().get(url, new HttpConnection.CallbackListener() {
             @Override
             public void callBack(String result) {
-//                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                pbLayout.setVisibility(View.INVISIBLE);
                 if (!result.equals("fail")) {
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);

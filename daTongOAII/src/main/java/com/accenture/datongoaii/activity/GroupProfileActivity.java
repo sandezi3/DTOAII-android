@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -22,9 +23,11 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.adapter.AppGridAdapter;
 import com.accenture.datongoaii.adapter.UserGridAdapter;
 import com.accenture.datongoaii.db.GroupDao;
 import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.App;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Group;
@@ -52,10 +55,13 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
     private static final String TAG = "GroupProfileActivity";
     private Context context;
     private Group mGroup;
-    private List<Contact> dataList;
-    private UserGridAdapter adapter;
+    private List<Contact> userList;
+    private UserGridAdapter userAdapter;
     private TextView tvName;
     private GridView gvUsers;
+    private List<App> appList;
+    private AppGridAdapter appAdapter;
+    private GridView gvApps;
     private boolean isAdmin;
     private ProgressDialog progressDialog;
     private Handler handler = new ActivityHandler(this);
@@ -92,6 +98,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         ImageView ivHead = (ImageView) findViewById(R.id.ivHead);
         tvName = (TextView) findViewById(R.id.tvName);
         gvUsers = (GridView) findViewById(R.id.gvUsers);
+        gvApps = (GridView) findViewById(R.id.gvApps);
 
         mGroup = (Group) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_GROUP_PROFILE);
 
@@ -99,11 +106,16 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         imageLoader.displayImage(mGroup.img, ivHead, Config.getDisplayOptions());
         tvName.setText(mGroup.name);
 
-        dataList = new ArrayList<Contact>();
+        userList = new ArrayList<Contact>();
         syncData();
-        adapter = new UserGridAdapter(context, dataList, false);
-        gvUsers.setAdapter(adapter);
+        userAdapter = new UserGridAdapter(context, userList, false);
+        gvUsers.setAdapter(userAdapter);
         gvUsers.setOnItemClickListener(this);
+
+        appList = new ArrayList<App>();
+        appAdapter = new AppGridAdapter(context, appList);
+        gvApps.setAdapter(appAdapter);
+        gvApps.setOnItemClickListener(this);
 
         findViewById(R.id.btnBack).setOnClickListener(this);
         findViewById(R.id.btnChat).setOnClickListener(this);
@@ -189,66 +201,75 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                 }
                 break;
         }
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == adapter.getCount() - 1) {
-            /**
-             * 邀请成员，多选
-             * 初始状态：选择0个成员
-             */
-            List<Contact> selectedUsers = new ArrayList<Contact>();
-            Intent intent = new Intent(context, SelectUserActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT, (Serializable) selectedUsers);
-            intent.putExtras(bundle);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, true);
-            startActivityForResult(intent, Constants.REQUEST_CODE_GROUP_INVITE_MEMBER);
-            return;
-        }
-        if (adapter.delectable) {
-            final Contact user = (Contact) adapter.getItem(position);
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(Config.ALERT_KICK_MEMBER.replace("{}", user.name))
-                    .setCancelable(false)
-                    .setPositiveButton("移除", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            startQuitGroup(mGroup.imId, user.imId);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .show();
-            builder.create();
+        if (parent.getAdapter().equals(userAdapter)) {
+            if (position == userAdapter.getCount() - 1) {
+                /**
+                 * 邀请成员，多选
+                 * 初始状态：选择0个成员
+                 */
+                List<Contact> selectedUsers = new ArrayList<Contact>();
+                Intent intent = new Intent(context, SelectUserActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE_RESULT, (Serializable) selectedUsers);
+                intent.putExtras(bundle);
+                intent.putExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, true);
+                startActivityForResult(intent, Constants.REQUEST_CODE_GROUP_INVITE_MEMBER);
+                return;
+            }
+            if (userAdapter.delectable) {
+                final Contact user = (Contact) userAdapter.getItem(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(Config.ALERT_KICK_MEMBER.replace("{}", user.name))
+                        .setCancelable(false)
+                        .setPositiveButton("移除", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startQuitGroup(mGroup.imId, user.imId);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+                builder.create();
+            }
+        } else if (parent.getAdapter().equals(appAdapter)) {
+            App app = appList.get(position);
+            Intent intent = new Intent(context, AppActivity.class);
+            intent.putExtra(Constants.BUNDLE_TAG_APP, app);
+            startActivity(intent);
+            finish();
         }
     }
 
     private void syncData() {
-        dataList.clear();
+        userList.clear();
         if (mGroup.contactList != null) {
-            dataList.addAll(mGroup.contactList);
+            userList.addAll(mGroup.contactList);
         }
         Contact addBtn = new Contact();
         addBtn.id = Contact.CONTACT_BUTTON_INVALID_ID;
-        dataList.add(addBtn);
+        userList.add(addBtn);
     }
 
-    private void adjustHeight() {
-        gvUsers.measure(0, 0);
+    private void adjustHeight(GridView gridView, BaseAdapter adapter) {
+        gridView.measure(0, 0);
         int col = 4;
-        int totalHeight = gvUsers.getMeasuredHeight();
+        int totalHeight = gridView.getMeasuredHeight();
         int space = (int) getResources().getDimension(R.dimen.phone_group_user_grid_vertical_space_height);
         for (int i = 4; i < adapter.getCount(); i += col) {
-            View view = adapter.getView(0, null, gvUsers);
+            View view = adapter.getView(0, null, gridView);
             view.measure(0, 0);
             totalHeight += view.getMeasuredHeight();
             totalHeight += space;
         }
 
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gvUsers.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gridView.getLayoutParams();
         params.height = totalHeight;
-        gvUsers.setLayoutParams(params);
+        gridView.setLayoutParams(params);
     }
 
     private void refreshUIByAdmin() {
@@ -281,7 +302,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                     builder.create();
                 }
             });
-            adapter.delectable = true;
+            userAdapter.delectable = true;
         }
     }
 
@@ -292,8 +313,10 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
             public void run() {
                 refreshUIByAdmin();
                 syncData();
-                adapter.notifyDataSetChanged();
-                adjustHeight();
+                appAdapter.notifyDataSetChanged();
+                userAdapter.notifyDataSetChanged();
+                adjustHeight(gvUsers, userAdapter);
+                adjustHeight(gvApps, appAdapter);
             }
         });
     }
@@ -315,7 +338,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
             if (group.owner != null) {
                 mGroup = group;
                 refreshUI();
-                return;
+//                return;
             }
         }
         progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
@@ -333,6 +356,11 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                             } else {
                                 // should not come to here
                                 dao.save(mGroup);
+                            }
+                            List<App> list = App.listFromJSON(new JSONObject(result).getJSONObject("data"));
+                            if (list != null && list.size() > 0) {
+                                appList.clear();
+                                appList.addAll(list);
                             }
                             refreshUI();
                             return;
