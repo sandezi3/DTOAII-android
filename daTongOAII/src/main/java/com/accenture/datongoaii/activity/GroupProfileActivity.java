@@ -125,11 +125,6 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
             findViewById(R.id.btnSendMessage).setVisibility(View.INVISIBLE);
             Utils.toast(context, Config.ERROR_IM);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         refreshGroup();
     }
 
