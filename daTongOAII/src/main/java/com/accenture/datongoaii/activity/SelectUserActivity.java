@@ -2,12 +2,10 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectUserActivity extends Activity implements View.OnClickListener {
-    private Fragment currentFrag;
-
     private Context context;
     private Dept mDept;
     private LinearLayout llNavBtns;

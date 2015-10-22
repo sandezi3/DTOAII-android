@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Account;
@@ -51,6 +52,7 @@ public class AppActivity extends Activity {
                 return true;
             }
         });
-        webView.loadUrl(app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId())));
+        String url = Config.SERVER_HOST.replace("/api", "").replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
+        webView.loadUrl(url);
     }
 }
