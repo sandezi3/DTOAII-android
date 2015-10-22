@@ -23,13 +23,13 @@
             android:paddingLeft="10dp"
             android:text="正在加载"
             android:textColor="@color/gray_2"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLargeInverse"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_toLeftOf="@id/tvLoading"
             android:visibility="visible" />
 

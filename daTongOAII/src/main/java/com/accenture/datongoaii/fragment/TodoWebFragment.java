@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.R;
@@ -25,6 +26,14 @@ public class TodoWebFragment extends Fragment {
         //启用支持javascript
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
 
         refreshTodoList(Account.getInstance().getUserId());
 
@@ -32,7 +41,7 @@ public class TodoWebFragment extends Fragment {
     }
 
     public void refreshTodoList(Integer userId) {
-        String url = Config.URL_GET_TODO_URL;//.replace("{userId}", String.valueOf(userId));
+        String url = Config.URL_GET_TODO_URL.replace("{userId}", String.valueOf(userId));
         webView.loadUrl(url);
     }
 

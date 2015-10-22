@@ -179,7 +179,6 @@ public class SelectUserActivity extends Activity implements View.OnClickListener
                 }
             }
         } else {
-            t.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
             for (Fragment frag : fragList) {
                 t.hide(frag);
             }
@@ -196,6 +195,7 @@ public class SelectUserActivity extends Activity implements View.OnClickListener
                 ((PhoneContactFragment) frag).isSelectMode = true;
                 ((PhoneContactFragment) frag).isMultiMode = isMultiMode;
             } else {
+                t.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
                 frag = new DeptFragment();
                 ((DeptFragment) frag).setDisplayData(dept);
             }

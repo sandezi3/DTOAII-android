@@ -48,13 +48,12 @@ public class DeptFragment extends Fragment implements AdapterView.OnItemClickLis
         lvDept.setAdapter(adapter);
         lvDept.setOnItemClickListener(this);
 
-
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ((SelectUserActivity) context).onFragmentItemClick(view.getTag(view.getId()));
+        ((SelectUserActivity) context).onFragmentItemClick(adapterView.getAdapter().getItem(i));
     }
 
     // 公有方法

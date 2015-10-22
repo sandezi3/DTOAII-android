@@ -2,15 +2,16 @@ package com.accenture.datongoaii.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.App;
 import com.accenture.datongoaii.util.Logger;
 
@@ -42,6 +43,14 @@ public class AppActivity extends Activity {
         //启用支持javascript
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        webView.loadUrl(app.url);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView.loadUrl(app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId())));
     }
 }
