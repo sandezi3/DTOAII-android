@@ -1,10 +1,9 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -13,7 +12,7 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.FriendFragment;
 import com.accenture.datongoaii.model.Account;
 
-public class MyFriendActivity extends FragmentActivity {
+public class MyFriendActivity extends Activity {
     private Activity context;
     private FriendFragment friendFragment;
 
@@ -32,7 +31,7 @@ public class MyFriendActivity extends FragmentActivity {
             }
         });
 
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction t = getFragmentManager().beginTransaction();
         if (friendFragment == null) {
             friendFragment = new FriendFragment();
             friendFragment.isSelectMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_PHONE_CONTACT, false);

@@ -49,6 +49,7 @@ public class Config {
     public static final String URL_DISMISS_GROUP = "/chatgroup/{groupId}";
     public static final String URL_RENAME_GROUP = "/chatgroup/{chatGroupId}";
     public static final String URL_GET_GROUPS_BY_IDS = "/chatgroups/{chatGroupIds}";
+    public static final String URL_GET_TODO_URL = "http://www.baidu.com";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";

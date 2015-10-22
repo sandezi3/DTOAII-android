@@ -21,6 +21,7 @@ import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.fragment.NotiFragment;
 import com.accenture.datongoaii.fragment.TaskFragment;
 import com.accenture.datongoaii.fragment.TodoFragment;
+import com.accenture.datongoaii.fragment.TodoWebFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.network.HttpConnection;
@@ -45,7 +46,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     private final int TAB_CONTACT = 3;
     private int curTab = 0;
 
-    public TodoFragment todoFrag;
+    public TodoWebFragment todoFrag;
     private NotiFragment notiFrag;
     private TaskFragment taskFrag;
     public ContactFragment contactFrag;
@@ -116,7 +117,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                         .getString(Constants.PUSH_JSON_COMMAND));
                 switch (command) {
                     case Constants.PUSH_COMMAND_REFRESH_TODO:
-                        todoFrag.refreshTodoList();
+                        todoFrag.refreshTodoList(Account.getInstance().getUserId());
                         break;
                     case Constants.PUSH_COMMAND_REFRESH_NOTI:
                         notiFrag.syncConversationList();
@@ -170,10 +171,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
         switch (tab) {
             case TAB_TODO:
                 if (todoFrag == null) {
-                    todoFrag = new TodoFragment();
+                    todoFrag = new TodoWebFragment();
                     t.add(R.id.lBody, todoFrag);
                 } else {
                     t.show(todoFrag);
+                    todoFrag.refreshTodoList(Account.getInstance().getUserId());
                 }
                 ((ImageView) findViewById(R.id.imgTodo))
                         .setImageResource(R.drawable.tab_todo_h);

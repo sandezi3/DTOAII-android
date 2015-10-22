@@ -1,12 +1,13 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,9 +28,10 @@ import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.util.Utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SelectUserActivity extends FragmentActivity implements View.OnClickListener {
+public class SelectUserActivity extends Activity implements View.OnClickListener {
     private Fragment currentFrag;
 
     private Context context;
@@ -38,6 +40,8 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     private boolean isMultiMode;
     private LinearLayout llBottom;
     private List<Contact> selectedUsers;
+    private List<Fragment> fragList;
+    private List<Dept> deptList;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -67,7 +71,9 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         }
 
         initNavButton();
-        setDisplay(mDept);
+        fragList = new ArrayList<Fragment>();
+        deptList = new ArrayList<Dept>();
+        setFragmentDisplay(mDept);
     }
 
     @Override
@@ -90,7 +96,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
                 if (view.getTag() instanceof Dept) {
                     Dept dept = (Dept) view.getTag();
                     Utils.removeButton(context, (Button) view, llNavBtns);
-                    setDisplay(dept);
+                    setFragmentDisplay(dept);
                 } else if (isMultiMode && view.getTag() instanceof Contact) {
                     Contact contact = (Contact) view.getTag();
                     if (!contact.id.equals(Account.getInstance().getUserId())) {
@@ -123,7 +129,7 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
     public void onFragmentItemClick(Object obj) {
         if (obj instanceof Dept) {
             Dept dept = (Dept) obj;
-            setDisplay(dept);
+            setFragmentDisplay(dept);
             Utils.addButton(context, (Dept) obj, llNavBtns);
             return;
         }
@@ -156,49 +162,48 @@ public class SelectUserActivity extends FragmentActivity implements View.OnClick
         llNavBtns.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    private void setDisplay(Dept dept) {
-        if (dept.id.equals(Dept.DEPT_ID_ROOT_CONTACT)) {
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            if (currentFrag != null) {
-                t.remove(currentFrag);
+    private void setFragmentDisplay(Dept dept) {
+        FragmentTransaction t = getFragmentManager().beginTransaction();
+        if (deptList.contains(dept)) {
+            t.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            for (int i = deptList.size() - 1; i >= 0; i--) {
+                Dept d = deptList.get(i);
+                Fragment frag = fragList.get(i);
+                if (!dept.equals(d)) {
+                    deptList.remove(i);
+                    t.remove(frag);
+                    fragList.remove(i);
+                } else {
+                    t.show(fragList.get(i));
+                    break;
+                }
             }
-            ContactRootFragment rootFrag = new ContactRootFragment();
-            t.add(R.id.flContact, rootFrag);
-            currentFrag = rootFrag;
-            t.commitAllowingStateLoss();
-        } else if (dept.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            if (currentFrag != null) {
-                t.remove(currentFrag);
-            }
-            FriendFragment friendFrag = new FriendFragment();
-            friendFrag.isSelectMode = false;
-            friendFrag.isMultiMode = isMultiMode;
-            currentFrag = friendFrag;
-            t.add(R.id.flContact, friendFrag);
-            t.commitAllowingStateLoss();
-        } else if (dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            if (currentFrag != null) {
-                t.remove(currentFrag);
-            }
-            PhoneContactFragment fcFrag = new PhoneContactFragment();
-            fcFrag.isSelectMode = true;
-            fcFrag.isMultiMode = isMultiMode;
-            currentFrag = fcFrag;
-            t.add(R.id.flContact, fcFrag);
-            t.commitAllowingStateLoss();
         } else {
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            if (currentFrag != null) {
-                t.remove(currentFrag);
+            t.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+            for (Fragment frag : fragList) {
+                t.hide(frag);
             }
-            DeptFragment deptFrag = new DeptFragment();
-            deptFrag.setDisplayData(dept);
-            t.add(R.id.flContact, deptFrag);
-            currentFrag = deptFrag;
-            t.commitAllowingStateLoss();
+            deptList.add(dept);
+            Fragment frag;
+            if (dept.id.equals(Dept.DEPT_ID_ROOT_CONTACT)) {
+                frag = new ContactRootFragment();
+            } else if (dept.id.equals(Dept.DEPT_ID_MY_FRIENDS)) {
+                frag = new FriendFragment();
+                ((FriendFragment) frag).isSelectMode = false;
+                ((FriendFragment) frag).isMultiMode = isMultiMode;
+            } else if (dept.id.equals(Dept.DEPT_ID_PHONE_CONTACT)) {
+                frag = new PhoneContactFragment();
+                ((PhoneContactFragment) frag).isSelectMode = true;
+                ((PhoneContactFragment) frag).isMultiMode = isMultiMode;
+            } else {
+                frag = new DeptFragment();
+                ((DeptFragment) frag).setDisplayData(dept);
+            }
+            t.add(R.id.flContact, frag);
+            t.show(frag);
+            fragList.add(frag);
         }
+        t.commit();
     }
 
     private void refreshBottomBar() {
