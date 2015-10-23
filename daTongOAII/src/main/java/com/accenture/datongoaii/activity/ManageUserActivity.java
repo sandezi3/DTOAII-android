@@ -59,7 +59,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
             switch (msg.what) {
                 case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     ManageUserActivity a = mActivity.get();
-                    if (a.progressDialog.isShowing()) {
+                    if (a.progressDialog != null && a.progressDialog.isShowing()) {
                         a.progressDialog.dismiss();
                         a.progressDialog = null;
                     }

@@ -53,6 +53,7 @@ public class ContactFragment extends Fragment implements
 
     private ImageView ivSearch;
     private TextView tvSearch;
+    private View pbLayout;
 
     private void clearData() {
         tmpList.clear();
@@ -73,6 +74,7 @@ public class ContactFragment extends Fragment implements
         tmpList.clear();
         tmpList.addAll(viewList);
         adapter.notifyDataSetChanged();
+        pbLayout.setVisibility(View.INVISIBLE);
     }
 
     private void appendLocalData() {
@@ -289,6 +291,8 @@ public class ContactFragment extends Fragment implements
                 mpw.showAsDropDown();
             }
         });
+
+        pbLayout = layoutContact.findViewById(R.id.pbLayout);
 
         return layoutContact;
     }

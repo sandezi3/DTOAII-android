@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.DeptActivity;
 import com.accenture.datongoaii.activity.SelectUserActivity;
 import com.accenture.datongoaii.adapter.ContactListAdapter;
 import com.accenture.datongoaii.model.CommonResponse;
@@ -28,6 +29,9 @@ import java.util.List;
 public class DeptFragment extends Fragment implements AdapterView.OnItemClickListener {
     public Context context;
     public Dept mDept;
+
+    private boolean isManageMode;
+
     public List<Object> viewList;
     private ContactListAdapter adapter;
 
@@ -48,12 +52,18 @@ public class DeptFragment extends Fragment implements AdapterView.OnItemClickLis
         lvDept.setAdapter(adapter);
         lvDept.setOnItemClickListener(this);
 
+        adapter.isManageMode = isManageMode;
+
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ((SelectUserActivity) context).onFragmentItemClick(adapterView.getAdapter().getItem(i));
+        if (context instanceof SelectUserActivity) {
+            ((SelectUserActivity) context).onFragmentItemClick(adapterView.getAdapter().getItem(i));
+        } else if (context instanceof DeptActivity) {
+            ((DeptActivity) context).onFragmentItemClick(adapterView.getAdapter().getItem(i));
+        }
     }
 
     // 公有方法
@@ -62,6 +72,9 @@ public class DeptFragment extends Fragment implements AdapterView.OnItemClickLis
         startGetDeptConnect(dept.id);
     }
 
+    public void setIsManageMode(boolean isManageMode) {
+        this.isManageMode = isManageMode;
+    }
     // 私有方法
     public void refreshData() {
         viewList.clear();

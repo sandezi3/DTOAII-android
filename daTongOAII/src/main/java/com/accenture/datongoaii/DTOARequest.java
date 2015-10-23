@@ -22,7 +22,7 @@ import java.util.List;
 public class DTOARequest {
     public static final String TAG = "DTOARequest";
     private static DTOARequest instance;
-    private HttpConnection.CallbackListener defaultListener;
+    private static HttpConnection.CallbackListener defaultListener;
     private RequestListener mListener;
     private static Context mAppContext;
     private boolean mIsSilent;
@@ -115,6 +115,7 @@ public class DTOARequest {
         mListener = listener;
         new HttpConnection().put(url, defaultListener);
     }
+
     /**
      * Group
      */

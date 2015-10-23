@@ -1,75 +1,40 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
-import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.fragment.DeptFragment;
 import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
-import com.accenture.datongoaii.model.FirstPinYin;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
-import com.accenture.datongoaii.widget.SectionListView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeptActivity extends Activity implements View.OnClickListener, SectionListView.OnSectionItemClickedListener {
+public class DeptActivity extends Activity implements View.OnClickListener {
     public static final int HANDLER_TAG_DISMISS_PROGRESS_DIALOG = 0;
 
     private Context context;
     private Dept mDept;
-    private List<Object> viewList;
     private Boolean isManageMode;
 
-    private SectionListView slvDept;
+    private View layoutDept;
     private LinearLayout layoutButtons;
-    private ProgressDialog progressDialog;
-    private Handler handler = new ActivityHandler(this);
-
-    static class ActivityHandler extends Handler {
-        WeakReference<DeptActivity> mActivity;
-
-        public ActivityHandler(DeptActivity activity) {
-            this.mActivity = new WeakReference<DeptActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message message) {
-            DeptActivity a = mActivity.get();
-            switch (message.what) {
-                case HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
-                    if (a.progressDialog != null) {
-                        a.progressDialog.dismiss();
-                        a.progressDialog = null;
-                    }
-                    break;
-            }
-        }
-    }
+    private List<Fragment> fragList;
+    private List<Dept> deptList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,42 +42,52 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
         context = this;
         setContentView(R.layout.activity_dept);
 
-        viewList = new ArrayList<Object>();
         layoutButtons = (LinearLayout) findViewById(R.id.layoutButtons);
-        slvDept = (SectionListView) findViewById(R.id.slvDept);
-        slvDept.setAdapter(adapter);
-        slvDept.setOnSectionItemClickedListener(this);
+        layoutDept = findViewById(R.id.flContact);
 
         findViewById(R.id.btnBack).setOnClickListener(this);
 
         isManageMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_ORG_IS_MANAGE_MODE, false);
 
-        Integer deptId = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, -1);
-        String orgName = getIntent().getStringExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME);
-        getDept(deptId);
-
         mDept = new Dept();
-        mDept.id = deptId;
-        mDept.name = orgName;
+        mDept.id = getIntent().getIntExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, -1);
+        mDept.name = getIntent().getStringExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME);
+        fragList = new ArrayList<Fragment>();
+        deptList = new ArrayList<Dept>();
         resolveButtons();
+        resolveBottomBar();
+        setFragmentDisplay(mDept, true);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_CREATE_DEPT && resultCode == RESULT_OK) {
-            getDept(mDept.id);
+            setFragmentDisplay(mDept, true);
             return;
         }
         if (requestCode == Constants.REQUEST_CODE_ADD_DEPT_USER && resultCode == RESULT_OK) {
-            getDept(mDept.id);
+            setFragmentDisplay(mDept, true);
             return;
         }
         if (requestCode == Constants.REQUEST_CODE_MANAGE_DEPT && resultCode == RESULT_OK) {
-            getDept(mDept.id);
+            if (data.hasExtra(Constants.BUNDLE_TAG_RENAME_DEPT_NEW_NAME)) {
+                String newName = data.getStringExtra(Constants.BUNDLE_TAG_RENAME_DEPT_NEW_NAME);
+                Button btn = Utils.findButtonInButtons(mDept, layoutButtons);
+                if (btn != null) {
+                    btn.setText(newName);
+                }
+            }
+            setFragmentDisplay(mDept, true);
+            return;
+        }
+        if (requestCode == Constants.REQUEST_CODE_MANAGE_DEPT && resultCode == RESULT_FIRST_USER) {
+            //删除部门
+            Button btn = Utils.findButtonInButtons(mDept.parent, layoutButtons);
+            onClick(btn);
             return;
         }
         if (requestCode == Constants.REQUEST_CODE_MANAGE_USER && resultCode == RESULT_OK) {
-            getDept(mDept.id);
+            setFragmentDisplay(mDept, true);
         }
     }
 
@@ -123,18 +98,83 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
                 finish();
                 break;
             default:
-                if (view instanceof Button) {
-                    clearData();
-                    adapter.notifyDataSetChanged();
-                    Utils.removeButton(context, (Button) view, layoutButtons);
+                if (view.getTag() instanceof Dept) {
                     Dept dept = (Dept) view.getTag();
-                    getDept(dept.id);
+                    Utils.removeButton(context, (Button) view, layoutButtons);
+                    mDept = dept;
+                    setFragmentDisplay(dept, false);
+                    resolveBottomBar();
+                } else if (view.getTag() instanceof Contact) {
+                    Contact contact = (Contact) view.getTag();
+                    Intent intent = new Intent(context, ManageUserActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER, contact);
+                    bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER_DEPT, mDept);
+                    intent.putExtras(bundle);
+                    ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_USER);
                 }
                 break;
         }
     }
 
+    public void onFragmentItemClick(Object obj) {
+        if (obj instanceof Dept) {
+            Dept dept = (Dept) obj;
+            dept.parent = mDept;
+            mDept = dept;
+            Utils.addButton(this, dept, layoutButtons);
+            setFragmentDisplay(mDept, false);
+            resolveBottomBar();
+        } else if (obj instanceof Contact) {
+            Logger.i("onSectionItemClicked", "个人信息");
+            Contact c = (Contact) obj;
+            Intent intent = new Intent(context, ContactProfileActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.BUNDLE_TAG_CONTACT_PROFILE, c);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     // 私有方法
+    private void setFragmentDisplay(Dept dept, boolean isUpdated) {
+        FragmentTransaction t = getFragmentManager().beginTransaction();
+        if (deptList.contains(dept)) {
+            t.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            for (int i = deptList.size() - 1; i >= 0; i--) {
+                Dept d = deptList.get(i);
+                Fragment frag = fragList.get(i);
+                if (!dept.equals(d)) {
+                    deptList.remove(i);
+                    t.remove(frag);
+                    fragList.remove(i);
+                } else {
+                    DeptFragment deptFragment = (DeptFragment) fragList.get(i);
+                    t.show(deptFragment);
+                    if (isUpdated) {
+                        deptFragment.setDisplayData(dept);
+                    }
+                    break;
+                }
+            }
+        } else {
+            for (Fragment frag : fragList) {
+                t.hide(frag);
+            }
+            deptList.add(dept);
+            Fragment frag;
+            t.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+            frag = new DeptFragment();
+            ((DeptFragment) frag).setDisplayData(dept);
+            ((DeptFragment) frag).setIsManageMode(isManageMode);
+            t.add(R.id.flContact, frag);
+            t.show(frag);
+            fragList.add(frag);
+        }
+        t.commit();
+    }
+
     private void resolveBottomBar() {
         if (isManageMode) {
             findViewById(R.id.llBottom).setVisibility(View.VISIBLE);
@@ -175,27 +215,9 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
             }
         } else {
             findViewById(R.id.llBottom).setVisibility(View.GONE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) slvDept.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) layoutDept.getLayoutParams();
             params.setMargins(0, 0, 0, 0);
         }
-    }
-
-    private void clearData() {
-        viewList.clear();
-    }
-
-    private void refreshData() {
-        viewList.addAll(mDept.subDept);
-        viewList.addAll(mDept.contactList);
-        List<Object> tmpList = new ArrayList<Object>();
-        tmpList.addAll(FirstPinYin.createPinYinGroupedList(viewList));
-        viewList.clear();
-        viewList.addAll(tmpList);
-        if (viewList.size() == 0) {
-            Utils.toast(context, Config.NOTE_DEPT_EMPTY);
-        }
-        adapter.notifyDataSetChanged();
-        resolveBottomBar();
     }
 
     private void resolveButtons() {
@@ -203,167 +225,5 @@ public class DeptActivity extends Activity implements View.OnClickListener, Sect
         layoutButtons.addView(btn, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    // 网络数据
-    private void getDept(Integer deptId) {
-//        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_GET);
-        String url = Config.SERVER_HOST + Config.URL_DEPT.replace("{groupId}", deptId + "");
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
-            @Override
-            public void callBack(String result) {
-                handler.sendEmptyMessage(HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                if (!result.equals("fail")) {
-                    try {
-                        CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
-                        if (cr == null) {
-                            Utils.toast(context, Config.ERROR_INTERFACE);
-                            return;
-                        }
-                        if (cr.statusCode == 0) {
-                            clearData();
-                            mDept = Dept.fromJSON(new JSONObject(result).getJSONObject("data"));
-                            refreshData();
-                        } else {
-                            Utils.toast(context, cr.statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        Utils.toast(context, Config.ERROR_INTERFACE);
-                    }
-                } else {
-                    Utils.toast(context, Config.ERROR_NETWORK);
-                }
-            }
-        });
-    }
 
-    // adapter
-    private final SectionListView.SectionListAdapter adapter = new SectionListView.SectionListAdapter() {
-        @Override
-        public int getSectionCount() {
-            if (viewList == null) {
-                return 0;
-            } else {
-                return viewList.size();
-            }
-        }
-
-        @Override
-        public int getSectionItemCount(int section) {
-            Object object = viewList.get(section);
-            @SuppressWarnings("unchecked")
-            List<Object> list = (List<Object>) object;
-            return list.size();
-        }
-
-        @Override
-        public View getSectionHeaderView(int section, View convertView,
-                                         ViewGroup parent) {
-            Object o = getItem(section, 0);
-            View view = convertView;
-            if (view == null) {
-                view = View.inflate(parent.getContext(),
-                        R.layout.section_list_header, null);
-            }
-            TextView tv = (TextView) view.findViewById(R.id.txtLabel);
-            if (o instanceof Dept) {
-                tv.setText("#");
-            } else if (o instanceof Contact) {
-                tv.setText(((Contact) o).mFirstPinYin);
-            }
-            return view;
-        }
-
-        @Override
-        public View getSectionItemView(int section, int position,
-                                       View convertView, ViewGroup parent) {
-            Object o = getItem(section, position);
-            View view = convertView;
-            if (view == null) {
-                view = View.inflate(parent.getContext(),
-                        R.layout.list_cell_org, null);
-            }
-            TextView tv = (TextView) view.findViewById(R.id.tvName);
-            ImageView iv = (ImageView) view.findViewById(R.id.ivIcon);
-            ImageLoader il = ImageLoader.getInstance();
-            TextView tvValue = (TextView) view.findViewById(R.id.tvValue);
-            ImageView ivArrow = (ImageView) view.findViewById(R.id.ivArrow);
-            if (o instanceof Dept) {
-                tvValue.setVisibility(View.VISIBLE);
-                ivArrow.setVisibility(View.VISIBLE);
-                Dept d = (Dept) o;
-                if (d.img != null && d.img.length() > 0) {
-                    il.displayImage(d.img, iv, Config.getDisplayOptions());
-                } else {
-                    iv.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.ic_contact_c));
-                }
-                tv.setText(d.name);
-                tvValue.setText(d.userCount + "人");
-            } else if (o instanceof Contact) {
-                tvValue.setVisibility(View.GONE);
-                ivArrow.setVisibility(View.INVISIBLE);
-                Contact c = (Contact) o;
-                if (c.head.length() > 0) {
-                    il.displayImage(c.head, iv);
-                } else {
-                    iv.setImageResource(R.drawable.ic_contact_p);
-                }
-                tv.setText(c.name);
-                Button btnEdit = (Button) view.findViewById(R.id.btnEdit);
-                if (isManageMode) {
-                    btnEdit.setVisibility(View.VISIBLE);
-                    btnEdit.setTag(c);
-                    btnEdit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Contact contact = (Contact) view.getTag();
-                            Intent intent = new Intent(context, ManageUserActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER, contact);
-                            bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_USER_DEPT, mDept);
-                            intent.putExtras(bundle);
-                            ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_USER);
-                        }
-                    });
-                } else {
-                    btnEdit.setVisibility(View.INVISIBLE);
-                }
-            }
-            view.setTag(o);
-            return view;
-        }
-
-        @Override
-        public Object getItem(int section, int position) {
-            Object object = viewList.get(section);
-            @SuppressWarnings("unchecked")
-            List<Object> list = (List<Object>) object;
-            return list.get(position);
-        }
-
-        @Override
-        public String getSectionLabel(int section) {
-            FirstPinYin o = (FirstPinYin) getItem(section, 0);
-            return o.mFirstPinYin;
-        }
-    };
-
-    @Override
-    public void onSectionItemClicked(SectionListView listView, View view, int section, int position) {
-        if (view.getTag() instanceof Dept) {
-            clearData();
-            adapter.notifyDataSetChanged();
-            Dept dept = (Dept) view.getTag();
-            mDept = dept;
-            Utils.addButton(this, dept, layoutButtons);
-            getDept(dept.id);
-        } else if (view.getTag() instanceof Contact) {
-            Logger.i("onSectionItemClicked", "个人信息");
-            Contact c = (Contact) view.getTag();
-            Intent intent = new Intent(view.getContext(), ContactProfileActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constants.BUNDLE_TAG_CONTACT_PROFILE, c);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
-        }
-    }
 }

@@ -10,6 +10,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -261,6 +265,16 @@ public class Utils {
         btn.setTextColor(context.getResources().getColor(R.color.gray_2));
     }
 
+    public static Button findButtonInButtons(Dept dept, LinearLayout parent) {
+        for (int i = parent.getChildCount() - 1; i >= 0; i--) {
+            Object obj = parent.getChildAt(i).getTag();
+            if (obj != null && obj instanceof Dept && obj.equals(dept)) {
+                return (Button) parent.getChildAt(i);
+            }
+        }
+        return null;
+    }
+
     public static void saveUserInfo(Context context, String token, String userId) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -405,5 +419,31 @@ public class Utils {
             delta = -delta;
         }
         return delta < INTERVAL_IN_MILLISECONDS;
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    public static void initWebViewSettings(WebView webView) {
+        //启用支持javascript
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setAllowContentAccess(true);
+        settings.setAllowFileAccess(true);
+//        settings.setAppCacheEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setSaveFormData(true);
+        settings.setDomStorageEnabled(true);
+//        settings.setAppCacheMaxSize(1024 * 1024 * 8);
+//        String appCachePath = webView.getContext().getApplicationContext().getCacheDir().getAbsolutePath();
+//        settings.setAppCachePath(appCachePath);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient());
     }
 }

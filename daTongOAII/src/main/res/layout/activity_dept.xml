@@ -74,6 +74,7 @@
 
         <Button
             android:id="@+id/btnAddUser"
+            style="?android:buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -84,6 +85,7 @@
 
         <Button
             android:id="@+id/btnAddDept"
+            style="?android:buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -94,6 +96,7 @@
 
         <Button
             android:id="@+id/btnManageDept"
+            style="?android:buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -107,15 +110,16 @@
     <View
         android:id="@+id/seperator"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_above="@id/llBottom"
         android:background="@color/gray_2" />
 
-    <include
-        android:id="@+id/slvDept"
-        layout="@layout/section_list_view"
+    <FrameLayout
+        android:id="@+id/flContact"
+        android:paddingTop="10dp"
+        android:background="@color/gray_3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/hsvButtons"
-        android:layout_above="@id/llBottom"/>
+        android:layout_above="@id/llBottom"
+        android:layout_below="@id/hsvButtons" />
 </RelativeLayout>

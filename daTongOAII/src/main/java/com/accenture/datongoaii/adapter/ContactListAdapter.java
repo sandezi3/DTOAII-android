@@ -1,15 +1,21 @@
 package com.accenture.datongoaii.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.Config;
+import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.ManageUserActivity;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,13 +23,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 public class ContactListAdapter extends BaseAdapter {
+    private Context context;
     private List<Object> dataList;
     private LayoutInflater inflater;
     private ImageLoader loader;
+    public boolean isManageMode;
 
     public ContactListAdapter(Context context, List<Object> list) {
+        this.context = context;
         this.dataList = list;
         this.inflater = LayoutInflater.from(context);
+        this.isManageMode = false;
         loader = ImageLoader.getInstance();
     }
 
@@ -69,6 +79,14 @@ public class ContactListAdapter extends BaseAdapter {
             holder.ivArrow.setVisibility(View.VISIBLE);
         } else if (o instanceof Contact) {
             Contact contact = (Contact) o;
+            Button btnEdit = (Button) convertView.findViewById(R.id.btnEdit);
+            if (isManageMode) {
+                btnEdit.setVisibility(View.VISIBLE);
+                btnEdit.setTag(contact);
+                btnEdit.setOnClickListener((View.OnClickListener) context);
+            } else {
+                btnEdit.setVisibility(View.INVISIBLE);
+            }
             if (contact.head != null && contact.head.length() > 0) {
                 loader.displayImage(contact.head, holder.ivIcon, Config.getDisplayOptions());
             } else {

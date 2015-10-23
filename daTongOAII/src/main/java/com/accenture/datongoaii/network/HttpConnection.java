@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -33,6 +34,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 public class HttpConnection implements Runnable {
@@ -125,6 +128,18 @@ public class HttpConnection implements Runnable {
         }
     };
 
+    private void setHeader(HttpRequestBase access) {
+        access.setHeader("Accept", "application/json");
+        access.setHeader("Content-type", "application/json");
+        access.setHeader("Accept-Encoding", "gzip"); // only
+        String token = Account.getInstance().getToken();
+        if (token != null && token.length() > 0) {
+            Logger.i(TAG, "Init Header Token = " + token);
+            access.setHeader("token", Account.getInstance().getToken());
+        }
+        access.setHeader("access_from", "client_android");
+    }
+
     public void run() {
         // handler.sendMessage(Message.obtain(handler,
         // HttpConnection.DID_START));
@@ -135,14 +150,7 @@ public class HttpConnection implements Runnable {
                 case GET: {
                     HttpGet httpGetRequest = new HttpGet(url);
 
-                    httpGetRequest.setHeader("Accept", "application/json");
-                    httpGetRequest.setHeader("Content-type", "application/json");
-                    httpGetRequest.setHeader("Accept-Encoding", "gzip"); // only
-                    if (Account.getInstance().getToken().length() > 0) {
-                        String token = Account.getInstance().getToken();
-                        Logger.i("GET TOKEN", token);
-                        httpGetRequest.setHeader("token", Account.getInstance().getToken());
-                    }
+                    setHeader(httpGetRequest);
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpGetRequest);
@@ -183,13 +191,8 @@ public class HttpConnection implements Runnable {
                     }
                     // Set HTTP parameters
                     httpPostRequest.setEntity(se);
-                    httpPostRequest.setHeader("Accept", "application/json");
-                    httpPostRequest.setHeader("Content-type", "application/json");
-                    httpPostRequest.setHeader("Accept-Encoding", "gzip"); // only
-                    if (Account.getInstance().getToken().length() > 0) {
-                        httpPostRequest.setHeader("Token", Account.getInstance().getToken());
-                        Logger.e("POST token = ", Account.getInstance().getToken());
-                    }
+                    setHeader(httpPostRequest);
+
                     // set
                     // this
                     // parameter
@@ -241,12 +244,8 @@ public class HttpConnection implements Runnable {
                     }
                     // Set HTTP parameters
                     httpPutRquest.setEntity(se);
-                    httpPutRquest.setHeader("Accept", "application/json");
-                    httpPutRquest.setHeader("Content-type", "application/json");
-                    httpPutRquest.setHeader("Accept-Encoding", "gzip"); // only
-                    if (Account.getInstance().getToken().length() > 0) {
-                        httpPutRquest.setHeader("Token", Account.getInstance().getToken());
-                    }
+                    setHeader(httpPutRquest);
+
                     // set
                     // this
                     // parameter
@@ -316,11 +315,9 @@ public class HttpConnection implements Runnable {
                     InputStreamEntity ise = new InputStreamEntity(fis, f.length());
 
                     // Set HTTP parameters
+                    setHeader(httpPostRequest);
                     httpPostRequest.setEntity(ise);
                     ise.setContentType("binary/octet-stream");
-                    if (Account.getInstance().getToken().length() > 0) {
-                        httpPostRequest.setHeader("Token", Account.getInstance().getToken());
-                    }
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpPostRequest);
@@ -353,15 +350,7 @@ public class HttpConnection implements Runnable {
                 }
                 case DELETE: {
                     HttpDelete httpDeleteRequest = new HttpDelete(url);
-
-                    httpDeleteRequest.setHeader("Accept", "application/json");
-                    httpDeleteRequest.setHeader("Content-type", "application/json");
-                    httpDeleteRequest.setHeader("Accept-Encoding", "gzip"); // only
-                    if (Account.getInstance().getToken().length() > 0) {
-                        String token = Account.getInstance().getToken();
-                        Logger.i("GET TOKEN", token);
-                        httpDeleteRequest.setHeader("token", Account.getInstance().getToken());
-                    }
+                    setHeader(httpDeleteRequest);
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpDeleteRequest);
@@ -458,5 +447,12 @@ public class HttpConnection implements Runnable {
             }
         }
         return sb.toString();
+    }
+
+    public static Map<String, String> getHeaderMap() {
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("token", Account.getInstance().getToken());
+        header.put("access_from", "web_mobile");
+        return header;
     }
 }

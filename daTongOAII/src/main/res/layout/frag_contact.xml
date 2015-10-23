@@ -7,6 +7,37 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
+        android:id="@+id/pbLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="40dp"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:text="正在加载"
+            android:textColor="@color/gray_2"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLargeInverse"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@id/tvLoading"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layoutNavBar"
         android:layout_width="fill_parent"
         android:layout_height="45dp"

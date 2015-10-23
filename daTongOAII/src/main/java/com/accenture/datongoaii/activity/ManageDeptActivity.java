@@ -246,8 +246,10 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
-                            ((Activity) context).setResult(RESULT_OK);
                             tvDeptName.setText(name);
+                            Intent intent = new Intent();
+                            intent.putExtra(Constants.BUNDLE_TAG_RENAME_DEPT_NEW_NAME, name);
+                            ((Activity) context).setResult(RESULT_OK, intent);
                             Utils.toast(context, Config.SUCCESS_UPDATE);
                         } else {
                             Utils.toast(context, cr.statusMsg);
@@ -274,7 +276,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
                             Utils.toast(context, Config.SUCCESS_DELETE);
-                            ((Activity) context).setResult(Activity.RESULT_OK);
+                            ((Activity) context).setResult(Activity.RESULT_FIRST_USER);
                             ((Activity) context).finish();
                         } else {
                             Utils.toast(context, cr.statusMsg);

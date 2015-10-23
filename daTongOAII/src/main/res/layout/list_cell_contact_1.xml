@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
     tools:ignore="ContentDescription,HardcodedText, RtlHardcoded">
 
     <ImageView
@@ -35,4 +36,16 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/arrow" />
 
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/ivArrow"
+        android:background="@drawable/button"
+        android:focusable="false"
+        android:text="编辑"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="16sp"
+        android:visibility="invisible" />
 </RelativeLayout>
