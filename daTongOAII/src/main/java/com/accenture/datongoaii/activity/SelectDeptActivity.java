@@ -15,6 +15,7 @@ import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.SelectDeptFragment;
+import com.accenture.datongoaii.fragment.SelectDeptRootFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Dept;
 import com.accenture.datongoaii.util.Utils;
@@ -53,9 +54,13 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         invalidDeptId = getIntent().getIntExtra(Constants.BUNDLE_TAG_PARENT_DEPT_INVALID, Dept.DEPT_ID_INVALID);
 
         mDept = new Dept();
-        mDept.id = Account.getInstance().getOrg().orgId;
-        mDept.name = orgName;
-        mDept.mFirstPinYin = "#";
+        mDept.id = Dept.DEPT_ID_ROOT_CONTACT;
+        mDept.name = "组织架构";
+        mDept.subDept = new ArrayList<Dept>();
+        Dept org = new Dept();
+        org.id = Account.getInstance().getOrg().orgId;
+        org.name = orgName;
+        mDept.subDept.add(org);
 
         selectList = new ArrayList<Dept>();
         if (getIntent().hasExtra(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT)) {
@@ -129,6 +134,8 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         for (Fragment fragment : fragList) {
             if (fragment instanceof SelectDeptFragment) {
                 ((SelectDeptFragment) fragment).refreshData();
+            } else if (fragment instanceof SelectDeptRootFragment) {
+                ((SelectDeptRootFragment) fragment).refreshData();
             }
         }
         refreshBottomBar();
@@ -144,7 +151,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
         LinearLayout llBottomBtns = (LinearLayout) findViewById(R.id.llBottomBtns);
         llBottomBtns.removeAllViews();
         for (Dept dept : selectList) {
-            Button btn = Utils.createButton(context, mDept);
+            Button btn = Utils.createButton(context, dept);
             btn.setTextColor(getResources().getColor(R.color.tab_text_focused));
             btn.setTag(dept);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +163,8 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
                     for (Fragment fragment : fragList) {
                         if (fragment instanceof SelectDeptFragment) {
                             ((SelectDeptFragment) fragment).refreshData();
+                        } else if (fragment instanceof SelectDeptRootFragment) {
+                            ((SelectDeptRootFragment) fragment).refreshData();
                         }
                     }
                 }
@@ -184,9 +193,12 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
                     t.remove(frag);
                     fragList.remove(i);
                 } else {
-                    SelectDeptFragment deptFragment = (SelectDeptFragment) fragList.get(i);
-                    t.show(deptFragment);
-                    deptFragment.setDisplayData(dept);
+                    if (dept.id == Dept.DEPT_ID_ROOT_CONTACT) {
+                        ((SelectDeptRootFragment) fragList.get(i)).setDisplayData(dept);
+                    } else {
+                        ((SelectDeptFragment) fragList.get(i)).setDisplayData(dept);
+                    }
+                    t.show(fragList.get(i));
                     break;
                 }
             }
@@ -197,8 +209,13 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
             deptList.add(dept);
             android.app.Fragment frag;
             t.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-            frag = new SelectDeptFragment();
-            ((SelectDeptFragment) frag).setDisplayData(dept);
+            if (dept.id == Dept.DEPT_ID_ROOT_CONTACT) {
+                frag = new SelectDeptRootFragment();
+                ((SelectDeptRootFragment) frag).setDisplayData(dept);
+            } else {
+                frag = new SelectDeptFragment();
+                ((SelectDeptFragment) frag).setDisplayData(dept);
+            }
             t.add(R.id.flContact, frag);
             t.show(frag);
             fragList.add(frag);
