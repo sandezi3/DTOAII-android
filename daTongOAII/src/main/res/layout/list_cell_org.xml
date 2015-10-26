@@ -15,7 +15,7 @@
         android:layout_marginLeft="10dp"
         android:padding="8dp"
         android:src="@drawable/ic_unselected"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/ivIcon"

@@ -209,7 +209,7 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
                     try {
                         CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                         if (cr.statusCode == 0) {
-                            ((Activity) context).setResult(RESULT_OK);
+                            ((Activity) context).setResult(RESULT_FIRST_USER);
                             Utils.toast(context, Config.SUCCESS_UPDATE);
                             parent = tmpParent;
                             tvParentName.setText(parent.name);

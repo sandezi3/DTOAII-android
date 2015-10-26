@@ -83,8 +83,10 @@ public class DeptActivity extends Activity implements View.OnClickListener {
         if (requestCode == Constants.REQUEST_CODE_MANAGE_DEPT && resultCode == RESULT_FIRST_USER) {
             //删除部门
             Button btn = Utils.findButtonInButtons(mDept.parent, layoutButtons);
-            onClick(btn);
-            return;
+            Utils.removeButton(context, btn, layoutButtons);
+            mDept = mDept.parent;
+            setFragmentDisplay(mDept, true);
+            resolveBottomBar();
         }
         if (requestCode == Constants.REQUEST_CODE_MANAGE_USER && resultCode == RESULT_OK) {
             setFragmentDisplay(mDept, true);

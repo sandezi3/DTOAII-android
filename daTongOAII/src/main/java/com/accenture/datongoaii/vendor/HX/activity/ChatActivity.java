@@ -13,11 +13,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,9 +42,13 @@ import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
 import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
+import com.accenture.datongoaii.vendor.HX.Utils.SmileUtils;
+import com.accenture.datongoaii.vendor.HX.adapter.ExpressionAdapter;
+import com.accenture.datongoaii.vendor.HX.adapter.ExpressionPagerAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.GroupRemoveListener;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.VoicePlayClickListener;
+import com.accenture.datongoaii.vendor.HX.widget.ExpandGridView;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
@@ -62,6 +68,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,6 +119,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         }
     };
     private Drawable[] micImages;
+    private List<String> reslist;
 
     @Override
     @SuppressWarnings("Deprecated")
@@ -145,14 +154,27 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
         micImage = (ImageView) findViewById(R.id.mic_image);
         recordingHint = (TextView) findViewById(R.id.recording_hint);
+        ViewPager expressionViewpager = (ViewPager) findViewById(R.id.vPager);
 
         buttonSend.setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
         iv_emoticons_normal.setVisibility(View.VISIBLE);
         iv_emoticons_checked.setVisibility(View.INVISIBLE);
+        iv_emoticons_normal.setOnClickListener(this);
+        iv_emoticons_checked.setOnClickListener(this);
         btnContainer.setVisibility(View.GONE);
         buttonPressToSpeak.setOnTouchListener(new PressToSpeakListen());
         voiceRecorder = new VoiceRecorder(micImageHandler);
+
+        // 表情list
+        reslist = getExpressionRes(35);
+        // 初始化表情viewpager
+        List<View> views = new ArrayList<View>();
+        View gv1 = getGridChildView(1);
+        View gv2 = getGridChildView(2);
+        views.add(gv1);
+        views.add(gv2);
+        expressionViewpager.setAdapter(new ExpressionPagerAdapter(views));
 
         // 动画资源文件,用于录制语音时
         micImages = new Drawable[]{getResources().getDrawable(R.drawable.record_animate_01),
@@ -302,7 +324,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
         }
         switch (emNotifierEvent.getEvent()) {
             case EventNewCMDMessage:
-                EMMessage message1 = (EMMessage) emNotifierEvent.getData();
                 break;
             case EventNewMessage: {
                 //获取到message
@@ -369,6 +390,21 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             case R.id.btn_picture:
                 // 点击图片图标
                 selectPicFromLocal();
+                break;
+            case R.id.iv_emoticons_normal:
+                more.setVisibility(View.VISIBLE);
+                iv_emoticons_normal.setVisibility(View.INVISIBLE);
+                iv_emoticons_checked.setVisibility(View.VISIBLE);
+                btnContainer.setVisibility(View.GONE);
+                emojiIconContainer.setVisibility(View.VISIBLE);
+                Utils.closeSoftKeyboard(context, v);
+                break;
+            case R.id.iv_emoticons_checked:
+                iv_emoticons_normal.setVisibility(View.VISIBLE);
+                iv_emoticons_checked.setVisibility(View.INVISIBLE);
+                btnContainer.setVisibility(View.VISIBLE);
+                emojiIconContainer.setVisibility(View.GONE);
+                more.setVisibility(View.GONE);
                 break;
             default:
         }
@@ -685,6 +721,84 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 adapter.refresh();
             }
         });
+    }
+
+    /**
+     * 获取表情的gridview的子view
+     *
+     * @param i index
+     * @return 表情gridview的子view
+     */
+    private View getGridChildView(int i) {
+        View view = View.inflate(this, R.layout.expression_gridview, null);
+        ExpandGridView gv = (ExpandGridView) view.findViewById(R.id.gridview);
+        List<String> list = new ArrayList<String>();
+        if (i == 1) {
+            List<String> list1 = reslist.subList(0, 20);
+            list.addAll(list1);
+        } else if (i == 2) {
+            list.addAll(reslist.subList(20, reslist.size()));
+        }
+        list.add("delete_expression");
+        final ExpressionAdapter expressionAdapter = new ExpressionAdapter(this, 1, list);
+        gv.setAdapter(expressionAdapter);
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String filename = expressionAdapter.getItem(position);
+                try {
+                    // 文字输入框可见时，才可输入表情
+                    // 按住说话可见，不让输入表情
+                    if (buttonSetModeKeyboard.getVisibility() != View.VISIBLE) {
+
+                        if (!filename.equals("delete_expression")) { // 不是删除键，显示表情
+                            // 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
+                            Class clz = Class.forName("com.accenture.datongoaii.vendor.HX.Utils.SmileUtils");
+                            Field field = clz.getField(filename);
+                            mEditTextContent.append(SmileUtils.getSmiledText(ChatActivity.this,
+                                    (String) field.get(null)));
+                        } else { // 删除文字或者表情
+                            if (!TextUtils.isEmpty(mEditTextContent.getText())) {
+
+                                int selectionStart = mEditTextContent.getSelectionStart();// 获取光标的位置
+                                if (selectionStart > 0) {
+                                    String body = mEditTextContent.getText().toString();
+                                    String tempStr = body.substring(0, selectionStart);
+                                    int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
+                                    if (i != -1) {
+                                        CharSequence cs = tempStr.substring(i, selectionStart);
+                                        if (SmileUtils.containsKey(cs.toString()))
+                                            mEditTextContent.getEditableText().delete(i, selectionStart);
+                                        else
+                                            mEditTextContent.getEditableText().delete(selectionStart - 1,
+                                                    selectionStart);
+                                    } else {
+                                        mEditTextContent.getEditableText().delete(selectionStart - 1, selectionStart);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                } catch (Exception e) {
+                    Logger.e(TAG, e.getMessage());
+                }
+
+            }
+        });
+        return view;
+    }
+
+    public List<String> getExpressionRes(int getSum) {
+        List<String> list = new ArrayList<String>();
+        for (int x = 1; x <= getSum; x++) {
+            String filename = "ee_" + x;
+
+            list.add(filename);
+
+        }
+        return list;
     }
 
     private void loadMoreChatHistory() {
