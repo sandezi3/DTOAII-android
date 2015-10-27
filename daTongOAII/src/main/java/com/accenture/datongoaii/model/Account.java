@@ -3,6 +3,8 @@ package com.accenture.datongoaii.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class Account {
     private Integer userId = null;
     private String username = null;
@@ -15,7 +17,7 @@ public class Account {
 
     private String imId = null;
 
-    private Org org = null;
+    private List<Org> orgList = null;
 
     private Account() {
         setUserId(-1);
@@ -25,7 +27,6 @@ public class Account {
         setSex("");
         setBirth("");
         setCell("");
-        setOrg(null);
         setImId("");
     }
 
@@ -94,20 +95,20 @@ public class Account {
         this.cell = cell;
     }
 
+    public List<Org> getOrgList() {
+        return orgList;
+    }
+
+    public void setOrgList(List<Org> orgList) {
+        this.orgList = orgList;
+    }
+
     public String getImId() {
         return imId;
     }
 
     public void setImId(String imId) {
         this.imId = imId;
-    }
-
-    public Org getOrg() {
-        return org;
-    }
-
-    public void setOrg(Org org) {
-        this.org = org;
     }
 
     public void fromJson(JSONObject json) {
@@ -128,5 +129,15 @@ public class Account {
         }
     }
 
-
+    public Org getCreatedOrg() {
+        if (orgList == null || orgList.size() == 0) {
+            return null;
+        }
+        for (Org org : orgList) {
+            if (userId.equals(org.createUserId)) {
+                return org;
+            }
+        }
+        return null;
+    }
 }

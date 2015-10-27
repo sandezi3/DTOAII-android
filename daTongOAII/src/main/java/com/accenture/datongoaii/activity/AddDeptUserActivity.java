@@ -73,7 +73,7 @@ public class AddDeptUserActivity extends Activity implements View.OnClickListene
             if (isDataValid()) {
                 String cell = etCell.getEditableText().toString().trim();
                 String name = etName.getEditableText().toString().trim();
-                startAddUserToDeptConnect(Account.getInstance().getOrg().orgId, mDept.id, cell, name, userId);
+                startAddUserToDeptConnect(Account.getInstance().getCreatedOrg().orgId, mDept.id, cell, name, userId);
             }
         }
     }

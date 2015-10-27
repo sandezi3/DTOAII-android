@@ -92,8 +92,8 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         if (view.equals(btnSelect)) {
             Intent intent = new Intent(view.getContext(), SelectDeptActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, false);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getCreatedOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getCreatedOrg().orgName);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.BUNDLE_TAG_MANAGE_DEPT_SELECT_PARENT, (Serializable) parents);
             intent.putExtras(bundle);
@@ -107,7 +107,7 @@ public class CreateDeptActivity extends Activity implements View.OnClickListener
         if (view.equals(btnCreate)) {
             String name = etName.getEditableText().toString().trim();
             if (isDataValid()) {
-                startCreateDeptConnect(name, parents.get(0).id, Account.getInstance().getOrg().orgId);
+                startCreateDeptConnect(name, parents.get(0).id, Account.getInstance().getCreatedOrg().orgId);
             }
         }
     }

@@ -200,7 +200,7 @@ public class DeptActivity extends Activity implements View.OnClickListener {
                 }
             });
             View btnManageDept = findViewById(R.id.btnManageDept);
-            if (mDept.id == null || mDept.id.equals(Account.getInstance().getOrg().orgId)) {
+            if (mDept.id == null || mDept.id.equals(Account.getInstance().getCreatedOrg().orgId)) {
                 btnManageDept.setVisibility(View.GONE);
             } else {
                 btnManageDept.setVisibility(View.VISIBLE);

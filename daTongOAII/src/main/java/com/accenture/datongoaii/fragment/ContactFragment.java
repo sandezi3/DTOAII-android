@@ -47,7 +47,7 @@ import java.util.List;
 
 public class ContactFragment extends Fragment implements
         OnSectionItemClickedListener {
-    public Org org;
+    public List<Org> orgList;
     private List<Object> viewList;
     private List<Object> tmpList;
 
@@ -63,8 +63,8 @@ public class ContactFragment extends Fragment implements
     }
 
     private void syncData() {
-        if (org != null) {
-            viewList.add(org);
+        if (orgList != null && orgList.size() > 0) {
+            viewList.addAll(orgList);
         }
         appendLocalData();
         tmpList.clear();
@@ -180,7 +180,6 @@ public class ContactFragment extends Fragment implements
                             ContactFragment.this.startActivityForResult(intent, Constants.REQUEST_CODE_MANAGE_ORG);
                         }
                     });
-                    view.setTag(org);
                     view.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -192,6 +191,7 @@ public class ContactFragment extends Fragment implements
                         }
                     });
                 }
+                view.setTag(org);
             } else if (o instanceof Group) {
                 Group g = (Group) o;
                 if (g.img.length() > 0) {
@@ -277,7 +277,7 @@ public class ContactFragment extends Fragment implements
         ibAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactAddPopupWindow capw = new ContactAddPopupWindow(v.getContext(), v, Account.getInstance().getOrg() == null);
+                ContactAddPopupWindow capw = new ContactAddPopupWindow(v.getContext(), v, Account.getInstance().getCreatedOrg() == null);
                 capw.showAsDropDown();
             }
         });
@@ -342,8 +342,8 @@ public class ContactFragment extends Fragment implements
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             clearData();
-                            org = Org.fromJSON(new JSONObject(result));
-                            Account.getInstance().setOrg(org);
+                            orgList = Org.listFromJSON(new JSONObject(result));
+                            Account.getInstance().setOrgList(orgList);
                             syncData();
                         }
                     } catch (Exception e) {
@@ -380,8 +380,8 @@ public class ContactFragment extends Fragment implements
             }
         } else if (o instanceof Org) {
             Intent intent = new Intent(view.getContext(), DeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, org.orgId);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, org.orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, ((Org)o).orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, ((Org)o).orgName);
             startActivity(intent);
         } else {
             // 个人信息

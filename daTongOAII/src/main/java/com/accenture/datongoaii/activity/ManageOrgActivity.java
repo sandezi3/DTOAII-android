@@ -79,7 +79,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
         btnOrg.setOnClickListener(this);
         btnDismiss.setOnClickListener(this);
 
-        tvOrgName.setText(Account.getInstance().getOrg().orgName);
+        tvOrgName.setText(Account.getInstance().getCreatedOrg().orgName);
     }
 
 
@@ -92,7 +92,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
         if (view.equals(btnOrgName)) {
             final EditText etName = new EditText(context);
             etName.setBackgroundColor(getResources().getColor(R.color.white));
-            etName.setText(Account.getInstance().getOrg().orgName);
+            etName.setText(Account.getInstance().getCreatedOrg().orgName);
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(etName)
                     .setCancelable(false)
@@ -104,7 +104,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
                                 Utils.toast(context, Config.NOTE_ORG_NAME_EMPTY);
                                 return;
                             }
-                            startChangeDeptNameConnect(Account.getInstance().getOrg().orgId, name);
+                            startChangeDeptNameConnect(Account.getInstance().getCreatedOrg().orgId, name);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -120,8 +120,8 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
         if (view.equals(btnOrg)) {
             Intent intent = new Intent(this, DeptActivity.class);
             intent.putExtra(Constants.BUNDLE_TAG_ORG_IS_MANAGE_MODE, true);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getCreatedOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getCreatedOrg().orgName);
             startActivity(intent);
             return;
         }
@@ -132,7 +132,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
                     .setPositiveButton("删除", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startDeleteOrgConnect(Account.getInstance().getOrg().orgId);
+                            startDeleteOrgConnect(Account.getInstance().getCreatedOrg().orgId);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {

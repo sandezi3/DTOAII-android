@@ -23,6 +23,7 @@ import com.accenture.datongoaii.fragment.PhoneContactFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
+import com.accenture.datongoaii.model.Org;
 import com.accenture.datongoaii.util.Utils;
 
 import java.io.Serializable;
@@ -123,6 +124,16 @@ public class SelectUserActivity extends Activity implements View.OnClickListener
 
     // 公有方法
     public void onFragmentItemClick(Object obj) {
+        if (obj instanceof Org) {
+            Dept dept = new Dept();
+            dept.id = ((Org)obj).orgId;
+            dept.name = ((Org)obj).orgName;
+            dept.mFirstPinYin = ((Org)obj).mFirstPinYin;
+            dept.img = ((Org)obj).logo;
+            setFragmentDisplay(dept);
+            Utils.addButton(context, dept, llNavBtns);
+            return;
+        }
         if (obj instanceof Dept) {
             Dept dept = (Dept) obj;
             setFragmentDisplay(dept);

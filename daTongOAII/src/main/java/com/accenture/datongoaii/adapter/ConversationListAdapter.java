@@ -1,6 +1,7 @@
 package com.accenture.datongoaii.adapter;
 
 import android.content.Context;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,20 @@ import android.widget.TextView;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.model.Conversation;
+import com.accenture.datongoaii.vendor.HX.Utils.SmileUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 public class ConversationListAdapter extends BaseAdapter {
     public List<Conversation> conversationList;
+    private Context context;
     private LayoutInflater inflater;
     private ImageLoader loader;
 
 
     public ConversationListAdapter(Context context, List<Conversation> list) {
+        this.context = context;
         this.conversationList = list;
         this.inflater = LayoutInflater.from(context);
         this.loader = ImageLoader.getInstance();
@@ -65,7 +69,8 @@ public class ConversationListAdapter extends BaseAdapter {
         loader.displayImage(c.username, holder.ivHead, Config.getDisplayOptions());
         holder.tvName.setText(c.username);
         holder.tvCreate.setText(c.create);
-        holder.tvSummary.setText(c.summary);
+        Spannable span = SmileUtils.getSmiledText(context, c.summary);
+        holder.tvSummary.setText(span, TextView.BufferType.SPANNABLE);
         holder.tvCount.setText(c.unReadedCount);
         if (c.unReadedCount.equals("0")) {
             holder.tvCount.setVisibility(View.INVISIBLE);

@@ -84,8 +84,8 @@ public class SelectDeptListAdapter extends BaseAdapter {
         }
 
         Object o = deptList.get(position);
-        Dept dept = (Dept) o;
         holder.ivSelect.setTag(o);
+        Dept dept = (Dept) o;
         if (Dept.contains(activity.selectList, dept)) {
             holder.ivSelect.setImageResource(R.drawable.ic_selected);
         } else {

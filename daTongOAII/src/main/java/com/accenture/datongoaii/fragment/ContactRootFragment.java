@@ -66,22 +66,19 @@ public class ContactRootFragment extends Fragment implements AdapterView.OnItemC
 
     // 私有方法
     private void appendLocalData() {
-        if (Account.getInstance().getOrg() != null) {
-            Dept d0 = new Dept();
-            d0.id = Account.getInstance().getOrg().orgId;
-            d0.name = Account.getInstance().getOrg().orgName;
-            orgList.add(d0);
+        if (Account.getInstance().getOrgList() != null && Account.getInstance().getOrgList().size() > 0) {
+            orgList.addAll(Account.getInstance().getOrgList());
         }
         Dept d1 = new Dept();
         d1.id = Dept.DEPT_ID_MY_FRIENDS;
         d1.name = "我的好友";
         d1.img = null;
-        d1.mFirstPinYin = "*";
+        d1.mFirstPinYin = "#";
         Dept d2 = new Dept();
         d2.id = Dept.DEPT_ID_PHONE_CONTACT;
         d2.name = "手机通讯录";
         d2.img = null;
-        d2.mFirstPinYin = "*";
+        d2.mFirstPinYin = "#";
         groupList.add(d1);
         groupList.add(d2);
     }

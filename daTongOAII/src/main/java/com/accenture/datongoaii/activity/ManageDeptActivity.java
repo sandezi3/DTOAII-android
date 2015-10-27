@@ -125,8 +125,8 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
         }
         if (view.equals(btnParent)) {
             Intent intent = new Intent(context, SelectDeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getCreatedOrg().orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getCreatedOrg().orgId);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, false);
             intent.putExtra(Constants.BUNDLE_TAG_PARENT_DEPT_INVALID, mDept.id);
             Bundle bundle = new Bundle();

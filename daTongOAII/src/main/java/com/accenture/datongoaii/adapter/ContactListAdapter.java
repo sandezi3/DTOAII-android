@@ -1,9 +1,6 @@
 package com.accenture.datongoaii.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.R;
-import com.accenture.datongoaii.activity.ManageUserActivity;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
+import com.accenture.datongoaii.model.Org;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -68,7 +64,16 @@ public class ContactListAdapter extends BaseAdapter {
         }
 
         Object o = dataList.get(position);
-        if (o instanceof Dept) {
+        if (o instanceof Org) {
+            Org org = (Org) o;
+            if (org.logo != null && org.logo.length() > 0) {
+                loader.displayImage(org.logo, holder.ivIcon, Config.getDisplayOptions());
+            } else {
+                holder.ivIcon.setImageResource(R.drawable.ic_contact_c);
+            }
+            holder.tvName.setText(org.orgName);
+            holder.ivArrow.setVisibility(View.VISIBLE);
+        } else if (o instanceof Dept) {
             Dept dept = (Dept) o;
             if (dept.img != null && dept.img.length() > 0) {
                 loader.displayImage(dept.img, holder.ivIcon, Config.getDisplayOptions());

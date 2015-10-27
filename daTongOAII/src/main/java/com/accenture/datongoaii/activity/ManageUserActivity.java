@@ -90,7 +90,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
         mContact = (Contact) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_MANAGE_USER);
         tvUsername.setText(mContact.name);
 
-        getParents(Account.getInstance().getOrg().orgId, mContact.id);
+        getParents(Account.getInstance().getCreatedOrg().orgId, mContact.id);
     }
 
     private String getParentName(List<Dept> parentDepts) {
@@ -142,8 +142,8 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
         }
         if (view.equals(btnParent)) {
             Intent intent = new Intent(context, SelectDeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getOrg().orgName);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getOrg().orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, Account.getInstance().getCreatedOrg().orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, Account.getInstance().getCreatedOrg().orgId);
             intent.putExtra(Constants.BUNDLE_TAG_SELECT_DEPT_MULTI_MODE, true);
             this.startActivityForResult(intent, Constants.REQUEST_CODE_CHANGE_DEPT_PARENT);
             return;
@@ -181,7 +181,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startChangeParentDeptConnect(Account.getInstance().getOrg().orgId, mContact.id, tmpParents);
+                            startChangeParentDeptConnect(Account.getInstance().getCreatedOrg().orgId, mContact.id, tmpParents);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -247,7 +247,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                         if (cr.statusCode == 0) {
                             ((Activity) context).setResult(RESULT_OK);
                             Utils.toast(context, Config.SUCCESS_UPDATE);
-                            getParents(Account.getInstance().getOrg().orgId, mContact.id);
+                            getParents(Account.getInstance().getCreatedOrg().orgId, mContact.id);
                         } else {
                             Utils.toast(context, cr.statusMsg);
                         }
