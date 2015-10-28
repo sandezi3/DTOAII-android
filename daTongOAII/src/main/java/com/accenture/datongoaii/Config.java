@@ -8,8 +8,8 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://192.168.1.103:8888/oaf/api";
-//    public static final String SERVER_HOST = "http://10.202.211.163:9999/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.1.104:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
     public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
@@ -50,6 +50,7 @@ public class Config {
     public static final String URL_RENAME_GROUP = "/chatgroup/{chatGroupId}";
     public static final String URL_GET_GROUPS_BY_IDS = "/chatgroups/{chatGroupIds}";
     public static final String URL_GET_TODO_URL = "/template/queryList.html?roleId={userId}";
+    public static final String URL_GET_APPS_BY_USER_ID = "/user/{userId}/apps";
 
     // GROUP TYPE
     public static final String GROUP_TYPE_TAG = "groupTypeId";

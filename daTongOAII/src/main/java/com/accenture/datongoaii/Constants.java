@@ -32,6 +32,8 @@ public class Constants {
     public static final String BUNDLE_TAG_CONTACT_PROFILE_IS_FROM_MY_FRIENDS = "bundle.contact.profile.is.from.my.friends";
     public static final String BUNDLE_TAG_APP = "bundle.app.url";
     public static final String BUNDLE_TAG_RENAME_DEPT_NEW_NAME = "bundle.rename.dept.new.name";
+    public static final String BUNDLE_TAG_GROUP = "bundle.group";
+    public static final String BUNDLE_TAG_GROUP_TYPE = "bundle.group.type";
 
     // Request Code
     public static final int REQUEST_CODE_SELECT_QUESTION = 1002;

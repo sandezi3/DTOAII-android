@@ -79,6 +79,6 @@
         android:id="@+id/lvConversation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/etSearch"></ListView>
+        android:layout_below="@id/etSearch"/>
 
 </RelativeLayout>

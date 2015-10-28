@@ -19,6 +19,7 @@ public class Group extends FirstPinYin {
     public Contact owner;
     public Integer userNum;
     public List<Contact> contactList;
+    public List<App> apps;
 
     public static Group fromJSON(JSONObject json) {
         try {
@@ -31,6 +32,7 @@ public class Group extends FirstPinYin {
             g.mFirstPinYin = "*";
             g.owner = null;
             g.contactList = null;
+            g.apps = null;
             return g;
         } catch (Exception e) {
             if (Logger.DEBUG) {

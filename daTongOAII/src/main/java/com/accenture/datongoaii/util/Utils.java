@@ -369,7 +369,7 @@ public class Utils {
         calendar1.set(Calendar.MILLISECOND, 0);
         Date startDate = calendar1.getTime();
         long startTime = startDate.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss S");
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss S");
 
         Calendar calendar2 = Calendar.getInstance();
         calendar2.set(Calendar.HOUR_OF_DAY, 23);

@@ -33,7 +33,8 @@ public class AppActivity extends Activity {
         Utils.initWebViewSettings(webView);
         App app = (App) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_APP);
         Logger.i(TAG, "App url = " + app.url);
-        String url = Config.SERVER_HOST.replace("/api", "") + app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
+//        String url = Config.SERVER_HOST.replace("/api", "") + app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
+        String url = app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
 
         ((TextView) findViewById(R.id.textTitle)).setText(app.appName);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {

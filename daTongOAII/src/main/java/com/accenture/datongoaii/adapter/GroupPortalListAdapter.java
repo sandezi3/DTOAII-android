@@ -15,12 +15,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-public class GroupListAdapter extends BaseAdapter {
+public class GroupPortalListAdapter extends BaseAdapter {
     private List<Group> groupList;
     private LayoutInflater inflater;
     private ImageLoader loader;
 
-    public GroupListAdapter(Context context, List<Group> list) {
+    public GroupPortalListAdapter(Context context, List<Group> list) {
         groupList = list;
         inflater = LayoutInflater.from(context);
         loader = ImageLoader.getInstance();
@@ -45,13 +45,11 @@ public class GroupListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_cell_group, parent,
+            convertView = inflater.inflate(R.layout.list_cell_group_portal, parent,
                     false);
             holder = new ViewHolder();
             holder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             holder.tvName = (TextView) convertView.findViewById(R.id.tvName);
-            holder.tvMemberCount = (TextView) convertView
-                    .findViewById(R.id.tvMemberCount);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -60,9 +58,6 @@ public class GroupListAdapter extends BaseAdapter {
         Group t = groupList.get(position);
         loader.displayImage(t.img, holder.ivIcon, Config.getDisplayOptions());
         holder.tvName.setText(t.name);
-        if (t.userNum != null) {
-            holder.tvMemberCount.setText(t.userNum + "人");
-        }
 
         return convertView;
     }
@@ -70,6 +65,5 @@ public class GroupListAdapter extends BaseAdapter {
     public static class ViewHolder {
         ImageView ivIcon;
         TextView tvName;
-        TextView tvMemberCount;
     }
 }

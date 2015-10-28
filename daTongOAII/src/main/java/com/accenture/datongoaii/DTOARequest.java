@@ -215,5 +215,12 @@ public class DTOARequest {
         new HttpConnection().get(url, defaultListener);
     }
 
-
+    /**
+     * 应用
+     */
+    public void startGetAppsByUserId(Integer userId, RequestListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_GET_APPS_BY_USER_ID.replace("{userId}", String.valueOf(userId));
+        mListener = listener;
+        new HttpConnection().get(url, defaultListener);
+    }
 }

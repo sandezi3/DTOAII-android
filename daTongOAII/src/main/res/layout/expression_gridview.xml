@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <com.accenture.datongoaii.vendor.HX.widget.ExpandGridView
+    <com.accenture.datongoaii.widget.ExpandGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

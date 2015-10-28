@@ -48,7 +48,7 @@ import com.accenture.datongoaii.vendor.HX.adapter.ExpressionPagerAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.GroupRemoveListener;
 import com.accenture.datongoaii.vendor.HX.adapter.MessageAdapter;
 import com.accenture.datongoaii.vendor.HX.adapter.VoicePlayClickListener;
-import com.accenture.datongoaii.vendor.HX.widget.ExpandGridView;
+import com.accenture.datongoaii.widget.ExpandGridView;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
