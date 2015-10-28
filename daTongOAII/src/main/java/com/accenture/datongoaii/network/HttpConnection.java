@@ -1,6 +1,7 @@
 package com.accenture.datongoaii.network;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -49,24 +50,24 @@ public class HttpConnection implements Runnable {
     private static final int PUT = 2;
     private static final int DELETE = 3;
     //    private static final int BITMAP = 4;
-    private static final int POST_IMAGE = 5;
+    private static final int PUT_IMAGE = 5;
 
     private String url;
     private int method;
     private JSONObject data;
     private CallbackListener listener;
-    private Bitmap image;
+    private String path;
 
     // public HttpConnection() {
     // this(new Handler());
     // }
 
-    public void create(int method, String url, JSONObject data, Bitmap image, CallbackListener listener) {
+    public void create(int method, String url, JSONObject data, String path, CallbackListener listener) {
         this.method = method;
         this.url = url;
         this.data = data;
         this.listener = listener;
-        this.image = image;
+        this.path = path;
         ConnectionManager.getInstance().push(this);
     }
 
@@ -90,13 +91,13 @@ public class HttpConnection implements Runnable {
         create(DELETE, url, null, null, listener);
     }
 
-//    public void bitmap(String url) {
+    //    public void bitmap(String url) {
 //        create(BITMAP, url, null, null, listener);
 //    }
 //
-//    public void postImage(String url, Bitmap image, CallbackListener listener) {
-//        create(POST_IMAGE, url, new JSONObject(), image, listener);
-//    }
+    public void uploadImage(String url, String path, CallbackListener listener) {
+        create(PUT_IMAGE, url, null, path, listener);
+    }
 
     public interface CallbackListener {
         void callBack(String result);
@@ -288,8 +289,8 @@ public class HttpConnection implements Runnable {
                     }
                     break;
                 }
-                case POST_IMAGE: {
-                    HttpPost httpPostRequest = new HttpPost(url);
+                case PUT_IMAGE: {
+                    HttpPut httpPutRequest = new HttpPut(url);
                     String tempFilePath = Environment.getExternalStorageDirectory().getPath() + "/TEMP";
                     String fileName = tempFilePath + "/temp" + System.currentTimeMillis() + ".jpg";
                     try {
@@ -301,7 +302,8 @@ public class HttpConnection implements Runnable {
                         }
                         if (f.createNewFile()) {
                             FileOutputStream fos = new FileOutputStream(f);
-                            image.compress(Bitmap.CompressFormat.JPEG, 30, fos);
+                            Bitmap bitmap = BitmapFactory.decodeFile(path);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, fos);
                             fos.close();
                         } else {
                             Logger.i("CreateFile", "CreateFile failed!");
@@ -315,12 +317,13 @@ public class HttpConnection implements Runnable {
                     InputStreamEntity ise = new InputStreamEntity(fis, f.length());
 
                     // Set HTTP parameters
-                    setHeader(httpPostRequest);
-                    httpPostRequest.setEntity(ise);
+                    setHeader(httpPutRequest);
+                    httpPutRequest.setHeader("Content-Type", "image/jpeg");
+                    httpPutRequest.setEntity(ise);
                     ise.setContentType("binary/octet-stream");
 
                     long t = System.currentTimeMillis();
-                    httpResponse = httpClient.execute(httpPostRequest);
+                    httpResponse = httpClient.execute(httpPutRequest);
                     Logger.i(TAG, "HTTPResponse received in [" + (System.currentTimeMillis() - t) + "ms]");
 
                     if (isHttpSuccessExecuted(httpResponse)) {
@@ -344,7 +347,7 @@ public class HttpConnection implements Runnable {
                             this.sendMessage("fail");
                         }
                     } else {
-                        Logger.e("POST_IMAGE.Err", "Please contact interface provider!");
+                        Logger.e("PUT_IMAGE.Err", "Please contact interface provider!");
                     }
                     break;
                 }

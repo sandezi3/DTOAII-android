@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.accenture.datongoaii"
     android:versionCode="1"
-    android:versionName="1.0"
+    android:versionName="Vb1.01"
     tools:ignore="ExportedContentProvider">
 
     <uses-sdk
@@ -78,6 +78,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"

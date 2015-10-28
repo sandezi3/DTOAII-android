@@ -78,8 +78,13 @@ public class DTOARequest {
     }
 
     /**
-     * 待办
+     * Account
      */
+    public void uploadImage(String path, RequestListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_UPLOAD_HEAD;
+        mListener = listener;
+        new HttpConnection().uploadImage(url, path, defaultListener);
+    }
 
     /**
      * 用户
