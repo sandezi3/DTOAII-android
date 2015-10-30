@@ -10,6 +10,7 @@ import android.os.Message;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -302,7 +303,11 @@ public class HttpConnection implements Runnable {
                         }
                         if (f.createNewFile()) {
                             FileOutputStream fos = new FileOutputStream(f);
-                            Bitmap bitmap = BitmapFactory.decodeFile(path);
+                            int degree = Utils.readPictureDegree(path);
+                            BitmapFactory.Options opts=new BitmapFactory.Options();
+                            opts.inSampleSize=2;
+                            Bitmap bitmap = BitmapFactory.decodeFile(path, opts);
+                            bitmap = Utils.rotateImageView(degree, bitmap);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 30, fos);
                             fos.close();
                         } else {

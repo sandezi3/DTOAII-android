@@ -28,8 +28,7 @@ public class SplashActivity extends Activity {
         dialog = ProgressDialog.show(this, null, "程序正在启动，请稍候...", true, false);
 
         // 初始化ImageLoader
-        File cacheDir = StorageUtils.getOwnCacheDirectory(
-                getApplicationContext(), "imageloader/Cache");
+        File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext())
@@ -59,6 +58,6 @@ public class SplashActivity extends Activity {
                 SplashActivity.this.finish();
             }
 
-        }, 3000);
+        }, 1000);
     }
 }

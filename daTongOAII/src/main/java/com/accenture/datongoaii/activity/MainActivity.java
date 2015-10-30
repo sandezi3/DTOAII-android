@@ -20,7 +20,6 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.fragment.NotiFragment;
 import com.accenture.datongoaii.fragment.TaskFragment;
-import com.accenture.datongoaii.fragment.TodoFragment;
 import com.accenture.datongoaii.fragment.TodoWebFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
@@ -257,6 +256,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 .getResources().getColor(R.color.gray_5));
     }
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {

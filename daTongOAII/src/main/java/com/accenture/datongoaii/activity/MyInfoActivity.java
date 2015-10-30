@@ -23,8 +23,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,6 +52,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MyInfoActivity extends Activity implements OnItemClickListener, OnClickListener {
     private static final String TAG = "MyInfoActivity";
@@ -56,10 +62,15 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
     private Context context;
     private Dialog selectPicDialog;
     private ProgressDialog progressDialog;
+    private EditText etName;
+    private View dialogView;
+    private AlertDialog.Builder builder;
 
     private SparseArray<String[]> menu;
     private File cameraFile;
     private MenuAdapter adapter;
+    private String mSex;
+    private String mBirth;
 
     private Handler handler = new ActivityHandler(this);
 
@@ -199,36 +210,23 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         }
     }
 
-    private void uploadPicture(String path) {
-        DTOARequest.getInstance(context).uploadImage(path, new DTOARequest.RequestListener() {
-            @Override
-            public void callback(String result) {
-                Utils.toast(context, Config.SUCCESS_UPDATE);
-                try {
-                    String url = new JSONObject(result).getJSONObject("data").getString("url");
-                    Account.getInstance().setHead(url);
-                    getUserInfo();
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Logger.e(TAG, "uploadPicture " + e.getMessage());
-                }
-            }
-        });
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                showSelectDialog();
+                showSelectPicDialog();
                 break;
             case 1:
+                showRenameDialog();
                 break;
             case 2:
+                // TODO: 10/29/15 QRCode
                 break;
             case 3:
+                showModifySexDialog();
                 break;
             case 4:
+                showModifyBirthdayDialog();
                 break;
             case 5:
                 break;
@@ -239,29 +237,147 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCapture: {
-                dismissDialog();
+                dismissPicDialog();
                 selectPicFromCamera();
             }
             break;
             case R.id.btnSelect: {
-                dismissDialog();
+                dismissPicDialog();
                 selectPicFromLocal();
+            }
+            break;
+            case R.id.rlMale:
+            case R.id.btnMale: {
+                mSex = "男";
+                ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(false);
+            }
+            break;
+            case R.id.rlFemale:
+            case R.id.btnFemale: {
+                mSex = "女";
+                ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(false);
             }
             break;
         }
     }
 
-    private void showSelectDialog() {
+    private void showSelectPicDialog() {
         View view = View.inflate(context, R.layout.dialog_select_pic, null);
         view.findViewById(R.id.btnCapture).setOnClickListener(this);
         view.findViewById(R.id.btnSelect).setOnClickListener(this);
         selectPicDialog = PopupDialog.showPushDialogFromBottom(context, view);
     }
 
-    private void dismissDialog() {
+    private void dismissPicDialog() {
         if (selectPicDialog.isShowing()) {
             selectPicDialog.dismiss();
         }
+    }
+
+    private void showRenameDialog() {
+        etName = new EditText(context);
+        etName.setBackgroundColor(getResources().getColor(R.color.white));
+        etName.setText(Account.getInstance().getUsername());
+        if (builder == null) {
+            builder = new AlertDialog.Builder(this);
+            builder.setView(etName)
+                    .setTitle("更改姓名")
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            builder = null;
+                        }
+                    })
+                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startRenameConnect(getNewName());
+                            builder = null;
+                        }
+                    })
+                    .show();
+            builder.create();
+        }
+    }
+
+    private void showModifySexDialog() {
+        dialogView = View.inflate(context, R.layout.dialog_modify_user_sex, null);
+        dialogView.findViewById(R.id.btnMale).setOnClickListener(this);
+        dialogView.findViewById(R.id.btnFemale).setOnClickListener(this);
+        dialogView.findViewById(R.id.rlMale).setOnClickListener(this);
+        dialogView.findViewById(R.id.rlFemale).setOnClickListener(this);
+        mSex = Account.getInstance().getSex();
+        if (mSex.equals("男")) {
+            ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(true);
+            ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(false);
+        } else {
+            ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(false);
+            ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(true);
+        }
+        if (builder == null) {
+            builder = new AlertDialog.Builder(this);
+            builder.setTitle("更改性别")
+                    .setView(dialogView)
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            builder = null;
+                        }
+                    })
+                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startModifySexConnect(mSex);
+                            builder = null;
+                        }
+                    }).show();
+            builder.create();
+        }
+    }
+
+    private void showModifyBirthdayDialog() {
+        final DatePicker datePicker = new DatePicker(context);
+        datePicker.setBackgroundColor(getResources().getColor(R.color.white));
+        datePicker.setSpinnersShown(true);
+        datePicker.setCalendarViewShown(false);
+        int[] array = getBirthArray();
+        datePicker.init(array[0], array[1] - 1, array[2], null);
+        if (builder == null) {
+            builder = new AlertDialog.Builder(this);
+            builder.setTitle("更改生日")
+                    .setView(datePicker)
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            builder = null;
+                        }
+                    })
+                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                            String birth = Utils.getDateString(calendar);
+                            startModifyBirthdayConnect(birth);
+                            builder = null;
+                        }
+                    }).show();
+            builder.create();
+        }
+    }
+
+    private int[] getBirthArray() {
+        mBirth = Account.getInstance().getBirth();
+        List<String> data = Utils.splitStrings(mBirth, "-");
+        int[] array = new int[data.size()];
+        for (int i = 0; i < data.size(); i++) {
+            array[i] = Integer.parseInt(data.get(i));
+        }
+        return array;
+    }
+
+    private String getNewName() {
+        return etName.getEditableText().toString().trim().replace(" ", "");
     }
 
     /**
@@ -280,7 +396,6 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                 new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
                 Constants.REQUEST_CODE_CAMERA);
     }
-
 
     /**
      * 从图库获取图片
@@ -332,11 +447,87 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         }
         menu.put(0, new String[]{"头像", Account.getInstance().getHead()});
         menu.put(1, new String[]{"用户名", Account.getInstance().getUsername()});
-        menu.put(
-                2,
-                new String[]{"二维码名片", String.valueOf(R.drawable.ic_qrcode)});
+        menu.put(2, new String[]{"二维码名片", String.valueOf(R.drawable.ic_qrcode)});
         menu.put(3, new String[]{"性别", Account.getInstance().getSex()});
         menu.put(4, new String[]{"生日", Account.getInstance().getBirth()});
+    }
+
+    private void refresh() {
+        getUserInfo();
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 网络请求
+     */
+    private void uploadPicture(String path) {
+        progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_SUBMIT);
+        DTOARequest.getInstance(context).uploadImage(path, new DTOARequest.RequestListener() {
+            @Override
+            public void callback(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                Utils.toast(context, Config.SUCCESS_UPDATE);
+                try {
+                    String url = new JSONObject(result).getJSONObject("data").getString("url");
+                    Account.getInstance().setHead(url);
+                    refresh();
+                } catch (JSONException e) {
+                    Logger.e(TAG, "uploadPicture " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void startRenameConnect(final String name) {
+        try {
+            progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
+            DTOARequest.getInstance(context).modifyUsername(Account.getInstance().getUserId(), name, new DTOARequest.RequestListener() {
+                @Override
+                public void callback(String result) {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                    Account.getInstance().setUsername(name);
+                    refresh();
+                }
+            });
+        } catch (JSONException e) {
+            Logger.e(TAG, "startRenameConnect: " + e.getMessage());
+            handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+        }
+    }
+
+    private void startModifySexConnect(final String sex) {
+        try {
+            progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
+            DTOARequest.getInstance(context).modifyUserSex(Account.getInstance().getUserId(), sex, new DTOARequest.RequestListener() {
+                @Override
+                public void callback(String result) {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                    Account.getInstance().setSex(sex);
+                    refresh();
+                }
+            });
+        } catch (JSONException e) {
+            Logger.e(TAG, "startModifySexConnect: " + e.getMessage());
+            handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+        }
+    }
+
+    private void startModifyBirthdayConnect(final String birthday) {
+        try {
+            progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
+            DTOARequest.getInstance(context).modifyUserBirthday(Account.getInstance().getUserId(), birthday, new DTOARequest.RequestListener() {
+                @Override
+                public void callback(String result) {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                    mBirth = birthday;
+                    Account.getInstance().setBirth(birthday);
+                    refresh();
+                }
+            });
+        } catch (JSONException e) {
+            Logger.e(TAG, "startModifySexConnect: " + e.getMessage());
+            handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+        }
     }
 
     private void startLogoutConnection() {
@@ -356,7 +547,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                                         Logger.e(TAG, e.getMessage());
                                         Utils.toast(context, Config.ERROR_IM);
                                     }
-                                    Utils.saveUserInfo(context, "", null);
+                                    Utils.clearUserInfo(context);
                                     ((DTOAIIApplication) getApplicationContext()).restartApplication();
                                 } else {
                                     Utils.toast(context, cr.statusMsg);

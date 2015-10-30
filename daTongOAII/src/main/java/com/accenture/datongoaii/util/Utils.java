@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -20,10 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.easemob.util.TimeInfo;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
@@ -275,14 +280,21 @@ public class Utils {
         return null;
     }
 
-    public static void saveUserInfo(Context context, String token, String userId) {
+    public static void saveUserInfo(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("token", token);
-        if (userId != null) {
-            editor.putString("userId", userId);
-        }
-        editor.commit();
+        editor.putString("token", Account.getInstance().getToken());
+        editor.putString("userId", String.valueOf(Account.getInstance().getUserId()));
+        editor.putString("head", Account.getInstance().getHead());
+        editor.putString("cell", Account.getInstance().getCell());
+        editor.apply();
+    }
+
+    public static void clearUserInfo(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        editor.apply();
     }
 
     public static HashMap<String, String> getUserInfo(Context context) {
@@ -290,6 +302,8 @@ public class Utils {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("token", sp.getString("token", ""));
         map.put("userId", sp.getString("userId", ""));
+        map.put("head", sp.getString("head", ""));
+        map.put("cell", sp.getString("cell", ""));
         return map;
     }
 
@@ -445,5 +459,55 @@ public class Utils {
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
+    }
+
+    /**
+     * 读取图片属性：旋转的角度
+     *
+     * @param path 图片绝对路径
+     * @return degree旋转的角度
+     */
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    /**
+     * 旋转图片
+     *
+     * @param angle  旋转角度
+     * @param bitmap 图片
+     * @return Bitmap
+     */
+    public static Bitmap rotateImageView(int angle, Bitmap bitmap) {
+        //旋转图片 动作
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        // 创建新的图片
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public static String getDateString(Calendar calendar) {
+        Date date = new Date(calendar.getTimeInMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 }

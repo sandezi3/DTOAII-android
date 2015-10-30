@@ -19,6 +19,7 @@ public class Config {
     public static final String URL_REGISTER = "/users";
     public static final String URL_REQUIRE_VERIFY_CODE = "/captcha/";
     public static final String URL_UPLOAD_HEAD = "/user/photo";
+    public static final String URL_MODIFY_USER_INFO = "/user/{userId}";
     public static final String URL_VERIFICATION = "/captcha/verification";
     public static final String URL_CHANGE_PASSWORD = "/user/password";
     public static final String URL_TODO_LIST = "/DTOAII/todo.json";
@@ -138,9 +139,9 @@ public class Config {
 
     public static DisplayImageOptions getDisplayOptions() {
         return new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.ic_default)
-                .showImageOnFail(R.drawable.ic_default)
-                .showImageOnLoading(R.drawable.ic_default).cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.bird)
+                .showImageOnFail(R.drawable.bird)
+                .showImageOnLoading(R.drawable.bird).cacheOnDisk(true)
                 .build();
     }
 

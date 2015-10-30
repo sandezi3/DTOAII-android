@@ -1,5 +1,7 @@
 package com.accenture.datongoaii.model;
 
+import com.accenture.datongoaii.util.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

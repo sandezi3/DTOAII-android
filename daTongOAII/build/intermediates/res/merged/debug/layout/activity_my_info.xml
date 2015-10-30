@@ -52,7 +52,8 @@
         android:id="@+id/lvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutTitle" />
+        android:layout_below="@+id/layoutTitle"
+        android:listSelector="@drawable/listview_selector" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -65,6 +66,4 @@
         android:text="切换账户登录"
         android:textColor="@color/red"
         android:textSize="18sp" />
-
-
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/activity_my_info.xml -->

@@ -3,7 +3,6 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,22 +10,33 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.db.DBHelper;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private final static String TAG = "LoginActivity";
@@ -65,18 +75,42 @@ public class LoginActivity extends Activity implements OnClickListener {
         activity = this;
         setContentView(R.layout.activity_login);
 
+        // 初始化ImageLoader
+        File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                getApplicationContext())
+                .diskCacheSize(50 * 1024 * 1024)
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCacheFileCount(100)
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+                .imageDownloader(
+                        new BaseImageDownloader(this, 5 * 1000, 30 * 1000)) // connectTimeout
+                        // (5
+                        // s),
+                        // readTimeout
+                        // (30
+                        // s)超时时间
+                .build();
+        ImageLoader.getInstance().init(config);
+
         editPhoneNumber = (EditText) findViewById(R.id.editCell);
         editPassword = (EditText) findViewById(R.id.editPassword);
         TextView tVRegister = (TextView) findViewById(R.id.tVRegister);
         TextView tVForgetPswd = (TextView) findViewById(R.id.tVForgetPswd);
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
-        tVRegister.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        tVForgetPswd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        ImageView ivHead = (ImageView) findViewById(R.id.ivHead);
 
         tVRegister.setOnClickListener(this);
         tVForgetPswd.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
+        HashMap<String, String> map = Utils.getUserInfo(this);
+        if (map != null && map.size() > 0) {
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(map.get("head"), ivHead, Config.getDisplayOptions());
+            editPhoneNumber.setText(map.get("cell"));
+        }
     }
 
     @Override
@@ -155,16 +189,15 @@ public class LoginActivity extends Activity implements OnClickListener {
                 clearDB();
             }
         } catch (Exception e) {
-            clearDB();
+            Logger.e(TAG, "resolveLoginSuccess" + e.getMessage());
         }
 
-        Utils.saveUserInfo(activity, Account.getInstance().getToken(), Account.getInstance().getUserId().toString());
+        Utils.saveUserInfo(activity);
         finishAndReturn();
     }
 
     private void clearDB() {
-//        SQLiteDatabase db = DBHelper.getInstance(activity).getWritableDatabase();
-//        DBHelper.getInstance(activity).onUpgrade(db, 0, DBHelper.DATABASE_VERSION);
+        DBHelper.getInstance(getApplicationContext()).clearDataBase();
     }
 
     private void startLoginConnect(String token) {

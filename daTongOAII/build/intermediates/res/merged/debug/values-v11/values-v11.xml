@@ -2,7 +2,7 @@
 <resources>
     <!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/values-v11/styles.xml -->
     <eat-comment/>
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- API 11 theme customizations can go here. -->
     </style>
     <!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-v11/values.xml -->

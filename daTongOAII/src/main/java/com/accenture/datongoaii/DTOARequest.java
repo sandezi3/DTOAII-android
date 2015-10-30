@@ -86,6 +86,30 @@ public class DTOARequest {
         new HttpConnection().uploadImage(url, path, defaultListener);
     }
 
+    public void modifyUsername(Integer userId, String newName, RequestListener listener) throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("username", newName);
+        modifyUserInfo(userId, object, listener);
+    }
+
+    public void modifyUserSex(Integer userId, String sex, RequestListener listener) throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("sex", sex);
+        modifyUserInfo(userId, object, listener);
+    }
+
+    public void modifyUserBirthday(Integer userId, String birthday, RequestListener listener) throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("birth", birthday);
+        modifyUserInfo(userId, object, listener);
+    }
+
+    private void modifyUserInfo(Integer userId, JSONObject object, RequestListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_MODIFY_USER_INFO.replace("{userId}", String.valueOf(userId));
+        mListener = listener;
+        new HttpConnection().put(url, object, defaultListener);
+    }
+
     /**
      * 用户
      */

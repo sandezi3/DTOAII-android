@@ -5,7 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.accenture.datongoaii.util.Logger;
+
 public class DBHelper extends SQLiteOpenHelper {
+    private static final String TAG = "DBHelper";
     private static final String DB_NAME = "DatongOAII.db";
     public static final int DATABASE_VERSION = 1;
     private static DBHelper instance;
@@ -62,15 +65,28 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TodoDao.TODO_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS" + ContactDao.CONTACT_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS" + ContactDao.FRIEND_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS" + GroupDao.GROUP_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS" + GroupDao.MY_GROUP_TABLE);
+            dropTables(db);
         } else {
             return;
         }
         onCreate(db);
+    }
+
+    public void clearDataBase() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db.isOpen()) {
+            dropTables(db);
+            onCreate(db);
+        }
+    }
+
+    private void dropTables(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + TodoDao.TODO_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ContactDao.CONTACT_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ContactDao.FRIEND_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + GroupDao.GROUP_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + GroupDao.MY_GROUP_TABLE);
+        Logger.i(TAG, "clearDataBase success");
     }
 }
