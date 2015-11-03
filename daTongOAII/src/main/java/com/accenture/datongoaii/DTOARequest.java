@@ -131,6 +131,22 @@ public class DTOARequest {
         new HttpConnection().post(url, object, listener);
     }
 
+    public void startGetContactsStatusConnect(String[] cells, RequestListener listener) {
+        mListener = listener;
+        String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < cells.length; i++) {
+                array.put(cells[i]);
+            }
+            obj.put("cells", array);
+        } catch (JSONException e) {
+            return;
+        }
+        new HttpConnection().post(url, obj, defaultListener);
+    }
+
     /**
      * 好友
      */

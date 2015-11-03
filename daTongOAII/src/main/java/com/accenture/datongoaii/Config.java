@@ -9,10 +9,10 @@ public class Config {
 
     // Host & Url
 //    public static final String SERVER_HOST = "http://192.168.1.104:8888/oaf/api";
-    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
-//    public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
+    public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_AUTO_LOGIN = "/authentication/{token}";
     public static final String URL_LOGOUT = "/logout";
@@ -111,6 +111,8 @@ public class Config {
     public static final String ERROR_INTERFACE = "数据解析失败，请联系应用提供商";
     public static final String ERROR_APP = "程序出错";
     public static final String ERROR_IM = "聊天模块出错，您可能无法正常使用聊天功能";
+    public static final String ERROR_CAMERA_INIT_FAIL = "摄像头访问失败";
+    public static final String ERROR_SCAN_BARCODE = "请扫描本应用提供的二维码";
 
     public static final String PROGRESS_LOGIN = "正在登录...";
     public static final String PROGRESS_LOGOUT = "正在退出登录...";

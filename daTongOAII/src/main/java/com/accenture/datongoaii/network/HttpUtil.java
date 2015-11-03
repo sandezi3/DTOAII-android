@@ -169,7 +169,6 @@ public class HttpUtil {
      * get方式联网
      *
      * @param url
-     * @param data
      * @return 服务器返回的字符串数据
      * @throws Exception
      */

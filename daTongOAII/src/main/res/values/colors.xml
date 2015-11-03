@@ -31,4 +31,9 @@
     <color name="gray_5">#B0B0B0</color>
     <color name="green">#388e3c</color>
     <color name="blue">#009</color>
+
+    <color name="qrscan_viewfinder_frame">#C0808080</color>
+    <color name="qrscan_viewfinder_mask">#60000000</color>
+    <color name="qrscan_viewfinder_corner">#FFFFFF</color>
+    <color name="qrscan_result_view">#b0000000</color>
 </resources>

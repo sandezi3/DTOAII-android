@@ -15,21 +15,23 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.CreateGroupActivity;
 import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
+import com.accenture.datongoaii.vendor.qrscan.CaptureActivity;
 
 public class ContactAddPopupWindow extends PopupWindow implements OnClickListener {
     private View anchor;
-    private Context context;
+    private Activity context;
 
     public ContactAddPopupWindow(Context context, View anchor, Boolean canCreateOrg) {
         super(View.inflate(context, R.layout.view_popup_contact_add, null),
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         this.anchor = anchor;
-        this.context = context;
+        this.context = (Activity) context;
         View view = getContentView();
         LinearLayout llContent = (LinearLayout) view.findViewById(R.id.llContent);
         llContent.findViewById(R.id.tvAddGroup).setOnClickListener(this);
         llContent.findViewById(R.id.tvCreateOrg).setOnClickListener(this);
         llContent.findViewById(R.id.tvAddFriend).setOnClickListener(this);
+        llContent.findViewById(R.id.tvScan).setOnClickListener(this);
         if (!canCreateOrg) {
             View tvCreateOrg = llContent.findViewById(R.id.tvCreateOrg);
             Integer index = llContent.indexOfChild(tvCreateOrg);
@@ -62,6 +64,11 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
             case R.id.tvAddFriend: {
                 Intent intent = new Intent(context, PhoneContactActivity.class);
                 context.startActivity(intent);
+                break;
+            }
+            case R.id.tvScan: {
+                Intent intent = new Intent(context, CaptureActivity.class);
+                context.startActivityForResult(intent, Constants.REQUEST_CODE_SCAN_QR_CODE);
                 break;
             }
         }

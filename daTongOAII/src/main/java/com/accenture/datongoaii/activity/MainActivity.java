@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.fragment.ContactFragment;
@@ -23,6 +24,7 @@ import com.accenture.datongoaii.fragment.TaskFragment;
 import com.accenture.datongoaii.fragment.TodoWebFragment;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
+import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
@@ -36,6 +38,9 @@ import com.igexin.sdk.PushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnClickListener, EMEventListener {
     private long mExitTime = 0;
@@ -94,6 +99,23 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_SCAN_QR_CODE && resultCode == Activity.RESULT_OK) {
+            final String cell = data.getStringExtra("cell");
+            final String[] cells = {cell};
+            DTOARequest.getInstance(getApplicationContext()).startGetContactsStatusConnect(cells, new DTOARequest.RequestListener() {
+                @Override
+                public void callback(String result) {
+                    List<Contact> list = new ArrayList<Contact>();
+                    Contact contact = new Contact();
+                    contact.cell = cell;
+                    try {
+                        Contact.resolveContactList(new JSONObject(result), list);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
         if (resultCode == Activity.RESULT_OK) {
             contactFrag.getOrg(Account.getInstance().getUserId());
         }

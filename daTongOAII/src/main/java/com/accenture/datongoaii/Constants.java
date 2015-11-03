@@ -55,6 +55,7 @@ public class Constants {
     public static final int REQUEST_CODE_CAMERA = 1018;
     public static final int REQUEST_CODE_LOCAL = 1019;
     public static final int REQUEST_CODE_DELETE_FRIEND = 1020;
+    public static final int REQUEST_CODE_SCAN_QR_CODE = 1021;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;
@@ -87,4 +88,5 @@ public class Constants {
     public static final String BROADCAST_CMD_GROUP_DISMISS = "dissMissGroup";
     public static final String BROADCAST_CMD_GROUP_ADD_MEMBER = "addGroupMember";
 
+    public static final String BARCODE_PREFIX_TAG = "2#^mrs72*4";
 }
