@@ -9,83 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/leon.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$bool.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$integer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/android/support/v7/appcompat/R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/R$string.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Account.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Account.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/ConnectionManager.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/ConnectionManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Constants.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/widget/ContactAddPopupWindow.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/widget/ContactAddPopupWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/ContactDao.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/ContactDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/DBHelper.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/DBHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/DeptDao.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/DeptDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/GroupDao.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/GroupDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpUtil.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Logger.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Logger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/build/tmp/packageDebugJar/MANIFEST.MF" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/build/tmp/packageDebugJar/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/build/tmp/packageReleaseJar/MANIFEST.MF" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/build/tmp/packageReleaseJar/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/widget/PopupDialog.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/widget/PopupDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/SSLSocketFactoryEx.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/SSLSocketFactoryEx.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/TodoDao.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/TodoDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_login.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_19_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_19_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build.gradle" afterPath="$PROJECT_DIR$/daTongOAII/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/button.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/button.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/button.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/button.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/button_text_color.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/button_text_color.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/button_text_color.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/button_text_color.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/daTongOAII.iml" afterPath="$PROJECT_DIR$/daTongOAII/daTongOAII.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew.bat" afterPath="$PROJECT_DIR$/gradlew.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/image_btn.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable/image_btn.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/image_btn.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable/image_btn.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/increment_popup_dialog.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/increment_popup_dialog.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/increment_popup_dialog.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/increment_popup_dialog.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/notification_inc.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/notification_inc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/notification_inc.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/notification_inc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ar/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ar/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-cs/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-cs/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-de/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-de/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-es/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-es/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-fr/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-fr/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-he/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-he/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-it/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-it/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-iw/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-iw/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ja/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ja/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ko/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ko/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-nl/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-nl/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pl/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pl/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pt/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pt/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pt-rBR/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-pt-rBR/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ro/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ro/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ru/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-ru/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-zh/pull_refresh_strings.xml" afterPath="$PROJECT_DIR$/pullToRefreshLibrary/src/main/res/values-zh/pull_refresh_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/values-v11/values-v11.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/values-v11/values-v11.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_contact_add.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_contact_add.xml" />
-    </list>
+    <list default="true" id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="" />
     <ignored path="00_Android.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -108,8 +32,8 @@
       <file leaf-file-name="Config.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57831323">
-              <caret line="41" column="74" selection-start-line="41" selection-start-column="74" selection-end-line="41" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.21686748">
+              <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -2303,6 +2227,7 @@
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.daTongOAII">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2456,6 +2381,9 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="" />
@@ -2467,7 +2395,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1230" height="777" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2497,6 +2425,14 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -2549,8 +2485,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57831323">
-          <caret line="41" column="74" selection-start-line="41" selection-start-column="74" selection-end-line="41" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.21686748">
+          <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
           <folding />
         </state>
       </provider>
