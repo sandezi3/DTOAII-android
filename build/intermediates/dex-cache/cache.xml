@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/leon/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/support-v4-19.1.0-eb764aaa846dcc49848d9e16bc87583be06af750.jar" />
-    </item>
-    <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/GetuiSDK2.6.0.0.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -16,17 +9,17 @@
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/GetuiSDK2.6.0.0-4510f54103ac3a95048b7f7208613fd0b183b68a.jar" />
     </item>
     <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/jars/classes.jar"
+        jar="/Users/leon/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="23.0.0 rc3"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-ec28caf68d7b93329e68e28e22f4d6925471c906.jar" />
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/support-v4-19.1.0-eb764aaa846dcc49848d9e16bc87583be06af750.jar" />
     </item>
     <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/00_Android/pullToRefreshLibrary/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="f7d62e62b96f09baa1b77c5fc34ca2f959a5bbae">
+        sha1="59fc1d31b5e832cdd9fbaabb8f1c772e34eccfa5">
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-65ebb190cac15ab29eb31decc8092c41e68ec8a2.jar" />
     </item>
     <item
@@ -37,11 +30,18 @@
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/support-v4-19.1.0-eb764aaa846dcc49848d9e16bc87583be06af750.jar" />
     </item>
     <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/universal-image-loader-1.9.4-with-sources.jar"
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-ec28caf68d7b93329e68e28e22f4d6925471c906.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="40595dbd3e3f1b87b27e914340d0e7dfd2d5b3d3">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.4-with-sources-feb2e66484c021f09d75006510189fa2b656598d.jar" />
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-ec28caf68d7b93329e68e28e22f4d6925471c906.jar" />
     </item>
     <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/GetuiExt-2.0.3.jar"
@@ -49,6 +49,20 @@
         revision="23.0.1"
         sha1="7825bfa9135d693e2046eab96fd94e724e0f9eda">
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/GetuiExt-2.0.3-ac45fb76d55a8660231f82706785b803bc567c4f.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/universal-image-loader-1.9.4-with-sources.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="40595dbd3e3f1b87b27e914340d0e7dfd2d5b3d3">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.4-with-sources-feb2e66484c021f09d75006510189fa2b656598d.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/universal-image-loader-1.9.4-with-sources.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="40595dbd3e3f1b87b27e914340d0e7dfd2d5b3d3">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.4-with-sources-feb2e66484c021f09d75006510189fa2b656598d.jar" />
     </item>
     <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/00_Android/pullToRefreshLibrary/unspecified/jars/classes.jar"
@@ -58,32 +72,18 @@
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-65ebb190cac15ab29eb31decc8092c41e68ec8a2.jar" />
     </item>
     <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/classes-ec28caf68d7b93329e68e28e22f4d6925471c906.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/universal-image-loader-1.9.4-with-sources.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="40595dbd3e3f1b87b27e914340d0e7dfd2d5b3d3">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.4-with-sources-feb2e66484c021f09d75006510189fa2b656598d.jar" />
-    </item>
-    <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/ZXingCore-2.2.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ce94bcbc5683ba8d5d8e3e27562f1c2955b58fa1">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/ZXingCore-2.2-196b147a1051d477215a04488212fd6f01a96f4a.jar" />
-    </item>
-    <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/GetuiExt-2.0.3.jar"
         jumboMode="false"
         revision="23.0.0 rc3"
         sha1="7825bfa9135d693e2046eab96fd94e724e0f9eda">
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/GetuiExt-2.0.3-ac45fb76d55a8660231f82706785b803bc567c4f.jar" />
+    </item>
+    <item
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/GetuiSDK2.6.0.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="02d2a5a74ec3d6527e5a46c51732ef90c4e4b29c">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/GetuiSDK2.6.0.0-4510f54103ac3a95048b7f7208613fd0b183b68a.jar" />
     </item>
     <item
         jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/easemobchat_2.2.2.jar"
@@ -93,11 +93,11 @@
         <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/easemobchat_2.2.2-85fe366b5e5146ac9f462953b87fe59cc667aa18.jar" />
     </item>
     <item
-        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/GetuiSDK2.6.0.0.jar"
+        jar="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/libs/ZXingCore-2.2.jar"
         jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="02d2a5a74ec3d6527e5a46c51732ef90c4e4b29c">
-        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/GetuiSDK2.6.0.0-4510f54103ac3a95048b7f7208613fd0b183b68a.jar" />
+        revision="23.0.1"
+        sha1="ce94bcbc5683ba8d5d8e3e27562f1c2955b58fa1">
+        <dex dex="/Users/leon/Project/DTOA II/04_Code/00_Android/daTongOAII/build/intermediates/pre-dexed/debug/ZXingCore-2.2-196b147a1051d477215a04488212fd6f01a96f4a.jar" />
     </item>
 
 </items>

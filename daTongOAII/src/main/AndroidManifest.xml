@@ -58,14 +58,14 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppBaseTheme">
         <!--<activity-->
-            <!--android:name=".activity.SplashActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:screenOrientation="portrait">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <!--android:name=".activity.SplashActivity"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <activity
             android:name=".activity.MainActivity"
@@ -178,9 +178,15 @@
             android:name=".activity.GroupPortalActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".vendor.qrscan.CaptureActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".vendor.qrscan.PreferencesActivity" android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".vendor.qrscan.CaptureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".vendor.qrscan.PreferencesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".vendor.qrscan.MyQRCodeActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

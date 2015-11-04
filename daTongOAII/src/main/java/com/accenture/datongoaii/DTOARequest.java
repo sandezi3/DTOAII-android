@@ -2,6 +2,7 @@ package com.accenture.datongoaii;
 
 import android.content.Context;
 
+import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -159,6 +160,28 @@ public class DTOARequest {
         String url = Config.SERVER_HOST + Config.URL_INVITE_FRIEND.replace("{cell}", cell);
         mListener = listener;
         new HttpConnection().put(url, defaultListener);
+    }
+
+    public void startAddFriendsConnect(Integer userId, Contact.FriendStatus status, RequestListener listener) {
+        String op = null;
+        switch (status) {
+            case FRIENDS_STATUS_TO_BE_FRIEND:
+                op = "add";
+                break;
+            case FRIENDS_STATUS_TO_ME_NOT_ACCEPT:
+                op = "accept";
+                break;
+        }
+        String url = Config.SERVER_HOST + Config.URL_ADD_FRIEND;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("toUserId", userId);
+            object.put("op", op);
+        } catch (JSONException e) {
+            Utils.toast(mAppContext, Config.ERROR_APP);
+        }
+        mListener = listener;
+        new HttpConnection().post(url, object, defaultListener);
     }
 
     /**

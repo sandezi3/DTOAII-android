@@ -18,6 +18,7 @@ package com.accenture.datongoaii.vendor.qrscan;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,7 +43,9 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -280,7 +283,21 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
             restartPreviewAfterDelay(2000L);
             return;
         }
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        content = content.substring(content.indexOf(Constants.BARCODE_PREFIX_TAG) + Constants.BARCODE_PREFIX_TAG.length());
+        List<String> list = Utils.splitStrings(content, "|");
+        String name;
+        try {
+            name = Utils.decodeUTF8(list.get(0));
+        } catch (UnsupportedEncodingException e) {
+            Utils.toast(this, Config.ERROR_SCAN_BARCODE);
+            restartPreviewAfterDelay(2000L);
+            return;
+        }
+        intent.putExtra("name", name);
+        intent.putExtra("cell", list.get(1));
+        intent.putExtra("head", list.get(2));
+        setResult(RESULT_OK, intent);
         finish();
     }
 

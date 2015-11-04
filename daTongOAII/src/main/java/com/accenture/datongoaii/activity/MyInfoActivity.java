@@ -44,6 +44,7 @@ import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
 import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
+import com.accenture.datongoaii.vendor.qrscan.MyQRCodeActivity;
 import com.accenture.datongoaii.widget.PopupDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -220,7 +221,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                 showRenameDialog();
                 break;
             case 2:
-                // TODO: 10/29/15 QRCode
+                startQRCodeActivity();
                 break;
             case 3:
                 showModifySexDialog();
@@ -364,6 +365,11 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                     }).show();
             builder.create();
         }
+    }
+
+    private void startQRCodeActivity() {
+        Intent intent = new Intent(context, MyQRCodeActivity.class);
+        startActivity(intent);
     }
 
     private int[] getBirthArray() {

@@ -77,6 +77,7 @@ public class ContactProfileActivity extends Activity {
                             .setPositiveButton("删除", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    // TODO: 11/4/15 progressDialog
                                     DTOARequest.startDeleteFriend(mContact.id, new HttpConnection.CallbackListener() {
                                         @Override
                                         public void callBack(String result) {

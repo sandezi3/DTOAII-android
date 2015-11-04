@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="verbose" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="" />
+        <option name="name" value="DTOA II" />
+        <option name="packageNamePattern" value="com.accenture.datongoaii" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="DTOA II" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="" />
+    <list default="true" id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="00_Android.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,17 +57,83 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Config.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21686748">
-              <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+            <state vertical-scroll-proportion="-6.111111">
+              <caret line="34" column="47" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyQRCodeActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="88" column="54" selection-start-line="88" selection-start-column="54" selection-end-line="88" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2807#2831#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.14763232">
+              <caret line="516" column="0" selection-start-line="516" selection-start-column="0" selection-end-line="516" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5276#6035#0" expanded="true" />
+                <element signature="e#5446#5455#0" expanded="true" />
+                <element signature="e#6034#6035#0" expanded="true" />
+                <element signature="e#19831#20221#0" expanded="true" />
+                <element signature="e#20220#20221#0" expanded="true" />
+                <element signature="e#20548#21043#0" expanded="true" />
+                <element signature="e#21042#21043#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CaptureActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="296" column="0" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+              <folding>
+                <element signature="e#2813#2814#0" expanded="true" />
+                <element signature="e#2843#2844#0" expanded="true" />
+                <element signature="e#2883#2884#0" expanded="true" />
+                <element signature="e#2919#2920#0" expanded="true" />
+                <element signature="e#8160#8161#0" expanded="true" />
+                <element signature="e#8194#8195#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="520" column="35" selection-start-line="520" selection-start-column="25" selection-end-line="520" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -2171,6 +2265,19 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/EncodeActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2207,6 +2314,7 @@
     <panes>
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
@@ -2216,18 +2324,126 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="datongoaii" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="datongoaii" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="datongoaii" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="00_Android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daTongOAII" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4df158bb6cbb9f55" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="FullScreen" value="false" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/daTongOAII/src/main/res/layout" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.daTongOAII">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2237,6 +2453,37 @@
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
@@ -2297,6 +2544,11 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -2341,7 +2593,7 @@
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -2395,16 +2647,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1230" height="777" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41452345" sideWeight="0.503367" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4614221" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2412,18 +2665,18 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24579124" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39939487" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41452345" sideWeight="0.496633" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2439,18 +2692,19 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java</url>
-          <line>425</line>
-          <properties />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="1" />
+      <option name="time" value="19" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2471,23 +2725,262 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="441" column="0" selection-start-line="441" selection-start-column="0" selection-end-line="441" selection-end-column="0" />
+          <folding>
+            <element signature="e#19493#19509#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/daTongOAII/libs/ZXingCore-2.2.jar!/com/google/zxing/EncodeHintType.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14655173">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.4827585">
+          <caret line="72" column="33" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="180" column="17" selection-start-line="180" selection-start-column="17" selection-end-line="180" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31325302">
-          <caret line="453" column="36" selection-start-line="453" selection-start-column="36" selection-end-line="453" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.40921408">
+          <caret line="302" column="25" selection-start-line="302" selection-start-column="25" selection-end-line="302" selection-end-column="25" />
+          <folding>
+            <element signature="e#19493#19509#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.36856368">
+          <caret line="164" column="38" selection-start-line="164" selection-start-column="16" selection-end-line="164" selection-end-column="38" />
+          <folding>
+            <element signature="docComment;class#DTOARequest#0" expanded="false" />
+            <element signature="class#RequestListener#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#getInstance#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#getInstance#1;class#DTOARequest#0" expanded="false" />
+            <element signature="docComment;method#uploadImage#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#uploadImage#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#modifyUsername#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#modifyUserSex#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#modifyUserBirthday#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#modifyUserInfo#0;class#DTOARequest#0" expanded="false" />
+            <element signature="docComment;method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetUsersByImIds#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetContactsStatusConnect#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startDeleteFriend#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startInviteFriendConnect#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startCreateGroup#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetGroups#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetGroup#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startInviteGroupMembers#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startQuitGroup#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startRenameGroup#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startDismissGroup#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetGroupsByIds#0;class#DTOARequest#0" expanded="false" />
+            <element signature="method#startGetAppsByUserId#0;class#DTOARequest#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25060242">
+          <caret line="262" column="53" selection-start-line="262" selection-start-column="53" selection-end-line="262" selection-end-column="53" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37349397">
+          <caret line="146" column="54" selection-start-line="146" selection-start-column="54" selection-end-line="146" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.75">
+          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44715446">
+          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+          <folding>
+            <element signature="e#3408#3438#1" expanded="false" />
+            <element signature="e#3855#3885#0" expanded="false" />
+            <element signature="e#5089#5119#0" expanded="false" />
+            <element signature="e#10187#10217#1" expanded="false" />
+            <element signature="e#12776#13106#0" expanded="false" />
+            <element signature="e#13105#13106#0" expanded="false" />
+            <element signature="e#13470#13800#0" expanded="false" />
+            <element signature="e#13799#13800#0" expanded="false" />
+            <element signature="e#13883#14140#0" expanded="false" />
+            <element signature="e#14139#14140#0" expanded="false" />
+            <element signature="e#14832#15126#0" expanded="false" />
+            <element signature="e#15125#15126#0" expanded="false" />
+            <element signature="e#15521#15551#1" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21686748">
-          <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6284153">
+          <caret line="513" column="4" selection-start-line="513" selection-start-column="4" selection-end-line="513" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="520" column="35" selection-start-line="520" selection-start-column="25" selection-end-line="520" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyFriendActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.61002785">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4317549">
+          <caret line="79" column="68" selection-start-line="79" selection-start-column="68" selection-end-line="79" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="296" column="0" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+          <folding>
+            <element signature="e#2813#2814#0" expanded="true" />
+            <element signature="e#2843#2844#0" expanded="true" />
+            <element signature="e#2883#2884#0" expanded="true" />
+            <element signature="e#2919#2920#0" expanded="true" />
+            <element signature="e#8160#8161#0" expanded="true" />
+            <element signature="e#8194#8195#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38253012">
+          <caret line="283" column="19" selection-start-line="283" selection-start-column="12" selection-end-line="283" selection-end-column="19" />
+          <folding>
+            <element signature="class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#ActivityHandler#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#handleMessage#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="class#MenuAdapter#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#MenuAdapter#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="class#6818:7033" expanded="false" />
+            <element signature="method#onClick#0;class#6818:7033" expanded="false" />
+            <element signature="method#onActivityResult#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#onItemClick#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#onClick#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#showSelectPicDialog#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#dismissPicDialog#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#showModifySexDialog#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#startQRCodeActivity#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#getBirthArray#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#getNewName#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="docComment;method#selectPicFromCamera#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#selectPicFromCamera#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="docComment;method#selectPicFromLocal#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#selectPicFromLocal#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="docComment;method#sendPicByUri#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#sendPicByUri#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#getUserInfo#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#refresh#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="docComment;method#uploadPicture#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#uploadPicture#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#startRenameConnect#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#startModifySexConnect#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#startModifyBirthdayConnect#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#startLogoutConnection#0;class#MyInfoActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="54" selection-start-line="88" selection-start-column="54" selection-end-line="88" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2807#2831#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14763232">
+          <caret line="516" column="0" selection-start-line="516" selection-start-column="0" selection-end-line="516" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5276#6035#0" expanded="true" />
+            <element signature="e#5446#5455#0" expanded="true" />
+            <element signature="e#6034#6035#0" expanded="true" />
+            <element signature="e#19831#20221#0" expanded="true" />
+            <element signature="e#20220#20221#0" expanded="true" />
+            <element signature="e#20548#21043#0" expanded="true" />
+            <element signature="e#21042#21043#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

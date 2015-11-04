@@ -29,8 +29,11 @@ import com.accenture.datongoaii.model.Dept;
 import com.easemob.util.TimeInfo;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -509,5 +512,13 @@ public class Utils {
         Date date = new Date(calendar.getTimeInMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
+    }
+
+    public static String encodeUTF8(String str) throws UnsupportedEncodingException {
+        return URLEncoder.encode(str, "UTF-8");
+    }
+
+    public static String decodeUTF8(String str) throws UnsupportedEncodingException {
+        return URLDecoder.decode(str, "UTF-8");
     }
 }

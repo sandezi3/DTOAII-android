@@ -1,14 +1,20 @@
 package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +24,7 @@ import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.fragment.NotiFragment;
 import com.accenture.datongoaii.fragment.TaskFragment;
@@ -35,10 +42,12 @@ import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.igexin.sdk.PushManager;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,16 +59,41 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     private final int TAB_CONTACT = 3;
     private int curTab = 0;
 
+    private Context context;
     public TodoWebFragment todoFrag;
     private NotiFragment notiFrag;
     private TaskFragment taskFrag;
     public ContactFragment contactFrag;
-
     private int retryTimes = 0;
+
+    public AlertDialog dialog;
+    private ProgressDialog progressDialog;
+    private Handler handler = new ActivityHandler(this);
+
+    public static class ActivityHandler extends Handler {
+        WeakReference<MainActivity> mActivity;
+
+        public ActivityHandler(MainActivity activity) {
+            mActivity = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
+                    MainActivity a = mActivity.get();
+                    if (a.progressDialog != null && a.progressDialog.isShowing()) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_main);
 
         PushManager.getInstance().initialize(getApplicationContext());
@@ -101,6 +135,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_SCAN_QR_CODE && resultCode == Activity.RESULT_OK) {
             final String cell = data.getStringExtra("cell");
+            final String name = data.getStringExtra("name");
+            final String head = data.getStringExtra("head");
             final String[] cells = {cell};
             DTOARequest.getInstance(getApplicationContext()).startGetContactsStatusConnect(cells, new DTOARequest.RequestListener() {
                 @Override
@@ -108,8 +144,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                     List<Contact> list = new ArrayList<Contact>();
                     Contact contact = new Contact();
                     contact.cell = cell;
+                    list.add(contact);
                     try {
                         Contact.resolveContactList(new JSONObject(result), list);
+                        contact = list.get(0);
+                        contact.name = name;
+                        contact.head = head;
+                        showContactDialog(contact);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -315,10 +356,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                                 if (res.statusCode == 0) {
                                     retryTimes = 0;
                                 } else {
-                                    show(res.statusMsg);
+                                    Utils.toast(getApplicationContext(), res.statusMsg);
                                 }
                             } catch (JSONException e) {
-                                show(Config.ERROR_INTERFACE);
+                                Utils.toast(getApplicationContext(), Config.ERROR_INTERFACE);
                             }
                         } else {
                             new Handler().postDelayed(new Runnable() {
@@ -391,7 +432,103 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
         }
     }
 
-    private void show(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private void showContactDialog(Contact contact) {
+        if (dialog == null) {
+            View view = View.inflate(context, R.layout.list_cell_contact, null);
+            TextView tv = (TextView) view.findViewById(R.id.tvName);
+            ImageView iv = (ImageView) view.findViewById(R.id.ivIcon);
+            TextView tvAdded = (TextView) view.findViewById(R.id.tvAdded);
+            Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
+            ImageLoader il = ImageLoader.getInstance();
+            if (contact.head.length() > 0) {
+                il.displayImage(contact.head, iv);
+            } else {
+                iv.setImageResource(R.drawable.ic_contact_p);
+            }
+            tv.setText(contact.name);
+            if (contact.isUser) {
+                switch (contact.friendStatus) {
+                    case FRIENDS_STATUS_FRIEND: {
+                        tvAdded.setVisibility(View.VISIBLE);
+                        tvAdded.setText("已添加");
+                        btnAdd.setVisibility(View.GONE);
+                    }
+                    break;
+                    case FRIENDS_STATUS_FROM_ME_NOT_ACCEPT: {
+                        tvAdded.setVisibility(View.VISIBLE);
+                        tvAdded.setText("等待对方接受");
+                        btnAdd.setVisibility(View.GONE);
+                    }
+                    break;
+                    case FRIENDS_STATUS_TO_ME_NOT_ACCEPT: {
+                        tvAdded.setVisibility(View.GONE);
+                        btnAdd.setVisibility(View.VISIBLE);
+                        btnAdd.setText("接受");
+                        btnAdd.setTag(contact);
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Contact c = (Contact) view.getTag();
+                                startAddFriendsConnect(c.id, c.friendStatus);
+                            }
+                        });
+                    }
+                    break;
+                    case FRIENDS_STATUS_TO_BE_FRIEND: {
+                        tvAdded.setVisibility(View.GONE);
+                        btnAdd.setVisibility(View.VISIBLE);
+                        btnAdd.setText("添加");
+                        btnAdd.setTag(contact);
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Contact c = (Contact) view.getTag();
+                                startAddFriendsConnect(c.id, c.friendStatus);
+                            }
+                        });
+                    }
+                }
+            } else {
+                if (!Utils.isValidCellNumber(contact.cell)) {
+                    tvAdded.setText("非手机号");
+                    tvAdded.setVisibility(View.VISIBLE);
+                    btnAdd.setVisibility(View.GONE);
+                } else {
+                    tvAdded.setText("已邀请");
+                    tvAdded.setVisibility(View.VISIBLE);
+                    btnAdd.setVisibility(View.GONE);
+                }
+            }
+
+            view.setTag(contact);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            dialog = builder.setTitle("添加好友").setView(view).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (((MainActivity) context).dialog != null) {
+                        ((MainActivity) context).dialog.dismiss();
+                        ((MainActivity) context).dialog = null;
+                    }
+                }
+            }).create();
+            dialog.show();
+        }
+    }
+
+    private void startAddFriendsConnect(Integer userId, Contact.FriendStatus status) {
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SEND);
+        DTOARequest.getInstance(context).startAddFriendsConnect(userId, status, new DTOARequest.RequestListener() {
+            @Override
+            public void callback(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                Utils.toast(context, Config.SUCCESS_ADD);
+                // 清数据库，更新好友
+                new ContactDao(context).saveFriends(null);
+                if (dialog != null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+            }
+        });
     }
 }
