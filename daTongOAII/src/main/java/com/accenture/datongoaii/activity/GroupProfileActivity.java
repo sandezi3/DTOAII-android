@@ -263,7 +263,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
         }
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gridView.getLayoutParams();
-        params.height = totalHeight;
+        params.height = totalHeight + space;
         gridView.setLayoutParams(params);
     }
 

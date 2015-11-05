@@ -11,6 +11,7 @@
     <color name="tab_background">#FCFCFC</color>
     <color name="tab_text_normal">#99979C</color>
     <color name="tab_text_focused">#5D9CEC</color>
+    <color name="tab_text_focused1">#34c4f9</color>
     <color name="header_background">#3F434C</color>
     <color name="home_guide_background">#2BA6E9</color>
     <color name="home_btn_background">#789928</color>

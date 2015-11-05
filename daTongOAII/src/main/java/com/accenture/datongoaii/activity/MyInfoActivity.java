@@ -296,8 +296,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                             builder = null;
                         }
                     })
-                    .show();
-            builder.create();
+                    .create().show();
         }
     }
 
@@ -331,8 +330,8 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                             startModifySexConnect(mSex);
                             builder = null;
                         }
-                    }).show();
-            builder.create();
+                    }).create().show();
+
         }
     }
 
@@ -362,8 +361,8 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                             startModifyBirthdayConnect(birth);
                             builder = null;
                         }
-                    }).show();
-            builder.create();
+                    }).create().show();
+
         }
     }
 

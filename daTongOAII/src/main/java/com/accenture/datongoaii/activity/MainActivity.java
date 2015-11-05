@@ -242,7 +242,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 ((ImageView) findViewById(R.id.imgTodo))
                         .setImageResource(R.drawable.tab_todo_h);
                 ((TextView) findViewById(R.id.txtTodo)).setTextColor(this
-                        .getResources().getColor(R.color.green));
+                        .getResources().getColor(R.color.tab_text_focused1));
                 break;
             case TAB_NOTI:
                 if (notiFrag == null) {
@@ -255,7 +255,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 ((ImageView) findViewById(R.id.imgNotification))
                         .setImageResource(R.drawable.tab_noti_h);
                 ((TextView) findViewById(R.id.txtNotification)).setTextColor(this
-                        .getResources().getColor(R.color.green));
+                        .getResources().getColor(R.color.tab_text_focused1));
                 break;
             case TAB_TASK:
                 if (taskFrag == null) {
@@ -267,7 +267,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 ((ImageView) findViewById(R.id.imgTask))
                         .setImageResource(R.drawable.tab_task_h);
                 ((TextView) findViewById(R.id.txtTask)).setTextColor(this
-                        .getResources().getColor(R.color.green));
+                        .getResources().getColor(R.color.tab_text_focused1));
                 break;
             case TAB_CONTACT:
                 if (contactFrag == null) {
@@ -279,7 +279,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 ((ImageView) findViewById(R.id.imgContact))
                         .setImageResource(R.drawable.tab_contact_h);
                 ((TextView) findViewById(R.id.txtContact)).setTextColor(this
-                        .getResources().getColor(R.color.green));
+                        .getResources().getColor(R.color.tab_text_focused1));
                 break;
         }
         t.commitAllowingStateLoss();
