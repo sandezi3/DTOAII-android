@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    tools:ignore="ContentDescription,HardcodedText">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivIcon"
@@ -26,7 +24,6 @@
         android:gravity="center"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="昨天"
         android:textColor="@color/gray_2"
         android:textSize="14sp" />
 
@@ -39,7 +36,6 @@
         android:layout_toRightOf="@id/ivIcon"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="公文标题公文标题公文标题公文标题公文标题"
         android:textSize="18sp" />
 
     <TextView
@@ -52,7 +48,6 @@
         android:layout_toRightOf="@id/ivIcon"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="提醒时间：21：30"
         android:textColor="@color/gray_2"
         android:textSize="14sp" />
 

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    tools:ignore="ContentDescription,HardcodedText">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivHead"
@@ -20,8 +18,9 @@
         android:id="@+id/llRight"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tvCreate"
             android:layout_width="match_parent"
@@ -30,7 +29,6 @@
             android:gravity="center"
             android:maxLines="1"
             android:padding="4dp"
-            android:text="昨天"
             android:textColor="@color/gray_2"
             android:textSize="14sp" />
 
@@ -44,7 +42,6 @@
             android:gravity="center"
             android:maxLines="1"
             android:padding="4dp"
-            android:text="11"
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
@@ -59,7 +56,6 @@
         android:layout_toRightOf="@id/ivHead"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="姓名"
         android:textSize="18sp" />
 
     <TextView
@@ -72,7 +68,6 @@
         android:layout_toRightOf="@id/ivHead"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="上午开个小会"
         android:textColor="@color/gray_2"
         android:textSize="14sp" />
 

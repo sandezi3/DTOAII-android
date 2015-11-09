@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="6dp"
-    tools:ignore="ContentDescription,HardcodedText">
+    android:padding="6dp">
 
     <ImageView
         android:id="@+id/ivArrow"
@@ -23,9 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:maxLines="1"
         android:layout_marginLeft="20dp"
-        android:text="Function"
+        android:maxLines="1"
         android:textColor="@color/gray_2"
         android:textSize="18sp" />
 
@@ -36,7 +33,6 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/ivArrow"
         android:maxLines="1"
-        android:text="value"
         android:textSize="18sp"
         android:visibility="gone" />
 

@@ -9,10 +9,10 @@ public class Config {
 
     // Host & Url
 //    public static final String SERVER_HOST = "http://192.168.1.104:8888/oaf/api";
-    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
-//    public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
+    public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
     public static final String URL_LOGIN = "/authentication";
     public static final String URL_AUTO_LOGIN = "/authentication/{token}";
     public static final String URL_LOGOUT = "/logout";

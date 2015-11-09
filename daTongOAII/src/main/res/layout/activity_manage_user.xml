@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3"
-    tools:ignore="ContentDescription,RtlHardcoded,HardcodedText">
+    android:background="@color/gray_3">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -84,7 +82,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="用户名"
+                android:text="@string/label_username"
                 android:textSize="18sp" />
 
             <TextView
@@ -94,7 +92,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow1"
                 android:maxLines="1"
-                android:text="姓名"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -131,7 +128,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="选择父部门"
+                android:text="@string/label_select_parent_dept"
                 android:textSize="18sp" />
 
             <TextView
@@ -169,7 +166,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="删除员工"
+                android:text="@string/btn_delete_user"
                 android:textColor="@color/red"
                 android:textSize="18sp" />
 

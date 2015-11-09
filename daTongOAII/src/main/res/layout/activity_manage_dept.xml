@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3"
-    tools:ignore="ContentDescription,RtlHardcoded,HardcodedText">
+    android:background="@color/gray_3">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -37,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="管理部门"
+            android:text="@string/nav_title_manage_dept"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -84,7 +82,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="部门名称"
+                android:text="@string/label_dept_name"
                 android:textSize="18sp" />
 
             <TextView
@@ -94,7 +92,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow1"
                 android:maxLines="1"
-                android:text="部门名称"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -131,7 +128,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="选择父部门"
+                android:text="@string/label_select_parent_dept"
                 android:textSize="18sp" />
 
             <TextView
@@ -141,7 +138,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow2"
                 android:maxLines="1"
-                android:text="父部门名称"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -170,7 +166,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="删除部门"
+                android:text="@string/btn_delete_dept"
                 android:textColor="@color/red"
                 android:textSize="18sp" />
 

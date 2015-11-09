@@ -1,5 +1,6 @@
 package com.accenture.datongoaii.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
             mActivity = new WeakReference<CellIdentifyActivity>(activity);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
             CellIdentifyActivity theActivity = mActivity.get();
@@ -62,14 +64,14 @@ public class CellIdentifyActivity extends Activity implements View.OnClickListen
                     }
                     break;
                 case HANDLER_TAG_REFRESH_SECOND_COUNT:
-                    theActivity.btnGetVerifyCode.setText("再获取" + "("
-                            + (theActivity.count + 1) + ")");
+                    theActivity.btnGetVerifyCode.setText(theActivity.getResources().getText(R.string.btn_get_verify_code_again_prefix).toString()
+                            + (theActivity.count + 1) + theActivity.getResources().getText(R.string.btn_get_verify_code_again_suffix).toString());
                     break;
                 case HANDLER_TAG_RESTORE_BUTTON_BEHAVIER:
                     theActivity.btnGetVerifyCode.setEnabled(true);
                     theActivity.btnGetVerifyCode
                             .setBackgroundResource(R.drawable.button);
-                    theActivity.btnGetVerifyCode.setText("获取验证码");
+                    theActivity.btnGetVerifyCode.setText(theActivity.getResources().getText(R.string.btn_get_verify_code));
                     break;
                 case HANDLER_TAG_GET_CODE_SUCCESS:
                     Toast.makeText(theActivity, Config.SUCCESS_GET_VERIFY_CODE,

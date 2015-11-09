@@ -55,7 +55,7 @@ public class SelectDeptActivity extends Activity implements View.OnClickListener
 
         mDept = new Dept();
         mDept.id = Dept.DEPT_ID_ROOT_CONTACT;
-        mDept.name = "组织架构";
+        mDept.name = getResources().getText(R.string.label_org).toString();
         mDept.subDept = new ArrayList<Dept>();
         Dept org = new Dept();
         org.id = Account.getInstance().getCreatedOrg().orgId;

@@ -53,7 +53,7 @@ public class SelectUserActivity extends Activity implements View.OnClickListener
 
         mDept = new Dept();
         mDept.id = Dept.DEPT_ID_ROOT_CONTACT;
-        mDept.name = "联系人";
+        mDept.name = getResources().getText(R.string.label_contact).toString();
 
         isMultiMode = getIntent().getBooleanExtra(Constants.BUNDLE_TAG_SELECT_USER_MULTI_MODE, false);
         RelativeLayout rlBottom = (RelativeLayout) findViewById(R.id.rlBottom);

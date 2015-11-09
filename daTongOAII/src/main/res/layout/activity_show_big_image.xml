@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="图片详情"
+            android:text="@string/nav_title_picute"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -52,9 +52,9 @@
 
     <com.accenture.datongoaii.vendor.HX.widget.PhotoView
         android:id="@+id/image"
-        android:layout_below="@id/layoutTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/layoutTitle"
         android:scaleType="fitCenter" />
 
     <ProgressBar

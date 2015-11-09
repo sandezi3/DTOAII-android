@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3"
-    tools:ignore="ContentDescription,RtlHardcoded,HardcodedText">
+    android:background="@color/gray_3">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -37,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="详细资料"
+            android:text="@string/nav_title_user_profile"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -88,12 +86,13 @@
                 android:visibility="invisible" />
 
             <TextView
+                android:id="@+id/tvLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="用户名"
+                android:text="@string/label_username"
                 android:textSize="18sp" />
 
             <TextView
@@ -102,8 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow1"
+                android:layout_toRightOf="@id/tvLabel"
+                android:gravity="right"
                 android:maxLines="1"
-                android:text="姓名"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -130,12 +130,13 @@
                 android:visibility="invisible" />
 
             <TextView
+                android:id="@+id/tvLabel1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="电话"
+                android:text="@string/label_cell"
                 android:textSize="18sp" />
 
             <TextView
@@ -144,8 +145,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow2"
+                android:layout_toRightOf="@id/tvLabel1"
+                android:gravity="right"
                 android:maxLines="1"
-                android:text="130xxxxxxxx"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -162,7 +164,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/button_selector"
             android:gravity="center_horizontal|center_vertical"
-            android:text="发消息"
+            android:text="@string/btn_chat"
             android:textColor="@color/green"
             android:textSize="18sp" />
 
@@ -172,7 +174,7 @@
             android:layout_height="45dp"
             android:background="@drawable/button_selector"
             android:gravity="center_horizontal|center_vertical"
-            android:text="删除好友"
+            android:text="@string/btn_delete_friend"
             android:textColor="@color/red"
             android:textSize="18sp"
             android:visibility="gone" />

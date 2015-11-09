@@ -54,9 +54,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class MyInfoActivity extends Activity implements OnItemClickListener, OnClickListener {
     private static final String TAG = "MyInfoActivity";
 
@@ -177,13 +177,13 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                 AlertDialog.Builder builder = new AlertDialog.Builder(context)
                         .setTitle(null)
                         .setMessage(Config.ALERT_SWITCH_ACCOUNT)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 startLogoutConnection();
                             }
                         })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -249,14 +249,16 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
             break;
             case R.id.rlMale:
             case R.id.btnMale: {
-                mSex = "男";
+                mSex = getResources().getText(R.string.label_male).toString();
+                ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(true);
                 ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(false);
             }
             break;
             case R.id.rlFemale:
             case R.id.btnFemale: {
-                mSex = "女";
+                mSex = getResources().getText(R.string.label_female).toString();
                 ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(false);
+                ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(true);
             }
             break;
         }
@@ -277,19 +279,18 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
 
     private void showRenameDialog() {
         etName = new EditText(context);
-        etName.setBackgroundColor(getResources().getColor(R.color.white));
         etName.setText(Account.getInstance().getUsername());
         if (builder == null) {
             builder = new AlertDialog.Builder(this);
             builder.setView(etName)
-                    .setTitle("更改姓名")
+                    .setTitle(getResources().getText(R.string.label_modify_name))
                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
                         public void onCancel(DialogInterface dialog) {
                             builder = null;
                         }
                     })
-                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                    .setNeutralButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startRenameConnect(getNewName());
@@ -307,7 +308,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         dialogView.findViewById(R.id.rlMale).setOnClickListener(this);
         dialogView.findViewById(R.id.rlFemale).setOnClickListener(this);
         mSex = Account.getInstance().getSex();
-        if (mSex.equals("男")) {
+        if (mSex.equals(getResources().getText(R.string.label_male).toString())) {
             ((RadioButton) dialogView.findViewById(R.id.btnMale)).setChecked(true);
             ((RadioButton) dialogView.findViewById(R.id.btnFemale)).setChecked(false);
         } else {
@@ -316,7 +317,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         }
         if (builder == null) {
             builder = new AlertDialog.Builder(this);
-            builder.setTitle("更改性别")
+            builder.setTitle(getResources().getText(R.string.label_modify_sex))
                     .setView(dialogView)
                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
@@ -324,7 +325,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                             builder = null;
                         }
                     })
-                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                    .setNeutralButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             startModifySexConnect(mSex);
@@ -337,14 +338,13 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
 
     private void showModifyBirthdayDialog() {
         final DatePicker datePicker = new DatePicker(context);
-        datePicker.setBackgroundColor(getResources().getColor(R.color.white));
         datePicker.setSpinnersShown(true);
         datePicker.setCalendarViewShown(false);
         int[] array = getBirthArray();
         datePicker.init(array[0], array[1] - 1, array[2], null);
         if (builder == null) {
             builder = new AlertDialog.Builder(this);
-            builder.setTitle("更改生日")
+            builder.setTitle(getResources().getText(R.string.label_modify_birthday))
                     .setView(datePicker)
                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
@@ -352,7 +352,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
                             builder = null;
                         }
                     })
-                    .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+                    .setNeutralButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Calendar calendar = Calendar.getInstance();
@@ -450,11 +450,11 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         if (menu == null) {
             menu = new SparseArray<String[]>();
         }
-        menu.put(0, new String[]{"头像", Account.getInstance().getHead()});
-        menu.put(1, new String[]{"用户名", Account.getInstance().getUsername()});
-        menu.put(2, new String[]{"二维码名片", String.valueOf(R.drawable.ic_qrcode)});
-        menu.put(3, new String[]{"性别", Account.getInstance().getSex()});
-        menu.put(4, new String[]{"生日", Account.getInstance().getBirth()});
+        menu.put(0, new String[]{getResources().getText(R.string.label_head).toString(), Account.getInstance().getHead()});
+        menu.put(1, new String[]{getResources().getText(R.string.label_username).toString(), Account.getInstance().getUsername()});
+        menu.put(2, new String[]{getResources().getText(R.string.label_bar_code).toString(), String.valueOf(R.drawable.ic_qrcode)});
+        menu.put(3, new String[]{getResources().getText(R.string.label_sex).toString(), Account.getInstance().getSex()});
+        menu.put(4, new String[]{getResources().getText(R.string.label_birthday).toString(), Account.getInstance().getBirth()});
     }
 
     private void refresh() {

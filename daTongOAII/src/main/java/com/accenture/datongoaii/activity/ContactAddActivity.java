@@ -15,9 +15,7 @@ import android.widget.TextView;
 import com.accenture.datongoaii.R;
 
 public class ContactAddActivity extends Activity {
-    private ListView lvMenu;
-    private String[] menu = {"创建群组"};
-    private MenuAdapter adapter;
+    private String[] menu = {getResources().getText(R.string.btn_create_group).toString()};
 
     private class MenuAdapter extends BaseAdapter {
         @Override
@@ -47,21 +45,19 @@ public class ContactAddActivity extends Activity {
             return view;
         }
     }
-
-    ;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_add);
-        lvMenu = (ListView) findViewById(R.id.lvFunction);
-        adapter = new MenuAdapter();
+        ListView lvMenu = (ListView) findViewById(R.id.lvFunction);
+        MenuAdapter adapter = new MenuAdapter();
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (menu[position].equals("创建群组")) {
+                if (menu[position].equals(getResources().getText(R.string.btn_create_group).toString())) {
                     Intent intent = new Intent(parent.getContext(), CreateGroupActivity.class);
                     parent.getContext().startActivity(intent);
                 }

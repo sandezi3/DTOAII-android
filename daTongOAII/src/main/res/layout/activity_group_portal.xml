@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="HardcodedText,ContentDescription,RtlHardcoded">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -28,8 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
         <TextView
@@ -38,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="群聊详情"
+            android:text="@string/nav_title_group_detail"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -89,7 +86,7 @@
                 android:maxLines="1"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="群应用"
+                android:text="@string/label_group_app"
                 android:textSize="18sp" />
 
 

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/white"
-    android:descendantFocusability="blocksDescendants"
-    tools:ignore="ContentDescription,HardcodedText, RtlHardcoded">
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/ivIcon"
@@ -24,7 +22,6 @@
         android:layout_toRightOf="@id/ivIcon"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="联系人"
         android:textSize="18sp" />
 
     <ImageView
@@ -44,7 +41,7 @@
         android:layout_toLeftOf="@id/ivArrow"
         android:background="@drawable/button"
         android:focusable="false"
-        android:text="编辑"
+        android:text="@string/btn_edit"
         android:textColor="@drawable/button_text_color"
         android:textSize="16sp"
         android:visibility="invisible" />

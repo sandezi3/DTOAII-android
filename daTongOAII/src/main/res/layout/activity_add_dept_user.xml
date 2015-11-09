@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_3"
-    tools:ignore="ContentDescription,RtlHardcoded,HardcodedText">
+    tools:ignore="ContentDescription,RtlHardcoded">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -16,8 +16,9 @@
         <RelativeLayout
             android:id="@+id/btnBack"
             android:layout_width="60dp"
-            android:layout_height="fill_parent"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
             android:background="@drawable/image_btn"
             android:gravity="center_horizontal">
 
@@ -31,16 +32,6 @@
                 android:src="@drawable/back" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="添加人员"
-            android:textColor="@color/green"
-            android:textSize="20sp" />
-
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="60dp"
@@ -49,9 +40,22 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:background="@drawable/button"
-            android:text="添加"
+            android:text="@string/nav_button_add"
             android:textColor="@drawable/button_text_color"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/btnAdd"
+            android:layout_toRightOf="@id/btnBack"
+            android:gravity="center_horizontal"
+            android:text="@string/nav_title_add_user"
+            android:textColor="@color/green"
+            android:textSize="20sp" />
+
 
         <View
             android:id="@+id/view1"
@@ -87,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:text="姓名"
+                android:text="@string/label_username"
                 android:textSize="18sp" />
 
             <ImageButton
@@ -109,7 +113,7 @@
                 android:layout_toLeftOf="@id/ibSelect"
                 android:layout_toRightOf="@id/lName"
                 android:background="@color/transparent"
-                android:hint="必填"
+                android:hint="@string/hint_required"
                 android:maxLines="1"
                 android:textSize="18sp" />
 
@@ -133,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:text="手机号码"
+                android:text="@string/label_cell"
                 android:textSize="18sp" />
 
             <EditText
@@ -145,7 +149,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@id/lCell"
                 android:background="@color/transparent"
-                android:hint="手机号码"
+                android:hint="@string/label_cell"
                 android:maxLines="1"
                 android:textSize="18sp" />
 
@@ -175,16 +179,17 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:visibility="invisible"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/arrow"
+                android:visibility="invisible" />
 
             <TextView
+                android:id="@+id/ltv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-                android:text="部门"
+                android:text="@string/label_dept"
                 android:textSize="18sp" />
 
             <TextView
@@ -193,7 +198,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/ivArrow2"
-                android:text="部门1"
+                android:layout_toRightOf="@id/ltv"
+                android:gravity="right"
+                android:text="@string/label_dept"
                 android:textColor="@color/gray_2"
                 android:textSize="18sp" />
 

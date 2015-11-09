@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    tools:ignore="ContentDescription,HardcodedText">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivSelect"
@@ -35,7 +33,6 @@
         android:layout_toRightOf="@id/ivIcon"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="联系人"
         android:textSize="18sp" />
 
     <ImageView
@@ -57,20 +54,19 @@
         android:maxLines="1"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="2人"
         android:textColor="@color/gray_2"
-        android:visibility="visible"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/btnEdit"
-        android:background="@drawable/button"
         android:layout_width="60dp"
         android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/ivArrow"
-        android:text="编辑"
+        android:background="@drawable/button"
+        android:text="@string/btn_edit"
         android:textColor="@drawable/button_text_color"
-        android:visibility="invisible"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 </RelativeLayout>

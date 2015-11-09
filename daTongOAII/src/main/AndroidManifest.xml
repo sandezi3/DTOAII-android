@@ -102,9 +102,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ForgetPwActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.CellIdentifyActivity"
             android:label="@string/title_activity_cell_identify"
             android:screenOrientation="portrait" />

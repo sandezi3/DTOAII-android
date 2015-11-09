@@ -22,30 +22,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0f0b4d2-6ddb-47d7-ba96-983353d5bfd3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_contact.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_contact.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_contact.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_contact.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_contact_h.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_contact_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_contact_h.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_contact_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_noti.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_noti.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_noti.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_noti.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_noti_h.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_noti_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_noti_h.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_noti_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_task.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_task.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_task.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_task.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_task_h.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_task_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_task_h.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_task_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_todo.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_todo.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_todo.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_todo.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_todo_h.png" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/drawable-hdpi/tab_todo_h.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_todo_h.png" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/drawable-hdpi/tab_todo_h.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_forget_pswd_step_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_forget_pswd_step_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_select_question.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_select_question.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ForgetPwActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/NotiListAdapter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/QuestionListAdapter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_forget_pswd_step_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_question.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_select_question.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_forget_pswd_step_1.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_forget_pswd.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CellIdentifyActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CellIdentifyActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactAddActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactAddActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/ContactFragment.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/ContactFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CreateOrgActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CreateOrgActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupProfileActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupProfileActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageDeptActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageDeptActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageOrgActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageOrgActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageUserActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageUserActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/NotiFragment.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/NotiFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectDeptActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectDeptActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectUserActivity.java" afterPath="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectUserActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_add_dept_user.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_add_dept_user.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_cell_identify.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_cell_identify.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_change_pswd.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_change_pswd.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_chat.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_chat.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_contact_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_contact_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_contact_profile.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_contact_profile.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_dept.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_dept.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_create_group.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_create_group.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_group.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_group.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_org.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_create_org.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_dept.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_dept.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_group_portal.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_group_portal.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_group_profile.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_group_profile.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_login.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_login.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_login.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_main.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_dept.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_dept.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_org.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_org.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_user.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_user.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_friends.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_friends.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_groups.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_groups.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_my_info.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_my_info.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_info.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_info.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_phone_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/activity_phone_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_phone_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_phone_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_qrscan.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_qrscan.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_register.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_register.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_dept.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_dept.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_user.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_user.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_show_big_image.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_show_big_image.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_modify_user_sex.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_modify_user_sex.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_select_pic.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_select_pic.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact_root.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact_root.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_dept.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_dept.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_noti.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_noti.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_noti.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_noti.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_task.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_task.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_task.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_task.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_todo.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/frag_todo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo_web.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo_web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact_1.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_conversation.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_conversation.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group_portal.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group_portal.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_menu.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_menu.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_menu.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_noti.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_noti.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_noti.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_noti.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_org.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_org.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_todo.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/list_cell_todo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_todo.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_todo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/notification_inc.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/notification_inc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/notification_inc.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/notification_inc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_contact_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_contact_add.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_contact_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_more.xml" afterPath="$PROJECT_DIR$/daTongOAII/build/intermediates/res/merged/debug/layout/view_popup_more.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_more.xml" afterPath="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_more.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="00_Android.iws" />
@@ -67,121 +141,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="70" selection-start-line="22" selection-start-column="70" selection-end-line="22" selection-end-column="70" />
+            <state vertical-scroll-proportion="-4.296296">
+              <caret line="123" column="32" selection-start-line="123" selection-start-column="32" selection-end-line="123" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeptFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/DeptFragment.java">
+      <file leaf-file-name="TaskFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/TaskFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="49" selection-start-line="64" selection-start-column="49" selection-end-line="64" selection-end-column="49" />
+              <caret line="183" column="11" selection-start-line="183" selection-start-column="11" selection-end-line="183" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeptActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/DeptActivity.java">
+      <file leaf-file-name="TodoFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/TodoFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="132" column="64" selection-start-line="132" selection-start-column="64" selection-end-line="132" selection-end-column="64" />
+              <caret line="86" column="29" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactProfileActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java">
+      <file leaf-file-name="ImageUtils.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/Utils/ImageUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="15" selection-start-line="64" selection-start-column="15" selection-end-line="64" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.2626506">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="255" column="57" selection-start-line="255" selection-start-column="57" selection-end-line="255" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="34" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="70" selection-start-line="11" selection-start-column="0" selection-end-line="24" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyInfoActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="172" column="52" selection-start-line="172" selection-start-column="52" selection-end-line="172" selection-end-column="52" />
-              <folding>
-                <element signature="class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="method#ActivityHandler#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="method#handleMessage#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="class#6818:7033" expanded="false" />
-                <element signature="method#onClick#0;class#6818:7033" expanded="false" />
-                <element signature="method#onActivityResult#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="method#onItemClick#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="method#onClick#0;class#MyInfoActivity#0" expanded="false" />
-                <element signature="method#showSelectPicDialog#0;class#MyInfoActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_my_info.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_info.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75136614">
-              <caret line="67" column="34" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -2323,24 +2319,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/EncodeActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupProfileActivity.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
-        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_menu.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_manage_user.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_friends.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_groups.xml" />
         <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_info.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_phone_contact.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_qrscan.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_register.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_dept.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_select_user.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_show_big_image.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_modify_user_sex.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/dialog_select_pic.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_contact_root.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_dept.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_noti.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_task.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/frag_todo_web.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact_1.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_conversation.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_group_portal.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_menu.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_noti.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_org.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_select_question.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_todo.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/notification_inc.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_contact_add.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/layout/view_popup_more.xml" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CellIdentifyActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactAddActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupProfileActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageDeptActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageOrgActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageUserActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectDeptActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectUserActivity.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/NotiListAdapter.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/ContactFragment.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/NotiFragment.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java" />
+        <option value="$PROJECT_DIR$/daTongOAII/src/main/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -2351,6 +2380,25 @@
     <option name="y" value="23" />
     <option name="width" value="1230" />
     <option name="height" value="777" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>AndroidLintRtlHardcoded</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -2375,9 +2423,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
@@ -2387,90 +2435,12 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="00_Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daTongOAII" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="00_Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daTongOAII" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="00_Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daTongOAII" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datongoaii" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="00_Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daTongOAII" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datongoaii" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="00_Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daTongOAII" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manifests" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4df158bb6cbb9f55" />
@@ -2689,37 +2659,37 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1230" height="777" extended-state="6" />
+    <frame x="0" y="23" width="1230" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.48653197" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3600605" sideWeight="0.506734" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32980332" sideWeight="0.52020204" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4614221" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32996634" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4614221" sideWeight="0.496633" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24579124" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.479798" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3600605" sideWeight="0.493266" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3600605" sideWeight="0.483165" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2735,454 +2705,489 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="19" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-          <folding />
+        <state vertical-scroll-proportion="0.24637681">
+          <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CreateDeptActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="54" selection-start-line="88" selection-start-column="54" selection-end-line="88" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-3.8454106">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CreateGroupActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="255" column="57" selection-start-line="255" selection-start-column="57" selection-end-line="255" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-0.51932365">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/CreateOrgActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="330" column="45" selection-start-line="330" selection-start-column="35" selection-end-line="330" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="70" selection-start-line="11" selection-start-column="0" selection-end-line="24" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="372" column="0" selection-start-line="372" selection-start-column="0" selection-end-line="372" selection-end-column="0" />
-          <folding>
-            <element signature="class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#ActivityHandler#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#handleMessage#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="class#MenuAdapter#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#getView#0;class#MenuAdapter#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="class#6818:7033" expanded="false" />
-            <element signature="method#onClick#0;class#6818:7033" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#onItemClick#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#onClick#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#showSelectPicDialog#0;class#MyInfoActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
-          <folding>
-            <element signature="docComment;class#DTOARequest#0" expanded="false" />
-            <element signature="class#RequestListener#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#DTOARequest#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#getInstance#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#getInstance#1;class#DTOARequest#0" expanded="false" />
-            <element signature="docComment;method#uploadImage#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#uploadImage#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUsername#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserSex#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserBirthday#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserInfo#0;class#DTOARequest#0" expanded="false" />
-            <element signature="docComment;method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetUsersByImIds#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetContactsStatusConnect#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startDeleteFriend#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startInviteFriendConnect#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startCreateGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroups#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startInviteGroupMembers#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startQuitGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startRenameGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startDismissGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroupsByIds#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetAppsByUserId#0;class#DTOARequest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="520" column="35" selection-start-line="520" selection-start-column="25" selection-end-line="520" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="441" column="0" selection-start-line="441" selection-start-column="0" selection-end-line="441" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/daTongOAII/libs/ZXingCore-2.2.jar!/com/google/zxing/EncodeHintType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14655173">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_qrcode.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.4827585">
-          <caret line="72" column="33" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25060242">
-          <caret line="262" column="53" selection-start-line="262" selection-start-column="53" selection-end-line="262" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/model/Contact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37349397">
-          <caret line="146" column="54" selection-start-line="146" selection-start-column="54" selection-end-line="146" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_contact.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.75">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44715446">
-          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6284153">
-          <caret line="513" column="4" selection-start-line="513" selection-start-column="4" selection-end-line="513" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="520" column="35" selection-start-line="520" selection-start-column="25" selection-end-line="520" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyFriendActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.61002785">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/MyQRCodeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="54" selection-start-line="88" selection-start-column="54" selection-end-line="88" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/qrscan/CaptureActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0696379">
-          <caret line="296" column="0" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/DTOARequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
-          <folding>
-            <element signature="docComment;class#DTOARequest#0" expanded="false" />
-            <element signature="class#RequestListener#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#DTOARequest#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#getInstance#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#getInstance#1;class#DTOARequest#0" expanded="false" />
-            <element signature="docComment;method#uploadImage#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#uploadImage#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUsername#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserSex#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserBirthday#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#modifyUserInfo#0;class#DTOARequest#0" expanded="false" />
-            <element signature="docComment;method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetUserByImId#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetUsersByImIds#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetContactsStatusConnect#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startDeleteFriend#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startInviteFriendConnect#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startCreateGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroups#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startInviteGroupMembers#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startQuitGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startRenameGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startDismissGroup#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetGroupsByIds#0;class#DTOARequest#0" expanded="false" />
-            <element signature="method#startGetAppsByUserId#0;class#DTOARequest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/network/HttpConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="330" column="45" selection-start-line="330" selection-start-column="35" selection-end-line="330" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="70" selection-start-line="11" selection-start-column="0" selection-end-line="24" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="255" column="57" selection-start-line="255" selection-start-column="57" selection-end-line="255" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/DeptFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="49" selection-start-line="64" selection-start-column="49" selection-end-line="64" selection-end-column="49" />
-          <folding />
+        <state vertical-scroll-proportion="-3.942029">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/DeptActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="132" column="64" selection-start-line="132" selection-start-column="64" selection-end-line="132" selection-end-column="64" />
+        <state vertical-scroll-proportion="-2.9975846">
+          <caret line="130" column="45" selection-start-line="130" selection-start-column="45" selection-end-line="130" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupPortalActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1518987">
+        <state vertical-scroll-proportion="-1.05314">
           <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4177215">
-          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/GroupProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3949367">
-          <caret line="259" column="31" selection-start-line="259" selection-start-column="31" selection-end-line="259" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.5483092">
+          <caret line="494" column="59" selection-start-line="494" selection-start-column="59" selection-end-line="494" selection-end-column="59" />
           <folding>
-            <element signature="docComment;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="class#ActivityHandler#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#ActivityHandler#0;class#ActivityHandler#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#handleMessage#0;class#ActivityHandler#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#onCreate#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="e#4639#4648#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#onClick#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#onItemClick#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#syncData#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="e#10451#10531#0" expanded="true" />
-            <element signature="method#refreshUIByAdmin#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#refreshUI#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#handleExistedMembers#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#refreshGroup#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#startRenameGroup#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#startQuitGroup#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#startInviteGroupMembers#0;class#GroupProfileActivity#0" expanded="false" />
-            <element signature="method#startDismissGroup#0;class#GroupProfileActivity#0" expanded="false" />
+            <element signature="e#4653#4683#0" expanded="false" />
+            <element signature="e#6069#6113#0" expanded="false" />
+            <element signature="e#6115#6422#0" expanded="false" />
+            <element signature="e#6421#6422#0" expanded="false" />
+            <element signature="e#6471#6514#0" expanded="false" />
+            <element signature="e#6516#6818#0" expanded="false" />
+            <element signature="e#6817#6818#0" expanded="false" />
+            <element signature="e#7189#7230#0" expanded="false" />
+            <element signature="e#7618#7661#0" expanded="false" />
+            <element signature="e#9363#9406#0" expanded="false" />
+            <element signature="e#9748#9791#0" expanded="false" />
+            <element signature="e#10684#10764#0" expanded="false" />
+            <element signature="e#11330#11380#0" expanded="false" />
+            <element signature="e#12117#12160#0" expanded="false" />
+            <element signature="e#12561#12604#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ContactProfileActivity.java">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="15" selection-start-line="64" selection-start-column="15" selection-end-line="64" selection-end-column="15" />
+        <state vertical-scroll-proportion="-0.6425121">
+          <caret line="239" column="29" selection-start-line="239" selection-start-column="21" selection-end-line="239" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.589372">
+          <caret line="512" column="24" selection-start-line="512" selection-start-column="24" selection-end-line="512" selection-end-column="24" />
+          <folding>
+            <element signature="e#12615#12673#0" expanded="true" />
+            <element signature="e#17494#17538#0" expanded="true" />
+            <element signature="e#17810#17860#0" expanded="true" />
+            <element signature="e#18186#18229#0" expanded="true" />
+            <element signature="e#18925#18965#0" expanded="true" />
+            <element signature="e#19558#19605#0" expanded="true" />
+            <element signature="e#19779#19825#0" expanded="true" />
+            <element signature="e#20119#20166#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageDeptActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.557971">
+          <caret line="176" column="82" selection-start-line="176" selection-start-column="82" selection-end-line="176" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageOrgActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.205314">
+          <caret line="131" column="81" selection-start-line="131" selection-start-column="81" selection-end-line="131" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/ManageUserActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3961353">
+          <caret line="180" column="82" selection-start-line="180" selection-start-column="82" selection-end-line="180" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyFriendActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.51932365">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyGroupsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3115942">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/Config.java">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="70" selection-start-line="22" selection-start-column="70" selection-end-line="22" selection-end-column="70" />
-          <folding />
+          <caret line="118" column="51" selection-start-line="118" selection-start-column="51" selection-end-line="118" selection-end-column="51" />
+          <folding>
+            <element signature="e#4816#4854#0" expanded="true" />
+          </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/list_cell_menu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4153005">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/MyInfoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="172" column="52" selection-start-line="172" selection-start-column="52" selection-end-line="172" selection-end-column="52" />
+          <caret line="458" column="0" selection-start-line="458" selection-start-column="0" selection-end-line="458" selection-end-column="0" />
           <folding>
+            <element signature="e#1993#2039#0" expanded="false" />
             <element signature="class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
             <element signature="method#ActivityHandler#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
             <element signature="method#handleMessage#0;class#ActivityHandler#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="class#6818:7033" expanded="false" />
-            <element signature="method#onClick#0;class#6818:7033" expanded="false" />
+            <element signature="e#6506#6550#0" expanded="false" />
+            <element signature="e#6872#6915#0" expanded="false" />
+            <element signature="class#6921:7136" expanded="false" />
+            <element signature="method#onClick#0;class#6921:7136" expanded="false" />
             <element signature="method#onActivityResult#0;class#MyInfoActivity#0" expanded="false" />
             <element signature="method#onItemClick#0;class#MyInfoActivity#0" expanded="false" />
-            <element signature="method#onClick#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="e#8918#8961#0" expanded="false" />
+            <element signature="e#9276#9321#0" expanded="false" />
             <element signature="method#showSelectPicDialog#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="method#dismissPicDialog#0;class#MyInfoActivity#0" expanded="false" />
+            <element signature="e#10330#10380#0" expanded="false" />
+            <element signature="e#10700#10744#0" expanded="false" />
+            <element signature="e#11601#11644#0" expanded="false" />
+            <element signature="e#12142#12191#0" expanded="false" />
+            <element signature="e#12552#12596#0" expanded="false" />
+            <element signature="e#13355#13409#0" expanded="false" />
+            <element signature="e#13770#13814#0" expanded="false" />
+            <element signature="e#17290#17333#0" expanded="false" />
+            <element signature="e#17414#17461#0" expanded="false" />
+            <element signature="e#17546#17593#0" expanded="false" />
+            <element signature="e#17679#17721#0" expanded="false" />
+            <element signature="e#17801#17848#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/layout/activity_my_info.xml">
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/PhoneContactActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75136614">
-          <caret line="67" column="34" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.16385542">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/RegisterActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5975903">
+          <caret line="95" column="44" selection-start-line="95" selection-start-column="44" selection-end-line="95" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectDeptActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <element signature="e#2001#2043#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SelectUserActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.701205">
+          <caret line="55" column="78" selection-start-line="55" selection-start-column="78" selection-end-line="55" selection-end-column="78" />
+          <folding>
+            <element signature="e#1904#1950#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/activity/SplashActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.12289157">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/AppGridAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/ContactListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8096385">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/ConversationListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.9012048">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/GroupListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3108433">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/GroupPortalListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1301205">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/TodoListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/adapter/UserGridAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="46" selection-start-line="74" selection-start-column="46" selection-end-line="74" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/ContactDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/DeptDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/GroupDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/db/TodoDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.686747">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/ContactFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46746987">
+          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
+          <folding>
+            <element signature="e#2854#2903#0" expanded="true" />
+            <element signature="e#3062#3114#0" expanded="true" />
+            <element signature="e#3269#3317#0" expanded="true" />
+            <element signature="e#4733#4775#0" expanded="true" />
+            <element signature="e#4850#4898#0" expanded="true" />
+            <element signature="e#6727#6770#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/ContactRootFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08192771">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/DeptFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6048193">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/FriendFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69638556">
+          <caret line="369" column="17" selection-start-line="369" selection-start-column="17" selection-end-line="369" selection-end-column="17" />
+          <folding>
+            <element signature="e#5271#5315#0" expanded="true" />
+            <element signature="e#5587#5637#0" expanded="true" />
+            <element signature="e#5963#6006#0" expanded="true" />
+            <element signature="e#6696#6736#0" expanded="true" />
+            <element signature="e#7317#7364#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/NotiFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.80240965">
+          <caret line="402" column="13" selection-start-line="402" selection-start-column="13" selection-end-line="402" selection-end-column="13" />
+          <folding>
+            <element signature="e#17240#17286#0" expanded="true" />
+            <element signature="e#17434#17478#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/PhoneContactFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.57349396">
+          <caret line="392" column="9" selection-start-line="392" selection-start-column="9" selection-end-line="392" selection-end-column="9" />
+          <folding>
+            <element signature="e#12066#12110#0" expanded="true" />
+            <element signature="e#12382#12432#0" expanded="true" />
+            <element signature="e#12758#12801#0" expanded="true" />
+            <element signature="e#13491#13531#0" expanded="true" />
+            <element signature="e#14412#14459#0" expanded="true" />
+            <element signature="e#14650#14696#0" expanded="true" />
+            <element signature="e#14979#15022#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/SelectDeptFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4578314">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/SelectDeptRootFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.007229">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.296296">
+          <caret line="123" column="32" selection-start-line="123" selection-start-column="32" selection-end-line="123" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/TaskFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="183" column="11" selection-start-line="183" selection-start-column="11" selection-end-line="183" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/TodoWebFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.88433737">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/activity/ShowBigImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7373494">
+          <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/activity/ChatActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50843376">
+          <caret line="1020" column="21" selection-start-line="1020" selection-start-column="21" selection-end-line="1020" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/adapter/ExpressionAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.1879518">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/adapter/GroupRemoveListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.61445785">
+          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/adapter/ExpressionPagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.26987952">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/adapter/MessageAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.445783">
+          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/fragment/TodoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="29" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/daTongOAII/src/main/java/com/accenture/datongoaii/vendor/HX/Utils/ImageUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2626506">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

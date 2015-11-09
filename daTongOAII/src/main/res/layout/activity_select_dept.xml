@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="选择部门"
+            android:text="@string/nav_title_select_dept"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -49,7 +49,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:background="@drawable/button"
-            android:text="确定"
+            android:text="@string/btn_confirm"
             android:textColor="@drawable/button_text_color"
             android:textSize="16sp" />
 
@@ -103,11 +103,11 @@
 
     <FrameLayout
         android:id="@+id/flContact"
-        android:paddingTop="10dp"
-        android:background="@color/gray_3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rlBottom"
-        android:layout_below="@id/hsvButtons" />
+        android:layout_below="@id/hsvButtons"
+        android:background="@color/gray_3"
+        android:paddingTop="10dp" />
 
 </RelativeLayout>

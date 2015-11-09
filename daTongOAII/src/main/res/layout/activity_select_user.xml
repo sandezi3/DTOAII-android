@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:ignore="HardcodedText,ContentDescription">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layoutNavBar"
@@ -29,8 +27,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
         <TextView
@@ -39,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="选择联系人"
+            android:text="@string/nav_title_select_user"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -70,7 +67,7 @@
         <LinearLayout
             android:id="@+id/llNavBtns"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" />
     </ScrollView>
 
@@ -90,7 +87,7 @@
         android:layout_below="@id/svNavBtns"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="搜索"
+        android:text="@string/label_search"
         android:textColor="@color/gray_2"
         android:textSize="13sp" />
 
@@ -128,17 +125,15 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="0.5dp"
             android:background="@drawable/button"
-            android:text="确定"
+            android:text="@string/btn_confirm"
             android:textColor="@drawable/button_text_color"
-            android:textSize="18sp"
-            tools:ignore="RtlHardcoded" />
+            android:textSize="18sp" />
 
         <HorizontalScrollView
             android:id="@+id/hsvBottom"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_toLeftOf="@id/btnSubmit"
-            tools:ignore="RtlHardcoded">
+            android:layout_toLeftOf="@id/btnSubmit">
 
             <LinearLayout
                 android:id="@+id/llBottom"

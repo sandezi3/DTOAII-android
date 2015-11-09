@@ -30,7 +30,6 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
     private Context context;
 
     private EditText etName;
-    private View btnSelect;
     private View btnBack;
     private View btnCreate;
     private ProgressDialog progressDialog;
@@ -65,24 +64,16 @@ public class CreateOrgActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_create_org);
 
         etName = (EditText) findViewById(R.id.etName);
-        btnSelect = findViewById(R.id.layoutSelect);
         btnBack = findViewById(R.id.btnBack);
         btnCreate = findViewById(R.id.btnCreate);
 
         btnCreate.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-        btnSelect.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
-        if (view.equals(btnSelect)) {
-            Intent intent = new Intent(view.getContext(), CreateGroupActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_SELECT_MEMBER, Constants.FUNCTION_TAG_CREATE_ORG);
-            startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
-            return;
-        }
         if (view.equals(btnBack)) {
             finish();
             return;

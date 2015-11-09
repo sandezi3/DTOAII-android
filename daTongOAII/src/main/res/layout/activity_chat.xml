@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_3">
+    android:background="@color/gray_3"
+    tools:ignore="UselessParent,SmallSp">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -107,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="按住说话"
+                    android:text="@string/label_press_to_speak"
                     android:textColor="#666666"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -136,6 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="35dip"
                     android:background="@null"
+                    android:inputType="text"
                     android:maxLines="3"
                     android:minHeight="40dp"
                     android:onClick="editClick"
@@ -185,7 +187,7 @@
                 android:layout_height="32dp"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/chat_send_btn_selector"
-                android:text="发送"
+                android:text="@string/btn_send"
                 android:textColor="#666666"
                 android:textSize="16sp"
                 android:visibility="visible" />
@@ -227,6 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:layout_marginTop="6dp"
+                    android:baselineAligned="false"
                     android:weightSum="4">
 
                     <LinearLayout
@@ -255,7 +258,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="拍照"
+                            android:text="@string/label_capture"
                             android:textColor="#727171" />
                     </LinearLayout>
 
@@ -285,7 +288,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="照片"
+                            android:text="@string/label_photo"
                             android:textColor="#727171" />
                     </LinearLayout>
                 </LinearLayout>
@@ -308,7 +311,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/recording_hint_bg"
         android:padding="10dp"
-        android:visibility="invisible" >
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/mic_image"
@@ -325,7 +328,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:padding="2dp"
-            android:text="手指上滑，取消发送"
+            android:text="@string/label_slide_up_to_cancel"
             android:textSize="10sp" />
     </RelativeLayout>
 

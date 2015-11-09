@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="HardcodedText,ContentDescription">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/layoutNavBar"
@@ -18,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="待办任务"
+            android:text="@string/nav_title_todo"
             android:textColor="@color/gray_2"
             android:textSize="22sp" />
 
@@ -54,7 +52,7 @@
         android:layout_below="@id/layoutNavBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="搜索"
+        android:text="@string/label_search"
         android:textColor="@color/gray_2"
         android:textSize="13sp" />
 
@@ -64,9 +62,9 @@
         android:layout_height="16dp"
         android:layout_below="@id/layoutNavBar"
         android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@id/tvSearch"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/tvSearch"
         android:src="@drawable/ic_search" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView

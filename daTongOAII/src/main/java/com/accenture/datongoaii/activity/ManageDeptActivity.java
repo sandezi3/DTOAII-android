@@ -107,13 +107,13 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(etName)
                     .setCancelable(false)
-                    .setPositiveButton("更改", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_modify), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startChangeDeptNameConnect(mDept.id, etName.getEditableText().toString().trim());
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -141,13 +141,13 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(Config.ALERT_DELETE_DEPT)
                     .setCancelable(false)
-                    .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_delete), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startDeleteDeptConnect(mDept.id);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -174,13 +174,13 @@ public class ManageDeptActivity extends Activity implements View.OnClickListener
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(Config.ALERT_PARENT_DEPT.replace("{}", "\"" + tmpParent.name + "\""))
                     .setCancelable(false)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startChangeParentDeptConnect(mDept.id, tmpParent.id);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();

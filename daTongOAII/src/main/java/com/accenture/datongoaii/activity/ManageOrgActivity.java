@@ -96,7 +96,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(etName)
                     .setCancelable(false)
-                    .setPositiveButton("更改", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_modify), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String name = etName.getEditableText().toString().trim();
@@ -107,7 +107,7 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
                             startChangeDeptNameConnect(Account.getInstance().getCreatedOrg().orgId, name);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -129,13 +129,13 @@ public class ManageOrgActivity extends Activity implements View.OnClickListener 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(Config.ALERT_DELETE_ORG)
                     .setCancelable(false)
-                    .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_delete), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startDeleteOrgConnect(Account.getInstance().getCreatedOrg().orgId);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();

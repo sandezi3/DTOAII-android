@@ -144,20 +144,20 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
                 switch (c.friendStatus) {
                     case FRIENDS_STATUS_FRIEND: {
                         tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("已添加");
+                        tvAdded.setText(getResources().getText(R.string.label_added));
                         btnAdd.setVisibility(View.GONE);
                     }
                     break;
                     case FRIENDS_STATUS_FROM_ME_NOT_ACCEPT: {
                         tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("等待对方接受");
+                        tvAdded.setText(getResources().getText(R.string.label_wait_accept));
                         btnAdd.setVisibility(View.GONE);
                     }
                     break;
                     case FRIENDS_STATUS_TO_ME_NOT_ACCEPT: {
                         tvAdded.setVisibility(View.GONE);
                         btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("接受");
+                        btnAdd.setText(getResources().getText(R.string.btn_accept));
                         btnAdd.setTag(c);
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -171,7 +171,7 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
                     case FRIENDS_STATUS_TO_BE_FRIEND: {
                         tvAdded.setVisibility(View.GONE);
                         btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("添加");
+                        btnAdd.setText(getResources().getText(R.string.btn_add));
                         btnAdd.setTag(c);
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -184,7 +184,7 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
                 }
             } else {
                 if (!Utils.isValidCellNumber(c.cell)) {
-                    tvAdded.setText("非手机号");
+                    tvAdded.setText(getResources().getText(R.string.label_not_cell));
                     tvAdded.setVisibility(View.VISIBLE);
                     btnAdd.setVisibility(View.GONE);
                 } else {

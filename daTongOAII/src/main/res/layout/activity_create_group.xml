@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="HardcodedText,ContentDescription,RtlHardcoded">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -28,8 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
         <TextView
@@ -38,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="创建群聊"
+            android:text="@string/nav_title_create_group"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -50,7 +47,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:background="@drawable/button"
-            android:text="创建"
+            android:text="@string/nav_btn_create"
             android:textColor="@drawable/button_text_color"
             android:textSize="16sp" />
 
@@ -78,7 +75,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/transparent"
-            android:hint="请输入群聊名称（选填）" />
+            android:hint="@string/hint_input_group_name" />
 
         <RelativeLayout
             android:id="@+id/layoutSelect"
@@ -105,8 +102,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"
-
-                android:text="请选择群聊人员"
+                android:text="@string/label_select_group_member"
                 android:textSize="18sp" />
 
             <TextView
@@ -118,7 +114,6 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="value"
                 android:textSize="18sp"
                 android:visibility="gone" />
 

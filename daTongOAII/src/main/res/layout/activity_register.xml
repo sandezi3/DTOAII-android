@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:ignore="HardcodedText,ContentDescription">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -28,8 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
         <TextView
@@ -38,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="注册"
+            android:text="@string/nav_title_register"
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -73,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/hint_input_username"
             android:inputType="text"
-            android:hint="请输入用户名"
             android:maxLength="11"
             android:textColorHint="@color/gray_1" />
 
@@ -84,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="请输入密码"
+            android:hint="@string/hint_input_pswd"
             android:inputType="textPassword"
             android:maxLength="20"
             android:textColorHint="@color/gray_1" />
@@ -95,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="请重复密码"
+            android:hint="@string/hint_input_rpt_pswd"
             android:inputType="textPassword"
             android:maxLength="20"
             android:textColorHint="@color/gray_1" />
@@ -178,7 +175,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_normal"
-            android:text="注册"
+            android:text="@string/btn_register"
             android:textColor="@drawable/button_text_color"
             android:textSize="16sp" />
     </LinearLayout>

@@ -80,17 +80,17 @@ public class ContactFragment extends Fragment implements
     private void appendLocalData() {
         Dept d0 = new Dept();
         d0.id = Dept.DEPT_ID_MY_FRIENDS;
-        d0.name = "我的好友";
+        d0.name = getResources().getText(R.string.label_my_friends).toString();
         d0.img = null;
         d0.mFirstPinYin = "*";
         Dept d1 = new Dept();
         d1.id = Dept.DEPT_ID_PHONE_CONTACT;
-        d1.name = "手机通讯录";
+        d1.name = getResources().getText(R.string.label_phone_contact).toString();
         d1.img = null;
         d1.mFirstPinYin = "*";
         Dept d2 = new Dept();
         d2.id = Dept.DEPT_ID_MY_GROUPS;
-        d2.name = "我的群聊";
+        d2.name = getResources().getText(R.string.label_my_groups).toString();
         d2.img = null;
         d2.mFirstPinYin = "*";
         viewList.add(d0);
@@ -132,9 +132,9 @@ public class ContactFragment extends Fragment implements
                     tv.setText("*");
                 }
             } else if (o instanceof Org) {
-                tv.setText("组织架构");
+                tv.setText(getResources().getText(R.string.label_org));
             } else if (o instanceof Group) {
-                tv.setText("我的群组");
+                tv.setText(getResources().getText(R.string.label_my_groups));
             } else if (o instanceof Contact) {
                 tv.setText(((Contact) o).mFirstPinYin);
             }
@@ -172,7 +172,7 @@ public class ContactFragment extends Fragment implements
                 if (org.createUserId.equals(Account.getInstance().getUserId())) {
                     Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
                     btnAdd.setVisibility(View.VISIBLE);
-                    btnAdd.setText("管理");
+                    btnAdd.setText(getResources().getText(R.string.btn_manage));
                     btnAdd.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -380,8 +380,8 @@ public class ContactFragment extends Fragment implements
             }
         } else if (o instanceof Org) {
             Intent intent = new Intent(view.getContext(), DeptActivity.class);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, ((Org)o).orgId);
-            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, ((Org)o).orgName);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, ((Org) o).orgId);
+            intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, ((Org) o).orgName);
             startActivity(intent);
         } else {
             // 个人信息

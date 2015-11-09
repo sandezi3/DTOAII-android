@@ -323,7 +323,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
-                Toast.makeText(this, "再按就要退出了哟~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getText(R.string.label_press_again_to_quit), Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
             } else {
                 finish();
@@ -450,20 +450,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 switch (contact.friendStatus) {
                     case FRIENDS_STATUS_FRIEND: {
                         tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("已添加");
+                        tvAdded.setText(getResources().getText(R.string.label_added));
                         btnAdd.setVisibility(View.GONE);
                     }
                     break;
                     case FRIENDS_STATUS_FROM_ME_NOT_ACCEPT: {
                         tvAdded.setVisibility(View.VISIBLE);
-                        tvAdded.setText("等待对方接受");
+                        tvAdded.setText(getResources().getText(R.string.label_wait_accept));
                         btnAdd.setVisibility(View.GONE);
                     }
                     break;
                     case FRIENDS_STATUS_TO_ME_NOT_ACCEPT: {
                         tvAdded.setVisibility(View.GONE);
                         btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("接受");
+                        btnAdd.setText(getResources().getText(R.string.btn_accept));
                         btnAdd.setTag(contact);
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -477,7 +477,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                     case FRIENDS_STATUS_TO_BE_FRIEND: {
                         tvAdded.setVisibility(View.GONE);
                         btnAdd.setVisibility(View.VISIBLE);
-                        btnAdd.setText("添加");
+                        btnAdd.setText(getResources().getText(R.string.btn_add));
                         btnAdd.setTag(contact);
                         btnAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -490,11 +490,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                 }
             } else {
                 if (!Utils.isValidCellNumber(contact.cell)) {
-                    tvAdded.setText("非手机号");
+                    tvAdded.setText(getResources().getText(R.string.label_not_cell));
                     tvAdded.setVisibility(View.VISIBLE);
                     btnAdd.setVisibility(View.GONE);
                 } else {
-                    tvAdded.setText("已邀请");
+                    tvAdded.setText(getResources().getText(R.string.label_invited));
                     tvAdded.setVisibility(View.VISIBLE);
                     btnAdd.setVisibility(View.GONE);
                 }
@@ -502,7 +502,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
 
             view.setTag(contact);
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            dialog = builder.setTitle("添加好友").setView(view).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            dialog = builder.setTitle(getResources().getText(R.string.btn_add_friend)).setView(view).setNeutralButton("取消", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (((MainActivity) context).dialog != null) {

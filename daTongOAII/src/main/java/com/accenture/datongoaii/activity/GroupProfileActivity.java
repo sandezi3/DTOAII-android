@@ -160,13 +160,13 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(Config.ALERT_DISMISS_GROUP)
                             .setCancelable(false)
-                            .setPositiveButton("解散", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getText(R.string.btn_dismiss), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     startDismissGroup(mGroup.imId);
                                 }
                             })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
@@ -179,13 +179,13 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(Config.ALERT_QUIT_GROUP)
                             .setCancelable(false)
-                            .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getText(R.string.btn_quit), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     startQuitGroup(mGroup.imId, Account.getInstance().getImId());
                                 }
                             })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
@@ -221,13 +221,13 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(Config.ALERT_KICK_MEMBER.replace("{}", user.name))
                         .setCancelable(false)
-                        .setPositiveButton("移除", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getText(R.string.btn_remove), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 startQuitGroup(mGroup.imId, user.imId);
                             }
                         })
-                        .setNegativeButton("取消", null)
+                        .setNegativeButton(getResources().getText(R.string.btn_cancel), null)
                         .show();
                 builder.create();
             }
@@ -269,7 +269,7 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
 
     private void refreshUIByAdmin() {
         if (isAdmin) {
-            ((TextView) findViewById(R.id.btnQuit)).setText("解散该群");
+            ((TextView) findViewById(R.id.btnQuit)).setText(getResources().getText(R.string.btn_dismiss_group));
             findViewById(R.id.ivArrow1).setVisibility(View.VISIBLE);
             findViewById(R.id.btnRename).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -281,13 +281,13 @@ public class GroupProfileActivity extends Activity implements View.OnClickListen
                     builder.setView(etName)
                             .setTitle(Config.ALERT_RENAME_GROUP)
                             .setCancelable(false)
-                            .setPositiveButton("更改", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getText(R.string.btn_modify), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     startRenameGroup(mGroup.imId, etName.getEditableText().toString().trim());
                                 }
                             })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();

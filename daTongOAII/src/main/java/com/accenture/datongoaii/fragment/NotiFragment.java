@@ -392,9 +392,9 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
             if (emConversation.getLastMessage().getBody() instanceof TextMessageBody) {
                 conversation.summary = ((TextMessageBody) emConversation.getLastMessage().getBody()).getMessage();
             } else if (emConversation.getLastMessage().getBody() instanceof ImageMessageBody) {
-                conversation.summary = "[图片]";
+                conversation.summary = getResources().getText(R.string.label_picture).toString();
             } else if (emConversation.getLastMessage().getBody() instanceof VoiceMessageBody) {
-                conversation.summary = "[语音]";
+                conversation.summary = getResources().getText(R.string.label_voice).toString();
             }
             try {
                 conversation.create = Utils.getPeroid(emConversation.getLastMessage().getMsgTime(), System.currentTimeMillis());

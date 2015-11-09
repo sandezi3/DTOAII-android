@@ -130,7 +130,7 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
                             startChangeUserNameConnect(mContact.id, name);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -152,13 +152,13 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(Config.ALERT_DELETE_USER)
                     .setCancelable(false)
-                    .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_delete), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startDeleteDeptUserConnect(mContact.parent.id, mContact.id);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -178,13 +178,13 @@ public class ManageUserActivity extends Activity implements View.OnClickListener
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(Config.ALERT_PARENT_DEPT.replace("{}", "\"" + getParentName(tmpParents) + "\""))
                     .setCancelable(false)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getText(R.string.btn_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startChangeParentDeptConnect(Account.getInstance().getCreatedOrg().orgId, mContact.id, tmpParents);
                         }
                     })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();

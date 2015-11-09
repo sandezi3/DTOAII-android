@@ -2,10 +2,12 @@ package com.accenture.datongoaii.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,16 +19,43 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
+import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.activity.ChatActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by leon on 10/3/15.
  * 用户详情
  */
 public class ContactProfileActivity extends Activity {
-    private Context context;
+    private ContactProfileActivity context;
     private Contact mContact;
+    public ProgressDialog progressDialog;
+    private Handler handler = new ActivityHandler(this);
+
+    public static class ActivityHandler extends Handler {
+        WeakReference<ContactProfileActivity> mActivity;
+
+        public ActivityHandler(ContactProfileActivity activity) {
+            mActivity = new WeakReference<ContactProfileActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            ContactProfileActivity a = mActivity.get();
+            switch (msg.what) {
+                case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG: {
+                    if (a.progressDialog != null) {
+                        a.progressDialog.dismiss();
+                        a.progressDialog = null;
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +101,16 @@ public class ContactProfileActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage(Config.ALERT_DELETE_FRIEND)
+                    AlertDialog ad = builder.setMessage(Config.ALERT_DELETE_FRIEND)
                             .setCancelable(false)
-                            .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getText(R.string.btn_delete), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    // TODO: 11/4/15 progressDialog
+                                    context.progressDialog = Utils.showProgressDialog(context, context.progressDialog, null, Config.PROGRESS_SUBMIT);
                                     DTOARequest.startDeleteFriend(mContact.id, new HttpConnection.CallbackListener() {
                                         @Override
                                         public void callBack(String result) {
+                                            handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                                             ContactDao dao = new ContactDao(context);
                                             // 清数据库好友表
                                             dao.saveFriends(null);
@@ -90,9 +120,9 @@ public class ContactProfileActivity extends Activity {
                                     });
                                 }
                             })
-                            .setNegativeButton("取消", null)
-                            .show();
-                    builder.create();
+                            .setNegativeButton(getResources().getText(R.string.btn_cancel), null)
+                            .create();
+                    ad.show();
                 }
             });
         } else {

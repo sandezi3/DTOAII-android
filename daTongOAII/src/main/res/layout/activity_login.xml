@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical"
-    tools:ignore="HardcodedText,ContentDescription">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layoutFocus"
@@ -38,7 +36,7 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:padding="10dp"
-            android:text="用户名"
+            android:text="@string/label_username"
             android:textSize="18sp" />
 
         <EditText
@@ -49,7 +47,7 @@
             android:layout_toRightOf="@id/tvName"
             android:background="@color/transparent"
             android:ems="10"
-            android:hint="您的手机号"
+            android:hint="@string/hint_input_cell"
             android:inputType="phone"
             android:maxLength="11"
             android:textColorHint="@color/gray_1" />
@@ -68,7 +66,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/line"
             android:padding="10dp"
-            android:text=" 密  码"
+            android:text="@string/label_password"
             android:textSize="18sp" />
 
         <EditText
@@ -80,7 +78,7 @@
             android:layout_toRightOf="@id/tvName"
             android:background="@color/transparent"
             android:ems="10"
-            android:hint="请输入密码"
+            android:hint="@string/hint_input_pswd"
             android:inputType="textPassword"
             android:maxLength="20"
             android:textColorHint="@color/gray_1" />
@@ -94,7 +92,7 @@
         android:layout_below="@+id/rrContent"
         android:layout_margin="16dp"
         android:background="@drawable/button"
-        android:text="登录"
+        android:text="@string/btn_login"
         android:textColor="@drawable/button_text_color"
         android:textSize="18sp" />
 
@@ -105,7 +103,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/btnLogin"
         android:layout_marginLeft="18dp"
-        android:text="无法登录？"
+        android:text="@string/btn_cannot_login"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -116,7 +114,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/btnLogin"
         android:layout_marginRight="18dp"
-        android:text="新用户注册"
+        android:text="@string/btn_login_register"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
