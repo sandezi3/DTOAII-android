@@ -15,6 +15,7 @@ import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.CreateGroupActivity;
 import com.accenture.datongoaii.activity.CreateOrgActivity;
 import com.accenture.datongoaii.activity.PhoneContactActivity;
+import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.qrscan.CaptureActivity;
 
 public class ContactAddPopupWindow extends PopupWindow implements OnClickListener {
@@ -52,13 +53,12 @@ public class ContactAddPopupWindow extends PopupWindow implements OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvAddGroup: {
-                Intent intent = new Intent(context, CreateGroupActivity.class);
-                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
+                Utils.startActivityForResult(context, CreateGroupActivity.class, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvCreateOrg: {
                 Intent intent = new Intent(context, CreateOrgActivity.class);
-                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
+                context.startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_ORG);
                 break;
             }
             case R.id.tvAddFriend: {

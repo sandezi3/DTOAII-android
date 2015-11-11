@@ -1,5 +1,6 @@
 package com.accenture.datongoaii.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
@@ -10,11 +11,13 @@ import android.widget.PopupWindow;
 
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.activity.MyInfoActivity;
+import com.accenture.datongoaii.util.Utils;
 
 public class MorePopupWindow extends PopupWindow implements OnClickListener {
     private View anchor;
     private Context context;
 
+    @SuppressWarnings("unused")
     public MorePopupWindow(Context context) {
         super(context, null);
     }
@@ -42,8 +45,7 @@ public class MorePopupWindow extends PopupWindow implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvAccount:
-                Intent intent = new Intent(context, MyInfoActivity.class);
-                context.startActivity(intent);
+                Utils.startActivity((Activity) context, MyInfoActivity.class);
                 break;
             case R.id.tvHelp:
                 break;

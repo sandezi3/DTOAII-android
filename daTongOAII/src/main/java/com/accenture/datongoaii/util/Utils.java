@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.DTOAActivity;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
@@ -521,4 +523,41 @@ public class Utils {
     public static String decodeUTF8(String str) throws UnsupportedEncodingException {
         return URLDecoder.decode(str, "UTF-8");
     }
+
+    public static void startActivity(Activity activity, Class<?> cls) {
+        startActivity(activity, cls, null, null);
+    }
+
+    public static void startActivity(Activity activity, Class<?> cls, String key, Object value) {
+        Context appContext = activity.getApplicationContext();
+        Intent intent = new Intent(appContext, cls);
+        initIntent(intent, key, value);
+        appContext.startActivity(intent);
+        activity.overridePendingTransition(R.anim.slide_in_right_1, R.anim.slide_out_left_1);
+    }
+
+    public static void startActivityForResult(Activity activity, Class<?> cls, int requestCode) {
+        startActivityForResult(activity, cls, null, null, requestCode);
+    }
+
+    public static void startActivityForResult(Activity activity, Class<?> cls, String key, Object value, int requestCode) {
+        Intent intent = new Intent(activity, cls);
+        initIntent(intent, key, value);
+        activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(R.anim.slide_in_right_1, R.anim.slide_out_left_1);
+    }
+
+    private static void initIntent(Intent intent, String key, Object value) {
+        if (value != null && key != null) {
+            if (value instanceof String) {
+                intent.putExtra(key, (String) value);
+            } else if (value instanceof Integer) {
+                intent.putExtra(key, ((Integer) value).intValue());
+            } else if (value instanceof Boolean) {
+                intent.putExtra(key, ((Boolean) value).booleanValue());
+            }
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
+
 }

@@ -43,8 +43,8 @@ public class DTOAActivity extends Activity {
 
     @Override
     public void finish() {
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         super.finish();
+        overridePendingTransition(R.anim.slide_in_left_1, R.anim.slide_out_right_1);
     }
 
     private long previousBackKeyPressTime;
