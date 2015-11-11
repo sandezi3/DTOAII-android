@@ -9,6 +9,7 @@ import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
+import com.accenture.datongoaii.vendor.HX.HXController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,6 +110,17 @@ public class DTOARequest {
         String url = Config.SERVER_HOST + Config.URL_MODIFY_USER_INFO.replace("{userId}", String.valueOf(userId));
         mListener = listener;
         new HttpConnection().put(url, object, defaultListener);
+    }
+
+    public void startLogout() {
+        String url = Config.SERVER_HOST + Config.URL_LOGOUT;
+        new HttpConnection().get(url, null);
+        try {
+            HXController.getInstance().startLogout();
+        } catch (Exception e) {
+            // do nothing
+        }
+        ((DTOAIIApplication) mAppContext).restartApplication();
     }
 
     /**

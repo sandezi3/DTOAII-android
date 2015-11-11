@@ -57,7 +57,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MyInfoActivity extends Activity implements OnItemClickListener, OnClickListener {
+public class MyInfoActivity extends DTOAActivity implements OnItemClickListener, OnClickListener {
     private static final String TAG = "MyInfoActivity";
 
     private Context context;
@@ -155,6 +155,7 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_my_info);
+        initTitleBar(R.string.nav_title_my_profile);
 
         getUserInfo();
 
@@ -162,13 +163,6 @@ public class MyInfoActivity extends Activity implements OnItemClickListener, OnC
         adapter = new MenuAdapter();
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(this);
-        View btnBack = this.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((Activity) v.getContext()).finish();
-            }
-        });
 
         View btnLogout = this.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new OnClickListener() {

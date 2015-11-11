@@ -31,7 +31,7 @@ public class App implements Serializable {
             app.appName = json.getString("appName");
             app.desc = json.getString("desc");
             app.logo = json.getString("logo");
-            app.url = json.getString("url");
+            app.url = json.getString("homeUrl");
             app.createUserId = json.getInt("createUserId");
             app.createTime = "";
         } catch (JSONException e) {

@@ -383,10 +383,6 @@ public class ContactFragment extends Fragment implements
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_ID, ((Org) o).orgId);
             intent.putExtra(Constants.BUNDLE_TAG_GET_DEPT_DEPT_NAME, ((Org) o).orgName);
             startActivity(intent);
-        } else {
-            // 个人信息
-            // TODO
-
         }
     }
 

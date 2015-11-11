@@ -17,7 +17,7 @@ public class Org extends FirstPinYin implements Serializable {
     public String orgName;
     public String logo;
     public Integer createUserId;
-    public Integer createTime;
+    public String createTime;
 
     public static List<Org> listFromJSON(JSONObject json) {
         try {
@@ -50,7 +50,7 @@ public class Org extends FirstPinYin implements Serializable {
                 o.logo = json.getString("logo");
                 o.mFirstPinYin = "#";
                 o.createUserId = json.getInt("createUserId");
-                o.createTime = json.getInt("createTime");
+                o.createTime = json.getString("createTime");
                 return o;
             }
         } catch (JSONException e) {

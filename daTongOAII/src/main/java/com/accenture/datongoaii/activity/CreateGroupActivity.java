@@ -33,7 +33,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateGroupActivity extends Activity implements OnClickListener {
+public class CreateGroupActivity extends DTOAActivity implements OnClickListener {
     private static final String TAG = "CreateGroupActivity";
     private Context context;
     private EditText etName;
@@ -68,16 +68,15 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_create_group);
+        initTitleBar(R.string.nav_title_create_group);
+        mFragTitleBar.showTitleCustomButton(R.string.nav_btn_create);
 
         etName = (EditText) findViewById(R.id.etName);
         View btnSelect = findViewById(R.id.layoutSelect);
-        View btnCreate = findViewById(R.id.btnCreate);
-        View btnBack = findViewById(R.id.btnBack);
         GridView gvUsers = (GridView) findViewById(R.id.gvUsers);
 
-        btnCreate.setOnClickListener(this);
         btnSelect.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
+        findViewById(R.id.btnCustom).setOnClickListener(this);
 
         selectedUsers = new ArrayList<Contact>();
         initMeButton();
@@ -127,7 +126,7 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
                 startActivityForResult(intent, Constants.REQUEST_CODE_CREATE_GROUP);
             }
             break;
-            case R.id.btnCreate:
+            case R.id.btnCustom:
                 if (isDataValid()) {
                     progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
                     DTOARequest.startCreateGroup(getGroupName(), Account.getInstance().getImId(), "", selectedUsers, new HttpConnection.CallbackListener() {
@@ -150,9 +149,6 @@ public class CreateGroupActivity extends Activity implements OnClickListener {
                         }
                     });
                 }
-                break;
-            case R.id.btnBack:
-                ((Activity) context).finish();
                 break;
         }
     }

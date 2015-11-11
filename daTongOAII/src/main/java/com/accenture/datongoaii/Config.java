@@ -113,6 +113,7 @@ public class Config {
     public static final String ERROR_IM = "聊天模块出错，您可能无法正常使用聊天功能";
     public static final String ERROR_CAMERA_INIT_FAIL = "摄像头访问失败";
     public static final String ERROR_SCAN_BARCODE = "请扫描本应用提供的二维码";
+    public static final String ERROR_TOKEN_EXPIRED = "您的登录已超时，请重新登录";
 
     public static final String PROGRESS_LOGIN = "正在登录...";
     public static final String PROGRESS_LOGOUT = "正在退出登录...";
