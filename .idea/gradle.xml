@@ -11,7 +11,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/daTongOAII" />
+            <option value="$PROJECT_DIR$/example" />
             <option value="$PROJECT_DIR$/pullToRefreshLibrary" />
+            <option value="$PROJECT_DIR$/roundedimageview" />
           </set>
         </option>
       </GradleProjectSettings>

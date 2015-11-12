@@ -1,7 +1,5 @@
 package com.accenture.datongoaii.model;
 
-import com.accenture.datongoaii.util.Utils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +13,6 @@ public class Account {
     private String sex = null;
     private String birth = null;
     private String cell = null;
-
 
     private String imId = null;
 
@@ -119,6 +116,22 @@ public class Account {
             this.setUserId(json.getInt("userId"));
             this.setUsername(json.getString("username"));
             this.setToken(json.getString("token"));
+            this.setHead(json.getString("photo"));
+            this.setSex(json.getString("sex"));
+            this.setBirth(json.getString("birth"));
+            this.setCell(json.getString("cell"));
+            if (json.has("imId") && json.getString("imId") != null) {
+                this.setImId(json.getString("imId"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateFromJson(JSONObject json) {
+        try {
+            this.setUserId(json.getInt("userId"));
+            this.setUsername(json.getString("username"));
             this.setHead(json.getString("photo"));
             this.setSex(json.getString("sex"));
             this.setBirth(json.getString("birth"));

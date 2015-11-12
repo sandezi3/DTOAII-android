@@ -1,6 +1,5 @@
 package com.accenture.datongoaii.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -46,6 +45,7 @@ import com.accenture.datongoaii.vendor.HX.HXController;
 import com.accenture.datongoaii.vendor.HX.Utils.CommonUtils;
 import com.accenture.datongoaii.vendor.qrscan.MyQRCodeActivity;
 import com.accenture.datongoaii.widget.PopupDialog;
+import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -87,7 +87,7 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
             switch (msg.what) {
                 case Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG:
                     MyInfoActivity a = mActivity.get();
-                    if (a.progressDialog.isShowing()) {
+                    if (a.progressDialog != null && a.progressDialog.isShowing()) {
                         a.progressDialog.dismiss();
                         a.progressDialog = null;
                     }
@@ -122,7 +122,7 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
             }
             TextView tvLabel = (TextView) view.findViewById(R.id.tvLabel);
             TextView tvValue = (TextView) view.findViewById(R.id.tvValue);
-            ImageView ivValue = (ImageView) view.findViewById(R.id.ivValue);
+            RoundedImageView ivValue = (RoundedImageView) view.findViewById(R.id.ivValue);
             String[] array = (String[]) getItem(position);
             tvLabel.setText(array[0]);
             try {
@@ -138,6 +138,9 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
                     params.width = (int) (80 * dm.density);
                     params.height = (int) (80 * dm.density);
                     ivValue.setLayoutParams(params);
+                    ivValue.setPadding(10, 10, 10, 10);
+                    ivValue.setCornerRadius(R.dimen.radius_menu);
+                    ivValue.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     imageLoader.displayImage(array[1], ivValue, Config.getDisplayOptions());
                 } else {
                     ivValue.setVisibility(View.GONE);
@@ -459,19 +462,50 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
     /**
      * 网络请求
      */
-    private void uploadPicture(String path) {
+    private void uploadPicture(final String path) {
         progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_SUBMIT);
         DTOARequest.getInstance(context).uploadImage(path, new DTOARequest.RequestListener() {
             @Override
             public void callback(String result) {
                 handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
-                Utils.toast(context, Config.SUCCESS_UPDATE);
                 try {
                     String url = new JSONObject(result).getJSONObject("data").getString("url");
-                    Account.getInstance().setHead(url);
-                    refresh();
+                    startModifyHeadConnect(url);
                 } catch (JSONException e) {
                     Logger.e(TAG, "uploadPicture " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void startModifyHeadConnect(final String url) {
+        try {
+            progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
+            DTOARequest.getInstance(context).modifyHead(Account.getInstance().getUserId(), url, new DTOARequest.RequestListener() {
+                @Override
+                public void callback(String result) {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                    startGetAccountById(Account.getInstance().getUserId());
+                    Utils.toast(context, Config.SUCCESS_UPDATE);
+                }
+            });
+        } catch (JSONException e) {
+            Logger.e(TAG, "startModifyHeadConnect: " + e.getMessage());
+            handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+        }
+    }
+
+    private void startGetAccountById(Integer userId) {
+        progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_REFRESH);
+        DTOARequest.getInstance(context).startGetUsersByIds(new Integer[]{userId}, new DTOARequest.RequestListener() {
+            @Override
+            public void callback(String result) {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+                try {
+                    Account.getInstance().updateFromJson(new JSONObject(result).getJSONArray("data").getJSONObject(0));
+                    refresh();
+                } catch (JSONException e) {
+                    Logger.e(TAG, "startGetAccountById: " + e.getMessage());
                 }
             }
         });
@@ -547,6 +581,7 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
                                         Utils.toast(context, Config.ERROR_IM);
                                     }
                                     Utils.clearUserInfo(context);
+                                    finish();
                                     ((DTOAIIApplication) getApplicationContext()).restartApplication();
                                 } else {
                                     Utils.toast(context, cr.statusMsg);

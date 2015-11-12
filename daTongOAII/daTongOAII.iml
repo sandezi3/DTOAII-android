@@ -96,6 +96,7 @@
     <orderEntry type="library" exported="" name="ZXingCore-2.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="GetuiSDK2.6.0.0" level="project" />
+    <orderEntry type="module" module-name="roundedimageview" exported="" />
     <orderEntry type="module" module-name="pullToRefreshLibrary" exported="" />
   </component>
 </module>

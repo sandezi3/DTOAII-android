@@ -77,6 +77,17 @@ public class Utils {
         return result.substring(0, result.length() - 1);
     }
 
+    public static String combineStrings(Object[] array, String sep) {
+        String result = "";
+        if (array == null || 0 == array.length) {
+            return result;
+        }
+        for (Object obj : array) {
+            result += obj.toString() + sep;
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
     @SuppressLint("SimpleDateFormat")
     public static String getPeroid(String time, long now) throws ParseException {
         Calendar c = Calendar.getInstance();

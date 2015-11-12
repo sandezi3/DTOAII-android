@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -47,10 +49,14 @@ public class MyQRCodeActivity extends Activity {
         setContentView(R.layout.activity_my_qrcode);
 
         ivQRCode = (ImageView) findViewById(R.id.ivQRCode);
-        ImageView ivHead = (ImageView) findViewById(R.id.ivHead);
+        RoundedImageView ivHead = (RoundedImageView) findViewById(R.id.ivRoundHead);
         TextView tvName = (TextView) findViewById(R.id.tvName);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
+        if (!URLUtil.isHttpUrl(Account.getInstance().getHead())) {
+            ivHead.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            ivHead.setCornerRadius(0.0f);
+        }
         imageLoader.displayImage(Account.getInstance().getHead(), ivHead, Config.getDisplayOptions());
         tvName.setText(Account.getInstance().getUsername());
 
@@ -116,17 +122,17 @@ public class MyQRCodeActivity extends Activity {
             }
         });
 
-        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
-        int quality = 100;
-        OutputStream stream;
-        try {
-            stream = new FileOutputStream(fileName);
-        } catch (FileNotFoundException e) {
-            Logger.e(TAG, "FileOutputStream " + e.getMessage());
-            return;
-        }
-
-        bmp.compress(format, quality, stream);
+//        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
+//        int quality = 100;
+//        OutputStream stream;
+//        try {
+//            stream = new FileOutputStream(fileName);
+//        } catch (FileNotFoundException e) {
+//            Logger.e(TAG, "FileOutputStream " + e.getMessage());
+//            return;
+//        }
+//
+//        bmp.compress(format, quality, stream);
     }
 
 }

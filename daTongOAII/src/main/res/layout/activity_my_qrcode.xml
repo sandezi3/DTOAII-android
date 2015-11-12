@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/gray_3">
@@ -49,21 +50,23 @@
     </RelativeLayout>
 
 
-    <ImageView
-        android:id="@id/ivHead"
+    <com.makeramen.RoundedImageView
+        android:id="@+id/ivRoundHead"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@id/layoutTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/bird" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/bird"
+        app:riv_corner_radius="30dp" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivHead"
+        android:layout_below="@id/ivRoundHead"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:textSize="20sp" />

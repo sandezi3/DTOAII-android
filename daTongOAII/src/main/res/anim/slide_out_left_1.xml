@@ -6,9 +6,9 @@
         android:fromXDelta="0"
         android:toXDelta="-100%p" />
 
-    <alpha
-        android:duration="@integer/animate_duration"
-        android:fromAlpha="1.0"
-        android:toAlpha="0.3" />
+    <!--<alpha-->
+        <!--android:duration="@integer/animate_duration"-->
+        <!--android:fromAlpha="1.0"-->
+        <!--android:toAlpha="0.3" />-->
 
 </set>

@@ -3,11 +3,17 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.Interpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +29,7 @@ import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
+import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -43,6 +50,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     private Activity activity;
     private EditText editPhoneNumber;
     private EditText editPassword;
+    private RoundedImageView ivHead;
+    private Animation anim;
 
     private ProgressDialog progressDialog;
 
@@ -99,17 +108,23 @@ public class LoginActivity extends Activity implements OnClickListener {
         TextView tVRegister = (TextView) findViewById(R.id.tVRegister);
         TextView tVForgetPswd = (TextView) findViewById(R.id.tVForgetPswd);
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
-        ImageView ivHead = (ImageView) findViewById(R.id.ivHead);
+        ivHead = (RoundedImageView) findViewById(R.id.ivRoundHead);
 
         tVRegister.setOnClickListener(this);
         tVForgetPswd.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
+        ImageLoader imageLoader = ImageLoader.getInstance();
         HashMap<String, String> map = Utils.getUserInfo(this);
-        if (map != null && map.size() > 0) {
-            ImageLoader imageLoader = ImageLoader.getInstance();
+        if (map != null && map.size() > 0 && map.get("token") != null && map.get("token").length() > 0) {
+            ivHead.setCornerRadius(R.dimen.radius);
+            ivHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageLoader.displayImage(map.get("head"), ivHead, Config.getDisplayOptions());
             editPhoneNumber.setText(map.get("cell"));
+        } else {
+            ivHead.setCornerRadius(0.0f);
+            ivHead.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageLoader.displayImage("", ivHead, Config.getDisplayOptions());
         }
     }
 
@@ -120,6 +135,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             Utils.closeSoftKeyboard(this, null);
             String token = Utils.getUserInfo(this).get("token");
             if (token != null && token.length() > 0) {
+                hideContent();
                 startLoginConnect(token);
             }
         }
@@ -141,6 +157,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             case R.id.btnLogin:
                 if (isDataValid()) {
                     Utils.closeSoftKeyboard(this, v);
+                    hideContent();
                     startLoginConnect(editPhoneNumber.getEditableText().toString()
                             .trim(), editPassword.getEditableText().toString()
                             .trim());
@@ -162,6 +179,38 @@ public class LoginActivity extends Activity implements OnClickListener {
                 && resultCode == RESULT_OK) {
             finishAndReturn();
         }
+    }
+
+    private void hideContent() {
+        findViewById(R.id.rrContent).setVisibility(View.INVISIBLE);
+        findViewById(R.id.btnLogin).setVisibility(View.INVISIBLE);
+        findViewById(R.id.tVForgetPswd).setVisibility(View.INVISIBLE);
+        findViewById(R.id.tVRegister).setVisibility(View.INVISIBLE);
+
+        anim = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, -1.0f);
+        anim.setDuration(2000);
+        anim.setFillAfter(true);
+        ivHead.startAnimation(anim);
+    }
+
+    private void showContent() {
+        findViewById(R.id.rrContent).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnLogin).setVisibility(View.VISIBLE);
+        findViewById(R.id.tVForgetPswd).setVisibility(View.VISIBLE);
+        findViewById(R.id.tVRegister).setVisibility(View.VISIBLE);
+
+        anim.cancel();
+//        float Y = ivHead.getY();
+//        AnimationSet set = new AnimationSet(true);
+//        Animation animation = new TranslateAnimation(ivHead.getX(), ivHead.getX(), Y, Y - 120);
+//        Animation animation1 = new ScaleAnimation(2.0f, 1.0f, 2.0f, 1.0f,
+//                Animation.RELATIVE_TO_SELF, 2.0f, Animation.RELATIVE_TO_SELF, 2.0f);
+//        set.addAnimation(animation);
+//        set.addAnimation(animation1);
+//        set.setDuration(300);
+//        set.setFillAfter(true);
+//        ivHead.startAnimation(set);
     }
 
     private boolean isDataValid() {
@@ -212,6 +261,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             resolveLoginSuccess(result);
+                            return;
                         } else {
                             Logger.i(TAG, "Failed!");
                             Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
@@ -224,6 +274,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     Logger.i(TAG, "Network Error!");
                     Utils.toast(activity, Config.ERROR_NETWORK);
                 }
+                showContent();
             }
         });
     }
@@ -251,6 +302,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     try {
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             resolveLoginSuccess(result);
+                            return;
                         } else {
                             Logger.i(TAG, "Failed!");
                             Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
@@ -263,6 +315,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     Logger.i(TAG, "Network Error!");
                     Utils.toast(activity, Config.ERROR_NETWORK);
                 }
+                showContent();
             }
         });
     }

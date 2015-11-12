@@ -51,6 +51,7 @@ public class HttpConnection implements Runnable {
     private static final int PUT = 2;
     private static final int DELETE = 3;
     //    private static final int BITMAP = 4;
+    private static final int POST_FILE = 4;
     private static final int PUT_IMAGE = 5;
 
     private String url;
@@ -58,10 +59,6 @@ public class HttpConnection implements Runnable {
     private JSONObject data;
     private CallbackListener listener;
     private String path;
-
-    // public HttpConnection() {
-    // this(new Handler());
-    // }
 
     public void create(int method, String url, JSONObject data, String path, CallbackListener listener) {
         this.method = method;
@@ -96,6 +93,10 @@ public class HttpConnection implements Runnable {
 //        create(BITMAP, url, null, null, listener);
 //    }
 //
+    public void uploadFile(String url, String path, CallbackListener listener) {
+        create(POST_FILE, url, null, path, listener);
+    }
+
     public void uploadImage(String url, String path, CallbackListener listener) {
         create(PUT_IMAGE, url, null, path, listener);
     }
@@ -130,9 +131,11 @@ public class HttpConnection implements Runnable {
         }
     };
 
-    private void setHeader(HttpRequestBase access) {
+    private void setHeader(HttpRequestBase access, boolean isContentJson) {
         access.setHeader("Accept", "application/json");
-        access.setHeader("Content-type", "application/json");
+        if (isContentJson) {
+            access.setHeader("Content-type", "application/json");
+        }
         access.setHeader("Accept-Encoding", "gzip"); // only
         String token = Account.getInstance().getToken();
         if (token != null && token.length() > 0) {
@@ -152,7 +155,7 @@ public class HttpConnection implements Runnable {
                 case GET: {
                     HttpGet httpGetRequest = new HttpGet(url);
 
-                    setHeader(httpGetRequest);
+                    setHeader(httpGetRequest, true);
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpGetRequest);
@@ -193,7 +196,7 @@ public class HttpConnection implements Runnable {
                     }
                     // Set HTTP parameters
                     httpPostRequest.setEntity(se);
-                    setHeader(httpPostRequest);
+                    setHeader(httpPostRequest,true);
 
                     // set
                     // this
@@ -237,6 +240,72 @@ public class HttpConnection implements Runnable {
                     }
                     break;
                 }
+                case POST_FILE: {
+                    HttpPost httpPostRequest = new HttpPost(url);
+                    String tempFilePath = Environment.getExternalStorageDirectory().getPath() + "/TEMP";
+                    String fileName = tempFilePath + "/temp" + System.currentTimeMillis() + ".jpg";
+                    try {
+                        File f = new File(tempFilePath);
+                        f.mkdirs();
+                        f = new File(fileName);
+                        if (f.exists()) {
+                            f.delete();
+                        }
+                        if (f.createNewFile()) {
+                            FileOutputStream fos = new FileOutputStream(f);
+                            int degree = Utils.readPictureDegree(path);
+                            BitmapFactory.Options opts=new BitmapFactory.Options();
+                            opts.inSampleSize=2;
+                            Bitmap bitmap = BitmapFactory.decodeFile(path, opts);
+                            bitmap = Utils.rotateImageView(degree, bitmap);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, fos);
+                            fos.close();
+                        } else {
+                            Logger.i("CreateFile", "CreateFile failed!");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    File f = new File(fileName);
+                    FileInputStream fis = new FileInputStream(f);
+                    InputStreamEntity ise = new InputStreamEntity(fis, f.length());
+
+                    // Set HTTP parameters
+                    setHeader(httpPostRequest,false);
+                    httpPostRequest.setHeader("Content-Type", "image/jpeg");
+                    httpPostRequest.setEntity(ise);
+                    ise.setContentType("binary/octet-stream");
+
+                    long t = System.currentTimeMillis();
+                    httpResponse = httpClient.execute(httpPostRequest);
+                    Logger.i(TAG, "HTTPResponse received in [" + (System.currentTimeMillis() - t) + "ms]");
+
+                    if (isHttpSuccessExecuted(httpResponse)) {
+                        // Get hold of the response entity (-> the data):
+                        HttpEntity entity = httpResponse.getEntity();
+
+                        if (entity != null) {
+                            // Read the content stream
+                            InputStream instream = entity.getContent();
+                            Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
+                            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+                                instream = new GZIPInputStream(instream);
+                            }
+
+                            // convert content stream to a String
+                            String resultString = convertStreamToString(instream);
+                            Logger.e("JSON Upload Image", resultString);
+                            instream.close();
+                            this.sendMessage(resultString);
+                        } else {
+                            this.sendMessage("fail");
+                        }
+                    } else {
+                        Logger.e("PUT_IMAGE.Err", "Please contact interface provider!");
+                    }
+                    break;
+                }
                 case PUT: {
                     HttpPut httpPutRquest = new HttpPut(url);
                     StringEntity se = null;
@@ -246,7 +315,7 @@ public class HttpConnection implements Runnable {
                     }
                     // Set HTTP parameters
                     httpPutRquest.setEntity(se);
-                    setHeader(httpPutRquest);
+                    setHeader(httpPutRquest, true);
 
                     // set
                     // this
@@ -322,10 +391,10 @@ public class HttpConnection implements Runnable {
                     InputStreamEntity ise = new InputStreamEntity(fis, f.length());
 
                     // Set HTTP parameters
-                    setHeader(httpPutRequest);
+                    setHeader(httpPutRequest,false);
                     httpPutRequest.setHeader("Content-Type", "image/jpeg");
                     httpPutRequest.setEntity(ise);
-                    ise.setContentType("binary/octet-stream");
+//                    ise.setContentType("binary/octet-stream");
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpPutRequest);
@@ -358,7 +427,7 @@ public class HttpConnection implements Runnable {
                 }
                 case DELETE: {
                     HttpDelete httpDeleteRequest = new HttpDelete(url);
-                    setHeader(httpDeleteRequest);
+                    setHeader(httpDeleteRequest, true);
 
                     long t = System.currentTimeMillis();
                     httpResponse = httpClient.execute(httpDeleteRequest);

@@ -83,9 +83,17 @@ public class DTOARequest {
      * Account
      */
     public void uploadImage(String path, RequestListener listener) {
-        String url = Config.SERVER_HOST + Config.URL_UPLOAD_HEAD;
+//        String url = Config.SERVER_HOST + Config.URL_UPLOAD_HEAD;
+        String url = Config.SERVER_HOST.replace("/api", "") + Config.URL_UPLOAD_HEAD1;
         mListener = listener;
-        new HttpConnection().uploadImage(url, path, defaultListener);
+//        new HttpConnection().uploadImage(url, path, defaultListener);
+        new HttpConnection().uploadFile(url, path, defaultListener);
+    }
+
+    public void modifyHead(Integer userId, String url, RequestListener listener) throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("photo", url);
+        modifyUserInfo(userId, object, listener);
     }
 
     public void modifyUsername(Integer userId, String newName, RequestListener listener) throws JSONException {
@@ -126,22 +134,14 @@ public class DTOARequest {
     /**
      * 用户
      */
-    public static void startGetUserByImId(String imId, HttpConnection.CallbackListener listener) {
-        String url = Config.SERVER_HOST + Config.URL_GET_USER_BY_IMID.replace("{imId}", imId);
+    public static void startGetUsersByImIds(String[] ids, HttpConnection.CallbackListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IMIDS.replace("{imId}", Utils.combineStrings(ids, ","));
         new HttpConnection().get(url, listener);
     }
 
     public static void startGetUsersByImIds(List<String> ids, HttpConnection.CallbackListener listener) {
-        String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IMIDS;
-        JSONObject object = new JSONObject();
-        JSONArray array = new JSONArray(ids);
-        try {
-            object.put("imIdList", array);
-        } catch (JSONException e) {
-            Logger.e(TAG, e.getMessage());
-            return;
-        }
-        new HttpConnection().post(url, object, listener);
+        String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IMIDS.replace("{imId}", Utils.combineStrings(ids, ","));
+        new HttpConnection().get(url, listener);
     }
 
     public void startGetContactsStatusConnect(String[] cells, RequestListener listener) {
@@ -158,6 +158,12 @@ public class DTOARequest {
             return;
         }
         new HttpConnection().post(url, obj, defaultListener);
+    }
+
+    public void startGetUsersByIds(Integer[] ids, RequestListener listener) {
+        mListener = listener;
+        String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IDS.replace("{userId}", Utils.combineStrings(ids, ","));
+        new HttpConnection().get(url, defaultListener);
     }
 
     /**

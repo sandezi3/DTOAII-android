@@ -1,2 +1,2 @@
-include ':pullToRefreshLibrary'
+include ':pullToRefreshLibrary', ':roundedimageview', ':example'
 include ':daTongOAII'

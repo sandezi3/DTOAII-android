@@ -8,7 +8,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://192.168.1.104:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.1.102:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
@@ -19,6 +19,7 @@ public class Config {
     public static final String URL_REGISTER = "/users";
     public static final String URL_REQUIRE_VERIFY_CODE = "/captcha/";
     public static final String URL_UPLOAD_HEAD = "/user/photo";
+    public static final String URL_UPLOAD_HEAD1 = "/resources";
     public static final String URL_MODIFY_USER_INFO = "/user/{userId}";
     public static final String URL_VERIFICATION = "/captcha/verification";
     public static final String URL_CHANGE_PASSWORD = "/user/password";
@@ -40,8 +41,8 @@ public class Config {
     public static final String URL_DELETE_USER = "/group/{groupId}/user/{userId}";
     public static final String URL_GET_USER_PARENT = "/user/{userId}/groups?rootGroupId={rootGroupId}";
     public static final String URL_INVITE_FRIEND = "/user/invited_friends/{cell}";
-    public static final String URL_GET_USER_BY_IMID = "/user/{imId}";
-    public static final String URL_GET_USERS_BY_IMIDS = "/users/search";
+    public static final String URL_GET_USERS_BY_IDS = "/users?userIds={userId}";
+    public static final String URL_GET_USERS_BY_IMIDS = "/users?imIds={imId}";
     public static final String URL_CREATE_GROUP = "/chatgroups";
     public static final String URL_GET_GROUPS = "/member/{imId}/joined_chatgroups";
     public static final String URL_GET_GROUP = "/chatgroup/{chatGroupId}";
@@ -121,6 +122,7 @@ public class Config {
     public static final String PROGRESS_Q_QUESTION = "正在获取安全问题...";
     public static final String PROGRESS_SEND = "正在发送...";
     public static final String PROGRESS_GET = "正在获取...";
+    public static final String PROGRESS_REFRESH = "正在刷新...";
     public static final String PROGRESS_SUBMIT = "正在提交...";
     public static final String PROGRESS_QUIT = "正在退出...";
     public static final String PROGRESS_DOWNLOADING_PICTURE = "正在下载图片...";

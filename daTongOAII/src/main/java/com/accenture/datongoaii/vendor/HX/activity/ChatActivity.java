@@ -654,12 +654,12 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             if (contact != null) {
                 syncAdapterWithContact(contact);
             } else {
-                DTOARequest.startGetUserByImId(toId, new HttpConnection.CallbackListener() {
+                DTOARequest.startGetUsersByImIds(new String[] {toId}, new HttpConnection.CallbackListener() {
                     @Override
                     public void callBack(String result) {
                         if (!result.equals("fail")) {
                             try {
-                                Contact c = Contact.fromJSON(new JSONObject(result).getJSONObject("data"));
+                                Contact c = Contact.fromJSON(new JSONObject(result).getJSONArray("data").getJSONObject(0));
                                 assert c != null;
                                 ContactDao dao = new ContactDao(context);
                                 if (dao.isExisted(c)) {
