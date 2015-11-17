@@ -293,29 +293,24 @@ public class LoginActivity extends Activity implements OnClickListener {
             @Override
             public void callBack(final String result) {
                 handler.sendEmptyMessage(0);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!result.equals("fail")) {
-                            try {
-                                if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                                    resolveLoginSuccess(result);
-                                    return;
-                                } else {
-                                    Logger.i(TAG, "Failed!");
-                                    Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
-                                }
-                            } catch (JSONException e) {
-                                Logger.e(TAG, "Exception!");
-                                Utils.toast(activity, Config.ERROR_INTERFACE);
-                            }
+                if (!result.equals("fail")) {
+                    try {
+                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+                            resolveLoginSuccess(result);
+                            return;
                         } else {
-                            Logger.i(TAG, "Network Error!");
-                            Utils.toast(activity, Config.ERROR_NETWORK);
+                            Logger.i(TAG, "Failed!");
+                            Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
                         }
-                        showContent();
+                    } catch (JSONException e) {
+                        Logger.e(TAG, "Exception!");
+                        Utils.toast(activity, Config.ERROR_INTERFACE);
                     }
-                }).start();
+                } else {
+                    Logger.i(TAG, "Network Error!");
+                    Utils.toast(activity, Config.ERROR_NETWORK);
+                }
+                showContent();
             }
         });
     }

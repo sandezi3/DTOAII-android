@@ -45,6 +45,7 @@ public class AppActivity extends Activity {
         });
 
 
+//        webView.loadUrl("http://120.24.73.78:8086/oaf/template/gwgl.html?caseKey=leaveCase&roleId=11", HttpConnection.getHeaderMap());
         webView.loadUrl(url, HttpConnection.getHeaderMap());
     }
 }

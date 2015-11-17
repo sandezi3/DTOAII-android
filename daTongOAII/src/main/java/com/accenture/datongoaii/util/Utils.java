@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -30,6 +31,7 @@ import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.App;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
+import com.accenture.datongoaii.network.HttpConnection;
 import com.easemob.util.TimeInfo;
 
 import java.io.IOException;
@@ -462,7 +464,7 @@ public class Utils {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setAllowContentAccess(true);
         settings.setAllowFileAccess(true);
-//        settings.setAppCacheEnabled(true);
+        settings.setAppCacheEnabled(false);
         settings.setDatabaseEnabled(true);
         settings.setSaveFormData(true);
         settings.setDomStorageEnabled(true);
@@ -473,11 +475,21 @@ public class Utils {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
-                view.loadUrl(url);
+                view.loadUrl(url, HttpConnection.getHeaderMap());
                 return true;
             }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+            }
         });
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                return super.onConsoleMessage(consoleMessage);
+            }
+        });
     }
 
     /**

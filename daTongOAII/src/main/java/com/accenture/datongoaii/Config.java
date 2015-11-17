@@ -8,7 +8,7 @@ public class Config {
     public static final boolean DEBUG_AUTO_LOGIN = true;
 
     // Host & Url
-//    public static final String SERVER_HOST = "http://192.168.1.102:8888/oaf/api";
+//    public static final String SERVER_HOST = "http://192.168.1.104:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://10.202.211.233:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
