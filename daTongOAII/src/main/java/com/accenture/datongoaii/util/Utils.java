@@ -24,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.AppActivity;
 import com.accenture.datongoaii.activity.DTOAActivity;
 import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.App;
 import com.accenture.datongoaii.model.Contact;
 import com.accenture.datongoaii.model.Dept;
 import com.easemob.util.TimeInfo;
@@ -33,6 +35,7 @@ import com.easemob.util.TimeInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -566,9 +569,12 @@ public class Utils {
                 intent.putExtra(key, ((Integer) value).intValue());
             } else if (value instanceof Boolean) {
                 intent.putExtra(key, ((Boolean) value).booleanValue());
+            } else if (value instanceof App) {
+                intent.putExtra(key, (Serializable) value);
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
+
 
 }

@@ -181,6 +181,11 @@ public class TaskFragment extends Fragment implements AdapterView.OnItemClickLis
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void callbackError() {
+
+            }
         });
     }
 

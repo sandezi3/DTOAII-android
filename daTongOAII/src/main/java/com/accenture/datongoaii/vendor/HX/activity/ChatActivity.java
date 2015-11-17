@@ -654,7 +654,7 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
             if (contact != null) {
                 syncAdapterWithContact(contact);
             } else {
-                DTOARequest.startGetUsersByImIds(new String[] {toId}, new HttpConnection.CallbackListener() {
+                DTOARequest.requestGetUsersByImIds(new String[]{toId}, new HttpConnection.CallbackListener() {
                     @Override
                     public void callBack(String result) {
                         if (!result.equals("fail")) {

@@ -56,6 +56,7 @@ public class Constants {
     public static final int REQUEST_CODE_LOCAL = 1019;
     public static final int REQUEST_CODE_DELETE_FRIEND = 1020;
     public static final int REQUEST_CODE_SCAN_QR_CODE = 1021;
+    public static final int REQUEST_CODE_START_APP = 1021;
 
     // Function Tag
     public static final int FUNCTION_TAG_REGISTER = 0;

@@ -71,6 +71,7 @@
         android:id="@+id/lvTodo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:showDividers="none"
         android:layout_below="@id/etSearch" />
 
 </RelativeLayout>

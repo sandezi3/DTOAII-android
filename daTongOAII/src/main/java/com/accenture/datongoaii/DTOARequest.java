@@ -2,7 +2,6 @@ package com.accenture.datongoaii;
 
 import android.content.Context;
 
-import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.model.Account;
 import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
@@ -15,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -25,12 +25,15 @@ public class DTOARequest {
     public static final String TAG = "DTOARequest";
     private static DTOARequest instance;
     private static HttpConnection.CallbackListener defaultListener;
-    private RequestListener mListener;
+    private WeakReference<RequestListener> mListener;
+    private RequestListener mStrongListener;
     private static Context mAppContext;
     private boolean mIsSilent;
 
     public interface RequestListener {
         void callback(String result);
+
+        void callbackError();
     }
 
     private DTOARequest(Context appContext) {
@@ -38,6 +41,7 @@ public class DTOARequest {
         mAppContext = appContext;
         instance = this;
         mListener = null;
+        mStrongListener = null;
         mIsSilent = false;
         defaultListener = new HttpConnection.CallbackListener() {
             @Override
@@ -51,7 +55,14 @@ public class DTOARequest {
                 try {
                     CommonResponse cr = Intepreter.getCommonStatusFromJson(result);
                     if (cr.statusCode == 0) {
-                        mListener.callback(result);
+                        if (mListener != null && mListener.get() != null) {
+                            mListener.get().callback(result);
+                            return;
+                        } else if (mStrongListener != null) {
+                            mStrongListener.callback(result);
+                            mStrongListener = null;
+                            return;
+                        }
                     } else {
                         if (!mIsSilent) {
                             Utils.toast(mAppContext, cr.statusMsg);
@@ -62,6 +73,12 @@ public class DTOARequest {
                     if (!mIsSilent) {
                         Utils.toast(mAppContext, Config.ERROR_INTERFACE);
                     }
+                }
+                if (mListener != null && mListener.get() != null) {
+                    mListener.get().callbackError();
+                } else if (mStrongListener != null) {
+                    mStrongListener.callbackError();
+                    mStrongListener = null;
                 }
             }
         };
@@ -82,33 +99,33 @@ public class DTOARequest {
     /**
      * Account
      */
-    public void uploadImage(String path, RequestListener listener) {
+    public void requestUploadImage(String path, RequestListener listener) {
 //        String url = Config.SERVER_HOST + Config.URL_UPLOAD_HEAD;
         String url = Config.SERVER_HOST.replace("/api", "") + Config.URL_UPLOAD_HEAD1;
-        mListener = listener;
-//        new HttpConnection().uploadImage(url, path, defaultListener);
+        mStrongListener = listener;
+//        new HttpConnection().requestUploadImage(url, path, defaultListener);
         new HttpConnection().uploadFile(url, path, defaultListener);
     }
 
-    public void modifyHead(Integer userId, String url, RequestListener listener) throws JSONException {
+    public void requestModifyHead(Integer userId, String url, RequestListener listener) throws JSONException {
         JSONObject object = new JSONObject();
         object.put("photo", url);
         modifyUserInfo(userId, object, listener);
     }
 
-    public void modifyUsername(Integer userId, String newName, RequestListener listener) throws JSONException {
+    public void requestModifyUsername(Integer userId, String newName, RequestListener listener) throws JSONException {
         JSONObject object = new JSONObject();
         object.put("username", newName);
         modifyUserInfo(userId, object, listener);
     }
 
-    public void modifyUserSex(Integer userId, String sex, RequestListener listener) throws JSONException {
+    public void requestModifyUserSex(Integer userId, String sex, RequestListener listener) throws JSONException {
         JSONObject object = new JSONObject();
         object.put("sex", sex);
         modifyUserInfo(userId, object, listener);
     }
 
-    public void modifyUserBirthday(Integer userId, String birthday, RequestListener listener) throws JSONException {
+    public void requestModifyUserBirthday(Integer userId, String birthday, RequestListener listener) throws JSONException {
         JSONObject object = new JSONObject();
         object.put("birth", birthday);
         modifyUserInfo(userId, object, listener);
@@ -116,11 +133,11 @@ public class DTOARequest {
 
     private void modifyUserInfo(Integer userId, JSONObject object, RequestListener listener) {
         String url = Config.SERVER_HOST + Config.URL_MODIFY_USER_INFO.replace("{userId}", String.valueOf(userId));
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         new HttpConnection().put(url, object, defaultListener);
     }
 
-    public void startLogout() {
+    public void requestLogout() {
         String url = Config.SERVER_HOST + Config.URL_LOGOUT;
         new HttpConnection().get(url, null);
         try {
@@ -134,24 +151,24 @@ public class DTOARequest {
     /**
      * 用户
      */
-    public static void startGetUsersByImIds(String[] ids, HttpConnection.CallbackListener listener) {
+    public static void requestGetUsersByImIds(String[] ids, HttpConnection.CallbackListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IMIDS.replace("{imId}", Utils.combineStrings(ids, ","));
         new HttpConnection().get(url, listener);
     }
 
-    public static void startGetUsersByImIds(List<String> ids, HttpConnection.CallbackListener listener) {
+    public static void requestGetUsersByImIds(List<String> ids, HttpConnection.CallbackListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IMIDS.replace("{imId}", Utils.combineStrings(ids, ","));
         new HttpConnection().get(url, listener);
     }
 
-    public void startGetContactsStatusConnect(String[] cells, RequestListener listener) {
-        mListener = listener;
+    public void requestGetContactsStatusConnect(String[] cells, RequestListener listener) {
+        mListener = new WeakReference<RequestListener>(listener);
         String url = Config.SERVER_HOST + Config.URL_GET_USER_STATUS;
         JSONObject obj = new JSONObject();
         try {
             JSONArray array = new JSONArray();
-            for (int i = 0; i < cells.length; i++) {
-                array.put(cells[i]);
+            for (String cell : cells) {
+                array.put(cell);
             }
             obj.put("cells", array);
         } catch (JSONException e) {
@@ -161,7 +178,7 @@ public class DTOARequest {
     }
 
     public void startGetUsersByIds(Integer[] ids, RequestListener listener) {
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         String url = Config.SERVER_HOST + Config.URL_GET_USERS_BY_IDS.replace("{userId}", Utils.combineStrings(ids, ","));
         new HttpConnection().get(url, defaultListener);
     }
@@ -176,7 +193,7 @@ public class DTOARequest {
 
     public void startInviteFriendConnect(String cell, RequestListener listener) {
         String url = Config.SERVER_HOST + Config.URL_INVITE_FRIEND.replace("{cell}", cell);
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         new HttpConnection().put(url, defaultListener);
     }
 
@@ -198,7 +215,7 @@ public class DTOARequest {
         } catch (JSONException e) {
             Utils.toast(mAppContext, Config.ERROR_APP);
         }
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         new HttpConnection().post(url, object, defaultListener);
     }
 
@@ -297,7 +314,7 @@ public class DTOARequest {
 
     public void startGetGroupsByIds(String ids, RequestListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_GROUPS_BY_IDS.replace("{chatGroupIds}", ids);
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         new HttpConnection().get(url, defaultListener);
     }
 
@@ -306,7 +323,56 @@ public class DTOARequest {
      */
     public void startGetAppsByUserId(Integer userId, RequestListener listener) {
         String url = Config.SERVER_HOST + Config.URL_GET_APPS_BY_USER_ID.replace("{userId}", String.valueOf(userId));
-        mListener = listener;
+        mListener = new WeakReference<RequestListener>(listener);
         new HttpConnection().get(url, defaultListener);
+    }
+
+    /**
+     * 待办
+     */
+    public void requestTodoList(Integer userId, RequestListener listener) {
+        String url = Config.SERVER_HOST + Config.URL_TODO_LIST.replace("{roleId}", userId.toString());
+        mStrongListener = listener;
+        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+            @Override
+            public void callBack(String result) {
+                if (result.equals("fail")) {
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_NETWORK);
+                        mStrongListener.callbackError();
+                        mStrongListener = null;
+                    }
+                    return;
+                }
+                if (result.equals(HttpConnection.ERROR_INTERFACE)) {
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_INTERFACE);
+                        mStrongListener.callbackError();
+                        mStrongListener = null;
+                    }
+                    return;
+                }
+                try {
+                    JSONObject object = new JSONObject(result);
+                    String status = object.getString("result");
+                    if (!status.equals("success")) {
+                        if (!mIsSilent) {
+                            Utils.toast(mAppContext, status);
+                            mStrongListener.callbackError();
+                            mStrongListener = null;
+                        }
+                        return;
+                    }
+                    mStrongListener.callback(result);
+                } catch (JSONException e) {
+                    Logger.e(TAG, e.getMessage());
+                    if (!mIsSilent) {
+                        Utils.toast(mAppContext, Config.ERROR_INTERFACE);
+                        mStrongListener.callbackError();
+                        mStrongListener = null;
+                    }
+                }
+            }
+        });
     }
 }

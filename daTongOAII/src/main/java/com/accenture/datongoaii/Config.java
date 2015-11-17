@@ -9,7 +9,7 @@ public class Config {
 
     // Host & Url
 //    public static final String SERVER_HOST = "http://192.168.1.102:8888/oaf/api";
-//    public static final String SERVER_HOST = "http://10.202.211.100:9999/oaf/api";
+//    public static final String SERVER_HOST = "http://10.202.211.233:8888/oaf/api";
 //    public static final String SERVER_HOST = "http://183.203.132.158:8086/oaf/api";
     //    public static final String SERVER_HOST = "http://10.202.210.178:8080/oaf/api";
     public static final String SERVER_HOST = "http://120.24.73.78:8086/oaf/api";
@@ -23,7 +23,7 @@ public class Config {
     public static final String URL_MODIFY_USER_INFO = "/user/{userId}";
     public static final String URL_VERIFICATION = "/captcha/verification";
     public static final String URL_CHANGE_PASSWORD = "/user/password";
-    public static final String URL_TODO_LIST = "/DTOAII/todo.json";
+    public static final String URL_TODO_LIST = "/workitems/{roleId}";
     public static final String URL_NOTI_LIST = "/DTOAII/noti.json";
     public static final String URL_ORG = "/groups/{userId}";
     public static final String URL_DEPT = "/group/{groupId}/subgroups";

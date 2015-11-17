@@ -32,11 +32,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists " + DeptDao.DEPT_TABLE + "("
-                + DeptDao.DEPT_TABLE_ID + " int," + DeptDao.DEPT_TABLE_VERSION
-                + " text," + DeptDao.DEPT_TABLE_NAME + " text,"
-                + DeptDao.DEPT_TABLE_IMG + " text," + DeptDao.DEPT_TABLE_PID
-                + " int)");
+//        db.execSQL("create table if not exists " + DeptDao.DEPT_TABLE + "("
+//                + DeptDao.DEPT_TABLE_ID + " int," + DeptDao.DEPT_TABLE_VERSION
+//                + " text," + DeptDao.DEPT_TABLE_NAME + " text,"
+//                + DeptDao.DEPT_TABLE_IMG + " text," + DeptDao.DEPT_TABLE_PID
+//                + " int)");
 
         db.execSQL("create table if not exists " + ContactDao.CONTACT_TABLE + "("
                 + ContactDao.CONTACT_TABLE_ID + " int,"
@@ -81,8 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void dropTables(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS " + TodoDao.TODO_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE);
+//        db.execSQL("DROP TABLE IF EXISTS " + TodoDao.TODO_TABLE);
+//        db.execSQL("DROP TABLE IF EXISTS " + DeptDao.DEPT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ContactDao.CONTACT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ContactDao.FRIEND_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + GroupDao.GROUP_TABLE);

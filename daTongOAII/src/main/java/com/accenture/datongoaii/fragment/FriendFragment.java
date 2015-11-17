@@ -365,7 +365,7 @@ public class FriendFragment extends Fragment implements SectionListView.OnSectio
                             Utils.toast(context, cr.statusMsg);
                         }
                     } catch (JSONException e) {
-                        Logger.e("startGetContactsStatusConnect", e.getMessage());
+                        Logger.e("requestGetContactsStatusConnect", e.getMessage());
                     }
                 }
             }

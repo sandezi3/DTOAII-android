@@ -464,7 +464,7 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
      */
     private void uploadPicture(final String path) {
         progressDialog = Utils.showProgressDialog(this, progressDialog, null, Config.PROGRESS_SUBMIT);
-        DTOARequest.getInstance(context).uploadImage(path, new DTOARequest.RequestListener() {
+        DTOARequest.getInstance(context).requestUploadImage(path, new DTOARequest.RequestListener() {
             @Override
             public void callback(String result) {
                 handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
@@ -475,18 +475,28 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
                     Logger.e(TAG, "uploadPicture " + e.getMessage());
                 }
             }
+
+            @Override
+            public void callbackError() {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
+            }
         });
     }
 
     private void startModifyHeadConnect(final String url) {
         try {
             progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
-            DTOARequest.getInstance(context).modifyHead(Account.getInstance().getUserId(), url, new DTOARequest.RequestListener() {
+            DTOARequest.getInstance(context).requestModifyHead(Account.getInstance().getUserId(), url, new DTOARequest.RequestListener() {
                 @Override
                 public void callback(String result) {
                     handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                     startGetAccountById(Account.getInstance().getUserId());
                     Utils.toast(context, Config.SUCCESS_UPDATE);
+                }
+
+                @Override
+                public void callbackError() {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 }
             });
         } catch (JSONException e) {
@@ -503,10 +513,16 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
                 handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 try {
                     Account.getInstance().updateFromJson(new JSONObject(result).getJSONArray("data").getJSONObject(0));
+                    Utils.saveUserInfo(context);
                     refresh();
                 } catch (JSONException e) {
                     Logger.e(TAG, "startGetAccountById: " + e.getMessage());
                 }
+            }
+
+            @Override
+            public void callbackError() {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
             }
         });
     }
@@ -514,12 +530,17 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
     private void startRenameConnect(final String name) {
         try {
             progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
-            DTOARequest.getInstance(context).modifyUsername(Account.getInstance().getUserId(), name, new DTOARequest.RequestListener() {
+            DTOARequest.getInstance(context).requestModifyUsername(Account.getInstance().getUserId(), name, new DTOARequest.RequestListener() {
                 @Override
                 public void callback(String result) {
                     handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                     Account.getInstance().setUsername(name);
                     refresh();
+                }
+
+                @Override
+                public void callbackError() {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 }
             });
         } catch (JSONException e) {
@@ -531,12 +552,17 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
     private void startModifySexConnect(final String sex) {
         try {
             progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
-            DTOARequest.getInstance(context).modifyUserSex(Account.getInstance().getUserId(), sex, new DTOARequest.RequestListener() {
+            DTOARequest.getInstance(context).requestModifyUserSex(Account.getInstance().getUserId(), sex, new DTOARequest.RequestListener() {
                 @Override
                 public void callback(String result) {
                     handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                     Account.getInstance().setSex(sex);
                     refresh();
+                }
+
+                @Override
+                public void callbackError() {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 }
             });
         } catch (JSONException e) {
@@ -548,13 +574,18 @@ public class MyInfoActivity extends DTOAActivity implements OnItemClickListener,
     private void startModifyBirthdayConnect(final String birthday) {
         try {
             progressDialog = Utils.showProgressDialog(context, progressDialog, null, Config.PROGRESS_SUBMIT);
-            DTOARequest.getInstance(context).modifyUserBirthday(Account.getInstance().getUserId(), birthday, new DTOARequest.RequestListener() {
+            DTOARequest.getInstance(context).requestModifyUserBirthday(Account.getInstance().getUserId(), birthday, new DTOARequest.RequestListener() {
                 @Override
                 public void callback(String result) {
                     handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                     mBirth = birthday;
                     Account.getInstance().setBirth(birthday);
                     refresh();
+                }
+
+                @Override
+                public void callbackError() {
+                    handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 }
             });
         } catch (JSONException e) {

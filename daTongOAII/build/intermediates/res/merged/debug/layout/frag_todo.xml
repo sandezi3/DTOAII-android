@@ -71,6 +71,7 @@
         android:id="@+id/lvTodo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:showDividers="none"
         android:layout_below="@id/etSearch" />
 
 </RelativeLayout><!-- From: file:/Users/leon/Project/DTOA%20II/04_Code/00_Android/daTongOAII/src/main/res/layout/frag_todo.xml -->

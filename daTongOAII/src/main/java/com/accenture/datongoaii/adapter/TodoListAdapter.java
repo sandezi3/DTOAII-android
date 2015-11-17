@@ -43,15 +43,13 @@ public class TodoListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_cell_todo, parent,
                     false);
             holder = new ViewHolder();
             holder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             holder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            holder.tvDeadline = (TextView) convertView
-                    .findViewById(R.id.tvDeadline);
             holder.tvCreate = (TextView) convertView
                     .findViewById(R.id.tvCreate);
             convertView.setTag(holder);
@@ -61,15 +59,13 @@ public class TodoListAdapter extends BaseAdapter {
 
         Todo t = todoList.get(position);
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(t.img, holder.ivIcon, Config.getDisplayOptions());
+        loader.displayImage("", holder.ivIcon, Config.getDisplayOptions());
         holder.tvTitle.setText(t.title);
         try {
-            holder.tvCreate.setText(Utils.getPeroid(t.create,
-                    System.currentTimeMillis()));
+            holder.tvCreate.setText(Utils.getPeroid(t.startTime, System.currentTimeMillis()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.tvDeadline.setText(t.deadline);
 
         return convertView;
     }
@@ -77,7 +73,6 @@ public class TodoListAdapter extends BaseAdapter {
     public static class ViewHolder {
         ImageView ivIcon;
         TextView tvTitle;
-        TextView tvDeadline;
         TextView tvCreate;
     }
 }

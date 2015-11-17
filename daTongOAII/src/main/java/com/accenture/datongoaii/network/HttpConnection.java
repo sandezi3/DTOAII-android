@@ -53,6 +53,7 @@ public class HttpConnection implements Runnable {
     //    private static final int BITMAP = 4;
     private static final int POST_FILE = 4;
     private static final int PUT_IMAGE = 5;
+    public static final String ERROR_INTERFACE = "SERVER INTERFACE ERROR";
 
     private String url;
     private int method;
@@ -183,6 +184,7 @@ public class HttpConnection implements Runnable {
                         }
                     } else {
                         Logger.e("GET.Err", "Please contact interface provider!");
+                        this.sendMessage(ERROR_INTERFACE);
                     }
                 }
                 break;
@@ -237,6 +239,7 @@ public class HttpConnection implements Runnable {
                         // this.sendMessage("");
                         // }
                         Logger.e("POST.Err", "Please contact interface provider!");
+                        this.sendMessage(ERROR_INTERFACE);
                     }
                     break;
                 }
@@ -303,6 +306,7 @@ public class HttpConnection implements Runnable {
                         }
                     } else {
                         Logger.e("PUT_IMAGE.Err", "Please contact interface provider!");
+                        this.sendMessage(ERROR_INTERFACE);
                     }
                     break;
                 }
@@ -355,6 +359,7 @@ public class HttpConnection implements Runnable {
                         // if (Account.govDebug) {
                         // this.sendMessage("");
                         // }
+                        this.sendMessage(ERROR_INTERFACE);
                         Logger.e("PUT.Err", "Please contact interface provider!");
                     }
                     break;
@@ -422,6 +427,7 @@ public class HttpConnection implements Runnable {
                         }
                     } else {
                         Logger.e("PUT_IMAGE.Err", "Please contact interface provider!");
+                        this.sendMessage(ERROR_INTERFACE);
                     }
                     break;
                 }
@@ -455,6 +461,7 @@ public class HttpConnection implements Runnable {
                         }
                     } else {
                         Logger.e("DELETE.Err", "Please contact interface provider!");
+                        this.sendMessage(ERROR_INTERFACE);
                     }
                 }
                 break;

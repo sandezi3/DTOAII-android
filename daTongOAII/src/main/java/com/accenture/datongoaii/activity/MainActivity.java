@@ -22,17 +22,15 @@ import android.widget.Toast;
 import com.accenture.datongoaii.Config;
 import com.accenture.datongoaii.Constants;
 import com.accenture.datongoaii.DTOARequest;
-import com.accenture.datongoaii.Intepreter;
 import com.accenture.datongoaii.R;
 import com.accenture.datongoaii.db.ContactDao;
 import com.accenture.datongoaii.fragment.ContactFragment;
 import com.accenture.datongoaii.fragment.NotiFragment;
 import com.accenture.datongoaii.fragment.TaskFragment;
+import com.accenture.datongoaii.fragment.TodoFragment;
 import com.accenture.datongoaii.fragment.TodoWebFragment;
 import com.accenture.datongoaii.model.Account;
-import com.accenture.datongoaii.model.CommonResponse;
 import com.accenture.datongoaii.model.Contact;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
 import com.accenture.datongoaii.util.Utils;
 import com.accenture.datongoaii.vendor.HX.HXController;
@@ -41,7 +39,6 @@ import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
-import com.igexin.sdk.PushManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -60,7 +57,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
     private int curTab = 0;
 
     private Context context;
-    public TodoWebFragment todoFrag;
+    public TodoFragment todoFrag;
     private NotiFragment notiFrag;
     private TaskFragment taskFrag;
     public ContactFragment contactFrag;
@@ -96,8 +93,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
         context = this;
         setContentView(R.layout.activity_main);
 
-        PushManager.getInstance().initialize(getApplicationContext());
-        syncUserForPush();
+//        PushManager.getInstance().initialize(getApplicationContext());
+//        syncUserForPush();
 
         findViewById(R.id.lTodo).setOnClickListener(this);
         findViewById(R.id.lNotification).setOnClickListener(this);
@@ -138,7 +135,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
             final String name = data.getStringExtra("name");
             final String head = data.getStringExtra("head");
             final String[] cells = {cell};
-            DTOARequest.getInstance(getApplicationContext()).startGetContactsStatusConnect(cells, new DTOARequest.RequestListener() {
+            DTOARequest.getInstance(getApplicationContext()).requestGetContactsStatusConnect(cells, new DTOARequest.RequestListener() {
                 @Override
                 public void callback(String result) {
                     List<Contact> list = new ArrayList<Contact>();
@@ -154,6 +151,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                @Override
+                public void callbackError() {
                 }
             });
         }
@@ -179,7 +180,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                         .getString(Constants.PUSH_JSON_COMMAND));
                 switch (command) {
                     case Constants.PUSH_COMMAND_REFRESH_TODO:
-                        todoFrag.refreshTodoList(Account.getInstance().getUserId());
+//                        todoFrag.refreshTodoList(Account.getInstance().getUserId());
                         break;
                     case Constants.PUSH_COMMAND_REFRESH_NOTI:
                         notiFrag.syncConversationList();
@@ -233,11 +234,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
         switch (tab) {
             case TAB_TODO:
                 if (todoFrag == null) {
-                    todoFrag = new TodoWebFragment();
+                    todoFrag = new TodoFragment();
                     t.add(R.id.lBody, todoFrag);
                 } else {
                     t.show(todoFrag);
-                    todoFrag.refreshTodoList(Account.getInstance().getUserId());
+//                    todoFrag.refreshTodoList(Account.getInstance().getUserId());
                 }
                 ((ImageView) findViewById(R.id.imgTodo))
                         .setImageResource(R.drawable.tab_todo_h);
@@ -333,52 +334,52 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
         return super.onKeyDown(keyCode, event);
     }
 
-    private void syncUserForPush() {
-        String url = Config.SERVER_HOST + "/DTOAII/syncUser.json";
-        JSONObject json = new JSONObject();
-        try {
-            json.put("userId", Account.getInstance().getUserId());
-            json.put(
-                    "clientId",
-                    PushManager.getInstance().getClientid(
-                            getApplicationContext()));
-        } catch (JSONException e) {
-            Logger.e("syncUserForPush", e.getMessage());
-        }
-        new HttpConnection().post(url, json,
-                new HttpConnection.CallbackListener() {
-                    @Override
-                    public void callBack(String result) {
-                        if (!result.equals("fail")) {
-                            try {
-                                CommonResponse res = Intepreter
-                                        .getCommonStatusFromJson(result);
-                                if (res.statusCode == 0) {
-                                    retryTimes = 0;
-                                } else {
-                                    Utils.toast(getApplicationContext(), res.statusMsg);
-                                }
-                            } catch (JSONException e) {
-                                Utils.toast(getApplicationContext(), Config.ERROR_INTERFACE);
-                            }
-                        } else {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    retrySyncUser();
-                                }
-                            }, 30000 * retryTimes);
-                        }
-                    }
-                });
-    }
-
-    private void retrySyncUser() {
-        if (retryTimes < 2) {
-            syncUserForPush();
-        }
-        retryTimes++;
-    }
+//    private void syncUserForPush() {
+//        String url = Config.SERVER_HOST + "/DTOAII/syncUser.json";
+//        JSONObject json = new JSONObject();
+//        try {
+//            json.put("userId", Account.getInstance().getUserId());
+//            json.put(
+//                    "clientId",
+//                    PushManager.getInstance().getClientid(
+//                            getApplicationContext()));
+//        } catch (JSONException e) {
+//            Logger.e("syncUserForPush", e.getMessage());
+//        }
+//        new HttpConnection().post(url, json,
+//                new HttpConnection.CallbackListener() {
+//                    @Override
+//                    public void callBack(String result) {
+//                        if (!result.equals("fail")) {
+//                            try {
+//                                CommonResponse res = Intepreter
+//                                        .getCommonStatusFromJson(result);
+//                                if (res.statusCode == 0) {
+//                                    retryTimes = 0;
+//                                } else {
+//                                    Utils.toast(getApplicationContext(), res.statusMsg);
+//                                }
+//                            } catch (JSONException e) {
+//                                Utils.toast(getApplicationContext(), Config.ERROR_INTERFACE);
+//                            }
+//                        } else {
+//                            new Handler().postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    retrySyncUser();
+//                                }
+//                            }, 30000 * retryTimes);
+//                        }
+//                    }
+//                });
+//    }
+//
+//    private void retrySyncUser() {
+//        if (retryTimes < 2) {
+//            syncUserForPush();
+//        }
+//        retryTimes++;
+//    }
 
 
     @Override
@@ -528,6 +529,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, E
                     dialog.dismiss();
                     dialog = null;
                 }
+            }
+
+            @Override
+            public void callbackError() {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
             }
         });
     }

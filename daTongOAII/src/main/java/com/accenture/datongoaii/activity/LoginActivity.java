@@ -3,17 +3,13 @@ package com.accenture.datongoaii.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.Interpolator;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -116,7 +112,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         HashMap<String, String> map = Utils.getUserInfo(this);
-        if (map != null && map.size() > 0 && map.get("token") != null && map.get("token").length() > 0) {
+        if (map != null && map.size() > 0 && map.get("head") != null && map.get("head").length() > 0) {
             ivHead.setCornerRadius(R.dimen.radius);
             ivHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageLoader.displayImage(map.get("head"), ivHead, Config.getDisplayOptions());
@@ -189,9 +185,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         anim = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, -1.0f);
-        anim.setDuration(2000);
+        anim.setDuration(3000);
         anim.setFillAfter(true);
-        ivHead.startAnimation(anim);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ivHead.startAnimation(anim);
+            }
+        });
     }
 
     private void showContent() {
@@ -201,16 +202,6 @@ public class LoginActivity extends Activity implements OnClickListener {
         findViewById(R.id.tVRegister).setVisibility(View.VISIBLE);
 
         anim.cancel();
-//        float Y = ivHead.getY();
-//        AnimationSet set = new AnimationSet(true);
-//        Animation animation = new TranslateAnimation(ivHead.getX(), ivHead.getX(), Y, Y - 120);
-//        Animation animation1 = new ScaleAnimation(2.0f, 1.0f, 2.0f, 1.0f,
-//                Animation.RELATIVE_TO_SELF, 2.0f, Animation.RELATIVE_TO_SELF, 2.0f);
-//        set.addAnimation(animation);
-//        set.addAnimation(animation1);
-//        set.setDuration(300);
-//        set.setFillAfter(true);
-//        ivHead.startAnimation(set);
     }
 
     private boolean isDataValid() {
@@ -227,6 +218,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     }
 
     private void resolveLoginSuccess(String result) throws JSONException {
+        Logger.w(TAG, "resolveLoginSuccess" + Thread.currentThread().getName());
         Account.getInstance().fromJson(new JSONObject(result));
         String imId = Account.getInstance().getImId();
         if (imId != null && imId.length() > 0) {
@@ -255,10 +247,12 @@ public class LoginActivity extends Activity implements OnClickListener {
         HttpConnection connection = new HttpConnection();
         connection.get(url, new HttpConnection.CallbackListener() {
             @Override
-            public void callBack(String result) {
+            public void callBack(final String result) {
                 handler.sendEmptyMessage(0);
+
                 if (!result.equals("fail")) {
                     try {
+                        Logger.w(TAG, "startLoginConnect res:" + Thread.currentThread().getName());
                         if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
                             resolveLoginSuccess(result);
                             return;
@@ -276,6 +270,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 }
                 showContent();
             }
+
         });
     }
 
@@ -296,31 +291,37 @@ public class LoginActivity extends Activity implements OnClickListener {
         HttpConnection connection = new HttpConnection();
         connection.post(url, obj, new HttpConnection.CallbackListener() {
             @Override
-            public void callBack(String result) {
+            public void callBack(final String result) {
                 handler.sendEmptyMessage(0);
-                if (!result.equals("fail")) {
-                    try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            resolveLoginSuccess(result);
-                            return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!result.equals("fail")) {
+                            try {
+                                if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
+                                    resolveLoginSuccess(result);
+                                    return;
+                                } else {
+                                    Logger.i(TAG, "Failed!");
+                                    Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
+                                }
+                            } catch (JSONException e) {
+                                Logger.e(TAG, "Exception!");
+                                Utils.toast(activity, Config.ERROR_INTERFACE);
+                            }
                         } else {
-                            Logger.i(TAG, "Failed!");
-                            Utils.toast(activity, Intepreter.getCommonStatusFromJson(result).statusMsg);
+                            Logger.i(TAG, "Network Error!");
+                            Utils.toast(activity, Config.ERROR_NETWORK);
                         }
-                    } catch (JSONException e) {
-                        Logger.e(TAG, "Exception!");
-                        Utils.toast(activity, Config.ERROR_INTERFACE);
+                        showContent();
                     }
-                } else {
-                    Logger.i(TAG, "Network Error!");
-                    Utils.toast(activity, Config.ERROR_NETWORK);
-                }
-                showContent();
+                }).start();
             }
         });
     }
 
     protected void finishAndReturn() {
+        Logger.w(TAG, "finishAndReturn" + Thread.currentThread().getName());
         setResult(RESULT_OK);
         Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);

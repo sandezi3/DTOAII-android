@@ -170,7 +170,7 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
                     }
                 }
                 if (list.size() > 0) {
-                    DTOARequest.startGetUsersByImIds(list, new HttpConnection.CallbackListener() {
+                    DTOARequest.requestGetUsersByImIds(list, new HttpConnection.CallbackListener() {
                         @Override
                         public void callBack(String result) {
                             if (!result.equals("result")) {
@@ -246,6 +246,10 @@ public class NotiFragment extends Fragment implements AdapterView.OnItemClickLis
                             Logger.e(TAG, e.getMessage());
                             Utils.toast(context, Config.ERROR_INTERFACE);
                         }
+                    }
+
+                    @Override
+                    public void callbackError() {
                     }
                 });
             }

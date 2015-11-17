@@ -54,7 +54,7 @@ public class DTOAActivity extends Activity {
         if (this.isTaskRoot()) {
             long time = System.currentTimeMillis();
             if (previousBackKeyPressTime < time && previousBackKeyPressTime + 2000 > time) {
-                DTOARequest.getInstance(this).startLogout();
+                DTOARequest.getInstance(this).requestLogout();
                 try {
                     Thread.sleep(400);
                 } catch (Exception e) {

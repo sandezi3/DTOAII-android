@@ -200,7 +200,7 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
                             Utils.toast(context, cr.statusMsg);
                         }
                     } catch (JSONException e) {
-                        Logger.e("startGetContactsStatusConnect", e.getMessage());
+                        Logger.e("requestGetContactsStatusConnect", e.getMessage());
                     }
                 }
             }
@@ -255,6 +255,11 @@ public class PhoneContactFragment extends Fragment implements SectionListView.On
             public void callback(String result) {
                 handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
                 startGetContactsStatusConnect();
+            }
+
+            @Override
+            public void callbackError() {
+                handler.sendEmptyMessage(Constants.HANDLER_TAG_DISMISS_PROGRESS_DIALOG);
             }
         });
     }

@@ -1,5 +1,8 @@
 package com.accenture.datongoaii.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,45 +11,51 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.accenture.datongoaii.Config;
-import com.accenture.datongoaii.Intepreter;
+import com.accenture.datongoaii.Constants;
+import com.accenture.datongoaii.DTOARequest;
 import com.accenture.datongoaii.R;
+import com.accenture.datongoaii.activity.AppActivity;
 import com.accenture.datongoaii.adapter.TodoListAdapter;
+import com.accenture.datongoaii.model.Account;
+import com.accenture.datongoaii.model.App;
 import com.accenture.datongoaii.model.Todo;
-import com.accenture.datongoaii.network.HttpConnection;
 import com.accenture.datongoaii.util.Logger;
+import com.accenture.datongoaii.util.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TodoFragment extends Fragment {
-    private View layoutTodo;
+public class TodoFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private static final String TAG = "TodoFragment";
     private PullToRefreshListView lvTodo;
-    private EditText etSearch;
     private ImageView ivSearch;
     private TextView tvSearch;
 
     private TodoListAdapter adapter;
     private List<Todo> todoList;
     private List<Todo> tmpList;
+    private Context context;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layoutTodo = inflater.inflate(R.layout.frag_todo, container, false);
+        context = getActivity();
+        View layoutTodo = inflater.inflate(R.layout.frag_todo, container, false);
         lvTodo = (PullToRefreshListView) layoutTodo.findViewById(R.id.lvTodo);
-        etSearch = (EditText) layoutTodo.findViewById(R.id.etSearch);
+        EditText etSearch = (EditText) layoutTodo.findViewById(R.id.etSearch);
         ivSearch = (ImageView) layoutTodo.findViewById(R.id.ivSearch);
         tvSearch = (TextView) layoutTodo.findViewById(R.id.tvSearch);
 
@@ -81,11 +90,11 @@ public class TodoFragment extends Fragment {
             }
         });
 
-        lvTodo.setMode(Mode.BOTH);
-        lvTodo.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载更多...");
-        lvTodo.getLoadingLayoutProxy(false, true).setRefreshingLabel(
-                "正在加载更多...");
-        lvTodo.getLoadingLayoutProxy(false, true).setReleaseLabel("放开以加载更多...");
+        lvTodo.setMode(Mode.PULL_FROM_START);
+//        lvTodo.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载更多...");
+//        lvTodo.getLoadingLayoutProxy(false, true).setRefreshingLabel(
+//                "正在加载更多...");
+//        lvTodo.getLoadingLayoutProxy(false, true).setReleaseLabel("放开以加载更多...");
 
         todoList = new ArrayList<Todo>();
         tmpList = new ArrayList<Todo>();
@@ -109,69 +118,72 @@ public class TodoFragment extends Fragment {
                 }
             }
         });
+        lvTodo.setOnItemClickListener(this);
         refreshTodoList();
         return layoutTodo;
     }
 
     public void refreshTodoList() {
-        String url = Config.SERVER_HOST + "todo.json";
-        Logger.i("TodoFragment.refreshTodoList", "URL = " + url);
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+        DTOARequest.getInstance(context).requestTodoList(Account.getInstance().getUserId(), new DTOARequest.RequestListener() {
             @Override
-            public void callBack(String result) {
-                if (result != "fail") {
-                    try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            todoList.clear();
-                            todoList.addAll(Intepreter
-                                    .getTodoListFromJson(result));
-                            tmpList.clear();
-                            tmpList.addAll(todoList);
-                            adapter.notifyDataSetChanged();
-                            lvTodo.onRefreshComplete();
-                        } else {
-                            show(Intepreter.getCommonStatusFromJson(result).statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        show(Config.ERROR_INTERFACE);
-                    }
-                } else {
-                    show(Config.ERROR_NETWORK);
+            public void callback(String result) {
+                try {
+                    todoList.clear();
+                    todoList.addAll(Todo.listFromJSON(new JSONObject(result)));
+                    tmpList.clear();
+                    tmpList.addAll(todoList);
+                    adapter.notifyDataSetChanged();
+                    lvTodo.onRefreshComplete();
+                } catch (JSONException e) {
+                    Utils.toast(context, Config.ERROR_INTERFACE);
                 }
             }
+
+            @Override
+            public void callbackError() {
+                Logger.e(TAG, "error");
+                Utils.toast(context, Config.ERROR_APP);
+                lvTodo.onRefreshComplete();
+            }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Todo todo = (Todo) adapter.getItem(position - 1);
+        App app = new App();
+        app.appName = todo.title;
+        app.url = todo.url;
+        Utils.startActivityForResult((Activity) context, AppActivity.class, Constants.BUNDLE_TAG_APP, app, Constants.REQUEST_CODE_SCAN_QR_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            refreshTodoList();
+        }
     }
 
     private void loadMoreTodoList() {
-        String url = Config.SERVER_HOST + "todo.json";
-        Logger.i("TodoFragment.loadMoreTodoList", "URL = " + url);
-        new HttpConnection().get(url, new HttpConnection.CallbackListener() {
+        DTOARequest.getInstance(context).requestTodoList(Account.getInstance().getUserId(), new DTOARequest.RequestListener() {
             @Override
-            public void callBack(String result) {
-                if (result != "fail") {
-                    try {
-                        if (Intepreter.getCommonStatusFromJson(result).statusCode == 0) {
-                            todoList.addAll(Intepreter
-                                    .getTodoListFromJson(result));
-                            tmpList.clear();
-                            tmpList.addAll(todoList);
-                            adapter.notifyDataSetChanged();
-                            lvTodo.onRefreshComplete();
-                        } else {
-                            show(Intepreter.getCommonStatusFromJson(result).statusMsg);
-                        }
-                    } catch (JSONException e) {
-                        show(Config.ERROR_INTERFACE);
-                    }
-                } else {
-                    show(Config.ERROR_NETWORK);
+            public void callback(String result) {
+                try {
+                    todoList.addAll(Todo.listFromJSON(new JSONObject(result)));
+                    tmpList.clear();
+                    tmpList.addAll(todoList);
+                    adapter.notifyDataSetChanged();
+                    lvTodo.onRefreshComplete();
+                } catch (JSONException e) {
+                    Utils.toast(context, Config.ERROR_INTERFACE);
                 }
             }
-        });
-    }
 
-    private void show(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            @Override
+            public void callbackError() {
+            }
+        });
     }
 
     private List<Todo> getFiltedList(List<Todo> list,

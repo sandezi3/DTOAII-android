@@ -36,10 +36,10 @@ public class Intepreter {
         for (int i = 0; i < todoArray.length(); i++) {
             JSONObject obj = (JSONObject) todoArray.get(i);
             Todo t = new Todo();
-            t.img = obj.getString(JsonTodoList.img);
-            t.create = obj.getString(JsonTodoList.create);
-            t.deadline = obj.getString(JsonTodoList.deadline);
-            t.title = obj.getString(JsonTodoList.title);
+//            t.img = obj.getString(JsonTodoList.img);
+//            t.create = obj.getString(JsonTodoList.create);
+//            t.deadline = obj.getString(JsonTodoList.deadline);
+//            t.title = obj.getString(JsonTodoList.title);
             list.add(t);
         }
         return list;
