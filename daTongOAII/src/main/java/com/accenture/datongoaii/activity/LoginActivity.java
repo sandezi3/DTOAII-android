@@ -249,7 +249,6 @@ public class LoginActivity extends Activity implements OnClickListener {
             @Override
             public void callBack(final String result) {
                 handler.sendEmptyMessage(0);
-
                 if (!result.equals("fail")) {
                     try {
                         Logger.w(TAG, "startLoginConnect res:" + Thread.currentThread().getName());

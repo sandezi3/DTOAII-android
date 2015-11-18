@@ -858,7 +858,6 @@ public class ChatActivity extends Activity implements View.OnClickListener, EMEv
                 Constants.REQUEST_CODE_CAMERA);
     }
 
-
     /**
      * 从图库获取图片
      */

@@ -33,8 +33,7 @@ public class AppActivity extends Activity {
         Utils.initWebViewSettings(webView);
         App app = (App) getIntent().getSerializableExtra(Constants.BUNDLE_TAG_APP);
         Logger.i(TAG, "App url = " + app.url);
-//        String url = Config.SERVER_HOST.replace("/api", "") + app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
-        String url = app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()));
+        String url = app.url.replace("{userId}", String.valueOf(Account.getInstance().getUserId()) + "&sdfn=" + System.currentTimeMillis());
 
         ((TextView) findViewById(R.id.textTitle)).setText(app.appName);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
@@ -44,8 +43,6 @@ public class AppActivity extends Activity {
             }
         });
 
-
-//        webView.loadUrl("http://120.24.73.78:8086/oaf/template/gwgl.html?caseKey=leaveCase&roleId=11", HttpConnection.getHeaderMap());
         webView.loadUrl(url, HttpConnection.getHeaderMap());
     }
 }
